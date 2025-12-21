@@ -4,6 +4,8 @@ import Dashboard from './pages/Dashboard';
 import Properties from './pages/Properties';
 import Maintenance from './pages/Maintenance';
 import Contacts from './pages/Contacts';
+import Vehicles from './pages/Vehicles';
+import Subscriptions from './pages/Subscriptions';
 import __Layout from './Layout.jsx';
 
 
@@ -14,6 +16,8 @@ export const PAGES = {
     "Properties": Properties,
     "Maintenance": Maintenance,
     "Contacts": Contacts,
+    "Vehicles": Vehicles,
+    "Subscriptions": Subscriptions,
 }
 
 export const pagesConfig = {
