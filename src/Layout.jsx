@@ -7,6 +7,7 @@ import {
 } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import GlobalSearch from '@/components/GlobalSearch';
+import ChatAssistant from '@/components/ChatAssistant';
 
 export default function Layout({ children, currentPageName }) {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -226,6 +227,9 @@ export default function Layout({ children, currentPageName }) {
 
             {/* Global Search */}
             <GlobalSearch open={searchOpen} onOpenChange={setSearchOpen} />
+            
+            {/* AI Chat Assistant */}
+            <ChatAssistant />
         </div>
     );
 }
