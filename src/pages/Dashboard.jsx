@@ -11,6 +11,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { format, isAfter, isBefore, addDays } from 'date-fns';
 import FinancialAdvisor from '../components/financial/FinancialAdvisor';
+import OnboardingFlow from '../components/onboarding/OnboardingFlow';
+import { useNavigate } from 'react-router-dom';
 
 const QuickStatCard = ({ icon: Icon, title, value, subtitle, trend, color, link }) => {
     const content = (
@@ -45,9 +47,17 @@ const QuickStatCard = ({ icon: Icon, title, value, subtitle, trend, color, link 
 export default function Dashboard() {
     const [user, setUser] = useState(null);
     const [showGuide, setShowGuide] = useState(false);
+    const [showOnboarding, setShowOnboarding] = useState(false);
+    const navigate = useNavigate();
 
     useEffect(() => {
-        base44.auth.me().then(setUser);
+        base44.auth.me().then(userData => {
+            setUser(userData);
+            // Show onboarding if not completed
+            if (!userData?.onboarding_completed) {
+                setShowOnboarding(true);
+            }
+        });
     }, []);
 
     const { data: documents = [] } = useQuery({
@@ -108,8 +118,20 @@ export default function Dashboard() {
         }, 0);
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-[#F8F7F4] via-white to-[#F8F7F4]">
-            <div className="max-w-7xl mx-auto px-6 py-12">
+        <>
+            {/* Onboarding Flow */}
+            {showOnboarding && (
+                <OnboardingFlow
+                    onComplete={() => {
+                        setShowOnboarding(false);
+                        navigate(createPageUrl('Dashboard'));
+                    }}
+                    onSkip={() => setShowOnboarding(false)}
+                />
+            )}
+
+            <div className="min-h-screen bg-gradient-to-br from-[#F8F7F4] via-white to-[#F8F7F4]">
+                <div className="max-w-7xl mx-auto px-6 py-12">
                 {/* Welcome Header */}
                 <div className="mb-12">
                     <div className="flex items-center justify-between">
@@ -459,6 +481,6 @@ export default function Dashboard() {
                     </Link>
                 </div>
             </div>
-        </div>
+        </>
     );
 }
