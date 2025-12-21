@@ -52,7 +52,8 @@ export default function Layout({ children, currentPageName }) {
         { name: 'Pricing', icon: DollarSign, path: 'Pricing' },
         { name: 'Notifications', icon: LayoutDashboard, path: 'NotificationSettings' },
         { name: 'Succession', icon: Shield, path: 'Succession' },
-        { name: 'Integrations', icon: Plug, path: 'Integrations' }
+        { name: 'Integrations', icon: Plug, path: 'Integrations' },
+        { name: 'Email Assistant', icon: Plug, path: 'EmailAssistant' }
         ];
 
     return (
