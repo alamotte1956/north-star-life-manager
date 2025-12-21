@@ -6,6 +6,10 @@ import Maintenance from './pages/Maintenance';
 import Contacts from './pages/Contacts';
 import Vehicles from './pages/Vehicles';
 import Subscriptions from './pages/Subscriptions';
+import Valuables from './pages/Valuables';
+import Travel from './pages/Travel';
+import Health from './pages/Health';
+import Calendar from './pages/Calendar';
 import __Layout from './Layout.jsx';
 
 
@@ -18,6 +22,10 @@ export const PAGES = {
     "Contacts": Contacts,
     "Vehicles": Vehicles,
     "Subscriptions": Subscriptions,
+    "Valuables": Valuables,
+    "Travel": Travel,
+    "Health": Health,
+    "Calendar": Calendar,
 }
 
 export const pagesConfig = {
