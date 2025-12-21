@@ -73,22 +73,22 @@ export default function UploadZone({ onUploadComplete }) {
             onDragLeave={handleDragLeave}
             className={`relative border-2 border-dashed rounded-2xl p-12 text-center transition-all ${
                 dragActive 
-                    ? 'border-[#C9A95C] bg-[#C9A95C]/5' 
-                    : 'border-[#1A2B44]/20 hover:border-[#C9A95C]/50'
+                    ? 'border-[#8B2635] bg-[#8B2635]/5' 
+                    : 'border-[#1B4B7F]/20 hover:border-[#8B2635]/50'
             }`}
         >
             {uploading ? (
                 <div className="flex flex-col items-center gap-4">
-                    <Loader2 className="w-12 h-12 text-[#C9A95C] animate-spin" />
+                    <Loader2 className="w-12 h-12 text-[#8B2635] animate-spin" />
                     <p className="text-[#1A2B44]/60 font-light">Uploading and analyzing...</p>
                 </div>
             ) : (
                 <>
                     <div className="flex justify-center mb-6">
                         <div className="relative">
-                            <div className="absolute inset-0 bg-[#C9A95C]/20 rounded-full blur-xl" />
-                            <div className="relative bg-gradient-to-br from-[#1A2B44] to-[#0F1B2E] p-6 rounded-2xl">
-                                <Upload className="w-8 h-8 text-[#C9A95C]" />
+                            <div className="absolute inset-0 bg-[#8B2635]/20 rounded-full blur-xl" />
+                            <div className="relative bg-gradient-to-br from-[#1B4B7F] to-[#0F2847] p-6 rounded-2xl">
+                                <Upload className="w-8 h-8 text-[#E8DCC4]" />
                             </div>
                         </div>
                     </div>
@@ -107,7 +107,7 @@ export default function UploadZone({ onUploadComplete }) {
                             onChange={(e) => e.target.files?.[0] && handleFile(e.target.files[0])}
                             className="hidden"
                         />
-                        <span className="inline-flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-[#1A2B44] to-[#0F1B2E] text-white rounded-full cursor-pointer hover:shadow-lg hover:shadow-[#C9A95C]/20 transition-all font-light">
+                        <span className="inline-flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-[#1B4B7F] to-[#0F2847] text-white rounded-full cursor-pointer hover:shadow-lg hover:shadow-[#8B2635]/20 transition-all font-light">
                             <FileText className="w-4 h-4" />
                             Select PDF
                         </span>

@@ -15,7 +15,7 @@ export default function DocumentCard({ document }) {
     const StatusIcon = status.icon;
 
     return (
-        <div className="group relative bg-white border border-[#1A2B44]/10 rounded-2xl p-6 hover:shadow-xl hover:shadow-[#C9A95C]/10 transition-all duration-300">
+        <div className="group relative bg-white border border-[#1B4B7F]/10 rounded-2xl p-6 hover:shadow-xl hover:shadow-[#8B2635]/10 transition-all duration-300">
             {/* Status indicator */}
             <div className="absolute top-4 right-4 flex items-center gap-2 text-xs">
                 <StatusIcon className={`w-4 h-4 ${status.color} ${status.spin ? 'animate-spin' : ''}`} />
@@ -25,9 +25,9 @@ export default function DocumentCard({ document }) {
             {/* Document icon */}
             <div className="flex items-start gap-4 mb-4">
                 <div className="relative">
-                    <div className="absolute inset-0 bg-[#C9A95C]/20 rounded-lg blur-md" />
-                    <div className="relative bg-gradient-to-br from-[#1A2B44] to-[#0F1B2E] p-3 rounded-lg">
-                        <FileText className="w-6 h-6 text-[#C9A95C]" />
+                    <div className="absolute inset-0 bg-[#8B2635]/20 rounded-lg blur-md" />
+                    <div className="relative bg-gradient-to-br from-[#1B4B7F] to-[#0F2847] p-3 rounded-lg">
+                        <FileText className="w-6 h-6 text-[#E8DCC4]" />
                     </div>
                 </div>
                 <div className="flex-1 min-w-0">
@@ -44,7 +44,7 @@ export default function DocumentCard({ document }) {
             <div className="space-y-3">
                 {document.document_type && (
                     <div className="flex items-center gap-2">
-                        <Tag className="w-4 h-4 text-[#C9A95C]" />
+                        <Tag className="w-4 h-4 text-[#8B2635]" />
                         <span className="text-sm text-[#1A2B44]/70 font-light">
                             {document.document_type}
                         </span>
@@ -53,7 +53,7 @@ export default function DocumentCard({ document }) {
 
                 {document.expiry_date && (
                     <div className="flex items-center gap-2">
-                        <Calendar className="w-4 h-4 text-[#C9A95C]" />
+                        <Calendar className="w-4 h-4 text-[#8B2635]" />
                         <span className="text-sm text-[#1A2B44]/70 font-light">
                             Expires: {format(new Date(document.expiry_date), 'MMM d, yyyy')}
                         </span>
@@ -61,7 +61,7 @@ export default function DocumentCard({ document }) {
                 )}
 
                 {document.cabin_related && (
-                    <Badge className="bg-[#C9A95C]/10 text-[#C9A95C] border-[#C9A95C]/20 hover:bg-[#C9A95C]/20 font-light">
+                    <Badge className="bg-[#8B2635]/10 text-[#8B2635] border-[#8B2635]/20 hover:bg-[#8B2635]/20 font-light">
                         <Home className="w-3 h-3 mr-1" />
                         Cabin Property
                     </Badge>
