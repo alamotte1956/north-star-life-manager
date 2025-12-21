@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
-import { Heart, Plus, Pill, Shield, FileText, Sparkles, FileUser, Activity, Share2, MessageSquare } from 'lucide-react';
+import { Heart, Plus, Pill, Shield, FileText, Sparkles, FileUser, Activity, Share2, MessageSquare, Users } from 'lucide-react';
 import PrintButton from '../components/PrintButton';
 import HealthInsights from '../components/health/HealthInsights';
 import MedicationTracker from '../components/health/MedicationTracker';
 import WearableDataChart from '../components/health/WearableDataChart';
 import AICollaborationInsights from '../components/collaboration/AICollaborationInsights';
-import ShareDialog from '../components/collaboration/ShareDialog';
-import CommentsSection from '../components/collaboration/CommentsSection';
 import ShareDialog from '../components/collaboration/ShareDialog';
 import CommentsSection from '../components/collaboration/CommentsSection';
 import { toast } from 'sonner';
@@ -44,6 +42,7 @@ export default function Health() {
     const [summaryPurpose, setSummaryPurpose] = useState('');
     const [shareRecord, setShareRecord] = useState(null);
     const [commentRecord, setCommentRecord] = useState(null);
+    const [showFamilyInsights, setShowFamilyInsights] = useState(false);
     const [formData, setFormData] = useState({
         record_type: 'other',
         title: '',
@@ -186,6 +185,14 @@ export default function Health() {
                             <FileUser className="w-4 h-4 mr-2" />
                             Health Summary
                         </Button>
+                        <Button
+                            variant="outline"
+                            onClick={() => setShowFamilyInsights(!showFamilyInsights)}
+                            className="border-[#D4AF37]/20"
+                        >
+                            <Users className="w-4 h-4 mr-2" />
+                            Family Insights
+                        </Button>
                         <Dialog open={open} onOpenChange={setOpen}>
                         <DialogTrigger asChild>
                             <Button className="bg-gradient-to-r from-[#1A2B44] to-[#0F1B2E] hover:shadow-lg text-white">
@@ -323,6 +330,21 @@ export default function Health() {
                 {insights && (
                     <div className="mb-8">
                         <HealthInsights insights={insights} metrics={metricsData} />
+                    </div>
+                )}
+
+                {/* Family Health Insights */}
+                {showFamilyInsights && (
+                    <div className="mb-8 space-y-4">
+                        <AICollaborationInsights
+                            entityType="HealthRecord"
+                            entityId="family"
+                            insightType="health_trends"
+                        />
+                        <CommentsSection
+                            entityType="HealthRecord"
+                            entityId="family"
+                        />
                     </div>
                 )}
 

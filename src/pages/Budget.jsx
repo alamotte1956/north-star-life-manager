@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
-import { DollarSign, Plus, TrendingUp, AlertTriangle, Target, Sparkles } from 'lucide-react';
+import { DollarSign, Plus, TrendingUp, AlertTriangle, Target, Sparkles, Users } from 'lucide-react';
+import AICollaborationInsights from '../components/collaboration/AICollaborationInsights';
+import ShareDialog from '../components/collaboration/ShareDialog';
+import CommentsSection from '../components/collaboration/CommentsSection';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
@@ -44,6 +47,7 @@ export default function BudgetPage() {
     const [budgetOpen, setBudgetOpen] = useState(false);
     const [goalOpen, setGoalOpen] = useState(false);
     const [loadingSuggestions, setLoadingSuggestions] = useState({});
+    const [selectedGoalForCollab, setSelectedGoalForCollab] = useState(null);
     const [budgetForm, setBudgetForm] = useState({
         category: 'other',
         amount: '',
@@ -403,11 +407,40 @@ export default function BudgetPage() {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         {goals.map(goal => (
-                            <GoalProgressCard 
-                                key={goal.id} 
-                                goal={goal} 
-                                onUpdate={refetchGoals}
-                            />
+                            <div key={goal.id} className="space-y-2">
+                                <GoalProgressCard 
+                                    goal={goal} 
+                                    onUpdate={refetchGoals}
+                                />
+                                <div className="flex gap-2">
+                                    <ShareDialog
+                                        entityType="FinancialGoal"
+                                        entityId={goal.id}
+                                        entityName={goal.title}
+                                    />
+                                    <Button
+                                        variant="outline"
+                                        size="sm"
+                                        onClick={() => setSelectedGoalForCollab(selectedGoalForCollab === goal.id ? null : goal.id)}
+                                    >
+                                        <Users className="w-4 h-4 mr-2" />
+                                        {selectedGoalForCollab === goal.id ? 'Hide' : 'Collaborate'}
+                                    </Button>
+                                </div>
+                                {selectedGoalForCollab === goal.id && (
+                                    <div className="space-y-4 mt-4">
+                                        <AICollaborationInsights
+                                            entityType="FinancialGoal"
+                                            entityId={goal.id}
+                                            insightType="financial_goal_collaboration"
+                                        />
+                                        <CommentsSection
+                                            entityType="FinancialGoal"
+                                            entityId={goal.id}
+                                        />
+                                    </div>
+                                )}
+                            </div>
                         ))}
                     </div>
                 </div>

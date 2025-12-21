@@ -6,6 +6,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Card } from '@/components/ui/card';
 import { useQuery } from '@tanstack/react-query';
 import { format } from 'date-fns';
+import AICollaborationInsights from './AICollaborationInsights';
 
 export default function CommentsSection({ entityType, entityId }) {
     const [newComment, setNewComment] = useState('');
@@ -63,6 +64,14 @@ export default function CommentsSection({ entityType, entityId }) {
                     Hide
                 </Button>
             </div>
+
+            {comments.length > 0 && (
+                <AICollaborationInsights
+                    entityType={entityType}
+                    entityId={entityId}
+                    insightType="discussion_summary"
+                />
+            )}
 
             <form onSubmit={handleSubmit} className="flex gap-2">
                 <Textarea
