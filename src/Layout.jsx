@@ -36,6 +36,7 @@ export default function Layout({ children, currentPageName }) {
         { name: 'Vault', icon: FileText, path: 'Vault' },
         { name: 'Reports', icon: FileText, path: 'Reports' },
         { name: 'Properties', icon: Home, path: 'Properties' },
+        { name: 'Property Management', icon: TrendingUp, path: 'PropertyManagement' },
         { name: 'Maintenance', icon: Wrench, path: 'Maintenance' },
         { name: 'Contacts', icon: Users, path: 'Contacts' },
         { name: 'Vehicles', icon: Car, path: 'Vehicles' },

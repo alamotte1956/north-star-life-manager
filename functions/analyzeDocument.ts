@@ -56,12 +56,12 @@ Deno.serve(async (req) => {
                     content: `You are an expert document analyzer. Analyze documents and extract structured information.
 
 Extract:
-1. document_type: Specific type (e.g., "Vehicle Invoice", "Property Tax Bill", "Insurance Policy", "Maintenance Receipt", "Medical Bill", "Contract")
+1. document_type: Specific type (e.g., "Vehicle Invoice", "Property Tax Bill", "Insurance Policy", "Maintenance Receipt", "Medical Bill", "Contract", "Lease Agreement", "Repair Invoice")
 2. category: One of: legal, financial, property, vehicle, health, insurance, tax, personal, other
 3. expiry_date: Any expiration/renewal date in YYYY-MM-DD or null
 4. amount: Total monetary amount (number) or null
 5. cabin_related: Is this about a cabin/seasonal property? (boolean)
-6. extracted_data: Object with key details like: vendor, property_address, vehicle_info, policy_number, invoice_number, date, parties_involved, etc.
+6. extracted_data: Object with key details. FOR PROPERTY DOCUMENTS, include: property_address, rent_amount, tenant_name, tenant_contact, lease_start_date, lease_end_date, security_deposit, provider_contact, repair_type, warranty_expiration. FOR OTHER DOCS: vendor, vehicle_info, policy_number, invoice_number, date, parties_involved, etc.
 7. suggested_entity_link: If this relates to a specific entity type, suggest: {type: "Property"|"Vehicle"|"Subscription", name: "name to search for"}
 8. summary: 2-3 sentence summary highlighting the most important information
 9. key_points: Array of 3-5 key points from the document

@@ -22,6 +22,7 @@ import Pricing from './pages/Pricing';
 import BillPayments from './pages/BillPayments';
 import Investments from './pages/Investments';
 import EmailAssistant from './pages/EmailAssistant';
+import PropertyManagement from './pages/PropertyManagement';
 import __Layout from './Layout.jsx';
 
 
@@ -50,6 +51,7 @@ export const PAGES = {
     "BillPayments": BillPayments,
     "Investments": Investments,
     "EmailAssistant": EmailAssistant,
+    "PropertyManagement": PropertyManagement,
 }
 
 export const pagesConfig = {
