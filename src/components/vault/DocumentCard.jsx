@@ -187,6 +187,48 @@ export default function DocumentCard({ document }) {
                     </DialogHeader>
                     
                     <div className="space-y-6">
+                        {/* AI Summary */}
+                        {document.ai_summary && (
+                            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                                <h3 className="text-sm font-medium text-blue-900 mb-2 flex items-center gap-2">
+                                    <span>✨</span> AI Summary
+                                </h3>
+                                <p className="text-sm text-blue-800">{document.ai_summary}</p>
+                            </div>
+                        )}
+
+                        {/* Key Points */}
+                        {document.key_points?.length > 0 && (
+                            <div className="bg-purple-50 border border-purple-200 rounded-lg p-4">
+                                <h3 className="text-sm font-medium text-purple-900 mb-3">Key Points</h3>
+                                <ul className="space-y-2">
+                                    {document.key_points.map((point, i) => (
+                                        <li key={i} className="text-sm text-purple-800 flex items-start gap-2">
+                                            <span className="font-bold">•</span>
+                                            {point}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        )}
+
+                        {/* Action Items */}
+                        {document.action_items?.length > 0 && (
+                            <div className="bg-orange-50 border border-orange-200 rounded-lg p-4">
+                                <h3 className="text-sm font-medium text-orange-900 mb-3 flex items-center gap-2">
+                                    <span>⚡</span> Action Items
+                                </h3>
+                                <ul className="space-y-2">
+                                    {document.action_items.map((item, i) => (
+                                        <li key={i} className="text-sm text-orange-800 flex items-start gap-2">
+                                            <span className="font-bold">{i + 1}.</span>
+                                            {item}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        )}
+
                         {/* Extracted Data */}
                         {document.extracted_data && Object.keys(document.extracted_data).length > 0 && (
                             <div>
