@@ -13,6 +13,9 @@ import { Textarea } from '@/components/ui/textarea';
 import { format, isBefore, addDays } from 'date-fns';
 import CabinModeToggle from '@/components/CabinModeToggle';
 import PrintButton from '@/components/PrintButton';
+import ShareDialog from '@/components/collaboration/ShareDialog';
+import CommentsSection from '@/components/collaboration/CommentsSection';
+import { UserCircle } from 'lucide-react';
 
 const categoryLabels = {
     hvac: 'HVAC',
@@ -36,6 +39,7 @@ export default function Maintenance() {
         category: 'other',
         frequency: 'one_time',
         next_due_date: '',
+        assigned_to: '',
         provider_name: '',
         provider_contact: '',
         estimated_cost: '',
@@ -65,6 +69,7 @@ export default function Maintenance() {
             category: 'other',
             frequency: 'one_time',
             next_due_date: '',
+            assigned_to: '',
             provider_name: '',
             provider_contact: '',
             estimated_cost: '',
@@ -220,14 +225,25 @@ export default function Maintenance() {
                                         </div>
                                     </div>
 
-                                    <div>
-                                        <Label>Estimated Cost</Label>
-                                        <Input
-                                            type="number"
-                                            value={formData.estimated_cost}
-                                            onChange={(e) => setFormData({ ...formData, estimated_cost: e.target.value })}
-                                            placeholder="$"
-                                        />
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                        <div>
+                                            <Label>Assigned To (Email)</Label>
+                                            <Input
+                                                type="email"
+                                                value={formData.assigned_to}
+                                                onChange={(e) => setFormData({ ...formData, assigned_to: e.target.value })}
+                                                placeholder="user@example.com"
+                                            />
+                                        </div>
+                                        <div>
+                                            <Label>Estimated Cost</Label>
+                                            <Input
+                                                type="number"
+                                                value={formData.estimated_cost}
+                                                onChange={(e) => setFormData({ ...formData, estimated_cost: e.target.value })}
+                                                placeholder="$"
+                                            />
+                                        </div>
                                     </div>
 
                                     <div>
@@ -288,6 +304,25 @@ export default function Maintenance() {
                                             Provider: {task.provider_name}
                                         </div>
                                     )}
+
+                                    {task.assigned_to && (
+                                        <div className="flex items-center gap-2 text-sm text-[#1A2B44]/70 mt-2">
+                                            <UserCircle className="w-4 h-4 text-[#C9A95C]" />
+                                            Assigned: {task.assigned_to}
+                                        </div>
+                                    )}
+
+                                    <div className="mt-4 pt-4 border-t flex gap-2">
+                                        <ShareDialog 
+                                            entityType="MaintenanceTask" 
+                                            entityId={task.id} 
+                                            entityName={task.title}
+                                        />
+                                        <CommentsSection 
+                                            entityType="MaintenanceTask" 
+                                            entityId={task.id}
+                                        />
+                                    </div>
                                 </CardContent>
                             </Card>
                         ))}

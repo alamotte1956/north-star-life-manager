@@ -12,6 +12,7 @@ import Health from './pages/Health';
 import Calendar from './pages/Calendar';
 import Legal from './pages/Legal';
 import MedicalProfile from './pages/MedicalProfile';
+import Collaboration from './pages/Collaboration';
 import __Layout from './Layout.jsx';
 
 
@@ -30,6 +31,7 @@ export const PAGES = {
     "Calendar": Calendar,
     "Legal": Legal,
     "MedicalProfile": MedicalProfile,
+    "Collaboration": Collaboration,
 }
 
 export const pagesConfig = {

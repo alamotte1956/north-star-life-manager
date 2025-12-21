@@ -16,6 +16,7 @@ export default function Layout({ children, currentPageName }) {
 
     const navItems = [
         { name: 'Dashboard', icon: LayoutDashboard, path: 'Dashboard' },
+        { name: 'Collaboration', icon: Users, path: 'Collaboration' },
         { name: 'Vault', icon: FileText, path: 'Vault' },
         { name: 'Properties', icon: Home, path: 'Properties' },
         { name: 'Maintenance', icon: Wrench, path: 'Maintenance' },
