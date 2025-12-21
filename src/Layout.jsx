@@ -59,15 +59,6 @@ export default function Layout({ children, currentPageName }) {
                     --burgundy-light: #F4D03F;
                     --cream: #FFF8DC;
                 }
-
-                .text-stroke {
-                    text-shadow: 
-                        -1px -1px 0 #000,
-                        1px -1px 0 #000,
-                        -1px 1px 0 #000,
-                        1px 1px 0 #000,
-                        0 0 3px rgba(0,0,0,0.5);
-                }
                 
                 body {
                     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -134,8 +125,8 @@ export default function Layout({ children, currentPageName }) {
                             </div>
                         </div>
                         <div>
-                            <h1 className="text-lg font-light text-[#D4AF37] tracking-wide text-stroke">North Star</h1>
-                            <p className="text-[#F4D03F] text-xs font-light text-stroke">Life Manager</p>
+                            <h1 className="text-lg font-light text-black tracking-wide">North Star</h1>
+                            <p className="text-black/70 text-xs font-light">Life Manager</p>
                         </div>
                     </div>
                     <button
@@ -188,7 +179,7 @@ export default function Layout({ children, currentPageName }) {
                             <span className="text-black font-bold">★</span>
                         </div>
                         <div>
-                            <h1 className="text-sm font-light text-[#D4AF37] text-stroke">North Star</h1>
+                            <h1 className="text-sm font-light text-black">North Star</h1>
                         </div>
                     </div>
                     <div className="flex items-center gap-2">

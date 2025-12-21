@@ -32,18 +32,18 @@ export default function Vault() {
                             </div>
                         </div>
                         <div>
-                            <h1 className="text-4xl font-light text-[#D4AF37] mb-1" style={{textShadow: '-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000, 0 0 3px rgba(0,0,0,0.5)'}}>
+                            <h1 className="text-4xl font-light text-black mb-1">
                                 Secure Vault
                             </h1>
-                            <p className="text-[#D4AF37]/70 font-light flex items-center gap-2" style={{textShadow: '-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000'}}>
-                                <Sparkles className="w-4 h-4 text-[#F4D03F]" />
+                            <p className="text-black/70 font-light flex items-center gap-2">
+                                <Sparkles className="w-4 h-4 text-black/50" />
                                 AI OCR & Auto-categorization
                             </p>
                         </div>
                     </div>
 
                     <div className="flex justify-between items-center mt-8">
-                        <div className="text-sm text-[#D4AF37]/60 font-light">
+                        <div className="text-sm text-black/50 font-light">
                             {filteredDocuments.length} {filteredDocuments.length === 1 ? 'document' : 'documents'}
                         </div>
                         <CabinModeToggle enabled={cabinMode} onChange={setCabinMode} />
