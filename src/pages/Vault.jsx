@@ -3,11 +3,13 @@ import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { FileText, Sparkles } from 'lucide-react';
 import UploadZone from '../components/vault/UploadZone';
+import SupabaseUploadZone from '../components/vault/SupabaseUploadZone';
 import DocumentCard from '../components/vault/DocumentCard';
 import CabinModeToggle from '../components/CabinModeToggle';
 import IntelligentSearch from '../components/vault/IntelligentSearch';
 import ExpiryAlerts from '../components/vault/ExpiryAlerts';
 import PermissionGuard from '@/components/PermissionGuard';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 export default function Vault() {
     const [cabinMode, setCabinMode] = useState(false);
@@ -72,7 +74,18 @@ export default function Vault() {
 
                 {/* Upload Zone */}
                 <div className="mb-12">
-                    <UploadZone onUploadComplete={refetch} />
+                    <Tabs defaultValue="supabase" className="w-full">
+                        <TabsList className="grid w-full grid-cols-2 mb-4 max-w-md">
+                            <TabsTrigger value="supabase">🔒 Supabase (RLS)</TabsTrigger>
+                            <TabsTrigger value="base44">Base44 Storage</TabsTrigger>
+                        </TabsList>
+                        <TabsContent value="supabase">
+                            <SupabaseUploadZone onUploadComplete={refetch} />
+                        </TabsContent>
+                        <TabsContent value="base44">
+                            <UploadZone onUploadComplete={refetch} />
+                        </TabsContent>
+                    </Tabs>
                 </div>
 
                 {/* Documents Grid */}
