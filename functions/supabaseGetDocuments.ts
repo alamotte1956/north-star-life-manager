@@ -25,13 +25,23 @@ Deno.serve(async (req) => {
 
         const { filter, limit = 100 } = await req.json().catch(() => ({}));
 
-        // Query documents with RLS - user only sees their own
+        // Get user's family_id
+        const base44Users = await base44.entities.User.filter({ email: user.email });
+        const family_id = base44Users[0]?.family_id;
+
+        // Query documents with RLS - user sees their family's documents
         let query = supabase
             .from('documents')
             .select('*')
-            .eq('user_email', user.email)
             .order('created_at', { ascending: false })
             .limit(limit);
+
+        // If user has family_id, filter by family, otherwise filter by user email
+        if (family_id) {
+            query = query.eq('family_id', family_id);
+        } else {
+            query = query.eq('user_email', user.email);
+        }
 
         // Apply filters
         if (filter) {

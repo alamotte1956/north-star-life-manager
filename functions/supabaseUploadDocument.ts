@@ -47,11 +47,16 @@ Deno.serve(async (req) => {
             .from('documents')
             .getPublicUrl(fileName);
 
+        // Get user's family_id from Base44
+        const base44Users = await base44.entities.User.filter({ email: user.email });
+        const family_id = base44Users[0]?.family_id;
+
         // Store metadata in Supabase database with RLS
         const { data: docRecord, error: dbError } = await supabase
             .from('documents')
             .insert({
                 user_email: user.email,
+                family_id: family_id,
                 file_name: file.name,
                 file_path: fileName,
                 file_url: publicUrl,
