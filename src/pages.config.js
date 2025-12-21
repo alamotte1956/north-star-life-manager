@@ -24,6 +24,7 @@ import Investments from './pages/Investments';
 import EmailAssistant from './pages/EmailAssistant';
 import PropertyManagement from './pages/PropertyManagement';
 import FinancialDashboard from './pages/FinancialDashboard';
+import RoleManagement from './pages/RoleManagement';
 import __Layout from './Layout.jsx';
 
 
@@ -54,6 +55,7 @@ export const PAGES = {
     "EmailAssistant": EmailAssistant,
     "PropertyManagement": PropertyManagement,
     "FinancialDashboard": FinancialDashboard,
+    "RoleManagement": RoleManagement,
 }
 
 export const pagesConfig = {

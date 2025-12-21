@@ -55,7 +55,8 @@ export default function Layout({ children, currentPageName }) {
         { name: 'Notifications', icon: LayoutDashboard, path: 'NotificationSettings' },
         { name: 'Succession', icon: Shield, path: 'Succession' },
         { name: 'Integrations', icon: Plug, path: 'Integrations' },
-        { name: 'Email Assistant', icon: Plug, path: 'EmailAssistant' }
+        { name: 'Email Assistant', icon: Plug, path: 'EmailAssistant' },
+        { name: 'Role Management', icon: Shield, path: 'RoleManagement' }
         ];
 
     return (
