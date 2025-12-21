@@ -15,6 +15,7 @@ import CabinModeToggle from '@/components/CabinModeToggle';
 import PrintButton from '@/components/PrintButton';
 import ShareDialog from '@/components/collaboration/ShareDialog';
 import CommentsSection from '@/components/collaboration/CommentsSection';
+import AIMaintenanceSuggestions from '@/components/maintenance/AIMaintenanceSuggestions';
 import { UserCircle } from 'lucide-react';
 
 const categoryLabels = {
@@ -265,7 +266,12 @@ export default function Maintenance() {
                                 </div>
                                 </div>
 
-                {filteredTasks.length > 0 ? (
+                                {/* AI Maintenance Suggestions */}
+                                <div className="mb-8">
+                                <AIMaintenanceSuggestions onTaskAdded={refetch} />
+                                </div>
+
+                                {filteredTasks.length > 0 ? (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                         {filteredTasks.map(task => (
                             <Card key={task.id} className="shadow-lg hover:shadow-xl transition-all">
