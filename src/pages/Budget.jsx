@@ -12,6 +12,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
 import { format, startOfMonth, endOfMonth, startOfYear, endOfYear } from 'date-fns';
+import GoalProgressCard from '../components/budget/GoalProgressCard';
 
 const categoryLabels = {
     property: 'Property',
@@ -401,79 +402,13 @@ export default function BudgetPage() {
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        {goals.map(goal => {
-                            const progress = (goal.current_amount / goal.target_amount) * 100;
-                            const priorityColors = {
-                                high: 'bg-red-100 text-red-700',
-                                medium: 'bg-yellow-100 text-yellow-700',
-                                low: 'bg-blue-100 text-blue-700'
-                            };
-
-                            return (
-                                <Card key={goal.id} className="hover:shadow-xl transition-shadow">
-                                    <CardHeader>
-                                        <CardTitle className="flex items-center justify-between">
-                                            <span className="text-xl font-light">{goal.title}</span>
-                                            <Badge className={priorityColors[goal.priority]}>
-                                                {goal.priority}
-                                            </Badge>
-                                        </CardTitle>
-                                        <Badge variant="outline" className="w-fit">
-                                            {goalTypeLabels[goal.goal_type]}
-                                        </Badge>
-                                    </CardHeader>
-                                    <CardContent>
-                                        <div className="space-y-4">
-                                            <div>
-                                                <div className="flex items-center justify-between mb-2">
-                                                    <span className="text-2xl font-light">${goal.current_amount.toLocaleString()}</span>
-                                                    <span className="text-sm text-black/60">of ${goal.target_amount.toLocaleString()}</span>
-                                                </div>
-                                                <Progress value={Math.min(progress, 100)} />
-                                                <p className="text-sm text-green-600 mt-2">{progress.toFixed(0)}% complete</p>
-                                            </div>
-                                            
-                                            {goal.target_date && (
-                                                <p className="text-sm text-black/60">
-                                                    Target: {format(new Date(goal.target_date), 'MMM d, yyyy')}
-                                                </p>
-                                            )}
-
-                                            {goal.monthly_contribution && (
-                                                <p className="text-sm text-black/60">
-                                                    Monthly: ${goal.monthly_contribution.toLocaleString()}
-                                                </p>
-                                            )}
-
-                                            {goal.ai_suggestions && (
-                                                <div className="bg-[#D4AF37]/10 rounded-lg p-3 border border-[#D4AF37]/20">
-                                                    <div className="flex items-start gap-2">
-                                                        <Sparkles className="w-4 h-4 text-[#D4AF37] mt-0.5 flex-shrink-0" />
-                                                        <p className="text-sm text-black/80">{goal.ai_suggestions}</p>
-                                                    </div>
-                                                </div>
-                                            )}
-
-                                            <Button
-                                                variant="outline"
-                                                onClick={() => getAISuggestions(goal)}
-                                                disabled={loadingSuggestions[goal.id]}
-                                                className="w-full border-[#D4AF37]/20 hover:bg-[#D4AF37]/5"
-                                            >
-                                                {loadingSuggestions[goal.id] ? (
-                                                    <>Loading...</>
-                                                ) : (
-                                                    <>
-                                                        <Sparkles className="w-4 h-4 mr-2" />
-                                                        Get AI Suggestions
-                                                    </>
-                                                )}
-                                            </Button>
-                                        </div>
-                                    </CardContent>
-                                </Card>
-                            );
-                        })}
+                        {goals.map(goal => (
+                            <GoalProgressCard 
+                                key={goal.id} 
+                                goal={goal} 
+                                onUpdate={refetchGoals}
+                            />
+                        ))}
                     </div>
                 </div>
             </div>
