@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
-import { TrendingUp, Plus, DollarSign, PieChart, Target, RefreshCw } from 'lucide-react';
+import { TrendingUp, Plus, DollarSign, PieChart, Target, RefreshCw, Sparkles } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
@@ -13,6 +13,7 @@ import { Textarea } from '@/components/ui/textarea';
 import PortfolioChart from '../components/investments/PortfolioChart';
 import AssetAllocation from '../components/investments/AssetAllocation';
 import InvestmentCard from '../components/investments/InvestmentCard';
+import InvestmentInsights from '../components/investments/InvestmentInsights';
 import { toast } from 'sonner';
 
 const accountTypeLabels = {
@@ -42,6 +43,10 @@ const assetTypeLabels = {
 
 export default function Investments() {
     const [investmentOpen, setInvestmentOpen] = useState(false);
+    const [updatingPrices, setUpdatingPrices] = useState(false);
+    const [loadingInsights, setLoadingInsights] = useState(false);
+    const [insights, setInsights] = useState(null);
+    const [insightsMetrics, setInsightsMetrics] = useState(null);
     const [investmentForm, setInvestmentForm] = useState({
         account_name: '',
         account_type: 'brokerage',
@@ -119,6 +124,31 @@ export default function Investments() {
     const totalGainLoss = totalCurrentValue - totalCostBasis;
     const totalGainLossPercent = totalCostBasis > 0 ? (totalGainLoss / totalCostBasis) * 100 : 0;
 
+    const updateAllPrices = async () => {
+        setUpdatingPrices(true);
+        try {
+            const result = await base44.functions.invoke('fetchMarketPrices', {});
+            toast.success(result.data.message);
+            queryClient.invalidateQueries({ queryKey: ['investments'] });
+        } catch (error) {
+            toast.error('Failed to update prices');
+        }
+        setUpdatingPrices(false);
+    };
+
+    const getInsights = async () => {
+        setLoadingInsights(true);
+        try {
+            const result = await base44.functions.invoke('getInvestmentInsights');
+            setInsights(result.data.insights);
+            setInsightsMetrics(result.data.portfolio_metrics);
+            toast.success('Insights generated!');
+        } catch (error) {
+            toast.error('Failed to generate insights');
+        }
+        setLoadingInsights(false);
+    };
+
     return (
         <div className="min-h-screen bg-gradient-to-br from-[#F8F7F4] via-white to-[#F8F7F4]">
             <div className="max-w-7xl mx-auto px-6 py-12">
@@ -135,6 +165,34 @@ export default function Investments() {
                             <h1 className="text-4xl font-light text-black">Investments</h1>
                             <p className="text-black/70 font-light">Track your portfolio performance</p>
                         </div>
+                    </div>
+                    <div className="flex gap-2">
+                        <Button
+                            onClick={updateAllPrices}
+                            disabled={updatingPrices}
+                            variant="outline"
+                            className="border-[#D4AF37]/20"
+                        >
+                            <RefreshCw className={`w-4 h-4 mr-2 ${updatingPrices ? 'animate-spin' : ''}`} />
+                            Update Prices
+                        </Button>
+                        <Button
+                            onClick={getInsights}
+                            disabled={loadingInsights}
+                            className="bg-gradient-to-r from-[#D4AF37] to-[#F4D03F] text-black"
+                        >
+                            {loadingInsights ? (
+                                <>
+                                    <RefreshCw className="w-4 h-4 mr-2 animate-spin" />
+                                    Analyzing...
+                                </>
+                            ) : (
+                                <>
+                                    <Sparkles className="w-4 h-4 mr-2" />
+                                    Get AI Insights
+                                </>
+                            )}
+                        </Button>
                     </div>
                     <Dialog open={investmentOpen} onOpenChange={setInvestmentOpen}>
                         <DialogTrigger asChild>
@@ -332,6 +390,13 @@ export default function Investments() {
                         </CardContent>
                     </Card>
                 </div>
+
+                {/* AI Insights */}
+                {insights && (
+                    <div className="mb-8">
+                        <InvestmentInsights insights={insights} metrics={insightsMetrics} />
+                    </div>
+                )}
 
                 {/* Charts */}
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
