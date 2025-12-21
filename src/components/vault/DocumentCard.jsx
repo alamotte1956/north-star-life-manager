@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
-import { FileText, Calendar, Tag, ExternalLink, Loader2, CheckCircle, AlertCircle, Home, DollarSign, Link2, Eye } from 'lucide-react';
+import { FileText, Calendar, Tag, ExternalLink, Loader2, CheckCircle, AlertCircle, Home, DollarSign, Link2, Eye, Share2, MessageSquare } from 'lucide-react';
 import { format } from 'date-fns';
 import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
+import ShareDialog from '@/components/collaboration/ShareDialog';
+import CommentsSection from '@/components/collaboration/CommentsSection';
 
 export default function DocumentCard({ document }) {
     const [showDetails, setShowDetails] = useState(false);
+    const [showShare, setShowShare] = useState(false);
+    const [showComments, setShowComments] = useState(false);
     
     const statusConfig = {
         pending: { icon: Loader2, color: 'text-slate-400', text: 'Pending Analysis', spin: true },
@@ -110,28 +114,70 @@ export default function DocumentCard({ document }) {
             </div>
 
             {/* Actions */}
-            <div className="mt-4 flex gap-2">
-                <a
-                    href={document.file_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2 text-sm text-[#D4AF37] hover:bg-[#D4AF37]/5 rounded-lg transition-colors font-light border border-[#D4AF37]/20"
-                >
-                    <ExternalLink className="w-4 h-4" />
-                    View
-                </a>
-                {document.extracted_text && (
+            <div className="mt-4 space-y-2">
+                <div className="flex gap-2">
+                    <a
+                        href={document.file_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2 text-sm text-[#D4AF37] hover:bg-[#D4AF37]/5 rounded-lg transition-colors font-light border border-[#D4AF37]/20"
+                    >
+                        <ExternalLink className="w-4 h-4" />
+                        View
+                    </a>
+                    {document.extracted_text && (
+                        <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => setShowDetails(true)}
+                            className="flex-1 border-[#D4AF37]/20 hover:bg-[#D4AF37]/5"
+                        >
+                            <Eye className="w-4 h-4 mr-2" />
+                            Details
+                        </Button>
+                    )}
+                </div>
+                <div className="flex gap-2">
                     <Button
                         variant="outline"
                         size="sm"
-                        onClick={() => setShowDetails(true)}
+                        onClick={() => setShowShare(true)}
                         className="flex-1 border-[#D4AF37]/20 hover:bg-[#D4AF37]/5"
                     >
-                        <Eye className="w-4 h-4 mr-2" />
-                        Details
+                        <Share2 className="w-4 h-4 mr-2" />
+                        Share
                     </Button>
-                )}
+                    <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => setShowComments(!showComments)}
+                        className="flex-1 border-[#D4AF37]/20 hover:bg-[#D4AF37]/5"
+                    >
+                        <MessageSquare className="w-4 h-4 mr-2" />
+                        Comments
+                    </Button>
+                </div>
             </div>
+
+            {/* Comments Section */}
+            {showComments && (
+                <div className="mt-4 pt-4 border-t border-[#D4AF37]/20">
+                    <CommentsSection 
+                        entityType="Document" 
+                        entityId={document.id}
+                        showComments={showComments}
+                    />
+                </div>
+            )}
+
+            {/* Share Dialog */}
+            <ShareDialog
+                open={showShare}
+                onOpenChange={setShowShare}
+                entityType="Document"
+                entityId={document.id}
+                entityName={document.title}
+            />
 
             {/* Details Dialog */}
             <Dialog open={showDetails} onOpenChange={setShowDetails}>

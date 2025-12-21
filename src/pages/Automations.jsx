@@ -1,14 +1,21 @@
 import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
-import { Zap, Plus, Calendar, Mail, Webhook, Clock, Bell } from 'lucide-react';
+import { Zap, Plus, Calendar, Mail, Webhook, Clock, Bell, Share2, MessageSquare } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import CSVImporter from '../components/automation/CSVImporter';
 import SubscriptionAutomation from '../components/automation/SubscriptionAutomation';
+import ShareDialog from '../components/collaboration/ShareDialog';
+import CommentsSection from '../components/collaboration/CommentsSection';
 
 export default function Automations() {
+    const [shareTransaction, setShareTransaction] = useState(null);
+    const [shareAutomation, setShareAutomation] = useState(null);
+    const [commentTransaction, setCommentTransaction] = useState(null);
+    const [commentAutomation, setCommentAutomation] = useState(null);
+
     const { data: automations = [], refetch } = useQuery({
         queryKey: ['automations'],
         queryFn: () => base44.entities.Automation.list('-created_date')
@@ -91,17 +98,46 @@ export default function Automations() {
                             <CardContent className="pt-6">
                                 <div className="space-y-3">
                                     {transactions.map(txn => (
-                                        <div key={txn.id} className="flex items-center justify-between py-2 border-b last:border-0">
-                                            <div className="flex-1">
-                                                <p className="font-medium">{txn.description}</p>
-                                                <p className="text-sm text-black/50">{txn.merchant}</p>
+                                        <div key={txn.id} className="border-b last:border-0">
+                                            <div className="flex items-center justify-between py-2">
+                                                <div className="flex-1">
+                                                    <p className="font-medium">{txn.description}</p>
+                                                    <p className="text-sm text-black/50">{txn.merchant}</p>
+                                                </div>
+                                                <div className="text-right flex items-center gap-3">
+                                                    <div>
+                                                        <p className={`font-medium ${txn.amount < 0 ? 'text-red-600' : 'text-green-600'}`}>
+                                                            ${Math.abs(txn.amount).toLocaleString()}
+                                                        </p>
+                                                        <Badge className="mt-1">{txn.category}</Badge>
+                                                    </div>
+                                                    <div className="flex gap-1">
+                                                        <Button
+                                                            variant="ghost"
+                                                            size="sm"
+                                                            onClick={() => setShareTransaction(txn)}
+                                                        >
+                                                            <Share2 className="w-4 h-4" />
+                                                        </Button>
+                                                        <Button
+                                                            variant="ghost"
+                                                            size="sm"
+                                                            onClick={() => setCommentTransaction(commentTransaction?.id === txn.id ? null : txn)}
+                                                        >
+                                                            <MessageSquare className="w-4 h-4" />
+                                                        </Button>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div className="text-right">
-                                                <p className={`font-medium ${txn.amount < 0 ? 'text-red-600' : 'text-green-600'}`}>
-                                                    ${Math.abs(txn.amount).toLocaleString()}
-                                                </p>
-                                                <Badge className="mt-1">{txn.category}</Badge>
-                                            </div>
+                                            {commentTransaction?.id === txn.id && (
+                                                <div className="px-4 py-3 bg-gray-50 rounded-lg mb-2">
+                                                    <CommentsSection
+                                                        entityType="Transaction"
+                                                        entityId={txn.id}
+                                                        showComments={true}
+                                                    />
+                                                </div>
+                                            )}
                                         </div>
                                     ))}
                                 </div>
@@ -137,10 +173,35 @@ export default function Automations() {
                                                         <p className="text-sm text-black/50">{automation.trigger_type} → {automation.action_type}</p>
                                                     </div>
                                                 </div>
-                                                <Badge className={automation.enabled ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-700'}>
-                                                    {automation.enabled ? 'Active' : 'Disabled'}
-                                                </Badge>
+                                                <div className="flex items-center gap-2">
+                                                    <Badge className={automation.enabled ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-700'}>
+                                                        {automation.enabled ? 'Active' : 'Disabled'}
+                                                    </Badge>
+                                                    <Button
+                                                        variant="ghost"
+                                                        size="sm"
+                                                        onClick={() => setShareAutomation(automation)}
+                                                    >
+                                                        <Share2 className="w-4 h-4" />
+                                                    </Button>
+                                                    <Button
+                                                        variant="ghost"
+                                                        size="sm"
+                                                        onClick={() => setCommentAutomation(commentAutomation?.id === automation.id ? null : automation)}
+                                                    >
+                                                        <MessageSquare className="w-4 h-4" />
+                                                    </Button>
+                                                </div>
                                             </div>
+                                            {commentAutomation?.id === automation.id && (
+                                                <div className="mt-4 pt-4 border-t border-gray-200">
+                                                    <CommentsSection
+                                                        entityType="Automation"
+                                                        entityId={automation.id}
+                                                        showComments={true}
+                                                    />
+                                                </div>
+                                            )}
                                         </CardContent>
                                     </Card>
                                 );
@@ -181,6 +242,26 @@ export default function Automations() {
                         </CardContent>
                     </Card>
                 </div>
+
+                {/* Share Dialogs */}
+                {shareTransaction && (
+                    <ShareDialog
+                        open={!!shareTransaction}
+                        onOpenChange={(open) => !open && setShareTransaction(null)}
+                        entityType="Transaction"
+                        entityId={shareTransaction.id}
+                        entityName={shareTransaction.description}
+                    />
+                )}
+                {shareAutomation && (
+                    <ShareDialog
+                        open={!!shareAutomation}
+                        onOpenChange={(open) => !open && setShareAutomation(null)}
+                        entityType="Automation"
+                        entityId={shareAutomation.id}
+                        entityName={shareAutomation.name}
+                    />
+                )}
             </div>
         </div>
     );
