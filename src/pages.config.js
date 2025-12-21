@@ -14,6 +14,7 @@ import Legal from './pages/Legal';
 import MedicalProfile from './pages/MedicalProfile';
 import Collaboration from './pages/Collaboration';
 import Reports from './pages/Reports';
+import NotificationSettings from './pages/NotificationSettings';
 import __Layout from './Layout.jsx';
 
 
@@ -34,6 +35,7 @@ export const PAGES = {
     "MedicalProfile": MedicalProfile,
     "Collaboration": Collaboration,
     "Reports": Reports,
+    "NotificationSettings": NotificationSettings,
 }
 
 export const pagesConfig = {
