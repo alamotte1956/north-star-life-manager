@@ -25,6 +25,8 @@ export default function Layout({ children, currentPageName }) {
         { name: 'Valuables', icon: Gem, path: 'Valuables' },
         { name: 'Travel', icon: Plane, path: 'Travel' },
         { name: 'Health', icon: Heart, path: 'Health' },
+        { name: 'Medical Profile', icon: Heart, path: 'MedicalProfile' },
+        { name: 'Legal & Estate', icon: Shield, path: 'Legal' },
         { name: 'Calendar', icon: Calendar, path: 'Calendar' },
         { name: 'Succession', icon: Shield, path: 'Succession' }
     ];

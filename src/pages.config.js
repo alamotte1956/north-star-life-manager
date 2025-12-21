@@ -10,6 +10,8 @@ import Valuables from './pages/Valuables';
 import Travel from './pages/Travel';
 import Health from './pages/Health';
 import Calendar from './pages/Calendar';
+import Legal from './pages/Legal';
+import MedicalProfile from './pages/MedicalProfile';
 import __Layout from './Layout.jsx';
 
 
@@ -26,6 +28,8 @@ export const PAGES = {
     "Travel": Travel,
     "Health": Health,
     "Calendar": Calendar,
+    "Legal": Legal,
+    "MedicalProfile": MedicalProfile,
 }
 
 export const pagesConfig = {
