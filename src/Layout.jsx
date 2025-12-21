@@ -40,6 +40,7 @@ export default function Layout({ children, currentPageName }) {
         { name: 'Vehicles', icon: Car, path: 'Vehicles' },
         { name: 'Subscriptions', icon: DollarSign, path: 'Subscriptions' },
         { name: 'Budget & Goals', icon: TrendingUp, path: 'Budget' },
+        { name: 'Bill Payments', icon: DollarSign, path: 'BillPayments' },
         { name: 'Valuables', icon: Gem, path: 'Valuables' },
         { name: 'Travel', icon: Plane, path: 'Travel' },
         { name: 'Health', icon: Heart, path: 'Health' },
