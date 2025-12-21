@@ -12,6 +12,7 @@ export default function DocumentCard({ document }) {
     const [showShare, setShowShare] = useState(false);
     const [showComments, setShowComments] = useState(false);
     const [showMobileView, setShowMobileView] = useState(false);
+    const [showTaskAssigner, setShowTaskAssigner] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
 
     React.useEffect(() => {

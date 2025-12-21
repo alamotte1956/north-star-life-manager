@@ -54,6 +54,7 @@ export default function Layout({ children, currentPageName }) {
         { name: 'Calendar', icon: Calendar, path: 'Calendar' },
         { name: 'Pricing', icon: DollarSign, path: 'Pricing' },
         { name: 'Notifications', icon: LayoutDashboard, path: 'NotificationSettings' },
+        { name: 'Family Notifications', icon: LayoutDashboard, path: 'FamilyNotifications' },
         { name: 'Succession', icon: Shield, path: 'Succession' },
         { name: 'Integrations', icon: Plug, path: 'Integrations' },
         { name: 'Email Assistant', icon: Plug, path: 'EmailAssistant' },

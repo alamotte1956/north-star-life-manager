@@ -8,12 +8,14 @@ import DocumentCard from '../components/vault/DocumentCard';
 import CabinModeToggle from '../components/CabinModeToggle';
 import IntelligentSearch from '../components/vault/IntelligentSearch';
 import ExpiryAlerts from '../components/vault/ExpiryAlerts';
+import FolderManager from '../components/vault/FolderManager';
 import PermissionGuard from '@/components/PermissionGuard';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 export default function Vault() {
     const [cabinMode, setCabinMode] = useState(false);
     const [selectedDocument, setSelectedDocument] = useState(null);
+    const [selectedFolder, setSelectedFolder] = useState(null);
 
     const { data: documents = [], refetch } = useQuery({
         queryKey: ['documents'],
@@ -21,9 +23,9 @@ export default function Vault() {
         refetchInterval: 3000 // Poll for analysis updates
     });
 
-    const filteredDocuments = cabinMode 
-        ? documents.filter(doc => doc.cabin_related)
-        : documents;
+    const filteredDocuments = documents
+        .filter(doc => cabinMode ? doc.cabin_related : true)
+        .filter(doc => selectedFolder ? doc.folder_id === selectedFolder.id : true);
 
     return (
         <PermissionGuard section="documents" action="view">
@@ -66,6 +68,12 @@ export default function Vault() {
                 <div className="mb-6">
                     <ExpiryAlerts />
                 </div>
+
+                {/* Folder Manager */}
+                <FolderManager 
+                    selectedFolder={selectedFolder}
+                    onFolderSelect={setSelectedFolder}
+                />
 
                 {/* Intelligent Search */}
                 <IntelligentSearch 
