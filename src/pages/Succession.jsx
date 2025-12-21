@@ -25,12 +25,14 @@ export default function Succession() {
             <div className="min-h-screen bg-gradient-to-br from-[#0F1B2E] via-[#1A2B44] to-[#0F1B2E] flex items-center justify-center p-6">
                 <div className="text-center max-w-md">
                     <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8">
-                        <Shield className="w-16 h-16 text-[#C9A95C] mx-auto mb-6" />
-                        <h2 className="text-2xl font-light text-white mb-4">
+                        <div className="inline-flex items-center justify-center w-20 h-20 bg-[#C5A059]/10 rounded-full mb-6">
+                            <Shield className="w-12 h-12 text-[#C5A059]" />
+                        </div>
+                        <h2 className="text-2xl font-light text-white mb-3">
                             Setup Required
                         </h2>
-                        <p className="text-white/60 font-light mb-6">
-                            You need to set up a keycard code to access the succession dashboard. Please update your profile settings.
+                        <p className="text-white/70 font-light mb-8 leading-relaxed">
+                            Set up your secure keycard code to access critical emergency information and succession details.
                         </p>
                         <Button
                             onClick={() => {
@@ -41,8 +43,9 @@ export default function Succession() {
                                     });
                                 }
                             }}
-                            className="bg-gradient-to-r from-[#C9A95C] to-[#D4AF37] hover:shadow-lg hover:shadow-[#C9A95C]/30 text-white font-light"
+                            className="min-h-[50px] px-8 bg-gradient-to-r from-[#C5A059] to-[#D4AF37] hover:shadow-lg hover:shadow-[#C5A059]/30 text-[#0F172A] font-medium rounded-xl"
                         >
+                            <Shield className="w-5 h-5 mr-2" />
                             Set Keycard Code
                         </Button>
                     </div>
@@ -67,18 +70,21 @@ export default function Succession() {
                 <div className="mb-12">
                     <div className="flex items-center gap-4 mb-4">
                         <div className="relative">
-                            <div className="absolute inset-0 bg-[#C9A95C]/30 rounded-2xl blur-xl" />
-                            <div className="relative bg-gradient-to-br from-[#C9A95C] to-[#D4AF37] p-4 rounded-2xl">
+                            <div className="absolute inset-0 bg-[#C5A059]/30 rounded-2xl blur-xl" />
+                            <div className="relative bg-gradient-to-br from-[#C5A059] to-[#D4AF37] p-4 rounded-2xl shadow-lg">
                                 <Shield className="w-8 h-8 text-white" />
                             </div>
                         </div>
                         <div>
-                            <h1 className="text-4xl font-light text-white mb-1">
+                            <h1 className="text-4xl font-light text-white mb-2">
                                 Succession Dashboard
                             </h1>
-                            <p className="text-white/60 font-light">
-                                Emergency codes and critical information
-                            </p>
+                            <div className="flex items-center gap-2">
+                                <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
+                                <p className="text-white/70 font-light">
+                                    Succession Ready • Emergency Access Active
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -111,9 +117,9 @@ export default function Succession() {
                                     }).then(() => window.location.reload());
                                 }
                             }}
-                            className="bg-gradient-to-r from-[#C9A95C] to-[#D4AF37] hover:shadow-lg hover:shadow-[#C9A95C]/30 text-white font-light"
+                            className="min-h-[50px] px-8 bg-gradient-to-r from-[#C5A059] to-[#D4AF37] hover:shadow-lg hover:shadow-[#C5A059]/30 text-[#0F172A] font-medium rounded-xl"
                         >
-                            <Plus className="w-4 h-4 mr-2" />
+                            <Plus className="w-5 h-5 mr-2" />
                             Add Emergency Info
                         </Button>
                     </div>

@@ -28,25 +28,30 @@ export default function Vault() {
                 <div className="mb-12">
                     <div className="flex items-center gap-4 mb-4">
                         <div className="relative">
-                            <div className="absolute inset-0 bg-[#D4AF37]/30 rounded-2xl blur-xl" />
-                            <div className="relative bg-gradient-to-br from-black to-[#1a1a1a] p-4 rounded-2xl">
-                                <FileText className="w-8 h-8 text-[#D4AF37]" />
+                            <div className="absolute inset-0 bg-[#C5A059]/30 rounded-2xl blur-xl" />
+                            <div className="relative bg-gradient-to-br from-[#0F172A] to-[#1e293b] p-4 rounded-2xl">
+                                <FileText className="w-8 h-8 text-[#C5A059]" />
                             </div>
                         </div>
                         <div>
-                            <h1 className="text-4xl font-light text-black mb-1">
+                            <h1 className="text-4xl font-light text-[#0F172A] mb-1">
                                 Secure Vault
                             </h1>
-                            <p className="text-black/70 font-light flex items-center gap-2">
-                                <Sparkles className="w-4 h-4 text-black/50" />
+                            <p className="text-[#64748B] font-light flex items-center gap-2">
+                                <Sparkles className="w-4 h-4 text-[#C5A059]" />
                                 AI OCR & Auto-categorization
                             </p>
                         </div>
                     </div>
 
                     <div className="flex justify-between items-center mt-8">
-                        <div className="text-sm text-black/50 font-light">
-                            {filteredDocuments.length} {filteredDocuments.length === 1 ? 'document' : 'documents'}
+                        <div className="bg-white border border-[#C5A059]/20 rounded-xl px-6 py-4 shadow-sm">
+                            <div className="text-3xl font-light text-[#0F172A] mb-1">
+                                {filteredDocuments.length}
+                            </div>
+                            <div className="text-sm text-[#64748B] font-light">
+                                Secure {filteredDocuments.length === 1 ? 'File' : 'Files'}
+                            </div>
                         </div>
                         <CabinModeToggle enabled={cabinMode} onChange={setCabinMode} />
                     </div>
@@ -71,11 +76,14 @@ export default function Vault() {
                     </div>
                 ) : (
                     <div className="text-center py-16">
-                        <div className="inline-flex items-center justify-center w-20 h-20 bg-[#1A2B44]/5 rounded-full mb-4">
-                            <FileText className="w-10 h-10 text-[#1A2B44]/20" />
+                        <div className="inline-flex items-center justify-center w-24 h-24 bg-[#0F172A]/5 rounded-full mb-6">
+                            <FileText className="w-12 h-12 text-[#0F172A]/20" />
                         </div>
-                        <p className="text-[#1A2B44]/40 font-light">
-                            {cabinMode ? 'No cabin-related documents yet' : 'No documents uploaded yet'}
+                        <h3 className="text-xl font-light text-[#0F172A] mb-2">
+                            {cabinMode ? 'No cabin documents' : 'Your vault is empty'}
+                        </h3>
+                        <p className="text-[#64748B] font-light">
+                            {cabinMode ? 'Upload cabin-related documents to get started' : 'Take a photo or upload a document to begin'}
                         </p>
                     </div>
                 )}

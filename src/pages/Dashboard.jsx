@@ -123,10 +123,10 @@ export default function Dashboard() {
                         </div>
                         <button
                             onClick={() => setShowGuide(true)}
-                            className="flex items-center gap-2 px-6 py-3 bg-white border-2 border-[#8B2635] text-[#8B2635] rounded-full hover:bg-[#8B2635] hover:text-white transition-all font-light"
+                            className="flex items-center gap-3 px-6 py-4 min-h-[50px] bg-white border-2 border-[#C5A059] text-[#0F172A] rounded-xl hover:bg-[#C5A059] hover:text-white transition-all font-light shadow-sm"
                         >
-                            <BookOpen className="w-5 h-5" />
-                            Getting Started Guide
+                            <BookOpen className="w-6 h-6" />
+                            <span className="text-base">Getting Started</span>
                         </button>
                     </div>
                 </div>
