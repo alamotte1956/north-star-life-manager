@@ -11,9 +11,11 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { Calendar as CalendarComponent } from '@/components/ui/calendar';
 import { format } from 'date-fns';
 import MobileCameraCapture from './MobileCameraCapture';
+import { useRolePermission } from '../family/RoleBasedGuard';
 
 export default function UploadZone({ onUploadComplete }) {
     const [showCamera, setShowCamera] = useState(false);
+    const { hasPermission: canUpload } = useRolePermission('documents', 'edit');
     const [uploading, setUploading] = useState(false);
     const [dragActive, setDragActive] = useState(false);
     const [showMetadataDialog, setShowMetadataDialog] = useState(false);
@@ -42,6 +44,11 @@ export default function UploadZone({ onUploadComplete }) {
 
     const handleUploadWithMetadata = async () => {
         if (!pendingFile) return;
+
+        if (!canUpload) {
+            toast.error('You do not have permission to upload documents');
+            return;
+        }
 
         setUploading(true);
         setShowMetadataDialog(false);

@@ -14,6 +14,9 @@ export default function DocumentCard({ document }) {
     const [showMobileView, setShowMobileView] = useState(false);
     const [showTaskAssigner, setShowTaskAssigner] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
+    
+    const { hasPermission: canEdit } = useRolePermission('documents', 'edit');
+    const { hasPermission: canDelete } = useRolePermission('documents', 'delete');
 
     React.useEffect(() => {
         const checkMobile = () => setIsMobile(window.innerWidth < 768);

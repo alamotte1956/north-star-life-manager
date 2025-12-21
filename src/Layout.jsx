@@ -58,7 +58,8 @@ export default function Layout({ children, currentPageName }) {
         { name: 'Succession', icon: Shield, path: 'Succession' },
         { name: 'Integrations', icon: Plug, path: 'Integrations' },
         { name: 'Email Assistant', icon: Plug, path: 'EmailAssistant' },
-        { name: 'Role Management', icon: Shield, path: 'RoleManagement' }
+        { name: 'Role Management', icon: Shield, path: 'RoleManagement' },
+        { name: 'Family Roles', icon: Shield, path: 'FamilyRoleManagement' }
         ];
 
     return (

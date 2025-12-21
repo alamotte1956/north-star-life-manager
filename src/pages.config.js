@@ -28,6 +28,7 @@ import RoleManagement from './pages/RoleManagement';
 import TenantPortal from './pages/TenantPortal';
 import FamilyManagement from './pages/FamilyManagement';
 import FamilyNotifications from './pages/FamilyNotifications';
+import FamilyRoleManagement from './pages/FamilyRoleManagement';
 import __Layout from './Layout.jsx';
 
 
@@ -62,6 +63,7 @@ export const PAGES = {
     "TenantPortal": TenantPortal,
     "FamilyManagement": FamilyManagement,
     "FamilyNotifications": FamilyNotifications,
+    "FamilyRoleManagement": FamilyRoleManagement,
 }
 
 export const pagesConfig = {
