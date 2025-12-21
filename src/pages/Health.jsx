@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { Heart, Plus, Pill, Shield, FileText } from 'lucide-react';
+import PrintButton from '../components/PrintButton';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -99,8 +100,24 @@ export default function Health() {
                             <p className="text-[#1A2B44]/60 font-light">Medical records & wellness</p>
                         </div>
                     </div>
+                </div>
 
-                    <Dialog open={open} onOpenChange={setOpen}>
+                <div className="flex items-center justify-between mb-6">
+                    <div className="flex gap-4">
+                        <Tabs value={filter} onValueChange={setFilter}>
+                            <TabsList className="bg-white border border-[#1A2B44]/10">
+                                <TabsTrigger value="all">All</TabsTrigger>
+                                <TabsTrigger value="prescription">Prescriptions</TabsTrigger>
+                                <TabsTrigger value="insurance">Insurance</TabsTrigger>
+                                <TabsTrigger value="vaccination">Vaccinations</TabsTrigger>
+                                <TabsTrigger value="provider_info">Providers</TabsTrigger>
+                            </TabsList>
+                        </Tabs>
+                    </div>
+
+                    <div className="flex gap-2 print:hidden">
+                        <PrintButton />
+                        <Dialog open={open} onOpenChange={setOpen}>
                         <DialogTrigger asChild>
                             <Button className="bg-gradient-to-r from-[#1A2B44] to-[#0F1B2E] hover:shadow-lg text-white">
                                 <Plus className="w-4 h-4 mr-2" />
@@ -231,18 +248,6 @@ export default function Health() {
                         </DialogContent>
                     </Dialog>
                     </div>
-                </div>
-
-                <div className="mb-6">
-                    <Tabs value={filter} onValueChange={setFilter}>
-                        <TabsList className="bg-white border border-[#1A2B44]/10">
-                            <TabsTrigger value="all">All</TabsTrigger>
-                            <TabsTrigger value="prescription">Prescriptions</TabsTrigger>
-                            <TabsTrigger value="insurance">Insurance</TabsTrigger>
-                            <TabsTrigger value="vaccination">Vaccinations</TabsTrigger>
-                            <TabsTrigger value="provider_info">Providers</TabsTrigger>
-                        </TabsList>
-                    </Tabs>
                 </div>
 
                 {filteredRecords.length > 0 ? (
