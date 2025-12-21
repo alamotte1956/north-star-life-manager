@@ -11,6 +11,15 @@ export default function DocumentCard({ document }) {
     const [showDetails, setShowDetails] = useState(false);
     const [showShare, setShowShare] = useState(false);
     const [showComments, setShowComments] = useState(false);
+    const [showMobileView, setShowMobileView] = useState(false);
+    const [isMobile, setIsMobile] = useState(false);
+
+    React.useEffect(() => {
+        const checkMobile = () => setIsMobile(window.innerWidth < 768);
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
     
     const statusConfig = {
         pending: { icon: Loader2, color: 'text-slate-400', text: 'Pending Analysis', spin: true },

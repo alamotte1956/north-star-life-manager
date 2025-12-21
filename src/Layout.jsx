@@ -10,6 +10,7 @@ import GlobalSearch from '@/components/GlobalSearch';
 import ChatAssistant from '@/components/ChatAssistant';
 import PWAInstaller from '@/components/PWAInstaller';
 import ProactiveAssistant from '@/components/ProactiveAssistant';
+import PushNotificationManager from '@/components/PushNotificationManager';
 
 export default function Layout({ children, currentPageName }) {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -161,6 +162,9 @@ export default function Layout({ children, currentPageName }) {
                         <span>Search...</span>
                         <kbd className="ml-auto text-xs bg-white/10 px-1.5 py-0.5 rounded">⌘K</kbd>
                     </button>
+                    <div className="mt-4">
+                        <PushNotificationManager />
+                    </div>
                 </div>
 
                 <nav className="flex-1 p-4 space-y-2 overflow-y-auto">
@@ -216,6 +220,7 @@ export default function Layout({ children, currentPageName }) {
                         >
                             <Search className="w-6 h-6" />
                         </button>
+                        <PushNotificationManager />
                         <button
                             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                             className="p-3 text-[#F8F9FA] hover:bg-white/5 rounded-lg touch-manipulation active:scale-95 transition-transform min-h-[50px] min-w-[50px] flex items-center flex-col justify-center gap-1"

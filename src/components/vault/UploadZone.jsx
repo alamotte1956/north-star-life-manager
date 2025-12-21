@@ -10,8 +10,10 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Calendar as CalendarComponent } from '@/components/ui/calendar';
 import { format } from 'date-fns';
+import MobileCameraCapture from './MobileCameraCapture';
 
 export default function UploadZone({ onUploadComplete }) {
+    const [showCamera, setShowCamera] = useState(false);
     const [uploading, setUploading] = useState(false);
     const [dragActive, setDragActive] = useState(false);
     const [showMetadataDialog, setShowMetadataDialog] = useState(false);
@@ -134,19 +136,13 @@ export default function UploadZone({ onUploadComplete }) {
                         </p>
                     
                     <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                        <label className="inline-block">
-                            <input
-                                type="file"
-                                accept="application/pdf,image/jpeg,image/jpg,image/png,image/heic,image/heif"
-                                capture="environment"
-                                onChange={(e) => e.target.files?.[0] && handleFile(e.target.files[0])}
-                                className="hidden"
-                            />
-                            <span className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-[#C5A059] to-[#D4AF37] text-[#0F172A] rounded-lg cursor-pointer hover:shadow-lg hover:shadow-[#C5A059]/30 transition-all font-medium min-h-[50px]">
-                                <Camera className="w-5 h-5" />
-                                Take Photo
-                            </span>
-                            </label>
+                        <Button
+                            onClick={() => setShowCamera(true)}
+                            className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-[#C5A059] to-[#D4AF37] text-[#0F172A] rounded-lg hover:shadow-lg hover:shadow-[#C5A059]/30 transition-all font-medium min-h-[50px]"
+                        >
+                            <Camera className="w-5 h-5" />
+                            Take Photo
+                        </Button>
 
                             <label className="inline-block">
                             <input
@@ -246,6 +242,12 @@ export default function UploadZone({ onUploadComplete }) {
                     </div>
                 </DialogContent>
             </Dialog>
+
+            <MobileCameraCapture
+                open={showCamera}
+                onOpenChange={setShowCamera}
+                onCapture={handleFile}
+            />
         </div>
     );
 }
