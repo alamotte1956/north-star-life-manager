@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Upload, FileText, Loader2 } from 'lucide-react';
+import { Upload, FileText, Loader2, Camera } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { toast } from 'sonner';
 
@@ -8,8 +8,9 @@ export default function UploadZone({ onUploadComplete }) {
     const [dragActive, setDragActive] = useState(false);
 
     const handleFile = async (file) => {
-        if (!file || file.type !== 'application/pdf') {
-            toast.error('Please upload a PDF file');
+        const validTypes = ['application/pdf', 'image/jpeg', 'image/jpg', 'image/png', 'image/heic', 'image/heif'];
+        if (!file || !validTypes.includes(file.type)) {
+            toast.error('Please upload a PDF or image file (JPG, PNG, HEIC)');
             return;
         }
 
@@ -20,7 +21,7 @@ export default function UploadZone({ onUploadComplete }) {
 
             // Create document record
             const document = await base44.entities.Document.create({
-                title: file.name.replace('.pdf', ''),
+                title: file.name.replace(/\.(pdf|jpg|jpeg|png|heic|heif)$/i, ''),
                 file_url,
                 analysis_status: 'pending'
             });
@@ -94,24 +95,40 @@ export default function UploadZone({ onUploadComplete }) {
                     </div>
                     
                     <h3 className="text-xl font-light text-[#1A2B44] mb-2">
-                        Upload Document
+                        Upload Document or Photo
                     </h3>
                     <p className="text-[#1A2B44]/60 mb-6 font-light">
-                        Drag and drop your PDF here, or click to browse
+                        Drag and drop files, take a photo, or browse your device
                     </p>
                     
-                    <label className="inline-block">
-                        <input
-                            type="file"
-                            accept="application/pdf"
-                            onChange={(e) => e.target.files?.[0] && handleFile(e.target.files[0])}
-                            className="hidden"
-                        />
-                        <span className="inline-flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-[#1B4B7F] to-[#0F2847] text-white rounded-full cursor-pointer hover:shadow-lg hover:shadow-[#8B2635]/20 transition-all font-light">
-                            <FileText className="w-4 h-4" />
-                            Select PDF
-                        </span>
-                    </label>
+                    <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                        <label className="inline-block">
+                            <input
+                                type="file"
+                                accept="application/pdf,image/jpeg,image/jpg,image/png,image/heic,image/heif"
+                                capture="environment"
+                                onChange={(e) => e.target.files?.[0] && handleFile(e.target.files[0])}
+                                className="hidden"
+                            />
+                            <span className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-[#8B2635] to-[#A63446] text-white rounded-full cursor-pointer hover:shadow-lg hover:shadow-[#8B2635]/30 transition-all font-light">
+                                <Camera className="w-4 h-4" />
+                                Take Photo
+                            </span>
+                        </label>
+                        
+                        <label className="inline-block">
+                            <input
+                                type="file"
+                                accept="application/pdf,image/jpeg,image/jpg,image/png,image/heic,image/heif"
+                                onChange={(e) => e.target.files?.[0] && handleFile(e.target.files[0])}
+                                className="hidden"
+                            />
+                            <span className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-[#1B4B7F] to-[#0F2847] text-white rounded-full cursor-pointer hover:shadow-lg hover:shadow-[#8B2635]/20 transition-all font-light">
+                                <FileText className="w-4 h-4" />
+                                Choose File
+                            </span>
+                        </label>
+                    </div>
                 </>
             )}
         </div>
