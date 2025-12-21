@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
-import { Home, TrendingUp, Wrench, DollarSign, AlertTriangle, Sparkles, Users, Calendar, FileText } from 'lucide-react';
+import { Home, TrendingUp, Wrench, DollarSign, AlertTriangle, Sparkles, Users, Calendar, FileText, MessageSquare } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -10,6 +10,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { toast } from 'sonner';
 import { format } from 'date-fns';
 import PrintButton from '@/components/PrintButton';
+import TenantCommunications from '@/components/property/TenantCommunications';
 
 export default function PropertyManagement() {
     const [selectedProperty, setSelectedProperty] = useState(null);
@@ -160,6 +161,7 @@ export default function PropertyManagement() {
                         <TabsTrigger value="properties">Properties</TabsTrigger>
                         <TabsTrigger value="maintenance">Maintenance</TabsTrigger>
                         <TabsTrigger value="documents">Documents</TabsTrigger>
+                        <TabsTrigger value="communications">Tenant Communications</TabsTrigger>
                     </TabsList>
 
                     <TabsContent value="properties">
@@ -311,6 +313,10 @@ export default function PropertyManagement() {
                                 </Card>
                             ))}
                         </div>
+                    </TabsContent>
+
+                    <TabsContent value="communications">
+                        <TenantCommunications properties={properties} />
                     </TabsContent>
                 </Tabs>
             </div>
