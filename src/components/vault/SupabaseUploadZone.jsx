@@ -5,8 +5,11 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Upload, FileText, Loader2 } from 'lucide-react';
+import { Upload, FileText, Loader2, Calendar } from 'lucide-react';
 import { toast } from 'sonner';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Calendar as CalendarComponent } from '@/components/ui/calendar';
+import { format } from 'date-fns';
 
 export default function SupabaseUploadZone({ onUploadComplete, linkedEntity }) {
     const [uploading, setUploading] = useState(false);
@@ -14,6 +17,7 @@ export default function SupabaseUploadZone({ onUploadComplete, linkedEntity }) {
     const [metadata, setMetadata] = useState({
         title: '',
         category: 'other',
+        expiry_date: null,
         linked_entity_type: linkedEntity?.type || '',
         linked_entity_id: linkedEntity?.id || '',
         linked_entity_name: linkedEntity?.name || ''
@@ -120,6 +124,30 @@ export default function SupabaseUploadZone({ onUploadComplete, linkedEntity }) {
                                         <SelectItem value="other">Other</SelectItem>
                                     </SelectContent>
                                 </Select>
+                            </div>
+
+                            <div>
+                                <Label>Expiry Date (Optional)</Label>
+                                <Popover>
+                                    <PopoverTrigger asChild>
+                                        <Button
+                                            variant="outline"
+                                            className="w-full justify-start text-left font-normal"
+                                        >
+                                            <Calendar className="mr-2 h-4 w-4" />
+                                            {metadata.expiry_date ? format(new Date(metadata.expiry_date), 'PPP') : 'Set expiry date'}
+                                        </Button>
+                                    </PopoverTrigger>
+                                    <PopoverContent className="w-auto p-0">
+                                        <CalendarComponent
+                                            mode="single"
+                                            selected={metadata.expiry_date ? new Date(metadata.expiry_date) : undefined}
+                                            onSelect={(date) => setMetadata({ ...metadata, expiry_date: date ? date.toISOString().split('T')[0] : null })}
+                                            disabled={(date) => date < new Date()}
+                                        />
+                                    </PopoverContent>
+                                </Popover>
+                                <p className="text-xs text-gray-500 mt-1">Get notified before expiration</p>
                             </div>
 
                             <div className="p-3 bg-blue-50 border border-blue-200 rounded-lg">
