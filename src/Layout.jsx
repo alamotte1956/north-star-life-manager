@@ -11,6 +11,7 @@ import ChatAssistant from '@/components/ChatAssistant';
 import PWAInstaller from '@/components/PWAInstaller';
 import ProactiveAssistant from '@/components/ProactiveAssistant';
 import PushNotificationManager from '@/components/PushNotificationManager';
+import AuthGuard from '@/components/auth/AuthGuard';
 
 export default function Layout({ children, currentPageName }) {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -65,6 +66,7 @@ export default function Layout({ children, currentPageName }) {
         ];
 
     return (
+        <AuthGuard>
         <div className="min-h-screen flex" style={{ backgroundColor: '#F8F9FA' }}>
             <style>{`
                 :root {
@@ -285,6 +287,7 @@ export default function Layout({ children, currentPageName }) {
 
             {/* PWA Install Prompt */}
             <PWAInstaller />
-        </div>
-    );
-}
+            </div>
+            </AuthGuard>
+            );
+            }
