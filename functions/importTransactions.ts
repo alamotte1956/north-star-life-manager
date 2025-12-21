@@ -20,7 +20,39 @@ Deno.serve(async (req) => {
         const csvResponse = await fetch(file_url);
         const csvText = await csvResponse.text();
 
-        // Use AI to parse and categorize transactions
+        // Get user's historical corrections for learning
+        const corrections = await base44.asServiceRole.entities.TransactionCorrection.filter({ 
+            created_by: user.email 
+        });
+
+        const pastTransactions = await base44.asServiceRole.entities.Transaction.filter({ 
+            created_by: user.email 
+        }, '-date', 100);
+
+        // Build learning context
+        let learningContext = '';
+        if (corrections.length > 0) {
+            learningContext = '\n\nUser learning history (prioritize these patterns):\n';
+            corrections.slice(-30).forEach(c => {
+                learningContext += `- "${c.merchant || c.description_pattern}" → ${c.corrected_category}\n`;
+            });
+        }
+
+        let transactionContext = '';
+        if (pastTransactions.length > 0) {
+            transactionContext = '\n\nUser\'s transaction patterns:\n';
+            const merchantCategories = {};
+            pastTransactions.forEach(t => {
+                if (t.merchant && t.category) {
+                    merchantCategories[t.merchant] = t.category;
+                }
+            });
+            Object.entries(merchantCategories).slice(-20).forEach(([merch, cat]) => {
+                transactionContext += `- ${merch} → ${cat}\n`;
+            });
+        }
+
+        // Use AI to parse and categorize transactions with learning
         const analysisResponse = await openai.chat.completions.create({
             model: "gpt-4o-mini",
             messages: [
@@ -29,11 +61,13 @@ Deno.serve(async (req) => {
                     content: `Parse this CSV transaction data and return structured JSON. For each transaction:
 - Extract: date, description, amount, merchant
 - Categorize into: property, vehicle, subscription, maintenance, health, travel, utilities, groceries, dining, entertainment, other
+- IMPORTANT: Use user's learning history to improve accuracy
 - Suggest entity links if applicable (look for property names, vehicle info, subscription services)
 
-Return JSON array with: {date, description, amount, category, merchant, suggested_link: {type, name}}
+Return JSON array with: {date, description, amount, category, merchant, confidence, suggested_link: {type, name}}
 
-Date format: YYYY-MM-DD. Amount: negative for expenses, positive for income.`
+Date format: YYYY-MM-DD. Amount: negative for expenses, positive for income.
+Confidence: 0.0-1.0 for how confident you are in the category.${learningContext}${transactionContext}`
                 },
                 {
                     role: "user",
@@ -90,6 +124,7 @@ Date format: YYYY-MM-DD. Amount: negative for expenses, positive for income.`
                     linked_entity_type: linkedEntity.type,
                     linked_entity_id: linkedEntity.id,
                     linked_entity_name: linkedEntity.name,
+                    notes: txn.confidence < 0.7 ? `AI Confidence: ${(txn.confidence * 100).toFixed(0)}% - Review recommended` : null,
                     created_by: user.email
                 });
 

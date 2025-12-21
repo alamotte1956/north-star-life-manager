@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import CSVImporter from '../components/automation/CSVImporter';
 import SubscriptionAutomation from '../components/automation/SubscriptionAutomation';
+import TransactionReview from '../components/automation/TransactionReview';
 import ShareDialog from '../components/collaboration/ShareDialog';
 import CommentsSection from '../components/collaboration/CommentsSection';
 
@@ -60,6 +61,11 @@ export default function Automations() {
                 {/* Subscription Automation */}
                 <div className="mb-8">
                     <SubscriptionAutomation onUpdate={refetch} />
+                </div>
+
+                {/* Transaction Review */}
+                <div className="mb-8">
+                    <TransactionReview />
                 </div>
 
                 {/* Quick Actions */}
