@@ -26,18 +26,18 @@ export default function Vault() {
                 <div className="mb-12">
                     <div className="flex items-center gap-4 mb-4">
                         <div className="relative">
-                            <div className="absolute inset-0 bg-[#8B2635]/30 rounded-2xl blur-xl" />
-                            <div className="relative bg-gradient-to-br from-[#1B4B7F] to-[#0F2847] p-4 rounded-2xl">
-                                <FileText className="w-8 h-8 text-[#E8DCC4]" />
+                            <div className="absolute inset-0 bg-[#D4AF37]/30 rounded-2xl blur-xl" />
+                            <div className="relative bg-gradient-to-br from-black to-[#1a1a1a] p-4 rounded-2xl">
+                                <FileText className="w-8 h-8 text-[#D4AF37]" />
                             </div>
                         </div>
                         <div>
                             <h1 className="text-4xl font-light text-[#1A2B44] mb-1">
                                 Secure Vault
                             </h1>
-                            <p className="text-[#1B4B7F]/60 font-light flex items-center gap-2">
-                                <Sparkles className="w-4 h-4 text-[#8B2635]" />
-                                AI-powered document analysis
+                            <p className="text-[#1A2B44]/60 font-light flex items-center gap-2">
+                                <Sparkles className="w-4 h-4 text-[#D4AF37]" />
+                                AI OCR & Auto-categorization
                             </p>
                         </div>
                     </div>
