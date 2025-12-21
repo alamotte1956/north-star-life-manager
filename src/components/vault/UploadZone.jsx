@@ -1,28 +1,59 @@
 import React, { useState } from 'react';
-import { Upload, FileText, Loader2, Camera } from 'lucide-react';
+import { Upload, FileText, Loader2, Camera, Calendar } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { toast } from 'sonner';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Calendar as CalendarComponent } from '@/components/ui/calendar';
+import { format } from 'date-fns';
 
 export default function UploadZone({ onUploadComplete }) {
     const [uploading, setUploading] = useState(false);
     const [dragActive, setDragActive] = useState(false);
+    const [showMetadataDialog, setShowMetadataDialog] = useState(false);
+    const [pendingFile, setPendingFile] = useState(null);
+    const [metadata, setMetadata] = useState({
+        title: '',
+        category: 'other',
+        expiry_date: null
+    });
 
-    const handleFile = async (file) => {
+    const handleFile = (file) => {
         const validTypes = ['application/pdf', 'image/jpeg', 'image/jpg', 'image/png', 'image/heic', 'image/heif'];
         if (!file || !validTypes.includes(file.type)) {
             toast.error('Please upload a PDF or image file (JPG, PNG, HEIC)');
             return;
         }
 
+        setPendingFile(file);
+        setMetadata({
+            title: file.name.replace(/\.(pdf|jpg|jpeg|png|heic|heif)$/i, ''),
+            category: 'other',
+            expiry_date: null
+        });
+        setShowMetadataDialog(true);
+    };
+
+    const handleUploadWithMetadata = async () => {
+        if (!pendingFile) return;
+
         setUploading(true);
+        setShowMetadataDialog(false);
+
         try {
             // Upload file
-            const { file_url } = await base44.integrations.Core.UploadFile({ file });
+            const { file_url } = await base44.integrations.Core.UploadFile({ file: pendingFile });
 
             // Create document record
             const document = await base44.entities.Document.create({
-                title: file.name.replace(/\.(pdf|jpg|jpeg|png|heic|heif)$/i, ''),
+                title: metadata.title,
                 file_url,
+                category: metadata.category,
+                expiry_date: metadata.expiry_date,
                 analysis_status: 'pending'
             });
 
@@ -37,6 +68,7 @@ export default function UploadZone({ onUploadComplete }) {
 
             toast.success('Document uploaded successfully');
             onUploadComplete?.(document);
+            setPendingFile(null);
         } catch (error) {
             toast.error('Upload failed');
             console.error(error);
@@ -131,6 +163,89 @@ export default function UploadZone({ onUploadComplete }) {
                     </div>
                 </>
             )}
+
+            {/* Metadata Dialog */}
+            <Dialog open={showMetadataDialog} onOpenChange={setShowMetadataDialog}>
+                <DialogContent className="max-w-md">
+                    <DialogHeader>
+                        <DialogTitle>Document Details</DialogTitle>
+                    </DialogHeader>
+                    <div className="space-y-4">
+                        <div>
+                            <Label>Document Title</Label>
+                            <Input
+                                value={metadata.title}
+                                onChange={(e) => setMetadata({ ...metadata, title: e.target.value })}
+                                placeholder="Enter document title..."
+                            />
+                        </div>
+
+                        <div>
+                            <Label>Category</Label>
+                            <Select
+                                value={metadata.category}
+                                onValueChange={(value) => setMetadata({ ...metadata, category: value })}
+                            >
+                                <SelectTrigger>
+                                    <SelectValue />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="legal">Legal</SelectItem>
+                                    <SelectItem value="financial">Financial</SelectItem>
+                                    <SelectItem value="property">Property</SelectItem>
+                                    <SelectItem value="vehicle">Vehicle</SelectItem>
+                                    <SelectItem value="health">Health</SelectItem>
+                                    <SelectItem value="insurance">Insurance</SelectItem>
+                                    <SelectItem value="tax">Tax</SelectItem>
+                                    <SelectItem value="personal">Personal</SelectItem>
+                                    <SelectItem value="other">Other</SelectItem>
+                                </SelectContent>
+                            </Select>
+                        </div>
+
+                        <div>
+                            <Label>Expiry Date (Optional)</Label>
+                            <Popover>
+                                <PopoverTrigger asChild>
+                                    <Button
+                                        variant="outline"
+                                        className="w-full justify-start text-left font-normal"
+                                    >
+                                        <Calendar className="mr-2 h-4 w-4" />
+                                        {metadata.expiry_date ? format(new Date(metadata.expiry_date), 'PPP') : 'Set expiry date'}
+                                    </Button>
+                                </PopoverTrigger>
+                                <PopoverContent className="w-auto p-0">
+                                    <CalendarComponent
+                                        mode="single"
+                                        selected={metadata.expiry_date ? new Date(metadata.expiry_date) : undefined}
+                                        onSelect={(date) => setMetadata({ ...metadata, expiry_date: date ? date.toISOString().split('T')[0] : null })}
+                                        disabled={(date) => date < new Date()}
+                                    />
+                                </PopoverContent>
+                            </Popover>
+                            <p className="text-xs text-gray-500 mt-1">Get notified before expiration</p>
+                        </div>
+
+                        <div className="flex gap-2">
+                            <Button
+                                variant="outline"
+                                onClick={() => setShowMetadataDialog(false)}
+                                className="flex-1"
+                            >
+                                Cancel
+                            </Button>
+                            <Button
+                                onClick={handleUploadWithMetadata}
+                                disabled={!metadata.title}
+                                className="flex-1 bg-[#C5A059]"
+                            >
+                                Upload
+                            </Button>
+                        </div>
+                    </div>
+                </DialogContent>
+            </Dialog>
         </div>
     );
 }
