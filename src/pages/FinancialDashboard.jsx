@@ -12,6 +12,7 @@ import { Progress } from '@/components/ui/progress';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { toast } from 'sonner';
 import PrintButton from '@/components/PrintButton';
+import ExpenseTracker from '@/components/financial/ExpenseTracker';
 import { LineChart, Line, BarChart, Bar, PieChart as RechartsPie, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 const COLORS = ['#D4AF37', '#1A2B44', '#8B2635', '#4A90E2', '#50C878', '#FF6B6B', '#9B59B6', '#F39C12'];
@@ -114,6 +115,11 @@ export default function FinancialDashboard() {
                             Generate Insights
                         </Button>
                     </div>
+                </div>
+
+                {/* Expense Tracker */}
+                <div className="mb-8">
+                    <ExpenseTracker />
                 </div>
 
                 {insights ? (
