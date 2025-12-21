@@ -12,6 +12,8 @@ import { Textarea } from '@/components/ui/textarea';
 import { format, startOfMonth, endOfMonth, eachDayOfInterval, isSameMonth, isToday, isSameDay, addMonths, subMonths } from 'date-fns';
 import CalendarEvent from '@/components/calendar/CalendarEvent';
 import EventDetailsDialog from '@/components/calendar/EventDetailsDialog';
+import TaskSuggestions from '@/components/calendar/TaskSuggestions';
+import QuickAddButtons from '@/components/calendar/QuickAddButtons';
 
 const categoryLabels = {
     birthday: 'Birthday',
@@ -60,8 +62,41 @@ export default function CalendarPage() {
         queryFn: () => base44.entities.Subscription.list()
     });
 
+    const { data: calendarEvents = [], refetch: refetchEvents } = useQuery({
+        queryKey: ['calendarEvents'],
+        queryFn: () => base44.entities.CalendarEvent.list('-due_date')
+    });
+
+    const { data: properties = [] } = useQuery({
+        queryKey: ['propertiesForCalendar'],
+        queryFn: () => base44.entities.Property.list()
+    });
+
+    const { data: billPayments = [] } = useQuery({
+        queryKey: ['billsForCalendar'],
+        queryFn: () => base44.entities.BillPayment.list()
+    });
+
     const allEvents = useMemo(() => {
         const events = [];
+
+        // Calendar Events (new unified system)
+        calendarEvents.forEach(event => {
+            if (event.status !== 'cancelled') {
+                events.push({
+                    id: `event-${event.id}`,
+                    title: event.title,
+                    date: event.due_date,
+                    type: event.event_type,
+                    category: event.category,
+                    description: event.description,
+                    notes: event.notes,
+                    priority: event.priority,
+                    status: event.status,
+                    linkedEntity: event.linked_entity_name
+                });
+            }
+        });
 
         importantDates.forEach(date => {
             events.push({
@@ -112,7 +147,7 @@ export default function CalendarPage() {
         });
 
         return events;
-    }, [importantDates, maintenanceTasks, travelPlans, subscriptions]);
+    }, [calendarEvents, importantDates, maintenanceTasks, travelPlans, subscriptions]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -269,6 +304,28 @@ export default function CalendarPage() {
                             </DialogContent>
                         </Dialog>
                     </div>
+                </div>
+
+                {/* AI Task Suggestions */}
+                <div className="mb-6">
+                    <TaskSuggestions onTaskAdded={() => refetchEvents()} />
+                </div>
+
+                {/* Quick Add from Existing Data */}
+                <div className="mb-6">
+                    <Card>
+                        <CardHeader>
+                            <CardTitle className="text-xl font-light">Quick Add to Calendar</CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                            <QuickAddButtons
+                                properties={properties}
+                                maintenanceTasks={maintenanceTasks}
+                                billPayments={billPayments}
+                                onEventAdded={() => refetchEvents()}
+                            />
+                        </CardContent>
+                    </Card>
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
