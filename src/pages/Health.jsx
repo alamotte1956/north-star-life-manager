@@ -6,6 +6,7 @@ import PrintButton from '../components/PrintButton';
 import HealthInsights from '../components/health/HealthInsights';
 import MedicationTracker from '../components/health/MedicationTracker';
 import WearableDataChart from '../components/health/WearableDataChart';
+import HealthTrendsInsights from '../components/health/HealthTrendsInsights';
 import AICollaborationInsights from '../components/collaboration/AICollaborationInsights';
 import ShareDialog from '../components/collaboration/ShareDialog';
 import CommentsSection from '../components/collaboration/CommentsSection';
@@ -43,6 +44,9 @@ export default function Health() {
     const [shareRecord, setShareRecord] = useState(null);
     const [commentRecord, setCommentRecord] = useState(null);
     const [showFamilyInsights, setShowFamilyInsights] = useState(false);
+    const [healthTrends, setHealthTrends] = useState(null);
+    const [loadingTrends, setLoadingTrends] = useState(false);
+    const [trendsOpen, setTrendsOpen] = useState(false);
     const [formData, setFormData] = useState({
         record_type: 'other',
         title: '',
@@ -125,6 +129,29 @@ export default function Health() {
         }
     };
 
+    const analyzeRecord = async (recordId) => {
+        try {
+            await base44.functions.invoke('analyzeHealthRecord', { record_id: recordId });
+            refetch();
+            toast.success('Record analyzed!');
+        } catch (error) {
+            toast.error('Analysis failed');
+        }
+    };
+
+    const getHealthTrends = async () => {
+        setLoadingTrends(true);
+        try {
+            const result = await base44.functions.invoke('getHealthTrends');
+            setHealthTrends(result.data.trends);
+            setTrendsOpen(true);
+            toast.success('Health trends analyzed!');
+        } catch (error) {
+            toast.error('Failed to analyze trends');
+        }
+        setLoadingTrends(false);
+    };
+
     const categoryIcons = {
         prescription: Pill,
         insurance: Shield,
@@ -192,6 +219,15 @@ export default function Health() {
                         >
                             <Users className="w-4 h-4 mr-2" />
                             Family Insights
+                        </Button>
+                        <Button
+                            onClick={getHealthTrends}
+                            disabled={loadingTrends}
+                            variant="outline"
+                            className="border-[#D4AF37]/20"
+                        >
+                            <Activity className={`w-4 h-4 mr-2 ${loadingTrends ? 'animate-spin' : ''}`} />
+                            Health Trends
                         </Button>
                         <Dialog open={open} onOpenChange={setOpen}>
                         <DialogTrigger asChild>
@@ -403,6 +439,14 @@ export default function Health() {
                                                 <Button
                                                     variant="ghost"
                                                     size="sm"
+                                                    onClick={() => analyzeRecord(record.id)}
+                                                    title="AI Analysis"
+                                                >
+                                                    <Sparkles className="w-4 h-4" />
+                                                </Button>
+                                                <Button
+                                                    variant="ghost"
+                                                    size="sm"
                                                     onClick={() => setShareRecord(record)}
                                                 >
                                                     <Share2 className="w-4 h-4" />
@@ -416,6 +460,56 @@ export default function Health() {
                                                 </Button>
                                             </div>
                                         </div>
+
+                                        {record.analysis_status && record.analysis_status !== 'pending' && (
+                                            <Badge className={`mb-2 ${
+                                                record.analysis_status === 'completed' ? 'bg-green-100 text-green-700' :
+                                                record.analysis_status === 'analyzing' ? 'bg-blue-100 text-blue-700' :
+                                                'bg-red-100 text-red-700'
+                                            }`}>
+                                                {record.analysis_status === 'completed' && '✓ '}
+                                                {record.analysis_status}
+                                            </Badge>
+                                        )}
+
+                                        {record.ai_summary && (
+                                            <div className="mb-3 p-2 bg-blue-50 rounded-lg border border-blue-200">
+                                                <p className="text-xs text-blue-900">{record.ai_summary}</p>
+                                            </div>
+                                        )}
+
+                                        {record.key_findings?.length > 0 && (
+                                            <div className="mb-3 p-2 bg-purple-50 rounded-lg border border-purple-200">
+                                                <h5 className="text-xs font-medium mb-1">Key Findings:</h5>
+                                                <ul className="text-xs text-purple-900 space-y-1">
+                                                    {record.key_findings.map((finding, i) => (
+                                                        <li key={i}>• {finding}</li>
+                                                    ))}
+                                                </ul>
+                                            </div>
+                                        )}
+
+                                        {record.risk_indicators?.length > 0 && (
+                                            <div className="mb-3 p-2 bg-red-50 rounded-lg border border-red-200">
+                                                <h5 className="text-xs font-medium mb-1">⚠️ Risk Indicators:</h5>
+                                                <ul className="text-xs text-red-900 space-y-1">
+                                                    {record.risk_indicators.map((risk, i) => (
+                                                        <li key={i}>• {risk}</li>
+                                                    ))}
+                                                </ul>
+                                            </div>
+                                        )}
+
+                                        {record.extracted_medications?.length > 0 && (
+                                            <div className="mb-3 p-2 bg-green-50 rounded-lg border border-green-200">
+                                                <h5 className="text-xs font-medium mb-1">Medications:</h5>
+                                                <ul className="text-xs text-green-900 space-y-1">
+                                                    {record.extracted_medications.map((med, i) => (
+                                                        <li key={i}>• {med.name} {med.dosage && `(${med.dosage})`}</li>
+                                                    ))}
+                                                </ul>
+                                            </div>
+                                        )}
 
                                         <div className="space-y-2 text-sm">
                                             {record.provider_name && (
@@ -546,6 +640,16 @@ export default function Health() {
                         entityName={shareRecord.title}
                     />
                 )}
+
+                {/* Health Trends Dialog */}
+                <Dialog open={trendsOpen} onOpenChange={setTrendsOpen}>
+                    <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+                        <DialogHeader>
+                            <DialogTitle>Health Trends & Risk Analysis</DialogTitle>
+                        </DialogHeader>
+                        {healthTrends && <HealthTrendsInsights trends={healthTrends} />}
+                    </DialogContent>
+                </Dialog>
             </div>
         </div>
     );
