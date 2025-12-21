@@ -5,9 +5,11 @@ import { FileText, Sparkles } from 'lucide-react';
 import UploadZone from '../components/vault/UploadZone';
 import DocumentCard from '../components/vault/DocumentCard';
 import CabinModeToggle from '../components/CabinModeToggle';
+import IntelligentSearch from '../components/vault/IntelligentSearch';
 
 export default function Vault() {
     const [cabinMode, setCabinMode] = useState(false);
+    const [selectedDocument, setSelectedDocument] = useState(null);
 
     const { data: documents = [], refetch } = useQuery({
         queryKey: ['documents'],
@@ -49,6 +51,11 @@ export default function Vault() {
                         <CabinModeToggle enabled={cabinMode} onChange={setCabinMode} />
                     </div>
                 </div>
+
+                {/* Intelligent Search */}
+                <IntelligentSearch 
+                    onDocumentSelect={(doc) => setSelectedDocument(doc)} 
+                />
 
                 {/* Upload Zone */}
                 <div className="mb-12">
