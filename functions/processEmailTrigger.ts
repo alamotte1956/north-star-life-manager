@@ -8,12 +8,13 @@ const openai = new OpenAI({
 Deno.serve(async (req) => {
     try {
         const base44 = createClientFromRequest(req);
-        
-        const { email_from, email_subject, email_body, user_email } = await req.json();
+        const user = await base44.auth.me();
 
-        if (!user_email) {
-            return Response.json({ error: 'user_email required' }, { status: 400 });
+        if (!user) {
+            return Response.json({ error: 'Unauthorized' }, { status: 401 });
         }
+        
+        const { email_from, email_subject, email_body } = await req.json();
 
         // Find matching automation rules
         const automations = await base44.asServiceRole.entities.Automation.filter({
@@ -27,7 +28,7 @@ Deno.serve(async (req) => {
                 email_from?.toLowerCase().includes(config.sender_contains.toLowerCase());
             const subjectMatch = !config.subject_contains || 
                 email_subject?.toLowerCase().includes(config.subject_contains.toLowerCase());
-            return senderMatch && subjectMatch && rule.created_by === user_email;
+            return senderMatch && subjectMatch && rule.created_by === user.email;
         });
 
         if (matchedRules.length === 0) {
@@ -74,7 +75,7 @@ Deno.serve(async (req) => {
                         ...extracted,
                         status: 'active',
                         auto_renew: true,
-                        created_by: user_email
+                        created_by: user.email
                     });
 
                     results.push({
