@@ -6,6 +6,8 @@ import UploadZone from '../components/vault/UploadZone';
 import DocumentCard from '../components/vault/DocumentCard';
 import CabinModeToggle from '../components/CabinModeToggle';
 import IntelligentSearch from '../components/vault/IntelligentSearch';
+import ExpiryAlerts from '../components/vault/ExpiryAlerts';
+import PermissionGuard from '@/components/PermissionGuard';
 
 export default function Vault() {
     const [cabinMode, setCabinMode] = useState(false);
@@ -22,6 +24,7 @@ export default function Vault() {
         : documents;
 
     return (
+        <PermissionGuard section="documents" action="view">
         <div className="min-h-screen bg-gradient-to-br from-[#F8F7F4] via-white to-[#F8F7F4]">
             <div className="max-w-7xl mx-auto px-6 py-12">
                 {/* Header */}
@@ -55,6 +58,11 @@ export default function Vault() {
                         </div>
                         <CabinModeToggle enabled={cabinMode} onChange={setCabinMode} />
                     </div>
+                </div>
+
+                {/* Expiry Alerts */}
+                <div className="mb-6">
+                    <ExpiryAlerts />
                 </div>
 
                 {/* Intelligent Search */}
