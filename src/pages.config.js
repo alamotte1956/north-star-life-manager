@@ -20,6 +20,7 @@ import Integrations from './pages/Integrations';
 import Budget from './pages/Budget';
 import Pricing from './pages/Pricing';
 import BillPayments from './pages/BillPayments';
+import Investments from './pages/Investments';
 import __Layout from './Layout.jsx';
 
 
@@ -46,6 +47,7 @@ export const PAGES = {
     "Budget": Budget,
     "Pricing": Pricing,
     "BillPayments": BillPayments,
+    "Investments": Investments,
 }
 
 export const pagesConfig = {
