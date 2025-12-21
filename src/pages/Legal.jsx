@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { Scale, Plus, FileText, Shield, Users } from 'lucide-react';
+import PrintButton from '../components/PrintButton';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -140,8 +141,12 @@ export default function Legal() {
                     </div>
                 </div>
 
+                <div className="mb-4 flex justify-end print:hidden">
+                    <PrintButton />
+                </div>
+
                 <Tabs defaultValue="directives" className="space-y-6">
-                    <TabsList className="bg-white border border-[#1B4B7F]/10">
+                    <TabsList className="bg-white border border-[#1B4B7F]/10 print:hidden">
                         <TabsTrigger value="directives">Advance Directives</TabsTrigger>
                         <TabsTrigger value="beneficiaries">Beneficiaries</TabsTrigger>
                     </TabsList>
@@ -150,7 +155,7 @@ export default function Legal() {
                     <TabsContent value="directives">
                         <div className="flex justify-between items-center mb-6">
                             <p className="text-[#1B4B7F]/60 font-light">Critical legal documents for healthcare and financial decisions</p>
-                            <Dialog open={directiveOpen} onOpenChange={setDirectiveOpen}>
+                            <Dialog open={directiveOpen} onOpenChange={setDirectiveOpen} className="print:hidden">
                                 <DialogTrigger asChild>
                                     <Button className="bg-gradient-to-r from-[#1B4B7F] to-[#0F2847] hover:shadow-lg text-white">
                                         <Plus className="w-4 h-4 mr-2" />
@@ -332,7 +337,7 @@ export default function Legal() {
                     <TabsContent value="beneficiaries">
                         <div className="flex justify-between items-center mb-6">
                             <p className="text-[#1B4B7F]/60 font-light">Track beneficiary designations across accounts</p>
-                            <Dialog open={beneficiaryOpen} onOpenChange={setBeneficiaryOpen}>
+                            <Dialog open={beneficiaryOpen} onOpenChange={setBeneficiaryOpen} className="print:hidden">
                                 <DialogTrigger asChild>
                                     <Button className="bg-gradient-to-r from-[#1B4B7F] to-[#0F2847] hover:shadow-lg text-white">
                                         <Plus className="w-4 h-4 mr-2" />

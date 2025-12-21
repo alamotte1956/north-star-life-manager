@@ -91,9 +91,11 @@ export default function Valuables() {
                             <h1 className="text-4xl font-light text-[#1A2B44]">Valuables</h1>
                             <p className="text-[#1A2B44]/60 font-light">Your collection inventory</p>
                         </div>
-                    </div>
+                        </div>
 
-                    <Dialog open={open} onOpenChange={setOpen}>
+                        <div className="flex gap-2 print:hidden">
+                        <PrintButton />
+                        <Dialog open={open} onOpenChange={setOpen}>
                         <DialogTrigger asChild>
                             <Button className="bg-gradient-to-r from-[#1A2B44] to-[#0F1B2E] hover:shadow-lg text-white">
                                 <Plus className="w-4 h-4 mr-2" />
@@ -229,8 +231,9 @@ export default function Valuables() {
                                 </Button>
                             </form>
                         </DialogContent>
-                    </Dialog>
-                </div>
+                        </Dialog>
+                        </div>
+                        </div>
 
                 {/* Summary Cards */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">

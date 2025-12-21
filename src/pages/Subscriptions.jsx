@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { DollarSign, Plus, Calendar, TrendingUp } from 'lucide-react';
+import PrintButton from '../components/PrintButton';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -106,9 +107,11 @@ export default function Subscriptions() {
                             <h1 className="text-4xl font-light text-[#1A2B44]">Subscriptions</h1>
                             <p className="text-[#1A2B44]/60 font-light">Track recurring expenses</p>
                         </div>
-                    </div>
+                        </div>
 
-                    <Dialog open={open} onOpenChange={setOpen}>
+                        <div className="flex gap-2 print:hidden">
+                        <PrintButton />
+                        <Dialog open={open} onOpenChange={setOpen}>
                         <DialogTrigger asChild>
                             <Button className="bg-gradient-to-r from-[#1A2B44] to-[#0F1B2E] hover:shadow-lg text-white">
                                 <Plus className="w-4 h-4 mr-2" />
@@ -220,8 +223,9 @@ export default function Subscriptions() {
                                 </Button>
                             </form>
                         </DialogContent>
-                    </Dialog>
-                </div>
+                        </Dialog>
+                        </div>
+                        </div>
 
                 {/* Summary Cards */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">

@@ -12,6 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Textarea } from '@/components/ui/textarea';
 import { format, isBefore, addDays } from 'date-fns';
 import CabinModeToggle from '../components/CabinModeToggle';
+import PrintButton from '../components/PrintButton';
 
 const categoryLabels = {
     hvac: 'HVAC',
@@ -108,8 +109,9 @@ export default function Maintenance() {
                         </div>
                     </div>
 
-                    <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-4 print:hidden">
                         <CabinModeToggle enabled={cabinMode} onChange={setCabinMode} />
+                        <PrintButton />
                         <Dialog open={open} onOpenChange={setOpen}>
                             <DialogTrigger asChild>
                                 <Button className="bg-gradient-to-r from-[#1A2B44] to-[#0F1B2E] hover:shadow-lg text-white">

@@ -49,6 +49,25 @@ export default function Layout({ children, currentPageName }) {
                 h1, h2, h3, h4, h5, h6 {
                     font-family: 'Playfair Display', Georgia, serif;
                 }
+
+                @media print {
+                    body {
+                        background: white !important;
+                    }
+                    aside, nav, button.print\\:hidden, .print\\:hidden {
+                        display: none !important;
+                    }
+                    main {
+                        margin: 0 !important;
+                    }
+                    .shadow-lg, .shadow-xl {
+                        box-shadow: none !important;
+                    }
+                    * {
+                        -webkit-print-color-adjust: exact !important;
+                        print-color-adjust: exact !important;
+                    }
+                }
             `}</style>
 
             {/* Sidebar - Desktop */}

@@ -230,6 +230,7 @@ export default function Health() {
                             </form>
                         </DialogContent>
                     </Dialog>
+                    </div>
                 </div>
 
                 <div className="mb-6">
