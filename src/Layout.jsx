@@ -1,18 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from './utils';
 import {
     LayoutDashboard, FileText, Shield, Home, Wrench, Users, Car,
-    DollarSign, Gem, Plane, Heart, Calendar, LogOut, Menu, X
+    DollarSign, Gem, Plane, Heart, Calendar, LogOut, Menu, X, Search
 } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
+import GlobalSearch from '@/components/GlobalSearch';
 
 export default function Layout({ children, currentPageName }) {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const [searchOpen, setSearchOpen] = useState(false);
 
     const handleLogout = () => {
         base44.auth.logout();
     };
+
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+                e.preventDefault();
+                setSearchOpen(true);
+            }
+        };
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, []);
 
     const navItems = [
         { name: 'Dashboard', icon: LayoutDashboard, path: 'Dashboard' },
@@ -88,7 +101,7 @@ export default function Layout({ children, currentPageName }) {
             {/* Sidebar - Desktop */}
             <aside className="hidden lg:flex flex-col w-64 bg-gradient-to-b from-[#0F2847] to-[#1B4B7F] border-r border-[#8B2635]/20">
                 <div className="p-6 border-b border-[#8B2635]/20">
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-3 mb-4">
                         <div className="relative">
                             <div className="absolute inset-0 bg-[#8B2635]/30 rounded-lg blur-md" />
                             <div className="relative w-10 h-10 bg-gradient-to-br from-[#8B2635] to-[#A63446] rounded-lg flex items-center justify-center">
@@ -100,6 +113,14 @@ export default function Layout({ children, currentPageName }) {
                             <p className="text-[#E8DCC4] text-xs font-light">Life Manager</p>
                         </div>
                     </div>
+                    <button
+                        onClick={() => setSearchOpen(true)}
+                        className="w-full flex items-center gap-2 px-3 py-2 bg-white/10 hover:bg-white/15 rounded-lg transition-colors text-white/60 text-sm"
+                    >
+                        <Search className="w-4 h-4" />
+                        <span>Search...</span>
+                        <kbd className="ml-auto text-xs bg-white/10 px-1.5 py-0.5 rounded">⌘K</kbd>
+                    </button>
                 </div>
 
                 <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
@@ -145,13 +166,22 @@ export default function Layout({ children, currentPageName }) {
                             <h1 className="text-sm font-light text-white">North Star</h1>
                         </div>
                     </div>
-                    <button
-                        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                        className="p-3 text-white hover:bg-white/5 rounded-lg touch-manipulation active:scale-95 transition-transform"
-                        aria-label="Toggle menu"
-                    >
-                        {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-                    </button>
+                    <div className="flex items-center gap-2">
+                        <button
+                            onClick={() => setSearchOpen(true)}
+                            className="p-3 text-white hover:bg-white/5 rounded-lg touch-manipulation active:scale-95 transition-transform"
+                            aria-label="Search"
+                        >
+                            <Search className="w-5 h-5" />
+                        </button>
+                        <button
+                            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                            className="p-3 text-white hover:bg-white/5 rounded-lg touch-manipulation active:scale-95 transition-transform"
+                            aria-label="Toggle menu"
+                        >
+                            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+                        </button>
+                    </div>
                 </div>
 
                 {/* Mobile Menu */}
@@ -191,6 +221,9 @@ export default function Layout({ children, currentPageName }) {
             <main className="flex-1 lg:ml-0 mt-16 lg:mt-0 pb-safe">
                 {children}
             </main>
+
+            {/* Global Search */}
+            <GlobalSearch open={searchOpen} onOpenChange={setSearchOpen} />
         </div>
     );
 }
