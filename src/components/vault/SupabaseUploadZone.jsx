@@ -60,11 +60,11 @@ export default function SupabaseUploadZone({ onUploadComplete, linkedEntity }) {
     };
 
     return (
-        <Card className="border-2 border-dashed border-[#C5A059]/30 bg-gradient-to-br from-[#F8F7F4] to-white">
+        <Card className="border-2 border-dashed border-[#0F172A]/20 bg-white shadow-sm hover:border-[#C5A059]/50 transition-all">
             <CardContent className="pt-6">
                 <div className="space-y-4">
                     <div className="flex items-center justify-center w-full">
-                        <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-[#C5A059]/20 border-dashed rounded-lg cursor-pointer bg-[#F8F7F4] hover:bg-[#C5A059]/5 transition-colors">
+                        <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-[#0F172A]/10 border-dashed rounded-lg cursor-pointer bg-[#F8F9FA] hover:bg-[#C5A059]/5 transition-colors">
                             <div className="flex flex-col items-center justify-center pt-5 pb-6">
                                 {file ? (
                                     <>
@@ -74,11 +74,11 @@ export default function SupabaseUploadZone({ onUploadComplete, linkedEntity }) {
                                     </>
                                 ) : (
                                     <>
-                                        <Upload className="w-10 h-10 mb-3 text-gray-400" />
-                                        <p className="mb-2 text-sm text-gray-500">
-                                            <span className="font-semibold">Click to upload</span> or drag and drop
+                                        <Upload className="w-10 h-10 mb-3 text-[#C5A059]" />
+                                        <p className="mb-2 text-sm text-[#64748B]">
+                                            <span className="font-medium text-[#0F172A]">Click to upload</span> or drag and drop
                                         </p>
-                                        <p className="text-xs text-gray-500">PDF, PNG, JPG (MAX. 10MB)</p>
+                                        <p className="text-xs text-[#64748B]">PDF, PNG, JPG (MAX. 10MB)</p>
                                     </>
                                 )}
                             </div>
@@ -150,11 +150,11 @@ export default function SupabaseUploadZone({ onUploadComplete, linkedEntity }) {
                                 <p className="text-xs text-gray-500 mt-1">Get notified before expiration</p>
                             </div>
 
-                            <div className="p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                            <div className="p-4 bg-gradient-to-br from-[#C5A059]/10 to-[#C5A059]/5 border border-[#C5A059]/30 rounded-lg">
                                 <div className="flex items-start gap-2">
-                                    <FileText className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
-                                    <div className="text-sm text-blue-900">
-                                        <strong>Secure Storage:</strong> This document will be encrypted and stored in Supabase with Row Level Security. Only you can access it.
+                                    <FileText className="w-5 h-5 text-[#C5A059] flex-shrink-0 mt-0.5" />
+                                    <div className="text-sm text-[#0F172A] font-light">
+                                        <strong className="font-medium">Secure Storage:</strong> This document will be encrypted and stored in Supabase with Row Level Security. Only your family can access it.
                                     </div>
                                 </div>
                             </div>
@@ -162,7 +162,7 @@ export default function SupabaseUploadZone({ onUploadComplete, linkedEntity }) {
                             <Button
                                 onClick={handleUpload}
                                 disabled={uploading || !metadata.title}
-                                className="w-full bg-gradient-to-r from-[#C5A059] to-[#D4AF37] h-12"
+                                className="w-full bg-gradient-to-r from-[#C5A059] to-[#D4AF37] text-[#0F172A] rounded-lg font-medium hover:shadow-lg hover:shadow-[#C5A059]/30 transition-all min-h-[50px]"
                             >
                                 {uploading ? (
                                     <>
