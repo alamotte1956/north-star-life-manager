@@ -2,7 +2,7 @@ import React from 'react';
 import { Shield } from 'lucide-react';
 import FamilyMemberManager from '../components/family/FamilyMemberManager';
 import { Link } from 'react-router-dom';
-import { createPageUrl } from './utils';
+import { createPageUrl } from '../utils';
 import { Button } from '@/components/ui/button';
 import { Settings } from 'lucide-react';
 
