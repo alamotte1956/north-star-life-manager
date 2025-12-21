@@ -15,6 +15,8 @@ import RentCollectionManager from '@/components/property/RentCollectionManager';
 import PropertyValuation from '@/components/property/PropertyValuation';
 import RentPricingSuggestions from '@/components/property/RentPricingSuggestions';
 import TenantCommunicationHub from '@/components/property/TenantCommunicationHub';
+import LeaseManagement from '@/components/property/LeaseManagement';
+import LeaseAlerts from '@/components/property/LeaseAlerts';
 
 export default function PropertyManagement() {
     const [selectedProperty, setSelectedProperty] = useState(null);
@@ -144,6 +146,11 @@ export default function PropertyManagement() {
                     </Card>
                 </div>
 
+                {/* Lease Alerts */}
+                <div className="mb-8">
+                    <LeaseAlerts properties={properties} />
+                </div>
+
                 {/* AI Insights Section */}
                 {insights && (
                     <div className="mb-8">
@@ -167,6 +174,7 @@ export default function PropertyManagement() {
                         <TabsTrigger value="rent">Rent Collection</TabsTrigger>
                         <TabsTrigger value="maintenance">Maintenance</TabsTrigger>
                         <TabsTrigger value="documents">Documents</TabsTrigger>
+                        <TabsTrigger value="leases">Lease Management</TabsTrigger>
                         <TabsTrigger value="communications">Tenant Communications</TabsTrigger>
                     </TabsList>
 
@@ -344,6 +352,24 @@ export default function PropertyManagement() {
                                                 )}
                                             </div>
                                         </div>
+                                    </CardContent>
+                                </Card>
+                            ))}
+                        </div>
+                    </TabsContent>
+
+                    <TabsContent value="leases">
+                        <div className="space-y-6">
+                            {properties.map(property => (
+                                <Card key={property.id}>
+                                    <CardHeader>
+                                        <CardTitle className="text-xl font-light">{property.name}</CardTitle>
+                                        {property.address && (
+                                            <p className="text-sm text-gray-600">{property.address}</p>
+                                        )}
+                                    </CardHeader>
+                                    <CardContent>
+                                        <LeaseManagement property={property} onUpdate={refetch} />
                                     </CardContent>
                                 </Card>
                             ))}
