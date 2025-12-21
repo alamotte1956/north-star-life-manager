@@ -1,18 +1,27 @@
 import React, { useState, useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
-import { FileText, Download, DollarSign, TrendingUp } from 'lucide-react';
+import { FileText, Download, DollarSign, TrendingUp, Building2, AlertTriangle, Sparkles } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { format, startOfYear, endOfYear, startOfMonth, endOfMonth, isWithinInterval, parseISO } from 'date-fns';
+import PropertyAnalyticsReport from '../components/reports/PropertyAnalyticsReport';
+import AnomalyReport from '../components/reports/AnomalyReport';
+import { toast } from 'sonner';
 
 export default function Reports() {
     const [period, setPeriod] = useState('year');
     const [year, setYear] = useState(new Date().getFullYear());
     const [month, setMonth] = useState(new Date().getMonth() + 1);
     const [exporting, setExporting] = useState(false);
+    const [activeTab, setActiveTab] = useState('financial');
+    const [propertyAnalytics, setPropertyAnalytics] = useState(null);
+    const [loadingPropertyAnalytics, setLoadingPropertyAnalytics] = useState(false);
+    const [anomalyData, setAnomalyData] = useState(null);
+    const [loadingAnomalies, setLoadingAnomalies] = useState(false);
 
     const { data: vehicles = [] } = useQuery({
         queryKey: ['vehicles-reports'],
@@ -165,6 +174,38 @@ export default function Reports() {
         }
     };
 
+    const generatePropertyAnalytics = async () => {
+        setLoadingPropertyAnalytics(true);
+        try {
+            const result = await base44.functions.invoke('generatePropertyAnalytics', {
+                timeframe: 'yearly'
+            });
+            setPropertyAnalytics(result.data);
+            toast.success('Property analytics generated!');
+        } catch (error) {
+            toast.error('Failed to generate analytics');
+            console.error(error);
+        } finally {
+            setLoadingPropertyAnalytics(false);
+        }
+    };
+
+    const detectAnomalies = async () => {
+        setLoadingAnomalies(true);
+        try {
+            const result = await base44.functions.invoke('detectTransactionAnomalies', {
+                timeframe_days: 90
+            });
+            setAnomalyData(result.data);
+            toast.success('Anomaly detection complete!');
+        } catch (error) {
+            toast.error('Failed to detect anomalies');
+            console.error(error);
+        } finally {
+            setLoadingAnomalies(false);
+        }
+    };
+
     const years = Array.from({ length: 10 }, (_, i) => new Date().getFullYear() - i);
     const months = [
         { value: 1, label: 'January' },
@@ -193,20 +234,30 @@ export default function Reports() {
                             </div>
                         </div>
                         <div>
-                            <h1 className="text-4xl font-light text-[#1A2B44]">Financial Reports</h1>
-                            <p className="text-[#1A2B44]/60 font-light">Expense summaries for tax & budgeting</p>
+                            <h1 className="text-4xl font-light text-[#1A2B44]">Reports & Analytics</h1>
+                            <p className="text-[#1A2B44]/60 font-light">AI-powered insights & financial reports</p>
                         </div>
                     </div>
-
-                    <Button
-                        onClick={handleExport}
-                        disabled={exporting}
-                        className="bg-gradient-to-r from-[#1A2B44] to-[#0F1B2E] hover:shadow-lg text-white"
-                    >
-                        <Download className="w-4 h-4 mr-2" />
-                        {exporting ? 'Generating...' : 'Export PDF'}
-                    </Button>
                 </div>
+
+                <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-6">
+                    <TabsList className="bg-white border border-[#1A2B44]/10">
+                        <TabsTrigger value="financial">Financial Summary</TabsTrigger>
+                        <TabsTrigger value="property">Property Analytics</TabsTrigger>
+                        <TabsTrigger value="anomalies">Anomaly Detection</TabsTrigger>
+                    </TabsList>
+
+                    <TabsContent value="financial" className="mt-6">
+                        <div className="flex justify-end mb-6">
+                            <Button
+                                onClick={handleExport}
+                                disabled={exporting}
+                                className="bg-gradient-to-r from-[#1A2B44] to-[#0F1B2E] hover:shadow-lg text-white"
+                            >
+                                <Download className="w-4 h-4 mr-2" />
+                                {exporting ? 'Generating...' : 'Export PDF'}
+                            </Button>
+                        </div>
 
                 {/* Filters */}
                 <Card className="mb-6">
@@ -416,6 +467,88 @@ export default function Reports() {
                         </CardContent>
                     </Card>
                 </div>
+                    </TabsContent>
+
+                    <TabsContent value="property" className="mt-6">
+                        {!propertyAnalytics ? (
+                            <Card>
+                                <CardContent className="py-12 text-center">
+                                    <Building2 className="w-16 h-16 text-[#D4AF37] mx-auto mb-4" />
+                                    <h3 className="text-lg font-medium text-[#1A2B44] mb-2">
+                                        Property Portfolio Analytics
+                                    </h3>
+                                    <p className="text-sm text-gray-600 mb-6 max-w-md mx-auto">
+                                        Get AI-powered insights on portfolio performance, ROI, vacancy rates, 
+                                        tenant behavior predictions, and personalized recommendations.
+                                    </p>
+                                    <Button
+                                        onClick={generatePropertyAnalytics}
+                                        disabled={loadingPropertyAnalytics}
+                                        className="bg-gradient-to-r from-[#D4AF37] to-[#F4D03F] text-black"
+                                    >
+                                        <Sparkles className={`w-4 h-4 mr-2 ${loadingPropertyAnalytics ? 'animate-spin' : ''}`} />
+                                        {loadingPropertyAnalytics ? 'Analyzing...' : 'Generate Analytics'}
+                                    </Button>
+                                </CardContent>
+                            </Card>
+                        ) : (
+                            <div>
+                                <div className="flex justify-end mb-4">
+                                    <Button
+                                        onClick={generatePropertyAnalytics}
+                                        disabled={loadingPropertyAnalytics}
+                                        variant="outline"
+                                        size="sm"
+                                    >
+                                        <Sparkles className="w-4 h-4 mr-2" />
+                                        Refresh
+                                    </Button>
+                                </div>
+                                <PropertyAnalyticsReport analytics={propertyAnalytics} />
+                            </div>
+                        )}
+                    </TabsContent>
+
+                    <TabsContent value="anomalies" className="mt-6">
+                        {!anomalyData ? (
+                            <Card>
+                                <CardContent className="py-12 text-center">
+                                    <AlertTriangle className="w-16 h-16 text-orange-500 mx-auto mb-4" />
+                                    <h3 className="text-lg font-medium text-[#1A2B44] mb-2">
+                                        Transaction Anomaly Detection
+                                    </h3>
+                                    <p className="text-sm text-gray-600 mb-6 max-w-md mx-auto">
+                                        AI-powered fraud detection and error identification. Analyzes unusual amounts, 
+                                        duplicates, suspicious patterns, and potential data entry errors.
+                                    </p>
+                                    <Button
+                                        onClick={detectAnomalies}
+                                        disabled={loadingAnomalies}
+                                        className="bg-gradient-to-r from-[#D4AF37] to-[#F4D03F] text-black"
+                                    >
+                                        <AlertTriangle className={`w-4 h-4 mr-2 ${loadingAnomalies ? 'animate-spin' : ''}`} />
+                                        {loadingAnomalies ? 'Scanning...' : 'Scan Transactions'}
+                                    </Button>
+                                </CardContent>
+                            </Card>
+                        ) : (
+                            <div>
+                                <div className="flex justify-end mb-4">
+                                    <Button
+                                        onClick={detectAnomalies}
+                                        disabled={loadingAnomalies}
+                                        variant="outline"
+                                        size="sm"
+                                    >
+                                        <AlertTriangle className="w-4 h-4 mr-2" />
+                                        Refresh
+                                    </Button>
+                                </div>
+                                <AnomalyReport anomalyData={anomalyData} />
+                            </div>
+                        )}
+                    </TabsContent>
+                </Tabs>
             </div>
         </div>
     );
