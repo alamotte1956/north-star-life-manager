@@ -6,13 +6,15 @@ import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { 
     Home, FileText, Wrench, DollarSign, MessageSquare, 
-    Calendar, AlertCircle, CheckCircle 
+    Calendar, AlertCircle, CheckCircle, Bell, Settings 
 } from 'lucide-react';
 import { format } from 'date-fns';
 import TenantLeaseView from '@/components/tenant/TenantLeaseView';
 import TenantMaintenanceRequest from '@/components/tenant/TenantMaintenanceRequest';
 import TenantRentPayment from '@/components/tenant/TenantRentPayment';
 import TenantChatbot from '@/components/tenant/TenantChatbot';
+import TenantNotifications from '@/components/tenant/TenantNotifications';
+import TenantSettings from '@/components/tenant/TenantSettings';
 
 export default function TenantPortal() {
     const [user, setUser] = useState(null);
@@ -50,6 +52,13 @@ export default function TenantPortal() {
         enabled: !!tenantProperty
     });
 
+    const { data: notifications = [] } = useQuery({
+        queryKey: ['tenantNotifications', user?.email],
+        queryFn: () => base44.entities.TenantNotification.filter({ tenant_email: user.email }),
+        enabled: !!user,
+        refetchInterval: 30000
+    });
+
     useEffect(() => {
         if (properties.length > 0) {
             setTenantProperty(properties[0]);
@@ -63,6 +72,8 @@ export default function TenantPortal() {
     const upcomingPayment = rentPayments
         .filter(p => p.status === 'pending')
         .sort((a, b) => new Date(a.due_date) - new Date(b.due_date))[0];
+
+    const unreadNotifications = notifications.filter(n => !n.read).length;
 
     if (!user) {
         return (
@@ -166,7 +177,7 @@ export default function TenantPortal() {
 
                 {/* Main Tabs */}
                 <Tabs defaultValue="lease" className="space-y-4">
-                    <TabsList className="grid grid-cols-4 w-full h-auto p-1">
+                    <TabsList className="grid grid-cols-3 w-full h-auto p-1">
                         <TabsTrigger value="lease" className="flex-col gap-1 h-16">
                             <FileText className="w-5 h-5" />
                             <span className="text-xs">Lease</span>
@@ -179,11 +190,33 @@ export default function TenantPortal() {
                             <DollarSign className="w-5 h-5" />
                             <span className="text-xs">Pay Rent</span>
                         </TabsTrigger>
-                        <TabsTrigger value="chat" className="flex-col gap-1 h-16">
-                            <MessageSquare className="w-5 h-5" />
-                            <span className="text-xs">Chat</span>
-                        </TabsTrigger>
                     </TabsList>
+
+                    <div className="grid grid-cols-3 gap-2">
+                        <TabsTrigger value="notifications" className="flex-col gap-1 h-16 relative" asChild>
+                            <Button variant="outline" className="w-full">
+                                <Bell className="w-5 h-5" />
+                                <span className="text-xs">Alerts</span>
+                                {unreadNotifications > 0 && (
+                                    <span className="absolute top-1 right-1 bg-red-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                                        {unreadNotifications}
+                                    </span>
+                                )}
+                            </Button>
+                        </TabsTrigger>
+                        <TabsTrigger value="chat" className="flex-col gap-1 h-16" asChild>
+                            <Button variant="outline" className="w-full">
+                                <MessageSquare className="w-5 h-5" />
+                                <span className="text-xs">Chat</span>
+                            </Button>
+                        </TabsTrigger>
+                        <TabsTrigger value="settings" className="flex-col gap-1 h-16" asChild>
+                            <Button variant="outline" className="w-full">
+                                <Settings className="w-5 h-5" />
+                                <span className="text-xs">Settings</span>
+                            </Button>
+                        </TabsTrigger>
+                    </div>
 
                     <TabsContent value="lease">
                         <TenantLeaseView property={tenantProperty} />
@@ -203,8 +236,16 @@ export default function TenantPortal() {
                         />
                     </TabsContent>
 
+                    <TabsContent value="notifications">
+                        <TenantNotifications tenantEmail={user.email} />
+                    </TabsContent>
+
                     <TabsContent value="chat">
                         <TenantChatbot property={tenantProperty} />
+                    </TabsContent>
+
+                    <TabsContent value="settings">
+                        <TenantSettings tenantEmail={user.email} />
                     </TabsContent>
                 </Tabs>
             </div>
