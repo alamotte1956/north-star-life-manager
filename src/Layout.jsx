@@ -31,6 +31,7 @@ export default function Layout({ children, currentPageName }) {
         { name: 'Dashboard', icon: LayoutDashboard, path: 'Dashboard' },
         { name: 'Collaboration', icon: Users, path: 'Collaboration' },
         { name: 'Vault', icon: FileText, path: 'Vault' },
+        { name: 'Reports', icon: FileText, path: 'Reports' },
         { name: 'Properties', icon: Home, path: 'Properties' },
         { name: 'Maintenance', icon: Wrench, path: 'Maintenance' },
         { name: 'Contacts', icon: Users, path: 'Contacts' },
