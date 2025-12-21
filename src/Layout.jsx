@@ -68,6 +68,7 @@ export default function Layout({ children, currentPageName }) {
                     -webkit-tap-highlight-color: transparent;
                     overscroll-behavior-y: contain;
                     -webkit-overflow-scrolling: touch;
+                    color: white;
                 }
 
                 .touch-manipulation {
@@ -95,6 +96,14 @@ export default function Layout({ children, currentPageName }) {
                 
                 h1, h2, h3, h4, h5, h6 {
                     font-family: 'Playfair Display', Georgia, serif;
+                }
+
+                h1, h2, h3 {
+                    color: black;
+                }
+
+                p, span, div, a, button, label, input, textarea, select {
+                    color: white;
                 }
 
                 @media print {
