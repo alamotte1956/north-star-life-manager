@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
-import { Plane, Plus, Calendar, MapPin, Sparkles } from 'lucide-react';
+import { Plane, Plus, Calendar, MapPin } from 'lucide-react';
 import PrintButton from '@/components/PrintButton';
-import TravelPlanner from '@/components/travel/TravelPlanner';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -16,7 +15,6 @@ import { format, isPast, isFuture } from 'date-fns';
 
 export default function Travel() {
     const [open, setOpen] = useState(false);
-    const [plannerOpen, setPlannerOpen] = useState(false);
     const [formData, setFormData] = useState({
         trip_name: '',
         destination: '',
@@ -90,14 +88,6 @@ export default function Travel() {
 
                     <div className="flex gap-2 print:hidden w-full sm:w-auto">
                         <PrintButton className="flex-1 sm:flex-none" />
-                        <Button
-                            onClick={() => setPlannerOpen(true)}
-                            variant="outline"
-                            className="flex-1 sm:flex-none border-[#D4AF37]/20"
-                        >
-                            <Sparkles className="w-4 h-4 mr-2" />
-                            AI Planner
-                        </Button>
                         <Dialog open={open} onOpenChange={setOpen}>
                         <DialogTrigger asChild>
                             <Button className="bg-gradient-to-r from-[#1A2B44] to-[#0F1B2E] hover:shadow-lg text-white flex-1 sm:flex-none h-11 sm:h-10 touch-manipulation active:scale-98 transition-transform">
@@ -311,19 +301,6 @@ export default function Travel() {
                         <p className="text-[#1A2B44]/40 font-light">No trips planned yet</p>
                     </div>
                 )}
-
-                {/* AI Travel Planner Dialog */}
-                <Dialog open={plannerOpen} onOpenChange={setPlannerOpen}>
-                    <DialogContent className="max-w-6xl max-h-[90vh] overflow-y-auto">
-                        <DialogHeader>
-                            <DialogTitle className="flex items-center gap-2">
-                                <Sparkles className="w-5 h-5 text-[#D4AF37]" />
-                                AI Travel Planner
-                            </DialogTitle>
-                        </DialogHeader>
-                        <TravelPlanner />
-                    </DialogContent>
-                </Dialog>
             </div>
         </div>
     );
