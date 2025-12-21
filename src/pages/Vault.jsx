@@ -32,10 +32,10 @@ export default function Vault() {
                             </div>
                         </div>
                         <div>
-                            <h1 className="text-4xl font-light text-[#D4AF37] mb-1">
+                            <h1 className="text-4xl font-light text-[#D4AF37] mb-1" style={{textShadow: '-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000, 0 0 3px rgba(0,0,0,0.5)'}}>
                                 Secure Vault
                             </h1>
-                            <p className="text-[#D4AF37]/70 font-light flex items-center gap-2">
+                            <p className="text-[#D4AF37]/70 font-light flex items-center gap-2" style={{textShadow: '-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000'}}>
                                 <Sparkles className="w-4 h-4 text-[#F4D03F]" />
                                 AI OCR & Auto-categorization
                             </p>
