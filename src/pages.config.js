@@ -15,6 +15,7 @@ import MedicalProfile from './pages/MedicalProfile';
 import Collaboration from './pages/Collaboration';
 import Reports from './pages/Reports';
 import NotificationSettings from './pages/NotificationSettings';
+import Automations from './pages/Automations';
 import __Layout from './Layout.jsx';
 
 
@@ -36,6 +37,7 @@ export const PAGES = {
     "Collaboration": Collaboration,
     "Reports": Reports,
     "NotificationSettings": NotificationSettings,
+    "Automations": Automations,
 }
 
 export const pagesConfig = {
