@@ -9,7 +9,7 @@ Deno.serve(async (req) => {
             return Response.json({ error: 'Unauthorized' }, { status: 401 });
         }
 
-        const { advice_type } = await req.json();
+        const { advice_type, include_accounting_data = true } = await req.json();
 
         // Fetch comprehensive financial data
         const [
@@ -27,6 +27,34 @@ Deno.serve(async (req) => {
             base44.entities.BillPayment.list(),
             base44.entities.Subscription.list()
         ]);
+
+        // Fetch external accounting data if requested
+        let accountingData = null;
+        if (include_accounting_data) {
+            try {
+                // Try QuickBooks integration
+                const qbResult = await base44.functions.invoke('syncQuickBooks', {});
+                if (qbResult.data?.success) {
+                    accountingData = {
+                        source: 'QuickBooks',
+                        ...qbResult.data
+                    };
+                }
+            } catch (qbError) {
+                // QuickBooks not available, try Xero
+                try {
+                    const xeroResult = await base44.functions.invoke('syncXero', {});
+                    if (xeroResult.data?.success) {
+                        accountingData = {
+                            source: 'Xero',
+                            ...xeroResult.data
+                        };
+                    }
+                } catch (xeroError) {
+                    console.log('No accounting software integrated');
+                }
+            }
+        }
 
         // Calculate financial metrics
         const now = new Date();
@@ -103,8 +131,15 @@ Deno.serve(async (req) => {
         const savingsRate = monthlyIncome > 0 ? ((monthlyIncome - monthlyExpenses) / monthlyIncome) * 100 : 0;
         const debtToIncomeRatio = monthlyIncome > 0 ? (monthlyBills / monthlyIncome) * 100 : 0;
 
+        // Risk profile assessment
+        const riskProfile = {
+            age: user.age || 40,
+            investment_horizon: financialGoals.find(g => g.goal_type === 'retirement') ? 'long-term' : 'medium-term',
+            volatility_tolerance: investmentReturn > 10 ? 'high' : investmentReturn > 0 ? 'medium' : 'conservative'
+        };
+
         // Generate AI financial advice
-        const advicePrompt = `You are a professional financial advisor. Provide comprehensive, personalized financial advice.
+        const advicePrompt = `You are a professional financial advisor and investment strategist. Provide comprehensive, personalized financial advice with actionable recommendations.
 
 CLIENT FINANCIAL PROFILE:
 Monthly Income: $${monthlyIncome.toFixed(2)}
@@ -120,17 +155,27 @@ Investment Portfolio:
 - Total Value: $${totalInvestmentValue.toFixed(2)}
 - Total Return: ${investmentReturn.toFixed(1)}%
 - Number of Holdings: ${investments.length}
+- Asset Types: ${investments.map(i => i.asset_type).join(', ')}
+
+RISK PROFILE:
+- Investment Horizon: ${riskProfile.investment_horizon}
+- Risk Tolerance: ${riskProfile.volatility_tolerance}
+
+${accountingData ? `
+EXTERNAL ACCOUNTING DATA (${accountingData.source}):
+${JSON.stringify(accountingData, null, 2)}
+` : ''}
 
 Budget Status:
 ${budgetStatus.map(b => `- ${b.category}: $${b.spent.toFixed(2)} / $${b.budget} (${b.percentage.toFixed(0)}%)`).join('\n')}
 
 Active Financial Goals (${goalsAnalysis.length}):
-${goalsAnalysis.map(g => `- ${g.title}: ${g.progress}% complete, needs $${g.required_monthly}/month (currently $${g.current_contribution}/month)`).join('\n')}
+${goalsAnalysis.map(g => `- ${g.title} (${g.on_track ? 'ON TRACK' : 'BEHIND'}): ${g.progress}% complete, needs $${g.required_monthly}/month (currently $${g.current_contribution}/month)`).join('\n')}
 
 Category Spending:
 ${Object.entries(categorySpending).map(([cat, amt]) => `- ${cat}: $${amt.toFixed(2)}`).join('\n')}
 
-ADVICE REQUEST: ${advice_type || 'comprehensive financial review'}
+ADVICE REQUEST: ${advice_type || 'comprehensive financial review with investment recommendations'}
 
 Provide advice in JSON format:
 1. financial_health_score - Overall score 1-10
@@ -142,13 +187,17 @@ Provide advice in JSON format:
    - optimization_opportunities: Array of ways to optimize spending
 4. investment_advice - Object with:
    - portfolio_assessment: Brief assessment
-   - strategy_recommendations: Array of 3-4 specific investment actions
+   - strategy_recommendations: Array of 4-5 specific investment actions based on risk profile
    - risk_analysis: Risk level and recommendations
    - diversification_score: Score 1-10
+   - recommended_allocations: Object with suggested % allocations (stocks, bonds, real_estate, crypto, cash)
+   - specific_recommendations: Array of 3-4 specific ETFs/funds to consider with ticker symbols
+   - rebalancing_advice: When and how to rebalance
 5. debt_management - Object with:
    - current_status: Assessment of debt situation
    - recommendations: Array of 2-3 debt management strategies
    - priority_payments: Array of bills to prioritize
+   - consolidation_opportunities: Debt consolidation suggestions if applicable
 6. goals_coaching - Object with:
    - overall_progress: Assessment of goal progress
    - recommendations: Array of 3-4 specific actions per goal
@@ -157,13 +206,24 @@ Provide advice in JSON format:
    - recommended_savings_rate: Percentage (15-20% is healthy)
    - emergency_fund_status: Assessment and recommendation
    - automated_savings_plan: Specific plan
+   - high_yield_opportunities: Where to park savings for best returns
 8. action_plan - Object with:
    - immediate_actions: Array of 3 actions to take this week
    - short_term_actions: Array of 3 actions for this month
    - long_term_actions: Array of 2-3 actions for this quarter
 9. estimated_impact - Expected financial improvement in dollars/month
+10. proactive_alerts - Array of 3-4 proactive suggestions (e.g., "Tax season approaching - consider maxing 401k", "Interest rates dropped - refinance mortgage")
+11. financial_forecast - Object with:
+    - six_month_projection: Expected financial position in 6 months
+    - one_year_projection: Expected position in 1 year
+    - retirement_readiness: Assessment of retirement preparedness
+    - net_worth_trajectory: Projected net worth growth
+12. tax_optimization - Object with:
+    - current_efficiency: Tax efficiency assessment
+    - strategies: Array of 2-3 tax optimization strategies
+    - estimated_savings: Estimated annual tax savings
 
-Be specific, actionable, and encouraging. Use actual numbers from their data.`;
+Be specific, actionable, and encouraging. Use actual numbers from their data. For investment recommendations, suggest specific, low-cost index funds and ETFs.`;
 
         const advice = await base44.integrations.Core.InvokeLLM({
             prompt: advicePrompt,
@@ -187,7 +247,30 @@ Be specific, actionable, and encouraging. Use actual numbers from their data.`;
                             portfolio_assessment: { type: 'string' },
                             strategy_recommendations: { type: 'array', items: { type: 'string' } },
                             risk_analysis: { type: 'string' },
-                            diversification_score: { type: 'number' }
+                            diversification_score: { type: 'number' },
+                            recommended_allocations: {
+                                type: 'object',
+                                properties: {
+                                    stocks: { type: 'number' },
+                                    bonds: { type: 'number' },
+                                    real_estate: { type: 'number' },
+                                    crypto: { type: 'number' },
+                                    cash: { type: 'number' }
+                                }
+                            },
+                            specific_recommendations: {
+                                type: 'array',
+                                items: {
+                                    type: 'object',
+                                    properties: {
+                                        name: { type: 'string' },
+                                        ticker: { type: 'string' },
+                                        allocation: { type: 'number' },
+                                        rationale: { type: 'string' }
+                                    }
+                                }
+                            },
+                            rebalancing_advice: { type: 'string' }
                         }
                     },
                     debt_management: {
@@ -195,7 +278,8 @@ Be specific, actionable, and encouraging. Use actual numbers from their data.`;
                         properties: {
                             current_status: { type: 'string' },
                             recommendations: { type: 'array', items: { type: 'string' } },
-                            priority_payments: { type: 'array', items: { type: 'string' } }
+                            priority_payments: { type: 'array', items: { type: 'string' } },
+                            consolidation_opportunities: { type: 'array', items: { type: 'string' } }
                         }
                     },
                     goals_coaching: {
@@ -211,7 +295,8 @@ Be specific, actionable, and encouraging. Use actual numbers from their data.`;
                         properties: {
                             recommended_savings_rate: { type: 'number' },
                             emergency_fund_status: { type: 'string' },
-                            automated_savings_plan: { type: 'string' }
+                            automated_savings_plan: { type: 'string' },
+                            high_yield_opportunities: { type: 'array', items: { type: 'string' } }
                         }
                     },
                     action_plan: {
@@ -222,7 +307,25 @@ Be specific, actionable, and encouraging. Use actual numbers from their data.`;
                             long_term_actions: { type: 'array', items: { type: 'string' } }
                         }
                     },
-                    estimated_impact: { type: 'number' }
+                    estimated_impact: { type: 'number' },
+                    proactive_alerts: { type: 'array', items: { type: 'string' } },
+                    financial_forecast: {
+                        type: 'object',
+                        properties: {
+                            six_month_projection: { type: 'string' },
+                            one_year_projection: { type: 'string' },
+                            retirement_readiness: { type: 'string' },
+                            net_worth_trajectory: { type: 'string' }
+                        }
+                    },
+                    tax_optimization: {
+                        type: 'object',
+                        properties: {
+                            current_efficiency: { type: 'string' },
+                            strategies: { type: 'array', items: { type: 'string' } },
+                            estimated_savings: { type: 'number' }
+                        }
+                    }
                 }
             }
         });

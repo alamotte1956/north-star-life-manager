@@ -118,15 +118,39 @@ export default function FinancialAdvisor() {
                 </div>
             )}
 
+            {/* Proactive Alerts */}
+            {advice.proactive_alerts?.length > 0 && (
+                <Card className="border-orange-200 bg-orange-50">
+                    <CardHeader>
+                        <CardTitle className="text-lg font-light flex items-center gap-2">
+                            <AlertTriangle className="w-5 h-5 text-orange-600" />
+                            Proactive Alerts & Opportunities
+                        </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <ul className="space-y-2">
+                            {advice.proactive_alerts.map((alert, i) => (
+                                <li key={i} className="flex items-start gap-2 text-sm text-orange-900">
+                                    <Sparkles className="w-4 h-4 text-orange-600 mt-0.5 flex-shrink-0" />
+                                    <span>{alert}</span>
+                                </li>
+                            ))}
+                        </ul>
+                    </CardContent>
+                </Card>
+            )}
+
             {/* Advice Tabs */}
             <Tabs defaultValue="budget" className="w-full">
-                <TabsList className="grid grid-cols-3 md:grid-cols-6 w-full">
+                <TabsList className="grid grid-cols-3 md:grid-cols-8 w-full">
                     <TabsTrigger value="budget">Budget</TabsTrigger>
                     <TabsTrigger value="investment">Invest</TabsTrigger>
                     <TabsTrigger value="debt">Debt</TabsTrigger>
                     <TabsTrigger value="goals">Goals</TabsTrigger>
                     <TabsTrigger value="savings">Savings</TabsTrigger>
-                    <TabsTrigger value="action">Action Plan</TabsTrigger>
+                    <TabsTrigger value="forecast">Forecast</TabsTrigger>
+                    <TabsTrigger value="tax">Tax</TabsTrigger>
+                    <TabsTrigger value="action">Action</TabsTrigger>
                 </TabsList>
 
                 {/* Budget Advice */}
@@ -219,6 +243,45 @@ export default function FinancialAdvisor() {
                                 <h4 className="font-medium mb-2 text-blue-900">Risk Analysis</h4>
                                 <p className="text-sm text-blue-800">{advice.investment_advice.risk_analysis}</p>
                             </div>
+                            
+                            {advice.investment_advice.recommended_allocations && (
+                                <div className="bg-purple-50 border border-purple-200 rounded-lg p-4">
+                                    <h4 className="font-medium mb-3 text-purple-900">Recommended Portfolio Allocation</h4>
+                                    <div className="grid grid-cols-2 gap-3">
+                                        {Object.entries(advice.investment_advice.recommended_allocations).map(([asset, pct]) => (
+                                            <div key={asset} className="flex justify-between items-center">
+                                                <span className="text-sm capitalize">{asset.replace('_', ' ')}</span>
+                                                <Badge className="bg-purple-600 text-white">{pct}%</Badge>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+
+                            {advice.investment_advice.specific_recommendations?.length > 0 && (
+                                <div>
+                                    <h4 className="font-medium mb-3">Specific Fund Recommendations</h4>
+                                    <div className="space-y-3">
+                                        {advice.investment_advice.specific_recommendations.map((rec, i) => (
+                                            <div key={i} className="p-3 bg-gray-50 rounded-lg">
+                                                <div className="flex items-center justify-between mb-2">
+                                                    <span className="font-medium text-sm">{rec.name}</span>
+                                                    <Badge className="bg-blue-100 text-blue-700">{rec.ticker}</Badge>
+                                                </div>
+                                                <div className="text-xs text-black/60 mb-1">Suggested: {rec.allocation}%</div>
+                                                <p className="text-xs text-black/70">{rec.rationale}</p>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+
+                            {advice.investment_advice.rebalancing_advice && (
+                                <div className="bg-indigo-50 border border-indigo-200 rounded-lg p-4">
+                                    <h4 className="font-medium mb-2 text-indigo-900">Rebalancing Strategy</h4>
+                                    <p className="text-sm text-indigo-800">{advice.investment_advice.rebalancing_advice}</p>
+                                </div>
+                            )}
                         </CardContent>
                     </Card>
                 </TabsContent>
@@ -254,6 +317,16 @@ export default function FinancialAdvisor() {
                                     <ul className="space-y-1">
                                         {advice.debt_management.priority_payments.map((payment, i) => (
                                             <li key={i} className="text-sm text-yellow-800">• {payment}</li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            )}
+                            {advice.debt_management.consolidation_opportunities?.length > 0 && (
+                                <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+                                    <h4 className="font-medium mb-2 text-green-900">Consolidation Opportunities</h4>
+                                    <ul className="space-y-1">
+                                        {advice.debt_management.consolidation_opportunities.map((opp, i) => (
+                                            <li key={i} className="text-sm text-green-800">• {opp}</li>
                                         ))}
                                     </ul>
                                 </div>
@@ -325,9 +398,98 @@ export default function FinancialAdvisor() {
                                 <h4 className="font-medium mb-2 text-blue-900">Automated Savings Plan</h4>
                                 <p className="text-sm text-blue-800">{advice.savings_strategy.automated_savings_plan}</p>
                             </div>
+                            {advice.savings_strategy.high_yield_opportunities?.length > 0 && (
+                                <div>
+                                    <h4 className="font-medium mb-2 flex items-center gap-2">
+                                        <TrendingUp className="w-4 h-4 text-green-600" />
+                                        High-Yield Opportunities
+                                    </h4>
+                                    <ul className="space-y-2">
+                                        {advice.savings_strategy.high_yield_opportunities.map((opp, i) => (
+                                            <li key={i} className="text-sm text-black/70 flex items-start gap-2">
+                                                <DollarSign className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
+                                                <span>{opp}</span>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            )}
                         </CardContent>
                     </Card>
                 </TabsContent>
+
+                {/* Financial Forecast */}
+                {advice.financial_forecast && (
+                    <TabsContent value="forecast" className="space-y-4 mt-4">
+                        <Card className="border-purple-200">
+                            <CardHeader>
+                                <CardTitle className="text-lg font-light flex items-center gap-2">
+                                    <TrendingUp className="w-5 h-5 text-purple-600" />
+                                    Financial Forecast & Planning
+                                </CardTitle>
+                            </CardHeader>
+                            <CardContent className="space-y-4">
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                                        <h4 className="font-medium mb-2 text-blue-900">6-Month Outlook</h4>
+                                        <p className="text-sm text-blue-800">{advice.financial_forecast.six_month_projection}</p>
+                                    </div>
+                                    <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
+                                        <h4 className="font-medium mb-2 text-green-900">1-Year Outlook</h4>
+                                        <p className="text-sm text-green-800">{advice.financial_forecast.one_year_projection}</p>
+                                    </div>
+                                </div>
+                                
+                                <div className="p-4 bg-purple-50 border border-purple-200 rounded-lg">
+                                    <h4 className="font-medium mb-2 text-purple-900">Retirement Readiness</h4>
+                                    <p className="text-sm text-purple-800">{advice.financial_forecast.retirement_readiness}</p>
+                                </div>
+
+                                <div className="p-4 bg-indigo-50 border border-indigo-200 rounded-lg">
+                                    <h4 className="font-medium mb-2 text-indigo-900">Net Worth Trajectory</h4>
+                                    <p className="text-sm text-indigo-800">{advice.financial_forecast.net_worth_trajectory}</p>
+                                </div>
+                            </CardContent>
+                        </Card>
+                    </TabsContent>
+                )}
+
+                {/* Tax Optimization */}
+                {advice.tax_optimization && (
+                    <TabsContent value="tax" className="space-y-4 mt-4">
+                        <Card className="border-green-200">
+                            <CardHeader>
+                                <CardTitle className="text-lg font-light flex items-center gap-2">
+                                    <Shield className="w-5 h-5 text-green-600" />
+                                    Tax Optimization
+                                </CardTitle>
+                            </CardHeader>
+                            <CardContent className="space-y-4">
+                                <div className="flex items-center justify-between bg-green-50 border border-green-200 rounded-lg p-4">
+                                    <div>
+                                        <h4 className="font-medium text-green-900">Estimated Annual Tax Savings</h4>
+                                        <p className="text-sm text-green-700 mt-1">{advice.tax_optimization.current_efficiency}</p>
+                                    </div>
+                                    <Badge className="bg-green-600 text-white text-lg px-4 py-2">
+                                        ${advice.tax_optimization.estimated_savings?.toLocaleString() || 0}
+                                    </Badge>
+                                </div>
+
+                                <div>
+                                    <h4 className="font-medium mb-3">Tax Optimization Strategies</h4>
+                                    <ul className="space-y-2">
+                                        {advice.tax_optimization.strategies?.map((strategy, i) => (
+                                            <li key={i} className="flex items-start gap-2 text-sm">
+                                                <CheckCircle className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
+                                                <span>{strategy}</span>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            </CardContent>
+                        </Card>
+                    </TabsContent>
+                )}
 
                 {/* Action Plan */}
                 <TabsContent value="action" className="space-y-4 mt-4">
