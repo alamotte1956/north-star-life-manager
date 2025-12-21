@@ -1,16 +1,36 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from './utils';
-import { FileText, Shield, LogOut } from 'lucide-react';
+import {
+    LayoutDashboard, FileText, Shield, Home, Wrench, Users, Car,
+    DollarSign, Gem, Plane, Heart, Calendar, LogOut, Menu, X
+} from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 
 export default function Layout({ children, currentPageName }) {
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
     const handleLogout = () => {
         base44.auth.logout();
     };
 
+    const navItems = [
+        { name: 'Dashboard', icon: LayoutDashboard, path: 'Dashboard' },
+        { name: 'Vault', icon: FileText, path: 'Vault' },
+        { name: 'Properties', icon: Home, path: 'Properties' },
+        { name: 'Maintenance', icon: Wrench, path: 'Maintenance' },
+        { name: 'Contacts', icon: Users, path: 'Contacts' },
+        { name: 'Vehicles', icon: Car, path: 'Vehicles' },
+        { name: 'Subscriptions', icon: DollarSign, path: 'Subscriptions' },
+        { name: 'Valuables', icon: Gem, path: 'Valuables' },
+        { name: 'Travel', icon: Plane, path: 'Travel' },
+        { name: 'Health', icon: Heart, path: 'Health' },
+        { name: 'Calendar', icon: Calendar, path: 'Calendar' },
+        { name: 'Succession', icon: Shield, path: 'Succession' }
+    ];
+
     return (
-        <div className="min-h-screen">
+        <div className="min-h-screen flex">
             <style>{`
                 :root {
                     --navy-dark: #0F1B2E;
@@ -28,64 +48,109 @@ export default function Layout({ children, currentPageName }) {
                 }
             `}</style>
 
-            {/* Navigation */}
-            <nav className="bg-gradient-to-r from-[#0F1B2E] to-[#1A2B44] border-b border-[#C9A95C]/20">
-                <div className="max-w-7xl mx-auto px-6">
-                    <div className="flex items-center justify-between h-20">
-                        {/* Logo */}
-                        <div className="flex items-center gap-3">
-                            <div className="relative">
-                                <div className="absolute inset-0 bg-[#C9A95C]/30 rounded-lg blur-md" />
-                                <div className="relative w-10 h-10 bg-gradient-to-br from-[#C9A95C] to-[#D4AF37] rounded-lg flex items-center justify-center">
-                                    <span className="text-white font-light text-lg">★</span>
-                                </div>
-                            </div>
-                            <div>
-                                <h1 className="text-xl font-light text-white tracking-wide">
-                                    North Star
-                                </h1>
-                                <p className="text-[#C9A95C] text-xs font-light">Life Manager</p>
+            {/* Sidebar - Desktop */}
+            <aside className="hidden lg:flex flex-col w-64 bg-gradient-to-b from-[#0F1B2E] to-[#1A2B44] border-r border-[#C9A95C]/20">
+                <div className="p-6 border-b border-[#C9A95C]/20">
+                    <div className="flex items-center gap-3">
+                        <div className="relative">
+                            <div className="absolute inset-0 bg-[#C9A95C]/30 rounded-lg blur-md" />
+                            <div className="relative w-10 h-10 bg-gradient-to-br from-[#C9A95C] to-[#D4AF37] rounded-lg flex items-center justify-center">
+                                <span className="text-white font-light text-lg">★</span>
                             </div>
                         </div>
-
-                        {/* Navigation Links */}
-                        <div className="flex items-center gap-2">
-                            <Link
-                                to={createPageUrl('Vault')}
-                                className={`flex items-center gap-2 px-6 py-2.5 rounded-full transition-all font-light ${
-                                    currentPageName === 'Vault'
-                                        ? 'bg-[#C9A95C] text-white shadow-lg shadow-[#C9A95C]/30'
-                                        : 'text-white/70 hover:text-white hover:bg-white/5'
-                                }`}
-                            >
-                                <FileText className="w-4 h-4" />
-                                Vault
-                            </Link>
-                            <Link
-                                to={createPageUrl('Succession')}
-                                className={`flex items-center gap-2 px-6 py-2.5 rounded-full transition-all font-light ${
-                                    currentPageName === 'Succession'
-                                        ? 'bg-[#C9A95C] text-white shadow-lg shadow-[#C9A95C]/30'
-                                        : 'text-white/70 hover:text-white hover:bg-white/5'
-                                }`}
-                            >
-                                <Shield className="w-4 h-4" />
-                                Succession
-                            </Link>
-                            <button
-                                onClick={handleLogout}
-                                className="flex items-center gap-2 px-6 py-2.5 rounded-full text-white/70 hover:text-white hover:bg-white/5 transition-all font-light ml-2"
-                            >
-                                <LogOut className="w-4 h-4" />
-                                Logout
-                            </button>
+                        <div>
+                            <h1 className="text-lg font-light text-white tracking-wide">North Star</h1>
+                            <p className="text-[#C9A95C] text-xs font-light">Life Manager</p>
                         </div>
                     </div>
                 </div>
-            </nav>
 
-            {/* Page Content */}
-            <main>
+                <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
+                    {navItems.map((item) => {
+                        const Icon = item.icon;
+                        const isActive = currentPageName === item.path;
+                        return (
+                            <Link
+                                key={item.path}
+                                to={createPageUrl(item.path)}
+                                className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all font-light ${
+                                    isActive
+                                        ? 'bg-[#C9A95C] text-white shadow-lg shadow-[#C9A95C]/30'
+                                        : 'text-white/70 hover:text-white hover:bg-white/5'
+                                }`}
+                            >
+                                <Icon className="w-5 h-5" />
+                                {item.name}
+                            </Link>
+                        );
+                    })}
+                </nav>
+
+                <div className="p-4 border-t border-[#C9A95C]/20">
+                    <button
+                        onClick={handleLogout}
+                        className="flex items-center gap-3 px-4 py-3 rounded-xl text-white/70 hover:text-white hover:bg-white/5 transition-all font-light w-full"
+                    >
+                        <LogOut className="w-5 h-5" />
+                        Logout
+                    </button>
+                </div>
+            </aside>
+
+            {/* Mobile Header */}
+            <div className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-[#0F1B2E] to-[#1A2B44] border-b border-[#C9A95C]/20">
+                <div className="flex items-center justify-between px-6 h-16">
+                    <div className="flex items-center gap-3">
+                        <div className="w-8 h-8 bg-gradient-to-br from-[#C9A95C] to-[#D4AF37] rounded-lg flex items-center justify-center">
+                            <span className="text-white font-light">★</span>
+                        </div>
+                        <div>
+                            <h1 className="text-sm font-light text-white">North Star</h1>
+                        </div>
+                    </div>
+                    <button
+                        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                        className="p-2 text-white hover:bg-white/5 rounded-lg"
+                    >
+                        {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+                    </button>
+                </div>
+
+                {/* Mobile Menu */}
+                {mobileMenuOpen && (
+                    <div className="absolute top-16 left-0 right-0 bg-gradient-to-b from-[#0F1B2E] to-[#1A2B44] border-b border-[#C9A95C]/20 p-4 space-y-1 max-h-[calc(100vh-4rem)] overflow-y-auto">
+                        {navItems.map((item) => {
+                            const Icon = item.icon;
+                            const isActive = currentPageName === item.path;
+                            return (
+                                <Link
+                                    key={item.path}
+                                    to={createPageUrl(item.path)}
+                                    onClick={() => setMobileMenuOpen(false)}
+                                    className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all font-light ${
+                                        isActive
+                                            ? 'bg-[#C9A95C] text-white'
+                                            : 'text-white/70 hover:text-white hover:bg-white/5'
+                                    }`}
+                                >
+                                    <Icon className="w-5 h-5" />
+                                    {item.name}
+                                </Link>
+                            );
+                        })}
+                        <button
+                            onClick={handleLogout}
+                            className="flex items-center gap-3 px-4 py-3 rounded-xl text-white/70 hover:text-white hover:bg-white/5 transition-all font-light w-full"
+                        >
+                            <LogOut className="w-5 h-5" />
+                            Logout
+                        </button>
+                    </div>
+                )}
+            </div>
+
+            {/* Main Content */}
+            <main className="flex-1 lg:ml-0 mt-16 lg:mt-0">
                 {children}
             </main>
         </div>
