@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { createPageUrl } from './utils';
 import {
     LayoutDashboard, FileText, Shield, Home, Wrench, Users, Car,
-    DollarSign, Gem, Plane, Heart, Calendar, LogOut, Menu, X, Search, Plug
+    DollarSign, Gem, Plane, Heart, Calendar, LogOut, Menu, X, Search, Plug, TrendingUp
 } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import GlobalSearch from '@/components/GlobalSearch';
@@ -39,6 +39,7 @@ export default function Layout({ children, currentPageName }) {
         { name: 'Contacts', icon: Users, path: 'Contacts' },
         { name: 'Vehicles', icon: Car, path: 'Vehicles' },
         { name: 'Subscriptions', icon: DollarSign, path: 'Subscriptions' },
+        { name: 'Budget & Goals', icon: TrendingUp, path: 'Budget' },
         { name: 'Valuables', icon: Gem, path: 'Valuables' },
         { name: 'Travel', icon: Plane, path: 'Travel' },
         { name: 'Health', icon: Heart, path: 'Health' },
