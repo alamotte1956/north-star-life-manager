@@ -101,37 +101,37 @@ export default function UploadZone({ onUploadComplete }) {
 
     return (
         <div
-            onDrop={handleDrop}
-            onDragOver={handleDragOver}
-            onDragLeave={handleDragLeave}
-            className={`relative border-2 border-dashed rounded-2xl p-12 text-center transition-all ${
-                dragActive 
-                    ? 'border-[#8B2635] bg-[#8B2635]/5' 
-                    : 'border-[#1B4B7F]/20 hover:border-[#8B2635]/50'
-            }`}
-        >
+              onDrop={handleDrop}
+              onDragOver={handleDragOver}
+              onDragLeave={handleDragLeave}
+              className={`relative border-2 border-dashed rounded-2xl p-12 text-center transition-all bg-white shadow-sm ${
+                  dragActive 
+                      ? 'border-[#C5A059] bg-[#C5A059]/5' 
+                      : 'border-[#0F172A]/20 hover:border-[#C5A059]/50'
+              }`}
+          >
             {uploading ? (
                 <div className="flex flex-col items-center gap-4">
-                    <Loader2 className="w-12 h-12 text-[#8B2635] animate-spin" />
-                    <p className="text-[#1A2B44]/60 font-light">Uploading and analyzing...</p>
-                </div>
+                        <Loader2 className="w-12 h-12 text-[#C5A059] animate-spin" />
+                        <p className="text-[#64748B] font-light">Uploading and analyzing...</p>
+                    </div>
             ) : (
                 <>
                     <div className="flex justify-center mb-6">
-                        <div className="relative">
-                            <div className="absolute inset-0 bg-[#8B2635]/20 rounded-full blur-xl" />
-                            <div className="relative bg-gradient-to-br from-[#1B4B7F] to-[#0F2847] p-6 rounded-2xl">
-                                <Upload className="w-8 h-8 text-[#E8DCC4]" />
+                            <div className="relative">
+                                <div className="absolute inset-0 bg-[#C5A059]/30 rounded-full blur-xl" />
+                                <div className="relative bg-gradient-to-br from-[#0F172A] to-[#1e293b] p-6 rounded-2xl shadow-lg">
+                                    <Upload className="w-8 h-8 text-[#C5A059]" />
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    
-                    <h3 className="text-xl font-light text-[#1A2B44] mb-2">
-                        Upload Document or Photo
-                    </h3>
-                    <p className="text-[#1A2B44]/60 mb-6 font-light">
-                        Drag and drop files, take a photo, or browse your device
-                    </p>
+
+                        <h3 className="text-xl font-light text-[#0F172A] mb-2" style={{ fontFamily: 'Playfair Display, serif' }}>
+                            Upload Document or Photo
+                        </h3>
+                        <p className="text-[#64748B] mb-6 font-light">
+                            Drag and drop files, take a photo, or browse your device
+                        </p>
                     
                     <div className="flex flex-col sm:flex-row gap-3 justify-center">
                         <label className="inline-block">
@@ -142,24 +142,24 @@ export default function UploadZone({ onUploadComplete }) {
                                 onChange={(e) => e.target.files?.[0] && handleFile(e.target.files[0])}
                                 className="hidden"
                             />
-                            <span className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-[#8B2635] to-[#A63446] text-white rounded-full cursor-pointer hover:shadow-lg hover:shadow-[#8B2635]/30 transition-all font-light">
-                                <Camera className="w-4 h-4" />
+                            <span className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-[#C5A059] to-[#D4AF37] text-[#0F172A] rounded-lg cursor-pointer hover:shadow-lg hover:shadow-[#C5A059]/30 transition-all font-medium min-h-[50px]">
+                                <Camera className="w-5 h-5" />
                                 Take Photo
                             </span>
-                        </label>
-                        
-                        <label className="inline-block">
+                            </label>
+
+                            <label className="inline-block">
                             <input
                                 type="file"
                                 accept="application/pdf,image/jpeg,image/jpg,image/png,image/heic,image/heif"
                                 onChange={(e) => e.target.files?.[0] && handleFile(e.target.files[0])}
                                 className="hidden"
                             />
-                            <span className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-[#1B4B7F] to-[#0F2847] text-white rounded-full cursor-pointer hover:shadow-lg hover:shadow-[#8B2635]/20 transition-all font-light">
-                                <FileText className="w-4 h-4" />
+                            <span className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-[#0F172A] to-[#1e293b] text-[#C5A059] rounded-lg cursor-pointer hover:shadow-lg hover:shadow-[#0F172A]/20 transition-all font-medium min-h-[50px]">
+                                <FileText className="w-5 h-5" />
                                 Choose File
                             </span>
-                        </label>
+                            </label>
                     </div>
                 </>
             )}

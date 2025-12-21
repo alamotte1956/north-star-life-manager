@@ -11,9 +11,9 @@ export default function PrintButton({ className = '' }) {
         <Button
             variant="outline"
             onClick={handlePrint}
-            className={`border-[#1B4B7F]/20 hover:bg-[#1B4B7F]/5 print:hidden touch-manipulation active:scale-98 transition-transform h-11 sm:h-10 ${className}`}
+            className={`border-[#0F172A]/20 hover:bg-[#C5A059]/10 hover:border-[#C5A059]/30 print:hidden touch-manipulation active:scale-98 transition-all min-h-[50px] rounded-lg shadow-sm font-medium text-[#0F172A] ${className}`}
         >
-            <Printer className="w-4 h-4 sm:mr-2" />
+            <Printer className="w-5 h-5 sm:mr-2" />
             <span className="hidden sm:inline ml-2">Print</span>
         </Button>
     );
