@@ -8,6 +8,7 @@ import {
 import { base44 } from '@/api/base44Client';
 import GlobalSearch from '@/components/GlobalSearch';
 import ChatAssistant from '@/components/ChatAssistant';
+import PWAInstaller from '@/components/PWAInstaller';
 
 export default function Layout({ children, currentPageName }) {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -62,10 +63,22 @@ export default function Layout({ children, currentPageName }) {
                 body {
                     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
                     -webkit-tap-highlight-color: transparent;
+                    overscroll-behavior-y: contain;
+                    -webkit-overflow-scrolling: touch;
                 }
 
                 .touch-manipulation {
                     touch-action: manipulation;
+                }
+
+                * {
+                    -webkit-tap-highlight-color: transparent;
+                }
+
+                button, a {
+                    -webkit-touch-callout: none;
+                    -webkit-user-select: none;
+                    user-select: none;
                 }
 
                 .pb-safe {
@@ -230,6 +243,9 @@ export default function Layout({ children, currentPageName }) {
             
             {/* AI Chat Assistant */}
             <ChatAssistant />
+            
+            {/* PWA Install Prompt */}
+            <PWAInstaller />
         </div>
     );
 }

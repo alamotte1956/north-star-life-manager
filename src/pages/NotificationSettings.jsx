@@ -8,6 +8,7 @@ import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { toast } from 'sonner';
+import PushNotifications from '@/components/PushNotifications';
 
 export default function NotificationSettings() {
     const queryClient = useQueryClient();
@@ -247,6 +248,19 @@ export default function NotificationSettings() {
                                         </SelectContent>
                                     </Select>
                                 </div>
+                            </CardContent>
+                        </Card>
+
+                        {/* Push Notifications */}
+                        <Card>
+                            <CardHeader>
+                                <CardTitle className="text-lg font-light">Push Notifications</CardTitle>
+                            </CardHeader>
+                            <CardContent>
+                                <p className="text-sm text-[#1A2B44]/60 mb-4">
+                                    Enable push notifications to receive instant alerts on your device, even when the app is closed
+                                </p>
+                                <PushNotifications />
                             </CardContent>
                         </Card>
                     </div>
