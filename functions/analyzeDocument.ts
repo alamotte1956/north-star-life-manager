@@ -47,7 +47,7 @@ Deno.serve(async (req) => {
 
         const extractedText = ocrResponse.choices[0].message.content;
 
-        // Step 2: Analyze and categorize with entity linking
+        // Step 2: Analyze, categorize, and summarize
         const analysisResponse = await openai.chat.completions.create({
             model: "gpt-4o-mini",
             messages: [
@@ -63,6 +63,9 @@ Extract:
 5. cabin_related: Is this about a cabin/seasonal property? (boolean)
 6. extracted_data: Object with key details like: vendor, property_address, vehicle_info, policy_number, invoice_number, date, parties_involved, etc.
 7. suggested_entity_link: If this relates to a specific entity type, suggest: {type: "Property"|"Vehicle"|"Subscription", name: "name to search for"}
+8. summary: 2-3 sentence summary highlighting the most important information
+9. key_points: Array of 3-5 key points from the document
+10. action_items: Array of action items or next steps (if any)
 
 Return ONLY valid JSON.`
                 },
@@ -128,6 +131,9 @@ Return ONLY valid JSON.`
             linked_entity_type: linkedEntity.type,
             linked_entity_id: linkedEntity.id,
             linked_entity_name: linkedEntity.name,
+            ai_summary: analysis.summary || null,
+            key_points: analysis.key_points || [],
+            action_items: analysis.action_items || [],
             analysis_status: 'completed'
         });
 
