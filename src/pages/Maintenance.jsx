@@ -243,10 +243,11 @@ export default function Maintenance() {
                                         Add Task
                                     </Button>
                                 </form>
-                            </DialogContent>
-                        </Dialog>
-                    </div>
-                </div>
+                                </DialogContent>
+                                </Dialog>
+                                </div>
+                                </div>
+                                </div>
 
                 {filteredTasks.length > 0 ? (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
