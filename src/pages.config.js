@@ -18,6 +18,7 @@ import NotificationSettings from './pages/NotificationSettings';
 import Automations from './pages/Automations';
 import Integrations from './pages/Integrations';
 import Budget from './pages/Budget';
+import Pricing from './pages/Pricing';
 import __Layout from './Layout.jsx';
 
 
@@ -42,6 +43,7 @@ export const PAGES = {
     "Automations": Automations,
     "Integrations": Integrations,
     "Budget": Budget,
+    "Pricing": Pricing,
 }
 
 export const pagesConfig = {

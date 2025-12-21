@@ -46,6 +46,7 @@ export default function Layout({ children, currentPageName }) {
         { name: 'Medical Profile', icon: Heart, path: 'MedicalProfile' },
         { name: 'Legal & Estate', icon: Shield, path: 'Legal' },
         { name: 'Calendar', icon: Calendar, path: 'Calendar' },
+        { name: 'Pricing', icon: DollarSign, path: 'Pricing' },
         { name: 'Notifications', icon: LayoutDashboard, path: 'NotificationSettings' },
         { name: 'Succession', icon: Shield, path: 'Succession' },
         { name: 'Integrations', icon: Plug, path: 'Integrations' }
