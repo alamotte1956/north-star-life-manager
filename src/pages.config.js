@@ -16,6 +16,7 @@ import Collaboration from './pages/Collaboration';
 import Reports from './pages/Reports';
 import NotificationSettings from './pages/NotificationSettings';
 import Automations from './pages/Automations';
+import Integrations from './pages/Integrations';
 import __Layout from './Layout.jsx';
 
 
@@ -38,6 +39,7 @@ export const PAGES = {
     "Reports": Reports,
     "NotificationSettings": NotificationSettings,
     "Automations": Automations,
+    "Integrations": Integrations,
 }
 
 export const pagesConfig = {

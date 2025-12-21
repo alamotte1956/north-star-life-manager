@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { createPageUrl } from './utils';
 import {
     LayoutDashboard, FileText, Shield, Home, Wrench, Users, Car,
-    DollarSign, Gem, Plane, Heart, Calendar, LogOut, Menu, X, Search
+    DollarSign, Gem, Plane, Heart, Calendar, LogOut, Menu, X, Search, Plug
 } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import GlobalSearch from '@/components/GlobalSearch';
@@ -46,8 +46,9 @@ export default function Layout({ children, currentPageName }) {
         { name: 'Legal & Estate', icon: Shield, path: 'Legal' },
         { name: 'Calendar', icon: Calendar, path: 'Calendar' },
         { name: 'Notifications', icon: LayoutDashboard, path: 'NotificationSettings' },
-        { name: 'Succession', icon: Shield, path: 'Succession' }
-    ];
+        { name: 'Succession', icon: Shield, path: 'Succession' },
+        { name: 'Integrations', icon: Plug, path: 'Integrations' }
+        ];
 
     return (
         <div className="min-h-screen flex">

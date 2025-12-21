@@ -63,7 +63,7 @@ export default function Automations() {
                 </div>
 
                 {/* Quick Actions */}
-                <div className="mb-8">
+                <div className="mb-8 grid grid-cols-1 md:grid-cols-2 gap-6">
                     <Card>
                         <CardContent className="pt-6">
                             <div className="flex items-center justify-between">
@@ -84,6 +84,31 @@ export default function Automations() {
                                 >
                                     <Bell className="w-4 h-4 mr-2" />
                                     Check Now
+                                </Button>
+                            </div>
+                        </CardContent>
+                    </Card>
+                    
+                    <Card>
+                        <CardContent className="pt-6">
+                            <div className="flex items-center justify-between">
+                                <div>
+                                    <h3 className="text-lg font-light mb-1">Sync Google Calendar</h3>
+                                    <p className="text-sm text-black/60">Import events and create tasks</p>
+                                </div>
+                                <Button
+                                    onClick={async () => {
+                                        try {
+                                            const result = await base44.functions.invoke('syncGoogleCalendar');
+                                            alert(result.data.message);
+                                        } catch (error) {
+                                            alert('Error: ' + error.message);
+                                        }
+                                    }}
+                                    className="bg-gradient-to-r from-[#D4AF37] to-[#F4D03F]"
+                                >
+                                    <Calendar className="w-4 h-4 mr-2" />
+                                    Sync Now
                                 </Button>
                             </div>
                         </CardContent>

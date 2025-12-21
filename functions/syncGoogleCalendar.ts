@@ -10,80 +10,81 @@ Deno.serve(async (req) => {
         }
 
         // Get Google Calendar access token
-        const accessToken = await base44.asServiceRole.connectors.getAccessToken("googlecalendar");
+        const accessToken = await base44.asServiceRole.connectors.getAccessToken('googlecalendar');
 
-        if (!accessToken) {
-            return Response.json({ 
-                error: 'Google Calendar not connected',
-                message: 'Please authorize Google Calendar access first'
-            }, { status: 401 });
-        }
-
-        // Fetch events from Google Calendar (next 30 days)
+        // Fetch events from Google Calendar
         const now = new Date();
-        const futureDate = new Date();
-        futureDate.setDate(futureDate.getDate() + 30);
-
+        const thirtyDaysFromNow = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000);
+        
         const calendarResponse = await fetch(
-            `https://www.googleapis.com/calendar/v3/calendars/primary/events?timeMin=${now.toISOString()}&timeMax=${futureDate.toISOString()}&singleEvents=true&orderBy=startTime`,
+            `https://www.googleapis.com/calendar/v3/calendars/primary/events?` +
+            `timeMin=${now.toISOString()}&` +
+            `timeMax=${thirtyDaysFromNow.toISOString()}&` +
+            `singleEvents=true&orderBy=startTime`,
             {
                 headers: {
-                    'Authorization': `Bearer ${accessToken}`,
-                    'Content-Type': 'application/json'
+                    'Authorization': `Bearer ${accessToken}`
                 }
             }
         );
 
         if (!calendarResponse.ok) {
-            const error = await calendarResponse.text();
-            return Response.json({ 
-                error: 'Failed to fetch calendar events',
-                details: error 
-            }, { status: calendarResponse.status });
+            throw new Error('Failed to fetch calendar events');
         }
 
-        const calendarData = await calendarResponse.json();
-        const events = calendarData.items || [];
+        const { items: events } = await calendarResponse.json();
 
-        // Get existing important dates to avoid duplicates
-        const existingDates = await base44.asServiceRole.entities.ImportantDate.list();
-        const existingTitles = new Set(existingDates.map(d => d.title));
+        // Sync with app's calendar
+        let synced = 0;
+        let created = 0;
 
-        // Import events as ImportantDate entities
-        let importedCount = 0;
-        for (const event of events) {
-            const title = event.summary || 'Untitled Event';
+        for (const event of events || []) {
+            if (!event.start?.dateTime && !event.start?.date) continue;
+
+            const eventDate = event.start.dateTime || event.start.date;
             
-            // Skip if already imported
-            if (existingTitles.has(title)) continue;
+            // Check if it looks like a maintenance-related event
+            const maintenanceKeywords = ['maintenance', 'service', 'inspection', 'repair', 'check', 'clean'];
+            const isMaintenanceRelated = maintenanceKeywords.some(keyword => 
+                event.summary?.toLowerCase().includes(keyword)
+            );
 
-            const eventDate = event.start.date || event.start.dateTime?.split('T')[0];
-            if (!eventDate) continue;
+            if (isMaintenanceRelated) {
+                // Create maintenance task
+                await base44.asServiceRole.entities.MaintenanceTask.create({
+                    title: event.summary,
+                    notes: event.description || '',
+                    next_due_date: eventDate.split('T')[0],
+                    status: 'upcoming',
+                    created_by: user.email
+                });
+                created++;
+            }
 
+            // Also create as important date
             await base44.asServiceRole.entities.ImportantDate.create({
-                title: title,
-                date: eventDate,
+                title: event.summary,
+                date: eventDate.split('T')[0],
                 category: 'event',
-                recurring: false,
-                reminder_days_before: 7,
-                notes: `Imported from Google Calendar: ${event.description || ''}`
+                notes: event.description || 'Synced from Google Calendar',
+                created_by: user.email
             });
 
-            importedCount++;
+            synced++;
         }
 
         return Response.json({
             success: true,
-            imported: importedCount,
-            total: events.length,
-            message: `Imported ${importedCount} new events from Google Calendar`
+            synced,
+            maintenance_created: created,
+            message: `Synced ${synced} calendar events`
         });
 
     } catch (error) {
-        console.error('Sync error:', error);
+        console.error('Calendar sync error:', error);
         return Response.json({ 
             error: error.message,
-            details: error.stack 
+            success: false 
         }, { status: 500 });
     }
 });
