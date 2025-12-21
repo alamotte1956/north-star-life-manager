@@ -17,6 +17,7 @@ import RentPricingSuggestions from '@/components/property/RentPricingSuggestions
 import TenantCommunicationHub from '@/components/property/TenantCommunicationHub';
 import LeaseManagement from '@/components/property/LeaseManagement';
 import LeaseAlerts from '@/components/property/LeaseAlerts';
+import RenewalManagement from '@/components/property/RenewalManagement';
 
 export default function PropertyManagement() {
     const [selectedProperty, setSelectedProperty] = useState(null);
@@ -360,6 +361,8 @@ export default function PropertyManagement() {
 
                     <TabsContent value="leases">
                         <div className="space-y-6">
+                            <RenewalManagement properties={properties} />
+                            
                             {properties.map(property => (
                                 <Card key={property.id}>
                                     <CardHeader>

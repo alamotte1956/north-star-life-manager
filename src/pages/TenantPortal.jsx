@@ -15,6 +15,7 @@ import TenantRentPayment from '@/components/tenant/TenantRentPayment';
 import TenantChatbot from '@/components/tenant/TenantChatbot';
 import TenantNotifications from '@/components/tenant/TenantNotifications';
 import TenantSettings from '@/components/tenant/TenantSettings';
+import TenantRenewalOffer from '@/components/tenant/TenantRenewalOffer';
 
 export default function TenantPortal() {
     const [user, setUser] = useState(null);
@@ -219,7 +220,10 @@ export default function TenantPortal() {
                     </div>
 
                     <TabsContent value="lease">
-                        <TenantLeaseView property={tenantProperty} />
+                        <div className="space-y-4">
+                            <TenantRenewalOffer tenantEmail={user.email} />
+                            <TenantLeaseView property={tenantProperty} />
+                        </div>
                     </TabsContent>
 
                     <TabsContent value="maintenance">
