@@ -14,6 +14,7 @@ import TenantCommunications from '@/components/property/TenantCommunications';
 import RentCollectionManager from '@/components/property/RentCollectionManager';
 import PropertyValuation from '@/components/property/PropertyValuation';
 import RentPricingSuggestions from '@/components/property/RentPricingSuggestions';
+import TenantCommunicationHub from '@/components/property/TenantCommunicationHub';
 
 export default function PropertyManagement() {
     const [selectedProperty, setSelectedProperty] = useState(null);
@@ -350,7 +351,18 @@ export default function PropertyManagement() {
                     </TabsContent>
 
                     <TabsContent value="communications">
-                        <TenantCommunications properties={properties} />
+                        <div className="space-y-6">
+                            {properties.map(property => (
+                                <Card key={property.id}>
+                                    <CardHeader>
+                                        <CardTitle className="text-xl font-light">{property.name}</CardTitle>
+                                    </CardHeader>
+                                    <CardContent>
+                                        <TenantCommunicationHub property={property} />
+                                    </CardContent>
+                                </Card>
+                            ))}
+                        </div>
                     </TabsContent>
                 </Tabs>
             </div>
