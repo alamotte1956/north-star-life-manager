@@ -59,14 +59,14 @@ export default function Layout({ children, currentPageName }) {
         ];
 
     return (
-        <div className="min-h-screen flex">
+        <div className="min-h-screen flex" style={{ backgroundColor: '#F8F9FA' }}>
             <style>{`
                 :root {
-                    --navy-dark: #000000;
-                    --navy: #1a1a1a;
-                    --burgundy: #D4AF37;
-                    --burgundy-light: #F4D03F;
-                    --cream: #FFF8DC;
+                    --deep-navy: #0F172A;
+                    --champagne-gold: #C5A059;
+                    --winter-cream: #F8F9FA;
+                    --slate-grey: #64748B;
+                    --forest-pine: #164E63;
                 }
                 
                 body {
@@ -74,7 +74,8 @@ export default function Layout({ children, currentPageName }) {
                     -webkit-tap-highlight-color: transparent;
                     overscroll-behavior-y: contain;
                     -webkit-overflow-scrolling: touch;
-                    color: white;
+                    color: #0F172A;
+                    background-color: #F8F9FA;
                 }
 
                 .touch-manipulation {
@@ -102,14 +103,19 @@ export default function Layout({ children, currentPageName }) {
                 
                 h1, h2, h3, h4, h5, h6 {
                     font-family: 'Playfair Display', Georgia, serif;
-                }
-
-                h1, h2, h3 {
-                    color: black;
+                    font-weight: 500;
+                    color: #0F172A;
                 }
 
                 p, span, div, a, button, label, input, textarea, select {
-                    color: white;
+                    color: #0F172A;
+                }
+                
+                button, a[role="button"] {
+                    min-height: 50px;
+                    min-width: 50px;
+                    touch-action: manipulation;
+                    border-radius: 8px;
                 }
 
                 @media print {
@@ -133,8 +139,8 @@ export default function Layout({ children, currentPageName }) {
             `}</style>
 
             {/* Sidebar - Desktop */}
-            <aside className="hidden lg:flex flex-col w-64 bg-gradient-to-b from-black to-[#1a1a1a] border-r border-[#D4AF37]/20">
-                <div className="p-6 border-b border-[#D4AF37]/20">
+            <aside className="hidden lg:flex flex-col w-64 bg-gradient-to-b from-[#0F172A] to-[#1e293b] border-r border-[#C5A059]/20">
+                <div className="p-6 border-b border-[#C5A059]/20">
                     <div className="flex items-center gap-3 mb-4">
                         <img 
                             src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6947dc1f392f53989af97bda/b516d228e_Gemini_Generated_Image_tp0qgztp0qgztp0q.png" 
@@ -142,21 +148,21 @@ export default function Layout({ children, currentPageName }) {
                             className="w-10 h-10 object-contain"
                         />
                         <div>
-                            <h1 className="text-lg font-light text-black tracking-wide">North Star</h1>
-                            <p className="text-black/70 text-xs font-light">Life Manager</p>
+                            <h1 className="text-lg font-light text-[#C5A059] tracking-wide" style={{ fontFamily: 'Playfair Display, serif' }}>North Star</h1>
+                            <p className="text-[#64748B] text-xs font-light">Life Manager</p>
                         </div>
                     </div>
                     <button
                         onClick={() => setSearchOpen(true)}
-                        className="w-full flex items-center gap-2 px-3 py-2 bg-white/10 hover:bg-white/15 rounded-lg transition-colors text-white/60 text-sm"
+                        className="w-full flex items-center gap-2 px-3 py-3 bg-white/10 hover:bg-white/15 rounded-lg transition-colors text-[#F8F9FA]/80 text-sm min-h-[50px]"
                     >
-                        <Search className="w-4 h-4" />
+                        <Search className="w-5 h-5" />
                         <span>Search...</span>
                         <kbd className="ml-auto text-xs bg-white/10 px-1.5 py-0.5 rounded">⌘K</kbd>
                     </button>
                 </div>
 
-                <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
+                <nav className="flex-1 p-4 space-y-2 overflow-y-auto">
                     {navItems.map((item) => {
                         const Icon = item.icon;
                         const isActive = currentPageName === item.path;
@@ -164,10 +170,10 @@ export default function Layout({ children, currentPageName }) {
                             <Link
                                 key={item.path}
                                 to={createPageUrl(item.path)}
-                                className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all font-light ${
+                                className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all font-light min-h-[50px] ${
                                     isActive
-                                        ? 'bg-[#D4AF37] text-black shadow-lg shadow-[#D4AF37]/30'
-                                        : 'text-[#D4AF37]/70 hover:text-[#D4AF37] hover:bg-white/5'
+                                        ? 'bg-[#C5A059] text-[#0F172A] shadow-lg'
+                                        : 'text-[#F8F9FA]/80 hover:text-[#C5A059] hover:bg-white/5'
                                 }`}
                             >
                                 <Icon className="w-5 h-5" />
@@ -177,19 +183,19 @@ export default function Layout({ children, currentPageName }) {
                         })}
                         </nav>
 
-                        <div className="p-4 border-t border-[#D4AF37]/20">
+                        <div className="p-4 border-t border-[#C5A059]/20">
                     <button
                         onClick={handleLogout}
-                        className="flex items-center gap-3 px-4 py-4 rounded-xl text-[#D4AF37]/70 hover:text-[#D4AF37] hover:bg-white/5 transition-all font-light w-full touch-manipulation active:bg-white/10"
+                        className="flex items-center gap-3 px-4 py-4 rounded-lg text-[#F8F9FA]/80 hover:text-[#C5A059] hover:bg-white/5 transition-all font-light w-full touch-manipulation active:bg-white/10 min-h-[50px]"
                     >
                         <LogOut className="w-5 h-5" />
-                        Logout
+                        <span className="text-base">Logout</span>
                     </button>
                 </div>
             </aside>
 
             {/* Mobile Header */}
-            <div className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-black to-[#1a1a1a] border-b border-[#D4AF37]/20 safe-area-inset">
+            <div className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-[#0F172A] to-[#1e293b] border-b border-[#C5A059]/20 safe-area-inset">
                 <div className="flex items-center justify-between px-4 h-16">
                     <div className="flex items-center gap-3">
                         <img 
@@ -198,30 +204,31 @@ export default function Layout({ children, currentPageName }) {
                             className="w-8 h-8 object-contain"
                         />
                         <div>
-                            <h1 className="text-sm font-light text-black">North Star</h1>
+                            <h1 className="text-sm font-light text-[#C5A059]" style={{ fontFamily: 'Playfair Display, serif' }}>North Star</h1>
                         </div>
                     </div>
                     <div className="flex items-center gap-2">
                         <button
                             onClick={() => setSearchOpen(true)}
-                            className="p-3 text-white hover:bg-white/5 rounded-lg touch-manipulation active:scale-95 transition-transform"
+                            className="p-3 text-[#F8F9FA] hover:bg-white/5 rounded-lg touch-manipulation active:scale-95 transition-transform min-h-[50px] min-w-[50px]"
                             aria-label="Search"
                         >
-                            <Search className="w-5 h-5" />
+                            <Search className="w-6 h-6" />
                         </button>
                         <button
                             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                            className="p-3 text-white hover:bg-white/5 rounded-lg touch-manipulation active:scale-95 transition-transform"
+                            className="p-3 text-[#F8F9FA] hover:bg-white/5 rounded-lg touch-manipulation active:scale-95 transition-transform min-h-[50px] min-w-[50px] flex items-center flex-col justify-center gap-1"
                             aria-label="Toggle menu"
                         >
                             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+                            <span className="text-xs">MENU</span>
                         </button>
                     </div>
                 </div>
 
                 {/* Mobile Menu */}
                 {mobileMenuOpen && (
-                    <div className="absolute top-16 left-0 right-0 bg-gradient-to-b from-black to-[#1a1a1a] border-b border-[#D4AF37]/20 p-4 space-y-2 max-h-[calc(100vh-4rem)] overflow-y-auto shadow-2xl">
+                    <div className="absolute top-16 left-0 right-0 bg-gradient-to-b from-[#0F172A] to-[#1e293b] border-b border-[#C5A059]/20 p-4 space-y-2 max-h-[calc(100vh-4rem)] overflow-y-auto shadow-2xl">
                         {navItems.map((item) => {
                             const Icon = item.icon;
                             const isActive = currentPageName === item.path;
@@ -230,23 +237,23 @@ export default function Layout({ children, currentPageName }) {
                                     key={item.path}
                                     to={createPageUrl(item.path)}
                                     onClick={() => setMobileMenuOpen(false)}
-                                    className={`flex items-center gap-3 px-4 py-4 rounded-xl transition-all font-light touch-manipulation active:scale-98 ${
+                                    className={`flex items-center gap-3 px-4 py-4 rounded-lg transition-all font-light touch-manipulation active:scale-98 min-h-[50px] ${
                                         isActive
-                                            ? 'bg-[#D4AF37] text-black shadow-lg'
-                                            : 'text-[#D4AF37]/70 hover:text-[#D4AF37] hover:bg-white/5 active:bg-white/10'
+                                            ? 'bg-[#C5A059] text-[#0F172A] shadow-lg'
+                                            : 'text-[#F8F9FA]/80 hover:text-[#C5A059] hover:bg-white/5 active:bg-white/10'
                                     }`}
                                 >
-                                    <Icon className="w-5 h-5" />
-                                    {item.name}
+                                    <Icon className="w-6 h-6" />
+                                    <span className="text-base">{item.name}</span>
                                 </Link>
                             );
                         })}
                         <button
                             onClick={handleLogout}
-                            className="flex items-center gap-3 px-4 py-3 rounded-xl text-[#D4AF37]/70 hover:text-[#D4AF37] hover:bg-white/5 transition-all font-light w-full"
+                            className="flex items-center gap-3 px-4 py-4 rounded-lg text-[#F8F9FA]/80 hover:text-[#C5A059] hover:bg-white/5 transition-all font-light w-full min-h-[50px]"
                         >
-                            <LogOut className="w-5 h-5" />
-                            Logout
+                            <LogOut className="w-6 h-6" />
+                            <span className="text-base">Logout</span>
                         </button>
                     </div>
                 )}

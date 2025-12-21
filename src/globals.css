@@ -1,0 +1,208 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* The Midnight Forest Color Palette */
+  --deep-navy: #0F172A;
+  --champagne-gold: #C5A059;
+  --winter-cream: #F8F9FA;
+  --slate-grey: #64748B;
+  --forest-pine: #164E63;
+  
+  /* Semantic Colors */
+  --background: var(--winter-cream);
+  --foreground: var(--deep-navy);
+  --primary: var(--champagne-gold);
+  --secondary: var(--slate-grey);
+  --accent: var(--champagne-gold);
+  
+  /* Cabin Mode Override */
+  --cabin-accent: var(--forest-pine);
+}
+
+body.cabin-mode {
+  --accent: var(--cabin-accent);
+  --primary: var(--cabin-accent);
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: var(--deep-navy);
+  background-color: var(--winter-cream);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overscroll-behavior-y: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 500;
+  color: var(--deep-navy);
+  line-height: 1.2;
+}
+
+/* Senior-First Touch Targets */
+button, a[role="button"], input[type="button"], input[type="submit"] {
+  min-height: 50px;
+  min-width: 50px;
+  touch-action: manipulation;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* High Contrast Text */
+p, span, div, label, input, textarea, select {
+  color: var(--deep-navy);
+}
+
+.text-secondary {
+  color: var(--slate-grey);
+}
+
+/* Quiet Luxury Card System */
+.card, [class*="Card"] {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  transition: box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+.card:hover, [class*="Card"]:hover {
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.12);
+  transform: translateY(-2px);
+}
+
+/* Primary Buttons - Champagne Gold */
+button[class*="bg-gradient"], button.primary {
+  background: linear-gradient(135deg, var(--champagne-gold) 0%, #D4AF37 100%);
+  color: var(--deep-navy);
+  font-weight: 500;
+  border-radius: 8px;
+  padding: 14px 24px;
+  min-height: 50px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+button[class*="bg-gradient"]:hover, button.primary:hover {
+  box-shadow: 0 4px 16px rgba(197, 160, 89, 0.4);
+  transform: translateY(-2px);
+}
+
+/* Haptic Feedback Simulation */
+button:active {
+  transform: scale(0.98);
+}
+
+/* Large, Clear Icons with Labels */
+.icon-with-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* High Contrast Badges */
+.badge {
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* Safe Area Insets for Mobile */
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.safe-area-inset {
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+}
+
+/* Print Styles */
+@media print {
+  body {
+    background: white !important;
+  }
+  
+  aside, nav, button, .print\\:hidden {
+    display: none !important;
+  }
+  
+  main {
+    margin: 0 !important;
+  }
+  
+  .card, [class*="Card"] {
+    box-shadow: none !important;
+    border: 1px solid #ddd !important;
+  }
+  
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}
+
+/* Accessibility - Focus States */
+*:focus-visible {
+  outline: 3px solid var(--champagne-gold);
+  outline-offset: 2px;
+}
+
+/* Loading States */
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Smooth Scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--winter-cream);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--slate-grey);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--deep-navy);
+}
