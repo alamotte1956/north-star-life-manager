@@ -9,6 +9,7 @@ import { base44 } from '@/api/base44Client';
 import GlobalSearch from '@/components/GlobalSearch';
 import ChatAssistant from '@/components/ChatAssistant';
 import PWAInstaller from '@/components/PWAInstaller';
+import ProactiveAssistant from '@/components/ProactiveAssistant';
 
 export default function Layout({ children, currentPageName }) {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -258,7 +259,10 @@ export default function Layout({ children, currentPageName }) {
             
             {/* AI Chat Assistant */}
             <ChatAssistant />
-            
+
+            {/* Proactive Assistant */}
+            <ProactiveAssistant />
+
             {/* PWA Install Prompt */}
             <PWAInstaller />
         </div>
