@@ -50,11 +50,11 @@ export default function Layout({ children, currentPageName }) {
         <div className="min-h-screen flex">
             <style>{`
                 :root {
-                    --navy-dark: #0F2847;
-                    --navy: #1B4B7F;
-                    --burgundy: #8B2635;
-                    --burgundy-light: #A63446;
-                    --cream: #E8DCC4;
+                    --navy-dark: #000000;
+                    --navy: #1a1a1a;
+                    --burgundy: #D4AF37;
+                    --burgundy-light: #F4D03F;
+                    --cream: #FFF8DC;
                 }
                 
                 body {
@@ -100,18 +100,18 @@ export default function Layout({ children, currentPageName }) {
             `}</style>
 
             {/* Sidebar - Desktop */}
-            <aside className="hidden lg:flex flex-col w-64 bg-gradient-to-b from-[#0F2847] to-[#1B4B7F] border-r border-[#8B2635]/20">
-                <div className="p-6 border-b border-[#8B2635]/20">
+            <aside className="hidden lg:flex flex-col w-64 bg-gradient-to-b from-black to-[#1a1a1a] border-r border-[#D4AF37]/20">
+                <div className="p-6 border-b border-[#D4AF37]/20">
                     <div className="flex items-center gap-3 mb-4">
                         <div className="relative">
-                            <div className="absolute inset-0 bg-[#8B2635]/30 rounded-lg blur-md" />
-                            <div className="relative w-10 h-10 bg-gradient-to-br from-[#8B2635] to-[#A63446] rounded-lg flex items-center justify-center">
-                                <span className="text-white font-light text-lg">★</span>
+                            <div className="absolute inset-0 bg-[#D4AF37]/30 rounded-lg blur-md" />
+                            <div className="relative w-10 h-10 bg-gradient-to-br from-[#D4AF37] to-[#F4D03F] rounded-lg flex items-center justify-center">
+                                <span className="text-black font-bold text-lg">★</span>
                             </div>
                         </div>
                         <div>
                             <h1 className="text-lg font-light text-white tracking-wide">North Star</h1>
-                            <p className="text-[#E8DCC4] text-xs font-light">Life Manager</p>
+                            <p className="text-[#D4AF37] text-xs font-light">Life Manager</p>
                         </div>
                     </div>
                     <button
@@ -134,7 +134,7 @@ export default function Layout({ children, currentPageName }) {
                                 to={createPageUrl(item.path)}
                                 className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all font-light ${
                                     isActive
-                                        ? 'bg-[#8B2635] text-white shadow-lg shadow-[#8B2635]/30'
+                                        ? 'bg-[#D4AF37] text-black shadow-lg shadow-[#D4AF37]/30'
                                         : 'text-white/70 hover:text-white hover:bg-white/5'
                                 }`}
                             >
@@ -142,10 +142,10 @@ export default function Layout({ children, currentPageName }) {
                                 {item.name}
                             </Link>
                         );
-                    })}
-                </nav>
+                        })}
+                        </nav>
 
-                <div className="p-4 border-t border-[#8B2635]/20">
+                        <div className="p-4 border-t border-[#D4AF37]/20">
                     <button
                         onClick={handleLogout}
                         className="flex items-center gap-3 px-4 py-4 rounded-xl text-white/70 hover:text-white hover:bg-white/5 transition-all font-light w-full touch-manipulation active:bg-white/10"
@@ -157,11 +157,11 @@ export default function Layout({ children, currentPageName }) {
             </aside>
 
             {/* Mobile Header */}
-            <div className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-[#0F2847] to-[#1B4B7F] border-b border-[#8B2635]/20 safe-area-inset">
+            <div className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-black to-[#1a1a1a] border-b border-[#D4AF37]/20 safe-area-inset">
                 <div className="flex items-center justify-between px-4 h-16">
                     <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 bg-gradient-to-br from-[#8B2635] to-[#A63446] rounded-lg flex items-center justify-center">
-                            <span className="text-white font-light">★</span>
+                        <div className="w-8 h-8 bg-gradient-to-br from-[#D4AF37] to-[#F4D03F] rounded-lg flex items-center justify-center">
+                            <span className="text-black font-bold">★</span>
                         </div>
                         <div>
                             <h1 className="text-sm font-light text-white">North Star</h1>
@@ -187,7 +187,7 @@ export default function Layout({ children, currentPageName }) {
 
                 {/* Mobile Menu */}
                 {mobileMenuOpen && (
-                    <div className="absolute top-16 left-0 right-0 bg-gradient-to-b from-[#0F2847] to-[#1B4B7F] border-b border-[#8B2635]/20 p-4 space-y-2 max-h-[calc(100vh-4rem)] overflow-y-auto shadow-2xl">
+                    <div className="absolute top-16 left-0 right-0 bg-gradient-to-b from-black to-[#1a1a1a] border-b border-[#D4AF37]/20 p-4 space-y-2 max-h-[calc(100vh-4rem)] overflow-y-auto shadow-2xl">
                         {navItems.map((item) => {
                             const Icon = item.icon;
                             const isActive = currentPageName === item.path;
@@ -198,7 +198,7 @@ export default function Layout({ children, currentPageName }) {
                                     onClick={() => setMobileMenuOpen(false)}
                                     className={`flex items-center gap-3 px-4 py-4 rounded-xl transition-all font-light touch-manipulation active:scale-98 ${
                                         isActive
-                                            ? 'bg-[#8B2635] text-white shadow-lg'
+                                            ? 'bg-[#D4AF37] text-black shadow-lg'
                                             : 'text-white/70 hover:text-white hover:bg-white/5 active:bg-white/10'
                                     }`}
                                 >
