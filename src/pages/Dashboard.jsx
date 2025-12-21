@@ -187,10 +187,10 @@ export default function Dashboard() {
                                         <div className="flex gap-4 p-4 bg-[#F8F7F4] rounded-xl">
                                             <div className="flex-shrink-0 w-8 h-8 bg-[#8B2635] text-white rounded-full flex items-center justify-center font-light">3</div>
                                             <div className="flex-1">
-                                                <h4 className="font-light text-[#1A2B44] mb-1">Set Up Maintenance Reminders</h4>
+                                                <h4 className="font-light text-[#1A2B44] mb-1">Set Up Maintenance & Rent Collection</h4>
                                                 <p className="text-sm text-[#1A2B44]/70 font-light">
-                                                    Visit <strong>Maintenance</strong> to schedule recurring tasks for your properties. 
-                                                    You'll receive alerts when maintenance is due, keeping everything running smoothly.
+                                                    Visit <strong>Maintenance</strong> to schedule recurring tasks. For rental properties, use <strong>Property Management</strong> 
+                                                    to automate rent collection, send AI-powered reminders, and track payments with integrated Stripe processing.
                                                 </p>
                                             </div>
                                         </div>
@@ -198,10 +198,10 @@ export default function Dashboard() {
                                         <div className="flex gap-4 p-4 bg-[#F8F7F4] rounded-xl">
                                             <div className="flex-shrink-0 w-8 h-8 bg-[#8B2635] text-white rounded-full flex items-center justify-center font-light">4</div>
                                             <div className="flex-1">
-                                                <h4 className="font-light text-[#1A2B44] mb-1">Organize Your Contacts</h4>
+                                                <h4 className="font-light text-[#1A2B44] mb-1">Track Financial Goals & Investments</h4>
                                                 <p className="text-sm text-[#1A2B44]/70 font-light">
-                                                    Add your key contacts in the <strong>Contacts</strong> section - attorneys, accountants, physicians, contractors, and more. 
-                                                    Everything you need when you need it.
+                                                    Set financial goals in <strong>Budget & Goals</strong>, track your investment portfolio in <strong>Investments</strong>, 
+                                                    and manage recurring bills in <strong>Bill Payments</strong>. Get AI-driven insights on your financial health.
                                                 </p>
                                             </div>
                                         </div>
@@ -209,10 +209,10 @@ export default function Dashboard() {
                                         <div className="flex gap-4 p-4 bg-[#F8F7F4] rounded-xl">
                                             <div className="flex-shrink-0 w-8 h-8 bg-[#8B2635] text-white rounded-full flex items-center justify-center font-light">5</div>
                                             <div className="flex-1">
-                                                <h4 className="font-light text-[#1A2B44] mb-1">Complete Your Medical & Legal Information</h4>
+                                                <h4 className="font-light text-[#1A2B44] mb-1">Organize Contacts & Communications</h4>
                                                 <p className="text-sm text-[#1A2B44]/70 font-light">
-                                                    Set up your <strong>Medical Profile</strong> with emergency contacts, allergies, and medications. 
-                                                    Add advance directives and beneficiary information in <strong>Legal & Estate</strong>.
+                                                    Add key contacts in the <strong>Contacts</strong> section. For rental properties, use AI-powered tenant communication tools 
+                                                    to generate responses, analyze sentiment, and maintain professional tenant relationships.
                                                 </p>
                                             </div>
                                         </div>
@@ -220,10 +220,11 @@ export default function Dashboard() {
                                         <div className="flex gap-4 p-4 bg-[#F8F7F4] rounded-xl">
                                             <div className="flex-shrink-0 w-8 h-8 bg-[#8B2635] text-white rounded-full flex items-center justify-center font-light">6</div>
                                             <div className="flex-1">
-                                                <h4 className="font-light text-[#1A2B44] mb-1">Set Up Emergency Access (Optional)</h4>
+                                                <h4 className="font-light text-[#1A2B44] mb-1">Complete Medical & Estate Planning</h4>
                                                 <p className="text-sm text-[#1A2B44]/70 font-light">
-                                                    The <strong>Succession Dashboard</strong> lets you store critical emergency information with secure keycard access. 
-                                                    Perfect for ensuring trusted individuals can access important details when needed.
+                                                    Set up your <strong>Medical Profile</strong> with emergency contacts and medications. 
+                                                    Configure <strong>Legal & Estate</strong> with beneficiaries and advance directives. 
+                                                    Use <strong>Succession Dashboard</strong> for secure emergency access.
                                                 </p>
                                             </div>
                                         </div>
@@ -246,11 +247,11 @@ export default function Dashboard() {
 
                                         <div className="p-4 border border-[#1B4B7F]/20 rounded-xl">
                                             <div className="flex items-center gap-2 mb-2">
-                                                <Home className="w-5 h-5 text-[#8B2635]" />
-                                                <h4 className="font-light text-[#1A2B44]">Cabin Mode</h4>
+                                                <DollarSign className="w-5 h-5 text-[#8B2635]" />
+                                                <h4 className="font-light text-[#1A2B44]">Automated Rent Collection</h4>
                                             </div>
                                             <p className="text-sm text-[#1A2B44]/70 font-light">
-                                                Toggle Cabin Mode to filter seasonal property information across maintenance, documents, and more.
+                                                Set up payment schedules, send AI-personalized reminders, and collect rent online with secure Stripe integration.
                                             </p>
                                         </div>
 
@@ -280,11 +281,12 @@ export default function Dashboard() {
                                 <div className="bg-gradient-to-br from-[#8B2635]/5 to-[#1B4B7F]/5 p-6 rounded-xl border border-[#8B2635]/20">
                                     <h3 className="text-xl font-light text-[#1A2B44] mb-3">💡 Pro Tips</h3>
                                     <ul className="space-y-2 text-sm text-[#1A2B44]/70 font-light">
-                                        <li>• Use your phone's camera to quickly capture documents - the app supports direct photo uploads</li>
-                                        <li>• Set up all your subscriptions to track monthly and annual costs in one place</li>
-                                        <li>• Add insurance renewal dates to the Calendar so you never miss an important deadline</li>
+                                        <li>• Use your phone's camera to quickly capture documents - the app supports direct photo uploads with AI analysis</li>
+                                        <li>• Set up payment schedules in Property Management to automate rent collection and reminders</li>
+                                        <li>• Connect external services via Integrations - Google Calendar, Slack, Drive, and more</li>
+                                        <li>• Use the Email Assistant to manage communications with AI-powered drafting and categorization</li>
                                         <li>• The Medical Profile includes a printable emergency card - keep a copy in your wallet</li>
-                                        <li>• Use the Travel section to keep confirmation numbers and itineraries organized</li>
+                                        <li>• Share specific records with family or advisors using the Collaboration tools</li>
                                     </ul>
                                 </div>
 
