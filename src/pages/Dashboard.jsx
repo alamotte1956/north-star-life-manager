@@ -10,6 +10,7 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { format, isAfter, isBefore, addDays } from 'date-fns';
+import FinancialAdvisor from '../components/financial/FinancialAdvisor';
 
 const QuickStatCard = ({ icon: Icon, title, value, subtitle, trend, color, link }) => {
     const content = (
@@ -300,6 +301,11 @@ export default function Dashboard() {
                         </div>
                     </div>
                 )}
+
+                {/* AI Financial Advisor */}
+                <div className="mb-8">
+                    <FinancialAdvisor />
+                </div>
 
                 {/* Alerts Section */}
                 {(dueTasks.length > 0 || expiringDocs.length > 0) && (
