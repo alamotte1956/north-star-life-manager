@@ -12,13 +12,14 @@ import { format } from 'date-fns';
 import PrintButton from '@/components/PrintButton';
 import TenantCommunications from '@/components/property/TenantCommunications';
 import RentCollectionManager from '@/components/property/RentCollectionManager';
+import PropertyValuation from '@/components/property/PropertyValuation';
 
 export default function PropertyManagement() {
     const [selectedProperty, setSelectedProperty] = useState(null);
     const [loadingInsights, setLoadingInsights] = useState(false);
     const [insights, setInsights] = useState(null);
 
-    const { data: properties = [] } = useQuery({
+    const { data: properties = [], refetch } = useQuery({
         queryKey: ['properties'],
         queryFn: () => base44.entities.Property.list('-created_date')
     });
@@ -171,7 +172,7 @@ export default function PropertyManagement() {
                     </TabsContent>
 
                     <TabsContent value="properties">
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div className="grid grid-cols-1 gap-6">
                             {properties.map(property => (
                                 <Card key={property.id} className="hover:shadow-xl transition-all">
                                     <CardHeader>
@@ -187,76 +188,83 @@ export default function PropertyManagement() {
                                             </Button>
                                         </CardTitle>
                                     </CardHeader>
-                                    <CardContent className="space-y-4">
-                                        {property.address && (
-                                            <p className="text-sm text-gray-600">{property.address}</p>
-                                        )}
-
-                                        {(property.ai_maintenance_score || property.ai_financial_score) && (
-                                            <div className="space-y-3">
-                                                {property.ai_maintenance_score && (
-                                                    <div>
-                                                        <div className="flex justify-between text-sm mb-1">
-                                                            <span>Maintenance Health</span>
-                                                            <span className={getScoreColor(property.ai_maintenance_score)}>
-                                                                {property.ai_maintenance_score}/100
-                                                            </span>
-                                                        </div>
-                                                        <Progress value={property.ai_maintenance_score} />
-                                                    </div>
+                                    <CardContent className="space-y-6">
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                            <div className="space-y-4">
+                                                {property.address && (
+                                                    <p className="text-sm text-gray-600">{property.address}</p>
                                                 )}
-                                                {property.ai_financial_score && (
-                                                    <div>
-                                                        <div className="flex justify-between text-sm mb-1">
-                                                            <span>Financial Health</span>
-                                                            <span className={getScoreColor(property.ai_financial_score)}>
-                                                                {property.ai_financial_score}/100
-                                                            </span>
-                                                        </div>
-                                                        <Progress value={property.ai_financial_score} />
-                                                    </div>
-                                                )}
-                                            </div>
-                                        )}
 
-                                        {property.tenant_name && (
-                                            <div className="flex items-center gap-2 text-sm">
-                                                <Users className="w-4 h-4 text-blue-600" />
-                                                <span>Tenant: {property.tenant_name}</span>
-                                            </div>
-                                        )}
-
-                                        {property.lease_end_date && (
-                                            <div className="flex items-center gap-2 text-sm">
-                                                <Calendar className="w-4 h-4 text-orange-600" />
-                                                <span>Lease ends: {format(new Date(property.lease_end_date), 'MMM d, yyyy')}</span>
-                                            </div>
-                                        )}
-
-                                        {property.monthly_rent && (
-                                            <div className="flex items-center gap-2 text-sm">
-                                                <DollarSign className="w-4 h-4 text-green-600" />
-                                                <span>Rent: ${property.monthly_rent.toLocaleString()}/month</span>
-                                            </div>
-                                        )}
-
-                                        {property.next_major_repair && (
-                                            <div className="bg-orange-50 border border-orange-200 rounded-lg p-3">
-                                                <div className="flex items-start gap-2">
-                                                    <AlertTriangle className="w-4 h-4 text-orange-600 mt-0.5" />
-                                                    <div>
-                                                        <p className="text-sm font-medium text-orange-900">
-                                                            {property.next_major_repair}
-                                                        </p>
-                                                        {property.estimated_repair_cost && (
-                                                            <p className="text-sm text-orange-700 mt-1">
-                                                                Est. ${property.estimated_repair_cost.toLocaleString()}
-                                                            </p>
+                                                {(property.ai_maintenance_score || property.ai_financial_score) && (
+                                                    <div className="space-y-3">
+                                                        {property.ai_maintenance_score && (
+                                                            <div>
+                                                                <div className="flex justify-between text-sm mb-1">
+                                                                    <span>Maintenance Health</span>
+                                                                    <span className={getScoreColor(property.ai_maintenance_score)}>
+                                                                        {property.ai_maintenance_score}/100
+                                                                    </span>
+                                                                </div>
+                                                                <Progress value={property.ai_maintenance_score} />
+                                                            </div>
+                                                        )}
+                                                        {property.ai_financial_score && (
+                                                            <div>
+                                                                <div className="flex justify-between text-sm mb-1">
+                                                                    <span>Financial Health</span>
+                                                                    <span className={getScoreColor(property.ai_financial_score)}>
+                                                                        {property.ai_financial_score}/100
+                                                                    </span>
+                                                                </div>
+                                                                <Progress value={property.ai_financial_score} />
+                                                            </div>
                                                         )}
                                                     </div>
-                                                </div>
+                                                )}
+
+                                                {property.tenant_name && (
+                                                    <div className="flex items-center gap-2 text-sm">
+                                                        <Users className="w-4 h-4 text-blue-600" />
+                                                        <span>Tenant: {property.tenant_name}</span>
+                                                    </div>
+                                                )}
+
+                                                {property.lease_end_date && (
+                                                    <div className="flex items-center gap-2 text-sm">
+                                                        <Calendar className="w-4 h-4 text-orange-600" />
+                                                        <span>Lease ends: {format(new Date(property.lease_end_date), 'MMM d, yyyy')}</span>
+                                                    </div>
+                                                )}
+
+                                                {property.monthly_rent && (
+                                                    <div className="flex items-center gap-2 text-sm">
+                                                        <DollarSign className="w-4 h-4 text-green-600" />
+                                                        <span>Rent: ${property.monthly_rent.toLocaleString()}/month</span>
+                                                    </div>
+                                                )}
+
+                                                {property.next_major_repair && (
+                                                    <div className="bg-orange-50 border border-orange-200 rounded-lg p-3">
+                                                        <div className="flex items-start gap-2">
+                                                            <AlertTriangle className="w-4 h-4 text-orange-600 mt-0.5" />
+                                                            <div>
+                                                                <p className="text-sm font-medium text-orange-900">
+                                                                    {property.next_major_repair}
+                                                                </p>
+                                                                {property.estimated_repair_cost && (
+                                                                    <p className="text-sm text-orange-700 mt-1">
+                                                                        Est. ${property.estimated_repair_cost.toLocaleString()}
+                                                                    </p>
+                                                                )}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                )}
                                             </div>
-                                        )}
+                                            <div>
+                                                <PropertyValuation property={property} onUpdate={() => refetch()} />
+                                            </div>
+                                        </div>
                                     </CardContent>
                                 </Card>
                             ))}
