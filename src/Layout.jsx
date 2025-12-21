@@ -42,6 +42,7 @@ export default function Layout({ children, currentPageName }) {
         { name: 'Vehicles', icon: Car, path: 'Vehicles' },
         { name: 'Subscriptions', icon: DollarSign, path: 'Subscriptions' },
         { name: 'Budget & Goals', icon: TrendingUp, path: 'Budget' },
+        { name: 'Financial Dashboard', icon: TrendingUp, path: 'FinancialDashboard' },
         { name: 'Bill Payments', icon: DollarSign, path: 'BillPayments' },
         { name: 'Investments', icon: TrendingUp, path: 'Investments' },
         { name: 'Valuables', icon: Gem, path: 'Valuables' },

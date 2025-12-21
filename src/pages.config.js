@@ -23,6 +23,7 @@ import BillPayments from './pages/BillPayments';
 import Investments from './pages/Investments';
 import EmailAssistant from './pages/EmailAssistant';
 import PropertyManagement from './pages/PropertyManagement';
+import FinancialDashboard from './pages/FinancialDashboard';
 import __Layout from './Layout.jsx';
 
 
@@ -52,6 +53,7 @@ export const PAGES = {
     "Investments": Investments,
     "EmailAssistant": EmailAssistant,
     "PropertyManagement": PropertyManagement,
+    "FinancialDashboard": FinancialDashboard,
 }
 
 export const pagesConfig = {
