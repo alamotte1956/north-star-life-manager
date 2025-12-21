@@ -3,6 +3,8 @@ import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { Car, Plus, Calendar, AlertCircle } from 'lucide-react';
 import PrintButton from '@/components/PrintButton';
+import ShareDialog from '@/components/collaboration/ShareDialog';
+import CommentsSection from '@/components/collaboration/CommentsSection';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -267,6 +269,18 @@ export default function Vehicles() {
                                                     Insured: {vehicle.insurance_provider}
                                                 </div>
                                             )}
+                                        </div>
+
+                                        <div className="mt-4 pt-4 border-t flex gap-2">
+                                            <ShareDialog 
+                                                entityType="Vehicle" 
+                                                entityId={vehicle.id} 
+                                                entityName={`${vehicle.year} ${vehicle.make} ${vehicle.model}`}
+                                            />
+                                            <CommentsSection 
+                                                entityType="Vehicle" 
+                                                entityId={vehicle.id}
+                                            />
                                         </div>
                                     </CardContent>
                                 </Card>

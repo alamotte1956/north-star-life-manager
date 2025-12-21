@@ -3,6 +3,8 @@ import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { Home, Plus, MapPin, Calendar, DollarSign, Snowflake, Sun } from 'lucide-react';
 import PrintButton from '@/components/PrintButton';
+import ShareDialog from '@/components/collaboration/ShareDialog';
+import CommentsSection from '@/components/collaboration/CommentsSection';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -262,6 +264,18 @@ export default function Properties() {
                                             </span>
                                         </div>
                                     )}
+
+                                    <div className="mt-4 pt-4 border-t flex gap-2">
+                                        <ShareDialog 
+                                            entityType="Property" 
+                                            entityId={property.id} 
+                                            entityName={property.name}
+                                        />
+                                        <CommentsSection 
+                                            entityType="Property" 
+                                            entityId={property.id}
+                                        />
+                                    </div>
                                 </CardContent>
                             </Card>
                         ))}
