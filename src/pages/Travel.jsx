@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { Plane, Plus, Calendar, MapPin } from 'lucide-react';
+import PrintButton from '@/components/PrintButton';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -70,36 +71,36 @@ export default function Travel() {
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-[#F8F7F4] via-white to-[#F8F7F4]">
-            <div className="max-w-7xl mx-auto px-6 py-12">
-                <div className="flex items-center justify-between mb-8">
-                    <div className="flex items-center gap-4">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-12">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6 sm:mb-8">
+                    <div className="flex items-center gap-3 sm:gap-4">
                         <div className="relative">
                             <div className="absolute inset-0 bg-[#C9A95C]/30 rounded-2xl blur-xl" />
-                            <div className="relative bg-gradient-to-br from-[#1A2B44] to-[#0F1B2E] p-4 rounded-2xl">
-                                <Plane className="w-8 h-8 text-[#C9A95C]" />
+                            <div className="relative bg-gradient-to-br from-[#1A2B44] to-[#0F1B2E] p-3 sm:p-4 rounded-2xl">
+                                <Plane className="w-6 h-6 sm:w-8 sm:h-8 text-[#C9A95C]" />
                             </div>
                         </div>
                         <div>
-                            <h1 className="text-4xl font-light text-[#1A2B44]">Travel</h1>
-                            <p className="text-[#1A2B44]/60 font-light">Your itineraries & trips</p>
+                            <h1 className="text-2xl sm:text-4xl font-light text-[#1A2B44]">Travel</h1>
+                            <p className="text-sm sm:text-base text-[#1A2B44]/60 font-light">Your itineraries & trips</p>
                         </div>
-                        </div>
+                    </div>
 
-                        <div className="flex gap-2 print:hidden">
-                        <PrintButton />
+                    <div className="flex gap-2 print:hidden w-full sm:w-auto">
+                        <PrintButton className="flex-1 sm:flex-none" />
                         <Dialog open={open} onOpenChange={setOpen}>
                         <DialogTrigger asChild>
-                            <Button className="bg-gradient-to-r from-[#1A2B44] to-[#0F1B2E] hover:shadow-lg text-white">
-                                <Plus className="w-4 h-4 mr-2" />
+                            <Button className="bg-gradient-to-r from-[#1A2B44] to-[#0F1B2E] hover:shadow-lg text-white flex-1 sm:flex-none h-11 sm:h-10 touch-manipulation active:scale-98 transition-transform">
+                                <Plus className="w-5 h-5 sm:w-4 sm:h-4 mr-2" />
                                 Add Trip
                             </Button>
                         </DialogTrigger>
-                        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+                        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto mx-4">
                             <DialogHeader>
                                 <DialogTitle>Add New Trip</DialogTitle>
                             </DialogHeader>
                             <form onSubmit={handleSubmit} className="space-y-4">
-                                <div className="grid grid-cols-2 gap-4">
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                     <div>
                                         <Label>Trip Name</Label>
                                         <Input
@@ -119,7 +120,7 @@ export default function Travel() {
                                     </div>
                                 </div>
 
-                                <div className="grid grid-cols-2 gap-4">
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                     <div>
                                         <Label>Start Date</Label>
                                         <Input
@@ -158,7 +159,7 @@ export default function Travel() {
                                     </Select>
                                 </div>
 
-                                <div className="grid grid-cols-2 gap-4">
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                     <div>
                                         <Label>Accommodation</Label>
                                         <Input
@@ -206,20 +207,20 @@ export default function Travel() {
                                     />
                                 </div>
 
-                                <Button type="submit" className="w-full bg-gradient-to-r from-[#C9A95C] to-[#D4AF37]">
+                                <Button type="submit" className="w-full bg-gradient-to-r from-[#C9A95C] to-[#D4AF37] h-12 touch-manipulation">
                                     Add Trip
                                 </Button>
                             </form>
                         </DialogContent>
                         </Dialog>
-                        </div>
-                        </div>
+                    </div>
+                </div>
 
                 {/* Upcoming Trips */}
                 {upcomingTrips.length > 0 && (
-                    <div className="mb-12">
-                        <h2 className="text-2xl font-light text-[#1A2B44] mb-6">Upcoming Trips</h2>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="mb-8 sm:mb-12">
+                        <h2 className="text-xl sm:text-2xl font-light text-[#1A2B44] mb-4 sm:mb-6">Upcoming Trips</h2>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                             {upcomingTrips.map(trip => (
                                 <Card key={trip.id} className="shadow-lg hover:shadow-xl transition-all">
                                     <CardContent className="pt-6">
@@ -272,8 +273,8 @@ export default function Travel() {
                 {/* Past Trips */}
                 {pastTrips.length > 0 && (
                     <div>
-                        <h2 className="text-2xl font-light text-[#1A2B44] mb-6">Past Trips</h2>
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <h2 className="text-xl sm:text-2xl font-light text-[#1A2B44] mb-4 sm:mb-6">Past Trips</h2>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
                             {pastTrips.map(trip => (
                                 <Card key={trip.id} className="shadow-md hover:shadow-lg transition-all opacity-75">
                                     <CardContent className="pt-6">

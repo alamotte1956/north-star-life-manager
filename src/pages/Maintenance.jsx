@@ -11,8 +11,8 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { format, isBefore, addDays } from 'date-fns';
-import CabinModeToggle from '../components/CabinModeToggle';
-import PrintButton from '../components/PrintButton';
+import CabinModeToggle from '@/components/CabinModeToggle';
+import PrintButton from '@/components/PrintButton';
 
 const categoryLabels = {
     hvac: 'HVAC',
@@ -94,36 +94,40 @@ export default function Maintenance() {
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-[#F8F7F4] via-white to-[#F8F7F4]">
-            <div className="max-w-7xl mx-auto px-6 py-12">
-                <div className="flex items-center justify-between mb-8">
-                    <div className="flex items-center gap-4">
-                        <div className="relative">
-                            <div className="absolute inset-0 bg-[#C9A95C]/30 rounded-2xl blur-xl" />
-                            <div className="relative bg-gradient-to-br from-[#1A2B44] to-[#0F1B2E] p-4 rounded-2xl">
-                                <Wrench className="w-8 h-8 text-[#C9A95C]" />
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-12">
+                <div className="flex flex-col gap-4 mb-6 sm:mb-8">
+                    <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-3 sm:gap-4">
+                            <div className="relative">
+                                <div className="absolute inset-0 bg-[#C9A95C]/30 rounded-2xl blur-xl" />
+                                <div className="relative bg-gradient-to-br from-[#1A2B44] to-[#0F1B2E] p-3 sm:p-4 rounded-2xl">
+                                    <Wrench className="w-6 h-6 sm:w-8 sm:h-8 text-[#C9A95C]" />
+                                </div>
                             </div>
-                        </div>
-                        <div>
-                            <h1 className="text-4xl font-light text-[#1A2B44]">Maintenance</h1>
-                            <p className="text-[#1A2B44]/60 font-light">Property upkeep schedule</p>
+                            <div>
+                                <h1 className="text-2xl sm:text-4xl font-light text-[#1A2B44]">Maintenance</h1>
+                                <p className="text-sm sm:text-base text-[#1A2B44]/60 font-light hidden sm:block">Property upkeep schedule</p>
+                            </div>
                         </div>
                     </div>
 
-                    <div className="flex items-center gap-4 print:hidden">
+                    <div className="flex flex-wrap items-center gap-2 print:hidden">
                         <CabinModeToggle enabled={cabinMode} onChange={setCabinMode} />
-                        <PrintButton />
-                        <Dialog open={open} onOpenChange={setOpen}>
-                            <DialogTrigger asChild>
-                                <Button className="bg-gradient-to-r from-[#1A2B44] to-[#0F1B2E] hover:shadow-lg text-white">
-                                    <Plus className="w-4 h-4 mr-2" />
-                                    Add Task
-                                </Button>
-                            </DialogTrigger>
-                            <DialogContent className="max-w-2xl">
+                        <div className="flex gap-2 flex-1 sm:flex-none">
+                            <PrintButton className="flex-1 sm:flex-none" />
+                            <Dialog open={open} onOpenChange={setOpen}>
+                                <DialogTrigger asChild>
+                                    <Button className="bg-gradient-to-r from-[#1A2B44] to-[#0F1B2E] hover:shadow-lg text-white flex-1 sm:flex-none h-11 sm:h-10 touch-manipulation active:scale-98 transition-transform">
+                                        <Plus className="w-5 h-5 sm:w-4 sm:h-4 mr-2" />
+                                        <span className="hidden sm:inline">Add Task</span>
+                                        <span className="sm:hidden">Add</span>
+                                    </Button>
+                                </DialogTrigger>
+                            <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto mx-4">
                                 <DialogHeader>
                                     <DialogTitle>Add Maintenance Task</DialogTitle>
                                 </DialogHeader>
-                                <form onSubmit={handleSubmit} className="space-y-4">
+                                <form onSubmit={handleSubmit} className="space-y-5">
                                     <div>
                                         <Label>Task Title</Label>
                                         <Input
@@ -235,7 +239,7 @@ export default function Maintenance() {
                                         />
                                     </div>
 
-                                    <Button type="submit" className="w-full bg-gradient-to-r from-[#C9A95C] to-[#D4AF37]">
+                                    <Button type="submit" className="w-full bg-gradient-to-r from-[#C9A95C] to-[#D4AF37] h-12 touch-manipulation">
                                         Add Task
                                     </Button>
                                 </form>
@@ -245,7 +249,7 @@ export default function Maintenance() {
                 </div>
 
                 {filteredTasks.length > 0 ? (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                         {filteredTasks.map(task => (
                             <Card key={task.id} className="shadow-lg hover:shadow-xl transition-all">
                                 <CardContent className="pt-6">

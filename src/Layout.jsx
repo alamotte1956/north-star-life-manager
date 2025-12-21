@@ -44,6 +44,20 @@ export default function Layout({ children, currentPageName }) {
                 
                 body {
                     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+                    -webkit-tap-highlight-color: transparent;
+                }
+
+                .touch-manipulation {
+                    touch-action: manipulation;
+                }
+
+                .pb-safe {
+                    padding-bottom: env(safe-area-inset-bottom);
+                }
+
+                .safe-area-inset {
+                    padding-left: env(safe-area-inset-left);
+                    padding-right: env(safe-area-inset-right);
                 }
                 
                 h1, h2, h3, h4, h5, h6 {
@@ -111,7 +125,7 @@ export default function Layout({ children, currentPageName }) {
                 <div className="p-4 border-t border-[#8B2635]/20">
                     <button
                         onClick={handleLogout}
-                        className="flex items-center gap-3 px-4 py-3 rounded-xl text-white/70 hover:text-white hover:bg-white/5 transition-all font-light w-full"
+                        className="flex items-center gap-3 px-4 py-4 rounded-xl text-white/70 hover:text-white hover:bg-white/5 transition-all font-light w-full touch-manipulation active:bg-white/10"
                     >
                         <LogOut className="w-5 h-5" />
                         Logout
@@ -120,8 +134,8 @@ export default function Layout({ children, currentPageName }) {
             </aside>
 
             {/* Mobile Header */}
-            <div className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-[#0F2847] to-[#1B4B7F] border-b border-[#8B2635]/20">
-                <div className="flex items-center justify-between px-6 h-16">
+            <div className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-[#0F2847] to-[#1B4B7F] border-b border-[#8B2635]/20 safe-area-inset">
+                <div className="flex items-center justify-between px-4 h-16">
                     <div className="flex items-center gap-3">
                         <div className="w-8 h-8 bg-gradient-to-br from-[#8B2635] to-[#A63446] rounded-lg flex items-center justify-center">
                             <span className="text-white font-light">★</span>
@@ -132,7 +146,8 @@ export default function Layout({ children, currentPageName }) {
                     </div>
                     <button
                         onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                        className="p-2 text-white hover:bg-white/5 rounded-lg"
+                        className="p-3 text-white hover:bg-white/5 rounded-lg touch-manipulation active:scale-95 transition-transform"
+                        aria-label="Toggle menu"
                     >
                         {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
                     </button>
@@ -140,7 +155,7 @@ export default function Layout({ children, currentPageName }) {
 
                 {/* Mobile Menu */}
                 {mobileMenuOpen && (
-                    <div className="absolute top-16 left-0 right-0 bg-gradient-to-b from-[#0F2847] to-[#1B4B7F] border-b border-[#8B2635]/20 p-4 space-y-1 max-h-[calc(100vh-4rem)] overflow-y-auto">
+                    <div className="absolute top-16 left-0 right-0 bg-gradient-to-b from-[#0F2847] to-[#1B4B7F] border-b border-[#8B2635]/20 p-4 space-y-2 max-h-[calc(100vh-4rem)] overflow-y-auto shadow-2xl">
                         {navItems.map((item) => {
                             const Icon = item.icon;
                             const isActive = currentPageName === item.path;
@@ -149,10 +164,10 @@ export default function Layout({ children, currentPageName }) {
                                     key={item.path}
                                     to={createPageUrl(item.path)}
                                     onClick={() => setMobileMenuOpen(false)}
-                                    className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all font-light ${
+                                    className={`flex items-center gap-3 px-4 py-4 rounded-xl transition-all font-light touch-manipulation active:scale-98 ${
                                         isActive
-                                            ? 'bg-[#8B2635] text-white'
-                                            : 'text-white/70 hover:text-white hover:bg-white/5'
+                                            ? 'bg-[#8B2635] text-white shadow-lg'
+                                            : 'text-white/70 hover:text-white hover:bg-white/5 active:bg-white/10'
                                     }`}
                                 >
                                     <Icon className="w-5 h-5" />
@@ -172,7 +187,7 @@ export default function Layout({ children, currentPageName }) {
             </div>
 
             {/* Main Content */}
-            <main className="flex-1 lg:ml-0 mt-16 lg:mt-0">
+            <main className="flex-1 lg:ml-0 mt-16 lg:mt-0 pb-safe">
                 {children}
             </main>
         </div>
