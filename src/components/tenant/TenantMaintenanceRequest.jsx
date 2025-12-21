@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -7,18 +8,30 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
-import { Wrench, Plus, CheckCircle, Clock, Camera } from 'lucide-react';
+import { Wrench, Plus, CheckCircle, Clock, Camera, Star } from 'lucide-react';
 import { toast } from 'sonner';
 import { format } from 'date-fns';
+import TenantFeedback from './TenantFeedback';
 
 export default function TenantMaintenanceRequest({ property, existingTasks }) {
     const [showForm, setShowForm] = useState(false);
     const [submitting, setSubmitting] = useState(false);
+    const [showFeedback, setShowFeedback] = useState(null);
     const [formData, setFormData] = useState({
         title: '',
         category: 'other',
         description: '',
         priority: 'medium'
+    });
+
+    const { data: assignments = [] } = useQuery({
+        queryKey: ['tenantAssignments'],
+        queryFn: () => base44.entities.MaintenanceAssignment.filter({ property_name: property.name })
+    });
+
+    const { data: feedbacks = [] } = useQuery({
+        queryKey: ['tenantFeedbacks'],
+        queryFn: () => base44.entities.MaintenanceFeedback.list()
     });
 
     const handleSubmit = async (e) => {
@@ -166,32 +179,62 @@ export default function TenantMaintenanceRequest({ property, existingTasks }) {
                         </div>
                     ) : (
                         <div className="space-y-3">
-                            {existingTasks.map(task => (
-                                <div key={task.id} className="p-3 bg-gray-50 rounded-lg">
-                                    <div className="flex items-start justify-between mb-2">
-                                        <div className="flex items-center gap-2">
-                                            <Wrench className="w-4 h-4 text-[#C5A059]" />
-                                            <span className="font-medium text-sm">{task.title}</span>
+                            {existingTasks.map(task => {
+                                const taskAssignment = assignments.find(a => a.maintenance_task_id === task.id);
+                                const hasFeedback = feedbacks.some(f => f.maintenance_task_id === task.id);
+                                const canProvideFeedback = taskAssignment?.status === 'completed' && !hasFeedback;
+
+                                return (
+                                    <div key={task.id} className="space-y-2">
+                                        <div className="p-3 bg-gray-50 rounded-lg">
+                                            <div className="flex items-start justify-between mb-2">
+                                                <div className="flex items-center gap-2">
+                                                    <Wrench className="w-4 h-4 text-[#C5A059]" />
+                                                    <span className="font-medium text-sm">{task.title}</span>
+                                                </div>
+                                                <Badge className={
+                                                    task.status === 'completed' ? 'bg-green-100 text-green-700' :
+                                                    task.status === 'in_progress' ? 'bg-blue-100 text-blue-700' :
+                                                    task.status === 'overdue' ? 'bg-red-100 text-red-700' :
+                                                    'bg-yellow-100 text-yellow-700'
+                                                }>
+                                                    {task.status}
+                                                </Badge>
+                                            </div>
+                                            {task.notes && (
+                                                <p className="text-xs text-gray-600 mb-2">{task.notes}</p>
+                                            )}
+                                            {taskAssignment && (
+                                                <div className="text-xs text-gray-600 mb-2">
+                                                    Assigned to: {taskAssignment.vendor_name}
+                                                </div>
+                                            )}
+                                            {task.next_due_date && (
+                                                <div className="flex items-center gap-2 text-xs text-gray-500">
+                                                    <Clock className="w-3 h-3" />
+                                                    Scheduled: {format(new Date(task.next_due_date), 'MMM d, yyyy')}
+                                                </div>
+                                            )}
+                                            {canProvideFeedback && (
+                                                <Button
+                                                    size="sm"
+                                                    onClick={() => setShowFeedback(taskAssignment.id)}
+                                                    className="w-full mt-2 bg-[#C5A059]"
+                                                >
+                                                    <Star className="w-3 h-3 mr-1" />
+                                                    Rate Service
+                                                </Button>
+                                            )}
                                         </div>
-                                        <Badge className={
-                                            task.status === 'completed' ? 'bg-green-100 text-green-700' :
-                                            task.status === 'overdue' ? 'bg-red-100 text-red-700' :
-                                            'bg-yellow-100 text-yellow-700'
-                                        }>
-                                            {task.status}
-                                        </Badge>
+                                        {showFeedback === taskAssignment?.id && (
+                                            <TenantFeedback
+                                                assignment={{...taskAssignment, tenant_email: property.tenant_email}}
+                                                onSubmitted={() => setShowFeedback(null)}
+                                            />
+                                        )}
                                     </div>
-                                    {task.notes && (
-                                        <p className="text-xs text-gray-600 mb-2">{task.notes}</p>
-                                    )}
-                                    {task.next_due_date && (
-                                        <div className="flex items-center gap-2 text-xs text-gray-500">
-                                            <Clock className="w-3 h-3" />
-                                            Scheduled: {format(new Date(task.next_due_date), 'MMM d, yyyy')}
-                                        </div>
-                                    )}
-                                </div>
-                            ))}
+                                );
+                            })}
                         </div>
                     )}
                 </CardContent>

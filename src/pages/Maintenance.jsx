@@ -16,6 +16,7 @@ import PrintButton from '@/components/PrintButton';
 import ShareDialog from '@/components/collaboration/ShareDialog';
 import CommentsSection from '@/components/collaboration/CommentsSection';
 import AIMaintenanceSuggestions from '@/components/maintenance/AIMaintenanceSuggestions';
+import VendorAssignment from '@/components/maintenance/VendorAssignment';
 import { UserCircle } from 'lucide-react';
 
 const categoryLabels = {
@@ -318,16 +319,19 @@ export default function Maintenance() {
                                         </div>
                                     )}
 
-                                    <div className="mt-4 pt-4 border-t flex gap-2">
-                                        <ShareDialog 
-                                            entityType="MaintenanceTask" 
-                                            entityId={task.id} 
-                                            entityName={task.title}
-                                        />
-                                        <CommentsSection 
-                                            entityType="MaintenanceTask" 
-                                            entityId={task.id}
-                                        />
+                                    <div className="mt-4 pt-4 border-t space-y-3">
+                                        <VendorAssignment task={task} onAssigned={refetch} />
+                                        <div className="flex gap-2">
+                                            <ShareDialog 
+                                                entityType="MaintenanceTask" 
+                                                entityId={task.id} 
+                                                entityName={task.title}
+                                            />
+                                            <CommentsSection 
+                                                entityType="MaintenanceTask" 
+                                                entityId={task.id}
+                                            />
+                                        </div>
                                     </div>
                                 </CardContent>
                             </Card>
