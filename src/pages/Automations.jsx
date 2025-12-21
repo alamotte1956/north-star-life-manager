@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
-import { Zap, Plus, Calendar, Mail, Webhook, Clock } from 'lucide-react';
+import { Zap, Plus, Calendar, Mail, Webhook, Clock, Bell } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import CSVImporter from '../components/automation/CSVImporter';
+import SubscriptionAutomation from '../components/automation/SubscriptionAutomation';
 
 export default function Automations() {
     const { data: automations = [], refetch } = useQuery({
@@ -47,6 +48,39 @@ export default function Automations() {
                 {/* CSV Importer */}
                 <div className="mb-8">
                     <CSVImporter onImportComplete={refetch} />
+                </div>
+
+                {/* Subscription Automation */}
+                <div className="mb-8">
+                    <SubscriptionAutomation onUpdate={refetch} />
+                </div>
+
+                {/* Quick Actions */}
+                <div className="mb-8">
+                    <Card>
+                        <CardContent className="pt-6">
+                            <div className="flex items-center justify-between">
+                                <div>
+                                    <h3 className="text-lg font-light mb-1">Check Subscription Renewals</h3>
+                                    <p className="text-sm text-black/60">Manually trigger renewal notifications</p>
+                                </div>
+                                <Button
+                                    onClick={async () => {
+                                        try {
+                                            await base44.functions.invoke('checkSubscriptionRenewals');
+                                            alert('Renewal check completed');
+                                        } catch (error) {
+                                            alert('Error: ' + error.message);
+                                        }
+                                    }}
+                                    className="bg-gradient-to-r from-[#D4AF37] to-[#F4D03F]"
+                                >
+                                    <Bell className="w-4 h-4 mr-2" />
+                                    Check Now
+                                </Button>
+                            </div>
+                        </CardContent>
+                    </Card>
                 </div>
 
                 {/* Recent Transactions */}
@@ -129,14 +163,14 @@ export default function Automations() {
                         <CardContent className="pt-6">
                             <Mail className="w-8 h-8 text-[#D4AF37] mb-3" />
                             <h3 className="font-medium mb-2">Email Parsing</h3>
-                            <p className="text-sm text-black/60">Auto-create records from bills and receipts sent to your email</p>
+                            <p className="text-sm text-black/60">Auto-create subscriptions from invoice emails (Netflix, Spotify, etc.)</p>
                         </CardContent>
                     </Card>
                     <Card>
                         <CardContent className="pt-6">
-                            <Calendar className="w-8 h-8 text-[#D4AF37] mb-3" />
-                            <h3 className="font-medium mb-2">Calendar Sync</h3>
-                            <p className="text-sm text-black/60">Automatically create maintenance tasks from calendar events</p>
+                            <Bell className="w-8 h-8 text-[#D4AF37] mb-3" />
+                            <h3 className="font-medium mb-2">Renewal Tracking</h3>
+                            <p className="text-sm text-black/60">Automatic notifications for upcoming subscription renewals</p>
                         </CardContent>
                     </Card>
                     <Card>
