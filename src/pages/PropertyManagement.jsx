@@ -11,6 +11,7 @@ import { toast } from 'sonner';
 import { format } from 'date-fns';
 import PrintButton from '@/components/PrintButton';
 import TenantCommunications from '@/components/property/TenantCommunications';
+import RentCollectionManager from '@/components/property/RentCollectionManager';
 
 export default function PropertyManagement() {
     const [selectedProperty, setSelectedProperty] = useState(null);
@@ -159,10 +160,15 @@ export default function PropertyManagement() {
                 <Tabs defaultValue="properties" className="space-y-6">
                     <TabsList>
                         <TabsTrigger value="properties">Properties</TabsTrigger>
+                        <TabsTrigger value="rent">Rent Collection</TabsTrigger>
                         <TabsTrigger value="maintenance">Maintenance</TabsTrigger>
                         <TabsTrigger value="documents">Documents</TabsTrigger>
                         <TabsTrigger value="communications">Tenant Communications</TabsTrigger>
                     </TabsList>
+
+                    <TabsContent value="rent">
+                        <RentCollectionManager properties={properties} />
+                    </TabsContent>
 
                     <TabsContent value="properties">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
