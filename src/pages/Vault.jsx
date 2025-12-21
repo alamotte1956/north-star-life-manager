@@ -89,5 +89,6 @@ export default function Vault() {
                 )}
             </div>
         </div>
+        </PermissionGuard>
     );
 }

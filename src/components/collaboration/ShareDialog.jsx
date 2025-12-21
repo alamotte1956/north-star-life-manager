@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { base44 } from '@/api/base44Client';
-import { Share2, X, Check } from 'lucide-react';
+import { Share2, X, Check, Shield } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -8,12 +8,13 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
 import { useQuery } from '@tanstack/react-query';
+import { toast } from 'sonner';
 
-export default function ShareDialog({ entityType, entityId, entityName }) {
-    const [open, setOpen] = useState(false);
+export default function ShareDialog({ open, onOpenChange, entityType, entityId, entityName }) {
     const [email, setEmail] = useState('');
     const [permission, setPermission] = useState('view');
     const [notes, setNotes] = useState('');
+    const [roleId, setRoleId] = useState('');
 
     const { data: shares = [], refetch } = useQuery({
         queryKey: ['shares', entityType, entityId],
@@ -21,20 +22,38 @@ export default function ShareDialog({ entityType, entityId, entityName }) {
         enabled: open
     });
 
+    const { data: roles = [] } = useQuery({
+        queryKey: ['customRoles'],
+        queryFn: () => base44.entities.CustomRole.list(),
+        enabled: open
+    });
+
+    const { data: users = [] } = useQuery({
+        queryKey: ['users'],
+        queryFn: () => base44.entities.User.list(),
+        enabled: open
+    });
+
     const handleShare = async (e) => {
         e.preventDefault();
-        await base44.entities.SharedAccess.create({
-            entity_type: entityType,
-            entity_id: entityId,
-            entity_name: entityName,
-            shared_with_email: email,
-            permission_level: permission,
-            notes
-        });
-        setEmail('');
-        setPermission('view');
-        setNotes('');
-        refetch();
+        try {
+            await base44.entities.SharedAccess.create({
+                entity_type: entityType,
+                entity_id: entityId,
+                entity_name: entityName,
+                shared_with_email: email,
+                permission_level: permission,
+                notes
+            });
+            setEmail('');
+            setPermission('view');
+            setNotes('');
+            setRoleId('');
+            toast.success('Access shared successfully!');
+            refetch();
+        } catch (error) {
+            toast.error('Failed to share access');
+        }
     };
 
     const handleRemoveShare = async (shareId) => {
@@ -42,14 +61,14 @@ export default function ShareDialog({ entityType, entityId, entityName }) {
         refetch();
     };
 
+    const getSelectedUserRole = (userEmail) => {
+        const user = users.find(u => u.email === userEmail);
+        if (!user?.custom_role_id) return null;
+        return roles.find(r => r.id === user.custom_role_id);
+    };
+
     return (
-        <Dialog open={open} onOpenChange={setOpen}>
-            <DialogTrigger asChild>
-                <Button variant="outline" size="sm" className="gap-2">
-                    <Share2 className="w-4 h-4" />
-                    Share
-                </Button>
-            </DialogTrigger>
+        <Dialog open={open} onOpenChange={onOpenChange}>
             <DialogContent className="max-w-md">
                 <DialogHeader>
                     <DialogTitle>Share {entityName}</DialogTitle>
@@ -57,14 +76,30 @@ export default function ShareDialog({ entityType, entityId, entityName }) {
 
                 <form onSubmit={handleShare} className="space-y-4">
                     <div>
-                        <Label>Email Address</Label>
-                        <Input
-                            type="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            placeholder="colleague@example.com"
-                            required
-                        />
+                        <Label>Share With</Label>
+                        <Select value={email} onValueChange={(val) => setEmail(val)}>
+                            <SelectTrigger>
+                                <SelectValue placeholder="Select a user..." />
+                            </SelectTrigger>
+                            <SelectContent>
+                                {users.map(user => {
+                                    const userRole = getSelectedUserRole(user.email);
+                                    return (
+                                        <SelectItem key={user.id} value={user.email}>
+                                            <div className="flex items-center gap-2">
+                                                <span>{user.full_name || user.email}</span>
+                                                {userRole && (
+                                                    <Badge variant="outline" className="text-xs">
+                                                        <Shield className="w-3 h-3 mr-1" />
+                                                        {userRole.role_name}
+                                                    </Badge>
+                                                )}
+                                            </div>
+                                        </SelectItem>
+                                    );
+                                })}
+                            </SelectContent>
+                        </Select>
                     </div>
 
                     <div>
