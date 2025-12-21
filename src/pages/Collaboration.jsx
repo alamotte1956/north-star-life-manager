@@ -1,12 +1,23 @@
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
-import { Users, Share2, MessageSquare, CheckSquare } from 'lucide-react';
+import { Users, Share2, MessageSquare, CheckSquare, Home, Car, Gem, Wrench, DollarSign, FileText, Receipt, Zap } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { format } from 'date-fns';
 
 export default function Collaboration() {
+    const entityIcons = {
+        Property: Home,
+        Vehicle: Car,
+        ValuableItem: Gem,
+        MaintenanceTask: Wrench,
+        Subscription: DollarSign,
+        Document: FileText,
+        Transaction: Receipt,
+        Automation: Zap
+    };
+
     const { data: user } = useQuery({
         queryKey: ['currentUser'],
         queryFn: () => base44.auth.me()
@@ -108,21 +119,29 @@ export default function Collaboration() {
                         <h2 className="text-2xl font-light text-[#1A2B44] mb-4">Shared with Me</h2>
                         {sharedWithMe.length > 0 ? (
                             <div className="space-y-3">
-                                {sharedWithMe.map(share => (
-                                    <Card key={share.id}>
-                                        <CardContent className="pt-4">
-                                            <div className="flex items-start justify-between">
-                                                <div>
-                                                    <h3 className="font-medium text-[#1A2B44]">{share.entity_name}</h3>
-                                                    <p className="text-sm text-[#1A2B44]/60">
-                                                        {share.entity_type} • Shared by {share.created_by}
-                                                    </p>
+                                {sharedWithMe.map(share => {
+                                    const Icon = entityIcons[share.entity_type] || Share2;
+                                    return (
+                                        <Card key={share.id}>
+                                            <CardContent className="pt-4">
+                                                <div className="flex items-start justify-between">
+                                                    <div className="flex items-center gap-3">
+                                                        <div className="bg-[#D4AF37]/10 p-2 rounded-lg">
+                                                            <Icon className="w-4 h-4 text-[#D4AF37]" />
+                                                        </div>
+                                                        <div>
+                                                            <h3 className="font-medium text-[#1A2B44]">{share.entity_name}</h3>
+                                                            <p className="text-sm text-[#1A2B44]/60">
+                                                                {share.entity_type} • Shared by {share.created_by}
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    <Badge>{share.permission_level}</Badge>
                                                 </div>
-                                                <Badge>{share.permission_level}</Badge>
-                                            </div>
-                                        </CardContent>
-                                    </Card>
-                                ))}
+                                            </CardContent>
+                                        </Card>
+                                    );
+                                })}
                             </div>
                         ) : (
                             <p className="text-[#1A2B44]/40 text-center py-8">No items shared with you yet</p>
