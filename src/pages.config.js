@@ -29,6 +29,8 @@ import TenantPortal from './pages/TenantPortal';
 import FamilyManagement from './pages/FamilyManagement';
 import FamilyNotifications from './pages/FamilyNotifications';
 import FamilyRoleManagement from './pages/FamilyRoleManagement';
+import FamilyWorkflows from './pages/FamilyWorkflows';
+import FamilyToDo from './pages/FamilyToDo';
 import __Layout from './Layout.jsx';
 
 
@@ -64,6 +66,8 @@ export const PAGES = {
     "FamilyManagement": FamilyManagement,
     "FamilyNotifications": FamilyNotifications,
     "FamilyRoleManagement": FamilyRoleManagement,
+    "FamilyWorkflows": FamilyWorkflows,
+    "FamilyToDo": FamilyToDo,
 }
 
 export const pagesConfig = {

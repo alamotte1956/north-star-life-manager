@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { createPageUrl } from './utils';
 import {
     LayoutDashboard, FileText, Shield, Home, Wrench, Users, Car,
-    DollarSign, Gem, Plane, Heart, Calendar, LogOut, Menu, X, Search, Plug, TrendingUp
+    DollarSign, Gem, Plane, Heart, Calendar, LogOut, Menu, X, Search, Plug, TrendingUp, Zap, CheckCircle
 } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import GlobalSearch from '@/components/GlobalSearch';
@@ -59,7 +59,9 @@ export default function Layout({ children, currentPageName }) {
         { name: 'Integrations', icon: Plug, path: 'Integrations' },
         { name: 'Email Assistant', icon: Plug, path: 'EmailAssistant' },
         { name: 'Role Management', icon: Shield, path: 'RoleManagement' },
-        { name: 'Family Roles', icon: Shield, path: 'FamilyRoleManagement' }
+        { name: 'Family Roles', icon: Shield, path: 'FamilyRoleManagement' },
+        { name: 'Workflows', icon: Zap, path: 'FamilyWorkflows' },
+        { name: 'My To-Do', icon: CheckCircle, path: 'FamilyToDo' }
         ];
 
     return (
