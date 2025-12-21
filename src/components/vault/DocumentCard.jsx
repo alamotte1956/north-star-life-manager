@@ -47,10 +47,10 @@ export default function DocumentCard({ document }) {
                     </div>
                 </div>
                 <div className="flex-1 min-w-0">
-                    <h3 className="text-lg font-light text-[#1A2B44] truncate mb-1">
+                    <h3 className="text-lg font-light text-[#D4AF37] truncate mb-1">
                         {document.title}
                     </h3>
-                    <p className="text-sm text-[#1A2B44]/50 font-light">
+                    <p className="text-sm text-[#D4AF37]/60 font-light">
                         {format(new Date(document.created_date), 'MMM d, yyyy')}
                     </p>
                 </div>

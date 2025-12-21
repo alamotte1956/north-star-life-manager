@@ -125,8 +125,8 @@ export default function Layout({ children, currentPageName }) {
                             </div>
                         </div>
                         <div>
-                            <h1 className="text-lg font-light text-white tracking-wide">North Star</h1>
-                            <p className="text-[#D4AF37] text-xs font-light">Life Manager</p>
+                            <h1 className="text-lg font-light text-[#D4AF37] tracking-wide">North Star</h1>
+                            <p className="text-[#F4D03F] text-xs font-light">Life Manager</p>
                         </div>
                     </div>
                     <button
@@ -150,7 +150,7 @@ export default function Layout({ children, currentPageName }) {
                                 className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all font-light ${
                                     isActive
                                         ? 'bg-[#D4AF37] text-black shadow-lg shadow-[#D4AF37]/30'
-                                        : 'text-white/70 hover:text-white hover:bg-white/5'
+                                        : 'text-[#D4AF37]/70 hover:text-[#D4AF37] hover:bg-white/5'
                                 }`}
                             >
                                 <Icon className="w-5 h-5" />
@@ -163,7 +163,7 @@ export default function Layout({ children, currentPageName }) {
                         <div className="p-4 border-t border-[#D4AF37]/20">
                     <button
                         onClick={handleLogout}
-                        className="flex items-center gap-3 px-4 py-4 rounded-xl text-white/70 hover:text-white hover:bg-white/5 transition-all font-light w-full touch-manipulation active:bg-white/10"
+                        className="flex items-center gap-3 px-4 py-4 rounded-xl text-[#D4AF37]/70 hover:text-[#D4AF37] hover:bg-white/5 transition-all font-light w-full touch-manipulation active:bg-white/10"
                     >
                         <LogOut className="w-5 h-5" />
                         Logout
@@ -179,7 +179,7 @@ export default function Layout({ children, currentPageName }) {
                             <span className="text-black font-bold">★</span>
                         </div>
                         <div>
-                            <h1 className="text-sm font-light text-white">North Star</h1>
+                            <h1 className="text-sm font-light text-[#D4AF37]">North Star</h1>
                         </div>
                     </div>
                     <div className="flex items-center gap-2">
@@ -214,7 +214,7 @@ export default function Layout({ children, currentPageName }) {
                                     className={`flex items-center gap-3 px-4 py-4 rounded-xl transition-all font-light touch-manipulation active:scale-98 ${
                                         isActive
                                             ? 'bg-[#D4AF37] text-black shadow-lg'
-                                            : 'text-white/70 hover:text-white hover:bg-white/5 active:bg-white/10'
+                                            : 'text-[#D4AF37]/70 hover:text-[#D4AF37] hover:bg-white/5 active:bg-white/10'
                                     }`}
                                 >
                                     <Icon className="w-5 h-5" />
@@ -224,7 +224,7 @@ export default function Layout({ children, currentPageName }) {
                         })}
                         <button
                             onClick={handleLogout}
-                            className="flex items-center gap-3 px-4 py-3 rounded-xl text-white/70 hover:text-white hover:bg-white/5 transition-all font-light w-full"
+                            className="flex items-center gap-3 px-4 py-3 rounded-xl text-[#D4AF37]/70 hover:text-[#D4AF37] hover:bg-white/5 transition-all font-light w-full"
                         >
                             <LogOut className="w-5 h-5" />
                             Logout
