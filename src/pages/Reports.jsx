@@ -1,552 +1,454 @@
 import React, { useState, useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
-import { FileText, Download, DollarSign, TrendingUp, Building2, AlertTriangle, Sparkles } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
-import { format, startOfYear, endOfYear, startOfMonth, endOfMonth, isWithinInterval, parseISO } from 'date-fns';
-import PropertyAnalyticsReport from '../components/reports/PropertyAnalyticsReport';
-import AnomalyReport from '../components/reports/AnomalyReport';
-import { toast } from 'sonner';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { FileText, Users, Zap, HardDrive, Calendar, CheckCircle, AlertCircle, TrendingUp, Clock } from 'lucide-react';
+import { BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { format, subDays, isWithinInterval, parseISO } from 'date-fns';
 
 export default function Reports() {
-    const [period, setPeriod] = useState('year');
-    const [year, setYear] = useState(new Date().getFullYear());
-    const [month, setMonth] = useState(new Date().getMonth() + 1);
-    const [exporting, setExporting] = useState(false);
-    const [activeTab, setActiveTab] = useState('financial');
-    const [propertyAnalytics, setPropertyAnalytics] = useState(null);
-    const [loadingPropertyAnalytics, setLoadingPropertyAnalytics] = useState(false);
-    const [anomalyData, setAnomalyData] = useState(null);
-    const [loadingAnomalies, setLoadingAnomalies] = useState(false);
-
-    const { data: vehicles = [] } = useQuery({
-        queryKey: ['vehicles-reports'],
-        queryFn: () => base44.entities.Vehicle.list()
+    const [dateRange, setDateRange] = useState({
+        from: subDays(new Date(), 30),
+        to: new Date()
     });
 
-    const { data: subscriptions = [] } = useQuery({
-        queryKey: ['subscriptions-reports'],
-        queryFn: () => base44.entities.Subscription.list()
+    const { data: user } = useQuery({
+        queryKey: ['user'],
+        queryFn: () => base44.auth.me()
     });
 
-    const { data: maintenanceTasks = [] } = useQuery({
-        queryKey: ['maintenance-reports'],
-        queryFn: () => base44.entities.MaintenanceTask.list()
+    const { data: userRecord } = useQuery({
+        queryKey: ['userRecord'],
+        queryFn: () => base44.entities.User.filter({ email: user?.email }),
+        enabled: !!user
     });
 
-    const { data: properties = [] } = useQuery({
-        queryKey: ['properties-reports'],
-        queryFn: () => base44.entities.Property.list()
+    const family_id = userRecord?.[0]?.family_id;
+
+    const { data: documents = [] } = useQuery({
+        queryKey: ['documents'],
+        queryFn: () => base44.entities.Document.list('-created_date', 500),
+        enabled: !!family_id
     });
 
-    const dateRange = useMemo(() => {
-        if (period === 'year') {
-            return {
-                start: startOfYear(new Date(year, 0, 1)),
-                end: endOfYear(new Date(year, 0, 1))
-            };
-        } else {
-            return {
-                start: startOfMonth(new Date(year, month - 1, 1)),
-                end: endOfMonth(new Date(year, month - 1, 1))
-            };
-        }
-    }, [period, year, month]);
+    const { data: tasks = [] } = useQuery({
+        queryKey: ['documentTasks'],
+        queryFn: () => base44.entities.DocumentTask.filter({ family_id }),
+        enabled: !!family_id
+    });
 
-    const financialSummary = useMemo(() => {
-        const summary = {
-            subscriptions: 0,
-            maintenance: 0,
-            properties: 0,
-            vehicles: 0,
-            total: 0,
-            details: {
-                subscriptions: [],
-                maintenance: [],
-                properties: [],
-                vehicles: []
-            }
+    const { data: workflowRules = [] } = useQuery({
+        queryKey: ['workflowRules'],
+        queryFn: () => base44.entities.WorkflowRule.filter({ family_id }),
+        enabled: !!family_id
+    });
+
+    // Filter data by date range
+    const filteredDocuments = useMemo(() => {
+        return documents.filter(doc => {
+            const docDate = parseISO(doc.created_date);
+            return isWithinInterval(docDate, { start: dateRange.from, end: dateRange.to });
+        });
+    }, [documents, dateRange]);
+
+    const filteredTasks = useMemo(() => {
+        return tasks.filter(task => {
+            const taskDate = parseISO(task.created_date);
+            return isWithinInterval(taskDate, { start: dateRange.from, end: dateRange.to });
+        });
+    }, [tasks, dateRange]);
+
+    // Document metrics
+    const documentVolumeByDay = useMemo(() => {
+        const volumeMap = {};
+        filteredDocuments.forEach(doc => {
+            const day = format(parseISO(doc.created_date), 'MMM dd');
+            volumeMap[day] = (volumeMap[day] || 0) + 1;
+        });
+        return Object.entries(volumeMap).map(([date, count]) => ({ date, count }));
+    }, [filteredDocuments]);
+
+    const documentsByCategory = useMemo(() => {
+        const categoryMap = {};
+        filteredDocuments.forEach(doc => {
+            const cat = doc.category || 'other';
+            categoryMap[cat] = (categoryMap[cat] || 0) + 1;
+        });
+        return Object.entries(categoryMap).map(([name, value]) => ({ name, value }));
+    }, [filteredDocuments]);
+
+    const mostActiveUsers = useMemo(() => {
+        const userMap = {};
+        filteredDocuments.forEach(doc => {
+            const email = doc.created_by || 'Unknown';
+            userMap[email] = (userMap[email] || 0) + 1;
+        });
+        return Object.entries(userMap)
+            .map(([email, uploads]) => ({ email, uploads }))
+            .sort((a, b) => b.uploads - a.uploads)
+            .slice(0, 5);
+    }, [filteredDocuments]);
+
+    const overdueTasks = useMemo(() => {
+        return tasks.filter(task => {
+            if (task.status === 'completed' || !task.due_date) return false;
+            return new Date(task.due_date) < new Date();
+        });
+    }, [tasks]);
+
+    const tasksByStatus = useMemo(() => {
+        const statusMap = {};
+        filteredTasks.forEach(task => {
+            const status = task.status || 'pending';
+            statusMap[status] = (statusMap[status] || 0) + 1;
+        });
+        return Object.entries(statusMap).map(([name, value]) => ({ name, value }));
+    }, [filteredTasks]);
+
+    const workflowMetrics = useMemo(() => {
+        return workflowRules.map(rule => ({
+            name: rule.rule_name,
+            triggers: rule.trigger_count || 0
+        })).sort((a, b) => b.triggers - a.triggers);
+    }, [workflowRules]);
+
+    const storageUsage = useMemo(() => {
+        const totalDocs = documents.length;
+        const assumedAvgSizeMB = 2;
+        const estimatedUsageMB = totalDocs * assumedAvgSizeMB;
+        const quotaGB = 5;
+        return {
+            used: estimatedUsageMB,
+            total: quotaGB * 1024,
+            percentage: Math.min((estimatedUsageMB / (quotaGB * 1024)) * 100, 100)
         };
+    }, [documents]);
 
-        // Subscriptions - annualize or calculate for period
-        subscriptions.forEach(sub => {
-            if (sub.billing_amount) {
-                let annualCost = 0;
-                switch (sub.billing_frequency) {
-                    case 'monthly': annualCost = sub.billing_amount * 12; break;
-                    case 'quarterly': annualCost = sub.billing_amount * 4; break;
-                    case 'semi_annual': annualCost = sub.billing_amount * 2; break;
-                    case 'annual': annualCost = sub.billing_amount; break;
-                    default: annualCost = sub.billing_amount;
-                }
-                
-                const periodCost = period === 'year' ? annualCost : annualCost / 12;
-                summary.subscriptions += periodCost;
-                summary.details.subscriptions.push({
-                    name: sub.name,
-                    provider: sub.provider,
-                    amount: periodCost
-                });
-            }
-        });
-
-        // Maintenance - filter by date if completed
-        maintenanceTasks.forEach(task => {
-            if (task.estimated_cost && task.last_completed) {
-                try {
-                    const completedDate = parseISO(task.last_completed);
-                    if (isWithinInterval(completedDate, dateRange)) {
-                        summary.maintenance += task.estimated_cost;
-                        summary.details.maintenance.push({
-                            title: task.title,
-                            property: task.property_name,
-                            amount: task.estimated_cost,
-                            date: task.last_completed
-                        });
-                    }
-                } catch (e) {
-                    // Skip invalid dates
-                }
-            }
-        });
-
-        // Properties - annual tax divided by period
-        properties.forEach(prop => {
-            if (prop.property_tax_annual) {
-                const periodTax = period === 'year' ? prop.property_tax_annual : prop.property_tax_annual / 12;
-                summary.properties += periodTax;
-                summary.details.properties.push({
-                    name: prop.name,
-                    amount: periodTax,
-                    type: 'Property Tax'
-                });
-            }
-        });
-
-        // Vehicles - just list them for reference
-        vehicles.forEach(vehicle => {
-            if (vehicle.last_service_date) {
-                try {
-                    const serviceDate = parseISO(vehicle.last_service_date);
-                    if (isWithinInterval(serviceDate, dateRange)) {
-                        summary.details.vehicles.push({
-                            name: `${vehicle.year} ${vehicle.make} ${vehicle.model}`,
-                            date: vehicle.last_service_date
-                        });
-                    }
-                } catch (e) {
-                    // Skip invalid dates
-                }
-            }
-        });
-
-        summary.total = summary.subscriptions + summary.maintenance + summary.properties;
-        return summary;
-    }, [subscriptions, maintenanceTasks, properties, vehicles, dateRange, period]);
-
-    const handleExport = async () => {
-        setExporting(true);
-        try {
-            const response = await base44.functions.invoke('generateFinancialReport', {
-                period,
-                year,
-                month,
-                summary: financialSummary
-            });
-            
-            const blob = new Blob([response.data], { type: 'application/pdf' });
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `financial-report-${period}-${year}${period === 'month' ? `-${month}` : ''}.pdf`;
-            document.body.appendChild(a);
-            a.click();
-            window.URL.revokeObjectURL(url);
-            a.remove();
-        } catch (error) {
-            console.error('Export failed:', error);
-        } finally {
-            setExporting(false);
-        }
-    };
-
-    const generatePropertyAnalytics = async () => {
-        setLoadingPropertyAnalytics(true);
-        try {
-            const result = await base44.functions.invoke('generatePropertyAnalytics', {
-                timeframe: 'yearly'
-            });
-            setPropertyAnalytics(result.data);
-            toast.success('Property analytics generated!');
-        } catch (error) {
-            toast.error('Failed to generate analytics');
-            console.error(error);
-        } finally {
-            setLoadingPropertyAnalytics(false);
-        }
-    };
-
-    const detectAnomalies = async () => {
-        setLoadingAnomalies(true);
-        try {
-            const result = await base44.functions.invoke('detectTransactionAnomalies', {
-                timeframe_days: 90
-            });
-            setAnomalyData(result.data);
-            toast.success('Anomaly detection complete!');
-        } catch (error) {
-            toast.error('Failed to detect anomalies');
-            console.error(error);
-        } finally {
-            setLoadingAnomalies(false);
-        }
-    };
-
-    const years = Array.from({ length: 10 }, (_, i) => new Date().getFullYear() - i);
-    const months = [
-        { value: 1, label: 'January' },
-        { value: 2, label: 'February' },
-        { value: 3, label: 'March' },
-        { value: 4, label: 'April' },
-        { value: 5, label: 'May' },
-        { value: 6, label: 'June' },
-        { value: 7, label: 'July' },
-        { value: 8, label: 'August' },
-        { value: 9, label: 'September' },
-        { value: 10, label: 'October' },
-        { value: 11, label: 'November' },
-        { value: 12, label: 'December' }
-    ];
+    const COLORS = ['#C5A059', '#0F172A', '#64748B', '#164E63', '#D4AF37', '#8B7355'];
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-[#F8F7F4] via-white to-[#F8F7F4]">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-12">
-                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
+        <div className="min-h-screen bg-gradient-to-br from-[#F8F9FA] via-white to-[#F8F9FA]">
+            <div className="max-w-7xl mx-auto px-6 py-12">
+                <div className="flex items-center justify-between mb-8">
                     <div className="flex items-center gap-4">
                         <div className="relative">
-                            <div className="absolute inset-0 bg-[#C9A95C]/30 rounded-2xl blur-xl" />
-                            <div className="relative bg-gradient-to-br from-[#1A2B44] to-[#0F1B2E] p-4 rounded-2xl">
-                                <FileText className="w-8 h-8 text-[#C9A95C]" />
+                            <div className="absolute inset-0 bg-[#C5A059]/30 rounded-2xl blur-xl" />
+                            <div className="relative bg-gradient-to-br from-[#0F172A] to-[#1e293b] p-4 rounded-2xl">
+                                <TrendingUp className="w-8 h-8 text-[#C5A059]" />
                             </div>
                         </div>
                         <div>
-                            <h1 className="text-4xl font-light text-[#1A2B44]">Reports & Analytics</h1>
-                            <p className="text-[#1A2B44]/60 font-light">AI-powered insights & financial reports</p>
+                            <h1 className="text-4xl font-light text-[#0F172A]" style={{ fontFamily: 'Playfair Display, serif' }}>
+                                Reports & Analytics
+                            </h1>
+                            <p className="text-[#64748B] font-light">Family document management insights</p>
                         </div>
                     </div>
+
+                    <Popover>
+                        <PopoverTrigger asChild>
+                            <Button variant="outline" className="border-[#0F172A]/20">
+                                <Calendar className="w-4 h-4 mr-2" />
+                                {format(dateRange.from, 'MMM dd')} - {format(dateRange.to, 'MMM dd, yyyy')}
+                            </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-0" align="end">
+                            <div className="p-3 space-y-2">
+                                <Button
+                                    variant="outline"
+                                    size="sm"
+                                    onClick={() => setDateRange({ from: subDays(new Date(), 7), to: new Date() })}
+                                    className="w-full"
+                                >
+                                    Last 7 Days
+                                </Button>
+                                <Button
+                                    variant="outline"
+                                    size="sm"
+                                    onClick={() => setDateRange({ from: subDays(new Date(), 30), to: new Date() })}
+                                    className="w-full"
+                                >
+                                    Last 30 Days
+                                </Button>
+                                <Button
+                                    variant="outline"
+                                    size="sm"
+                                    onClick={() => setDateRange({ from: subDays(new Date(), 90), to: new Date() })}
+                                    className="w-full"
+                                >
+                                    Last 90 Days
+                                </Button>
+                            </div>
+                        </PopoverContent>
+                    </Popover>
                 </div>
 
-                <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-6">
-                    <TabsList className="bg-white border border-[#1A2B44]/10">
-                        <TabsTrigger value="financial">Financial Summary</TabsTrigger>
-                        <TabsTrigger value="property">Property Analytics</TabsTrigger>
-                        <TabsTrigger value="anomalies">Anomaly Detection</TabsTrigger>
+                <Tabs defaultValue="documents" className="w-full">
+                    <TabsList className="grid w-full grid-cols-3 mb-6 bg-white border border-[#0F172A]/10">
+                        <TabsTrigger value="documents">Documents</TabsTrigger>
+                        <TabsTrigger value="tasks">Tasks</TabsTrigger>
+                        <TabsTrigger value="workflows">Workflows</TabsTrigger>
                     </TabsList>
 
-                    <TabsContent value="financial" className="mt-6">
-                        <div className="flex justify-end mb-6">
-                            <Button
-                                onClick={handleExport}
-                                disabled={exporting}
-                                className="bg-gradient-to-r from-[#1A2B44] to-[#0F1B2E] hover:shadow-lg text-white"
-                            >
-                                <Download className="w-4 h-4 mr-2" />
-                                {exporting ? 'Generating...' : 'Export PDF'}
-                            </Button>
+                    <TabsContent value="documents" className="space-y-6">
+                        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                            <Card className="border-[#0F172A]/10 shadow-sm">
+                                <CardHeader className="pb-2">
+                                    <CardTitle className="text-sm font-light text-[#64748B]">Total Documents</CardTitle>
+                                </CardHeader>
+                                <CardContent>
+                                    <div className="text-3xl font-light text-[#0F172A]">{filteredDocuments.length}</div>
+                                    <p className="text-xs text-[#64748B] mt-1">In selected period</p>
+                                </CardContent>
+                            </Card>
+
+                            <Card className="border-[#0F172A]/10 shadow-sm">
+                                <CardHeader className="pb-2">
+                                    <CardTitle className="text-sm font-light text-[#64748B]">Most Active User</CardTitle>
+                                </CardHeader>
+                                <CardContent>
+                                    <div className="text-lg font-light text-[#0F172A] truncate">
+                                        {mostActiveUsers[0]?.email.split('@')[0] || 'N/A'}
+                                    </div>
+                                    <p className="text-xs text-[#64748B] mt-1">{mostActiveUsers[0]?.uploads || 0} uploads</p>
+                                </CardContent>
+                            </Card>
+
+                            <Card className="border-[#0F172A]/10 shadow-sm">
+                                <CardHeader className="pb-2">
+                                    <CardTitle className="text-sm font-light text-[#64748B]">Storage Used</CardTitle>
+                                </CardHeader>
+                                <CardContent>
+                                    <div className="text-2xl font-light text-[#0F172A]">
+                                        {(storageUsage.used / 1024).toFixed(1)} GB
+                                    </div>
+                                    <p className="text-xs text-[#64748B] mt-1">{storageUsage.percentage.toFixed(0)}% of quota</p>
+                                </CardContent>
+                            </Card>
+
+                            <Card className="border-[#0F172A]/10 shadow-sm">
+                                <CardHeader className="pb-2">
+                                    <CardTitle className="text-sm font-light text-[#64748B]">Categories</CardTitle>
+                                </CardHeader>
+                                <CardContent>
+                                    <div className="text-3xl font-light text-[#0F172A]">{documentsByCategory.length}</div>
+                                    <p className="text-xs text-[#64748B] mt-1">Document types</p>
+                                </CardContent>
+                            </Card>
                         </div>
 
-                {/* Filters */}
-                <Card className="mb-6">
-                    <CardContent className="pt-6">
-                        <div className="flex flex-wrap gap-4">
-                            <div>
-                                <Label>Period</Label>
-                                <Select value={period} onValueChange={setPeriod}>
-                                    <SelectTrigger className="w-32">
-                                        <SelectValue />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        <SelectItem value="month">Monthly</SelectItem>
-                                        <SelectItem value="year">Yearly</SelectItem>
-                                    </SelectContent>
-                                </Select>
-                            </div>
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                            <Card className="border-[#0F172A]/10 shadow-sm">
+                                <CardHeader>
+                                    <CardTitle style={{ fontFamily: 'Playfair Display, serif' }}>Document Uploads Over Time</CardTitle>
+                                </CardHeader>
+                                <CardContent>
+                                    <ResponsiveContainer width="100%" height={300}>
+                                        <LineChart data={documentVolumeByDay}>
+                                            <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                                            <XAxis dataKey="date" tick={{ fill: '#64748B', fontSize: 12 }} />
+                                            <YAxis tick={{ fill: '#64748B', fontSize: 12 }} />
+                                            <Tooltip />
+                                            <Line type="monotone" dataKey="count" stroke="#C5A059" strokeWidth={2} />
+                                        </LineChart>
+                                    </ResponsiveContainer>
+                                </CardContent>
+                            </Card>
 
-                            <div>
-                                <Label>Year</Label>
-                                <Select value={year.toString()} onValueChange={(v) => setYear(parseInt(v))}>
-                                    <SelectTrigger className="w-32">
-                                        <SelectValue />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        {years.map(y => (
-                                            <SelectItem key={y} value={y.toString()}>{y}</SelectItem>
-                                        ))}
-                                    </SelectContent>
-                                </Select>
-                            </div>
-
-                            {period === 'month' && (
-                                <div>
-                                    <Label>Month</Label>
-                                    <Select value={month.toString()} onValueChange={(v) => setMonth(parseInt(v))}>
-                                        <SelectTrigger className="w-40">
-                                            <SelectValue />
-                                        </SelectTrigger>
-                                        <SelectContent>
-                                            {months.map(m => (
-                                                <SelectItem key={m.value} value={m.value.toString()}>
-                                                    {m.label}
-                                                </SelectItem>
-                                            ))}
-                                        </SelectContent>
-                                    </Select>
-                                </div>
-                            )}
+                            <Card className="border-[#0F172A]/10 shadow-sm">
+                                <CardHeader>
+                                    <CardTitle style={{ fontFamily: 'Playfair Display, serif' }}>Documents by Category</CardTitle>
+                                </CardHeader>
+                                <CardContent>
+                                    <ResponsiveContainer width="100%" height={300}>
+                                        <PieChart>
+                                            <Pie
+                                                data={documentsByCategory}
+                                                cx="50%"
+                                                cy="50%"
+                                                labelLine={false}
+                                                label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+                                                outerRadius={80}
+                                                dataKey="value"
+                                            >
+                                                {documentsByCategory.map((entry, index) => (
+                                                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                                                ))}
+                                            </Pie>
+                                            <Tooltip />
+                                        </PieChart>
+                                    </ResponsiveContainer>
+                                </CardContent>
+                            </Card>
                         </div>
-                    </CardContent>
-                </Card>
 
-                {/* Summary Cards */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                    <Card>
-                        <CardContent className="pt-6">
-                            <div className="flex items-center justify-between mb-2">
-                                <div className="text-sm text-[#1A2B44]/60">Subscriptions</div>
-                                <DollarSign className="w-5 h-5 text-green-600" />
-                            </div>
-                            <div className="text-2xl font-light text-[#1A2B44]">
-                                ${financialSummary.subscriptions.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                            </div>
-                        </CardContent>
-                    </Card>
+                        <Card className="border-[#0F172A]/10 shadow-sm">
+                            <CardHeader>
+                                <CardTitle style={{ fontFamily: 'Playfair Display, serif' }}>Most Active Users</CardTitle>
+                            </CardHeader>
+                            <CardContent>
+                                <ResponsiveContainer width="100%" height={250}>
+                                    <BarChart data={mostActiveUsers}>
+                                        <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                                        <XAxis dataKey="email" tick={{ fill: '#64748B', fontSize: 11 }} />
+                                        <YAxis tick={{ fill: '#64748B', fontSize: 12 }} />
+                                        <Tooltip />
+                                        <Bar dataKey="uploads" fill="#C5A059" />
+                                    </BarChart>
+                                </ResponsiveContainer>
+                            </CardContent>
+                        </Card>
+                    </TabsContent>
 
-                    <Card>
-                        <CardContent className="pt-6">
-                            <div className="flex items-center justify-between mb-2">
-                                <div className="text-sm text-[#1A2B44]/60">Maintenance</div>
-                                <TrendingUp className="w-5 h-5 text-orange-600" />
-                            </div>
-                            <div className="text-2xl font-light text-[#1A2B44]">
-                                ${financialSummary.maintenance.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                            </div>
-                        </CardContent>
-                    </Card>
+                    <TabsContent value="tasks" className="space-y-6">
+                        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                            <Card className="border-[#0F172A]/10 shadow-sm">
+                                <CardHeader className="pb-2">
+                                    <CardTitle className="text-sm font-light text-[#64748B]">Total Tasks</CardTitle>
+                                </CardHeader>
+                                <CardContent>
+                                    <div className="text-3xl font-light text-[#0F172A]">{filteredTasks.length}</div>
+                                    <p className="text-xs text-[#64748B] mt-1">In selected period</p>
+                                </CardContent>
+                            </Card>
 
-                    <Card>
-                        <CardContent className="pt-6">
-                            <div className="flex items-center justify-between mb-2">
-                                <div className="text-sm text-[#1A2B44]/60">Property Tax</div>
-                                <FileText className="w-5 h-5 text-blue-600" />
-                            </div>
-                            <div className="text-2xl font-light text-[#1A2B44]">
-                                ${financialSummary.properties.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                            </div>
-                        </CardContent>
-                    </Card>
+                            <Card className="border-red-200 bg-red-50 shadow-sm">
+                                <CardHeader className="pb-2">
+                                    <CardTitle className="text-sm font-light text-red-700 flex items-center gap-2">
+                                        <AlertCircle className="w-4 h-4" />
+                                        Overdue
+                                    </CardTitle>
+                                </CardHeader>
+                                <CardContent>
+                                    <div className="text-3xl font-light text-red-700">{overdueTasks.length}</div>
+                                    <p className="text-xs text-red-600 mt-1">Needs attention</p>
+                                </CardContent>
+                            </Card>
 
-                    <Card className="bg-gradient-to-br from-[#1A2B44] to-[#0F1B2E]">
-                        <CardContent className="pt-6">
-                            <div className="flex items-center justify-between mb-2">
-                                <div className="text-sm text-white/80">Total Expenses</div>
-                                <DollarSign className="w-5 h-5 text-[#C9A95C]" />
-                            </div>
-                            <div className="text-2xl font-light text-white">
-                                ${financialSummary.total.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                            </div>
-                        </CardContent>
-                    </Card>
-                </div>
+                            <Card className="border-green-200 bg-green-50 shadow-sm">
+                                <CardHeader className="pb-2">
+                                    <CardTitle className="text-sm font-light text-green-700">Completed</CardTitle>
+                                </CardHeader>
+                                <CardContent>
+                                    <div className="text-3xl font-light text-green-700">
+                                        {filteredTasks.filter(t => t.status === 'completed').length}
+                                    </div>
+                                    <p className="text-xs text-green-600 mt-1">Finished</p>
+                                </CardContent>
+                            </Card>
 
-                {/* Detailed Breakdown */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    {/* Subscriptions */}
-                    <Card>
-                        <CardHeader>
-                            <CardTitle className="text-lg font-light">Subscriptions Breakdown</CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                            {financialSummary.details.subscriptions.length > 0 ? (
-                                <div className="space-y-3">
-                                    {financialSummary.details.subscriptions.map((item, idx) => (
-                                        <div key={idx} className="flex justify-between items-start pb-3 border-b last:border-0">
-                                            <div>
-                                                <div className="font-medium text-[#1A2B44]">{item.name}</div>
-                                                <div className="text-xs text-[#1A2B44]/60">{item.provider}</div>
-                                            </div>
-                                            <div className="text-sm text-[#1A2B44]">
-                                                ${item.amount.toFixed(2)}
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
-                            ) : (
-                                <p className="text-sm text-[#1A2B44]/40">No subscription expenses</p>
-                            )}
-                        </CardContent>
-                    </Card>
+                            <Card className="border-[#0F172A]/10 shadow-sm">
+                                <CardHeader className="pb-2">
+                                    <CardTitle className="text-sm font-light text-[#64748B]">In Progress</CardTitle>
+                                </CardHeader>
+                                <CardContent>
+                                    <div className="text-3xl font-light text-[#0F172A]">
+                                        {filteredTasks.filter(t => t.status === 'in_progress').length}
+                                    </div>
+                                    <p className="text-xs text-[#64748B] mt-1">Active</p>
+                                </CardContent>
+                            </Card>
+                        </div>
 
-                    {/* Maintenance */}
-                    <Card>
-                        <CardHeader>
-                            <CardTitle className="text-lg font-light">Maintenance Costs</CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                            {financialSummary.details.maintenance.length > 0 ? (
-                                <div className="space-y-3">
-                                    {financialSummary.details.maintenance.map((item, idx) => (
-                                        <div key={idx} className="flex justify-between items-start pb-3 border-b last:border-0">
-                                            <div>
-                                                <div className="font-medium text-[#1A2B44]">{item.title}</div>
-                                                <div className="text-xs text-[#1A2B44]/60">
-                                                    {item.property} • {format(parseISO(item.date), 'MMM d, yyyy')}
+                        <Card className="border-[#0F172A]/10 shadow-sm">
+                            <CardHeader>
+                                <CardTitle style={{ fontFamily: 'Playfair Display, serif' }}>Tasks by Status</CardTitle>
+                            </CardHeader>
+                            <CardContent>
+                                <ResponsiveContainer width="100%" height={300}>
+                                    <BarChart data={tasksByStatus}>
+                                        <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                                        <XAxis dataKey="name" tick={{ fill: '#64748B', fontSize: 12 }} />
+                                        <YAxis tick={{ fill: '#64748B', fontSize: 12 }} />
+                                        <Tooltip />
+                                        <Bar dataKey="value" fill="#C5A059" />
+                                    </BarChart>
+                                </ResponsiveContainer>
+                            </CardContent>
+                        </Card>
+
+                        {overdueTasks.length > 0 && (
+                            <Card className="border-red-200 shadow-sm">
+                                <CardHeader>
+                                    <CardTitle className="text-red-700" style={{ fontFamily: 'Playfair Display, serif' }}>
+                                        Overdue Tasks
+                                    </CardTitle>
+                                </CardHeader>
+                                <CardContent>
+                                    <div className="space-y-2">
+                                        {overdueTasks.slice(0, 5).map(task => (
+                                            <div key={task.id} className="flex justify-between items-center p-3 bg-red-50 rounded-lg">
+                                                <div>
+                                                    <p className="font-medium text-[#0F172A]">{task.task_title}</p>
+                                                    <p className="text-sm text-[#64748B]">Assigned to: {task.assigned_to_email}</p>
                                                 </div>
+                                                <span className="text-sm text-red-600">
+                                                    Due: {format(new Date(task.due_date), 'MMM dd')}
+                                                </span>
                                             </div>
-                                            <div className="text-sm text-[#1A2B44]">
-                                                ${item.amount.toFixed(2)}
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
-                            ) : (
-                                <p className="text-sm text-[#1A2B44]/40">No maintenance costs in this period</p>
-                            )}
-                        </CardContent>
-                    </Card>
-
-                    {/* Property Tax */}
-                    <Card>
-                        <CardHeader>
-                            <CardTitle className="text-lg font-light">Property Expenses</CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                            {financialSummary.details.properties.length > 0 ? (
-                                <div className="space-y-3">
-                                    {financialSummary.details.properties.map((item, idx) => (
-                                        <div key={idx} className="flex justify-between items-start pb-3 border-b last:border-0">
-                                            <div>
-                                                <div className="font-medium text-[#1A2B44]">{item.name}</div>
-                                                <div className="text-xs text-[#1A2B44]/60">{item.type}</div>
-                                            </div>
-                                            <div className="text-sm text-[#1A2B44]">
-                                                ${item.amount.toFixed(2)}
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
-                            ) : (
-                                <p className="text-sm text-[#1A2B44]/40">No property expenses</p>
-                            )}
-                        </CardContent>
-                    </Card>
-
-                    {/* Vehicle Services */}
-                    <Card>
-                        <CardHeader>
-                            <CardTitle className="text-lg font-light">Vehicle Services</CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                            {financialSummary.details.vehicles.length > 0 ? (
-                                <div className="space-y-3">
-                                    {financialSummary.details.vehicles.map((item, idx) => (
-                                        <div key={idx} className="pb-3 border-b last:border-0">
-                                            <div className="font-medium text-[#1A2B44]">{item.name}</div>
-                                            <div className="text-xs text-[#1A2B44]/60">
-                                                Service: {format(parseISO(item.date), 'MMM d, yyyy')}
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
-                            ) : (
-                                <p className="text-sm text-[#1A2B44]/40">No vehicle services in this period</p>
-                            )}
-                        </CardContent>
-                    </Card>
-                </div>
-                    </TabsContent>
-
-                    <TabsContent value="property" className="mt-6">
-                        {!propertyAnalytics ? (
-                            <Card>
-                                <CardContent className="py-12 text-center">
-                                    <Building2 className="w-16 h-16 text-[#D4AF37] mx-auto mb-4" />
-                                    <h3 className="text-lg font-medium text-[#1A2B44] mb-2">
-                                        Property Portfolio Analytics
-                                    </h3>
-                                    <p className="text-sm text-gray-600 mb-6 max-w-md mx-auto">
-                                        Get AI-powered insights on portfolio performance, ROI, vacancy rates, 
-                                        tenant behavior predictions, and personalized recommendations.
-                                    </p>
-                                    <Button
-                                        onClick={generatePropertyAnalytics}
-                                        disabled={loadingPropertyAnalytics}
-                                        className="bg-gradient-to-r from-[#D4AF37] to-[#F4D03F] text-black"
-                                    >
-                                        <Sparkles className={`w-4 h-4 mr-2 ${loadingPropertyAnalytics ? 'animate-spin' : ''}`} />
-                                        {loadingPropertyAnalytics ? 'Analyzing...' : 'Generate Analytics'}
-                                    </Button>
+                                        ))}
+                                    </div>
                                 </CardContent>
                             </Card>
-                        ) : (
-                            <div>
-                                <div className="flex justify-end mb-4">
-                                    <Button
-                                        onClick={generatePropertyAnalytics}
-                                        disabled={loadingPropertyAnalytics}
-                                        variant="outline"
-                                        size="sm"
-                                    >
-                                        <Sparkles className="w-4 h-4 mr-2" />
-                                        Refresh
-                                    </Button>
-                                </div>
-                                <PropertyAnalyticsReport analytics={propertyAnalytics} />
-                            </div>
                         )}
                     </TabsContent>
 
-                    <TabsContent value="anomalies" className="mt-6">
-                        {!anomalyData ? (
-                            <Card>
-                                <CardContent className="py-12 text-center">
-                                    <AlertTriangle className="w-16 h-16 text-orange-500 mx-auto mb-4" />
-                                    <h3 className="text-lg font-medium text-[#1A2B44] mb-2">
-                                        Transaction Anomaly Detection
-                                    </h3>
-                                    <p className="text-sm text-gray-600 mb-6 max-w-md mx-auto">
-                                        AI-powered fraud detection and error identification. Analyzes unusual amounts, 
-                                        duplicates, suspicious patterns, and potential data entry errors.
-                                    </p>
-                                    <Button
-                                        onClick={detectAnomalies}
-                                        disabled={loadingAnomalies}
-                                        className="bg-gradient-to-r from-[#D4AF37] to-[#F4D03F] text-black"
-                                    >
-                                        <AlertTriangle className={`w-4 h-4 mr-2 ${loadingAnomalies ? 'animate-spin' : ''}`} />
-                                        {loadingAnomalies ? 'Scanning...' : 'Scan Transactions'}
-                                    </Button>
+                    <TabsContent value="workflows" className="space-y-6">
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <Card className="border-[#0F172A]/10 shadow-sm">
+                                <CardHeader className="pb-2">
+                                    <CardTitle className="text-sm font-light text-[#64748B]">Total Rules</CardTitle>
+                                </CardHeader>
+                                <CardContent>
+                                    <div className="text-3xl font-light text-[#0F172A]">{workflowRules.length}</div>
+                                    <p className="text-xs text-[#64748B] mt-1">Automation rules</p>
                                 </CardContent>
                             </Card>
-                        ) : (
-                            <div>
-                                <div className="flex justify-end mb-4">
-                                    <Button
-                                        onClick={detectAnomalies}
-                                        disabled={loadingAnomalies}
-                                        variant="outline"
-                                        size="sm"
-                                    >
-                                        <AlertTriangle className="w-4 h-4 mr-2" />
-                                        Refresh
-                                    </Button>
-                                </div>
-                                <AnomalyReport anomalyData={anomalyData} />
-                            </div>
-                        )}
+
+                            <Card className="border-[#0F172A]/10 shadow-sm">
+                                <CardHeader className="pb-2">
+                                    <CardTitle className="text-sm font-light text-[#64748B]">Active Rules</CardTitle>
+                                </CardHeader>
+                                <CardContent>
+                                    <div className="text-3xl font-light text-green-600">
+                                        {workflowRules.filter(r => r.enabled).length}
+                                    </div>
+                                    <p className="text-xs text-[#64748B] mt-1">Enabled</p>
+                                </CardContent>
+                            </Card>
+
+                            <Card className="border-[#0F172A]/10 shadow-sm">
+                                <CardHeader className="pb-2">
+                                    <CardTitle className="text-sm font-light text-[#64748B]">Total Triggers</CardTitle>
+                                </CardHeader>
+                                <CardContent>
+                                    <div className="text-3xl font-light text-[#0F172A]">
+                                        {workflowRules.reduce((sum, r) => sum + (r.trigger_count || 0), 0)}
+                                    </div>
+                                    <p className="text-xs text-[#64748B] mt-1">All time</p>
+                                </CardContent>
+                            </Card>
+                        </div>
+
+                        <Card className="border-[#0F172A]/10 shadow-sm">
+                            <CardHeader>
+                                <CardTitle style={{ fontFamily: 'Playfair Display, serif' }}>Workflow Trigger Frequency</CardTitle>
+                            </CardHeader>
+                            <CardContent>
+                                <ResponsiveContainer width="100%" height={300}>
+                                    <BarChart data={workflowMetrics}>
+                                        <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                                        <XAxis dataKey="name" tick={{ fill: '#64748B', fontSize: 11 }} />
+                                        <YAxis tick={{ fill: '#64748B', fontSize: 12 }} />
+                                        <Tooltip />
+                                        <Bar dataKey="triggers" fill="#C5A059" />
+                                    </BarChart>
+                                </ResponsiveContainer>
+                            </CardContent>
+                        </Card>
                     </TabsContent>
                 </Tabs>
             </div>
