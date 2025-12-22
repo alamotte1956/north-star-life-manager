@@ -5,15 +5,19 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { FileText, Users, Zap, HardDrive, Calendar, CheckCircle, AlertCircle, TrendingUp, Clock } from 'lucide-react';
-import { BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { Progress } from '@/components/ui/progress';
+import { FileText, Users, Zap, HardDrive, Calendar, CheckCircle, AlertCircle, TrendingUp, Clock, Download, Activity, Database } from 'lucide-react';
+import { BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area } from 'recharts';
 import { format, subDays, isWithinInterval, parseISO } from 'date-fns';
+import CustomReportBuilder from '../components/reports/CustomReportBuilder';
+import ActivityLogViewer from '../components/reports/ActivityLogViewer';
 
 export default function Reports() {
     const [dateRange, setDateRange] = useState({
         from: subDays(new Date(), 30),
         to: new Date()
     });
+    const [showCustomReport, setShowCustomReport] = useState(false);
 
     const { data: user } = useQuery({
         queryKey: ['user'],
@@ -43,6 +47,24 @@ export default function Reports() {
     const { data: workflowRules = [] } = useQuery({
         queryKey: ['workflowRules'],
         queryFn: () => base44.entities.WorkflowRule.filter({ family_id }),
+        enabled: !!family_id
+    });
+
+    const { data: documentVersions = [] } = useQuery({
+        queryKey: ['documentVersions'],
+        queryFn: () => base44.entities.DocumentVersion.list('-created_date', 500),
+        enabled: !!family_id
+    });
+
+    const { data: activities = [] } = useQuery({
+        queryKey: ['documentActivities'],
+        queryFn: () => base44.entities.DocumentActivity.filter({ family_id }, '-created_date', 100),
+        enabled: !!family_id
+    });
+
+    const { data: familyRecord } = useQuery({
+        queryKey: ['family', family_id],
+        queryFn: () => base44.entities.Family.filter({ id: family_id }),
         enabled: !!family_id
     });
 
@@ -116,16 +138,83 @@ export default function Reports() {
     }, [workflowRules]);
 
     const storageUsage = useMemo(() => {
-        const totalDocs = documents.length;
-        const assumedAvgSizeMB = 2;
-        const estimatedUsageMB = totalDocs * assumedAvgSizeMB;
-        const quotaGB = 5;
+        const family = familyRecord?.[0];
+        const quotaGB = family?.storage_quota_gb || 5;
+        const usedGB = family?.storage_used_gb || 0;
         return {
-            used: estimatedUsageMB,
+            used: usedGB * 1024, // Convert to MB
             total: quotaGB * 1024,
-            percentage: Math.min((estimatedUsageMB / (quotaGB * 1024)) * 100, 100)
+            percentage: Math.min((usedGB / quotaGB) * 100, 100),
+            quotaGB,
+            usedGB
         };
-    }, [documents]);
+    }, [familyRecord]);
+
+    // Document trends (uploads, edits, views)
+    const documentTrends = useMemo(() => {
+        const trendsMap = {};
+        
+        // Track uploads
+        filteredDocuments.forEach(doc => {
+            const day = format(parseISO(doc.created_date), 'MMM dd');
+            if (!trendsMap[day]) trendsMap[day] = { date: day, uploads: 0, edits: 0, views: 0 };
+            trendsMap[day].uploads++;
+        });
+
+        // Track version uploads (edits)
+        documentVersions.filter(v => {
+            const vDate = parseISO(v.created_date);
+            return isWithinInterval(vDate, { start: dateRange.from, end: dateRange.to });
+        }).forEach(version => {
+            const day = format(parseISO(version.created_date), 'MMM dd');
+            if (!trendsMap[day]) trendsMap[day] = { date: day, uploads: 0, edits: 0, views: 0 };
+            trendsMap[day].edits++;
+        });
+
+        // Track views
+        activities.filter(a => a.activity_type === 'view').forEach(activity => {
+            const day = format(parseISO(activity.created_date), 'MMM dd');
+            if (!trendsMap[day]) trendsMap[day] = { date: day, uploads: 0, edits: 0, views: 0 };
+            trendsMap[day].views++;
+        });
+
+        return Object.values(trendsMap).sort((a, b) => 
+            new Date(a.date + ' 2024') - new Date(b.date + ' 2024')
+        );
+    }, [filteredDocuments, documentVersions, activities, dateRange]);
+
+    // Activity breakdown by type
+    const activityByType = useMemo(() => {
+        const typeMap = {};
+        activities.forEach(activity => {
+            const type = activity.activity_type;
+            typeMap[type] = (typeMap[type] || 0) + 1;
+        });
+        return Object.entries(typeMap).map(([name, value]) => ({ name, value }));
+    }, [activities]);
+
+    // User activity metrics
+    const userActivityMetrics = useMemo(() => {
+        const userMap = {};
+        activities.forEach(activity => {
+            const email = activity.user_email;
+            if (!userMap[email]) {
+                userMap[email] = { email, uploads: 0, views: 0, edits: 0, total: 0 };
+            }
+            userMap[email].total++;
+            if (activity.activity_type === 'upload') userMap[email].uploads++;
+            if (activity.activity_type === 'view') userMap[email].views++;
+            if (activity.activity_type === 'edit' || activity.activity_type === 'version_upload') userMap[email].edits++;
+        });
+        return Object.values(userMap).sort((a, b) => b.total - a.total).slice(0, 5);
+    }, [activities]);
+
+    const filteredActivities = useMemo(() => {
+        return activities.filter(activity => {
+            const actDate = parseISO(activity.created_date);
+            return isWithinInterval(actDate, { start: dateRange.from, end: dateRange.to });
+        });
+    }, [activities, dateRange]);
 
     const COLORS = ['#C5A059', '#0F172A', '#64748B', '#164E63', '#D4AF37', '#8B7355'];
 
@@ -187,13 +276,25 @@ export default function Reports() {
                 </div>
 
                 <Tabs defaultValue="documents" className="w-full">
-                    <TabsList className="grid w-full grid-cols-3 mb-6 bg-white border border-[#0F172A]/10">
+                    <TabsList className="grid w-full grid-cols-4 mb-6 bg-white border border-[#0F172A]/10">
                         <TabsTrigger value="documents">Documents</TabsTrigger>
+                        <TabsTrigger value="activity">Activity</TabsTrigger>
                         <TabsTrigger value="tasks">Tasks</TabsTrigger>
                         <TabsTrigger value="workflows">Workflows</TabsTrigger>
                     </TabsList>
 
                     <TabsContent value="documents" className="space-y-6">
+                        <div className="flex justify-end mb-4">
+                            <Button
+                                onClick={() => setShowCustomReport(true)}
+                                variant="outline"
+                                className="gap-2"
+                            >
+                                <Download className="w-4 h-4" />
+                                Generate Custom Report
+                            </Button>
+                        </div>
+
                         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                             <Card className="border-[#0F172A]/10 shadow-sm">
                                 <CardHeader className="pb-2">
@@ -219,13 +320,19 @@ export default function Reports() {
 
                             <Card className="border-[#0F172A]/10 shadow-sm">
                                 <CardHeader className="pb-2">
-                                    <CardTitle className="text-sm font-light text-[#64748B]">Storage Used</CardTitle>
+                                    <CardTitle className="text-sm font-light text-[#64748B] flex items-center gap-2">
+                                        <Database className="w-4 h-4" />
+                                        Storage Used
+                                    </CardTitle>
                                 </CardHeader>
                                 <CardContent>
                                     <div className="text-2xl font-light text-[#0F172A]">
-                                        {(storageUsage.used / 1024).toFixed(1)} GB
+                                        {storageUsage.usedGB?.toFixed(2) || 0} GB
                                     </div>
-                                    <p className="text-xs text-[#64748B] mt-1">{storageUsage.percentage.toFixed(0)}% of quota</p>
+                                    <Progress value={storageUsage.percentage} className="mt-2" />
+                                    <p className="text-xs text-[#64748B] mt-1">
+                                        {storageUsage.percentage.toFixed(0)}% of {storageUsage.quotaGB} GB
+                                    </p>
                                 </CardContent>
                             </Card>
 
@@ -240,23 +347,26 @@ export default function Reports() {
                             </Card>
                         </div>
 
+                        <Card className="border-[#0F172A]/10 shadow-sm mb-6">
+                            <CardHeader>
+                                <CardTitle style={{ fontFamily: 'Playfair Display, serif' }}>Document Trends Over Time</CardTitle>
+                            </CardHeader>
+                            <CardContent>
+                                <ResponsiveContainer width="100%" height={300}>
+                                    <AreaChart data={documentTrends}>
+                                        <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                                        <XAxis dataKey="date" tick={{ fill: '#64748B', fontSize: 12 }} />
+                                        <YAxis tick={{ fill: '#64748B', fontSize: 12 }} />
+                                        <Tooltip />
+                                        <Area type="monotone" dataKey="uploads" stackId="1" stroke="#C5A059" fill="#C5A059" fillOpacity={0.6} />
+                                        <Area type="monotone" dataKey="edits" stackId="1" stroke="#164E63" fill="#164E63" fillOpacity={0.6} />
+                                        <Area type="monotone" dataKey="views" stackId="1" stroke="#64748B" fill="#64748B" fillOpacity={0.6} />
+                                    </AreaChart>
+                                </ResponsiveContainer>
+                            </CardContent>
+                        </Card>
+
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                            <Card className="border-[#0F172A]/10 shadow-sm">
-                                <CardHeader>
-                                    <CardTitle style={{ fontFamily: 'Playfair Display, serif' }}>Document Uploads Over Time</CardTitle>
-                                </CardHeader>
-                                <CardContent>
-                                    <ResponsiveContainer width="100%" height={300}>
-                                        <LineChart data={documentVolumeByDay}>
-                                            <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-                                            <XAxis dataKey="date" tick={{ fill: '#64748B', fontSize: 12 }} />
-                                            <YAxis tick={{ fill: '#64748B', fontSize: 12 }} />
-                                            <Tooltip />
-                                            <Line type="monotone" dataKey="count" stroke="#C5A059" strokeWidth={2} />
-                                        </LineChart>
-                                    </ResponsiveContainer>
-                                </CardContent>
-                            </Card>
 
                             <Card className="border-[#0F172A]/10 shadow-sm">
                                 <CardHeader>
@@ -301,6 +411,93 @@ export default function Reports() {
                                 </ResponsiveContainer>
                             </CardContent>
                         </Card>
+                    </TabsContent>
+
+                    <TabsContent value="activity" className="space-y-6">
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <Card className="border-[#0F172A]/10 shadow-sm">
+                                <CardHeader className="pb-2">
+                                    <CardTitle className="text-sm font-light text-[#64748B]">Total Activities</CardTitle>
+                                </CardHeader>
+                                <CardContent>
+                                    <div className="text-3xl font-light text-[#0F172A]">{filteredActivities.length}</div>
+                                    <p className="text-xs text-[#64748B] mt-1">In selected period</p>
+                                </CardContent>
+                            </Card>
+
+                            <Card className="border-[#0F172A]/10 shadow-sm">
+                                <CardHeader className="pb-2">
+                                    <CardTitle className="text-sm font-light text-[#64748B]">Document Views</CardTitle>
+                                </CardHeader>
+                                <CardContent>
+                                    <div className="text-3xl font-light text-blue-600">
+                                        {filteredActivities.filter(a => a.activity_type === 'view').length}
+                                    </div>
+                                    <p className="text-xs text-[#64748B] mt-1">Total views</p>
+                                </CardContent>
+                            </Card>
+
+                            <Card className="border-[#0F172A]/10 shadow-sm">
+                                <CardHeader className="pb-2">
+                                    <CardTitle className="text-sm font-light text-[#64748B]">Version Uploads</CardTitle>
+                                </CardHeader>
+                                <CardContent>
+                                    <div className="text-3xl font-light text-green-600">
+                                        {documentVersions.length}
+                                    </div>
+                                    <p className="text-xs text-[#64748B] mt-1">All time</p>
+                                </CardContent>
+                            </Card>
+                        </div>
+
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                            <Card className="border-[#0F172A]/10 shadow-sm">
+                                <CardHeader>
+                                    <CardTitle style={{ fontFamily: 'Playfair Display, serif' }}>Activity by Type</CardTitle>
+                                </CardHeader>
+                                <CardContent>
+                                    <ResponsiveContainer width="100%" height={300}>
+                                        <PieChart>
+                                            <Pie
+                                                data={activityByType}
+                                                cx="50%"
+                                                cy="50%"
+                                                labelLine={false}
+                                                label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+                                                outerRadius={80}
+                                                dataKey="value"
+                                            >
+                                                {activityByType.map((entry, index) => (
+                                                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                                                ))}
+                                            </Pie>
+                                            <Tooltip />
+                                        </PieChart>
+                                    </ResponsiveContainer>
+                                </CardContent>
+                            </Card>
+
+                            <Card className="border-[#0F172A]/10 shadow-sm">
+                                <CardHeader>
+                                    <CardTitle style={{ fontFamily: 'Playfair Display, serif' }}>User Activity Breakdown</CardTitle>
+                                </CardHeader>
+                                <CardContent>
+                                    <ResponsiveContainer width="100%" height={300}>
+                                        <BarChart data={userActivityMetrics} layout="vertical">
+                                            <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                                            <XAxis type="number" tick={{ fill: '#64748B', fontSize: 12 }} />
+                                            <YAxis dataKey="email" type="category" tick={{ fill: '#64748B', fontSize: 11 }} width={100} />
+                                            <Tooltip />
+                                            <Bar dataKey="uploads" fill="#C5A059" name="Uploads" />
+                                            <Bar dataKey="views" fill="#64748B" name="Views" />
+                                            <Bar dataKey="edits" fill="#164E63" name="Edits" />
+                                        </BarChart>
+                                    </ResponsiveContainer>
+                                </CardContent>
+                            </Card>
+                        </div>
+
+                        <ActivityLogViewer activities={filteredActivities} />
                     </TabsContent>
 
                     <TabsContent value="tasks" className="space-y-6">
@@ -451,6 +648,13 @@ export default function Reports() {
                         </Card>
                     </TabsContent>
                 </Tabs>
+
+                {/* Custom Report Builder */}
+                <CustomReportBuilder
+                    open={showCustomReport}
+                    onOpenChange={setShowCustomReport}
+                    documents={filteredDocuments}
+                />
             </div>
         </div>
     );
