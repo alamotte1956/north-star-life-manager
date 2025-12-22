@@ -64,12 +64,16 @@ export default function PushNotificationManager() {
             });
 
             // Save subscription to backend
-            await base44.functions.invoke('savePushSubscription', {
+            const saveResponse = await base44.functions.invoke('savePushSubscription', {
                 subscription: JSON.stringify(sub)
             });
 
-            setSubscription(sub);
-            toast.success('Push notifications enabled!');
+            if (saveResponse.data.success) {
+                setSubscription(sub);
+                toast.success('Push notifications enabled!');
+            } else {
+                throw new Error('Failed to save subscription');
+            }
         } catch (error) {
             console.error('Error subscribing to push:', error);
             toast.error('Failed to enable notifications');
@@ -86,12 +90,16 @@ export default function PushNotificationManager() {
             await subscription.unsubscribe();
             
             // Remove subscription from backend
-            await base44.functions.invoke('removePushSubscription', {
+            const removeResponse = await base44.functions.invoke('removePushSubscription', {
                 endpoint: subscription.endpoint
             });
 
-            setSubscription(null);
-            toast.success('Push notifications disabled');
+            if (removeResponse.data.success) {
+                setSubscription(null);
+                toast.success('Push notifications disabled');
+            } else {
+                throw new Error('Failed to remove subscription');
+            }
         } catch (error) {
             console.error('Error unsubscribing:', error);
             toast.error('Failed to disable notifications');
