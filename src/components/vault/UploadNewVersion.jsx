@@ -44,8 +44,13 @@ export default function UploadNewVersion({ document, open, onOpenChange, onUploa
             const latestVersion = existingVersions[0];
             const newVersionNumber = (latestVersion?.version_number || 0) + 1;
 
-            // Upload new file
-            const { file_url } = await base44.integrations.Core.UploadFile({ file: selectedFile });
+            // Upload new file to Supabase
+            const uploadResponse = await base44.functions.invoke('supabaseUploadDocument', {
+                file: selectedFile,
+                document_id: document.id,
+                family_id: document.family_id
+            });
+            const file_url = uploadResponse.data.file_url;
 
             // Create version entry for the OLD file (if no versions exist yet)
             if (existingVersions.length === 0) {
