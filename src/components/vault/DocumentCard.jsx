@@ -1,18 +1,21 @@
 import React, { useState } from 'react';
-import { FileText, Calendar, Tag, ExternalLink, Loader2, CheckCircle, AlertCircle, Home, DollarSign, Link2, Eye, Share2, MessageSquare } from 'lucide-react';
+import { FileText, Calendar, Tag, ExternalLink, Loader2, CheckCircle, AlertCircle, Home, DollarSign, Link2, Eye, Share2, MessageSquare, History, Upload } from 'lucide-react';
 import { format } from 'date-fns';
 import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import ShareDialog from '@/components/collaboration/ShareDialog';
 import CommentsSection from '@/components/collaboration/CommentsSection';
+import DocumentVersionHistory from './DocumentVersionHistory';
+import UploadNewVersion from './UploadNewVersion';
+import { useRolePermission } from '../family/RoleBasedGuard';
 
 export default function DocumentCard({ document }) {
     const [showDetails, setShowDetails] = useState(false);
     const [showShare, setShowShare] = useState(false);
     const [showComments, setShowComments] = useState(false);
-    const [showMobileView, setShowMobileView] = useState(false);
-    const [showTaskAssigner, setShowTaskAssigner] = useState(false);
+    const [showVersionHistory, setShowVersionHistory] = useState(false);
+    const [showUploadVersion, setShowUploadVersion] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
     
     const { hasPermission: canEdit } = useRolePermission('documents', 'edit');
@@ -170,6 +173,28 @@ export default function DocumentCard({ document }) {
                         Comments
                     </Button>
                 </div>
+                {canEdit && (
+                    <div className="flex gap-2">
+                        <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => setShowVersionHistory(true)}
+                            className="flex-1 border-[#D4AF37]/20 hover:bg-[#D4AF37]/5"
+                        >
+                            <History className="w-4 h-4 mr-2" />
+                            Versions
+                        </Button>
+                        <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => setShowUploadVersion(true)}
+                            className="flex-1 border-[#D4AF37]/20 hover:bg-[#D4AF37]/5"
+                        >
+                            <Upload className="w-4 h-4 mr-2" />
+                            New Version
+                        </Button>
+                    </div>
+                )}
             </div>
 
             {/* Comments Section */}
@@ -190,6 +215,23 @@ export default function DocumentCard({ document }) {
                 entityType="Document"
                 entityId={document.id}
                 entityName={document.title}
+            />
+
+            {/* Version History */}
+            <DocumentVersionHistory
+                document={document}
+                open={showVersionHistory}
+                onOpenChange={setShowVersionHistory}
+            />
+
+            {/* Upload New Version */}
+            <UploadNewVersion
+                document={document}
+                open={showUploadVersion}
+                onOpenChange={setShowUploadVersion}
+                onUploadComplete={() => {
+                    setShowVersionHistory(true);
+                }}
             />
 
             {/* Details Dialog */}
