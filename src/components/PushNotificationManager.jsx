@@ -55,7 +55,8 @@ export default function PushNotificationManager() {
             const registration = await navigator.serviceWorker.ready;
             
             // Get VAPID public key from backend
-            const { data: { publicKey } } = await base44.functions.invoke('getVapidPublicKey', {});
+            const response = await base44.functions.invoke('getVapidPublicKey', {});
+            const publicKey = response.data.public_key;
             
             const sub = await registration.pushManager.subscribe({
                 userVisibleOnly: true,
