@@ -8,6 +8,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import SEO from '@/components/SEO';
 
 const plans = [
     {
@@ -123,6 +124,50 @@ export default function Pricing() {
     };
 
     return (
+        <>
+        <SEO 
+            title="Pricing Plans - North Star Life Manager | 14-Day Free Trial"
+            description="Choose the perfect plan for your life management needs. Basic at $49/mo, Plus at $99/mo, or Premium at $199/mo. Start your 14-day free trial today!"
+            keywords="life management pricing, document management subscription, financial planning software cost, property management pricing, family collaboration tools"
+            ogType="website"
+            canonical={window.location.href}
+            structuredData={{
+                "@context": "https://schema.org",
+                "@type": "Product",
+                "name": "North Star Life Manager",
+                "description": "Complete life management platform with AI-powered organization",
+                "brand": {
+                    "@type": "Brand",
+                    "name": "A.I. Help Pros LLP"
+                },
+                "offers": [
+                    {
+                        "@type": "Offer",
+                        "name": "Basic Plan",
+                        "price": "49",
+                        "priceCurrency": "USD",
+                        "priceValidUntil": "2026-12-31",
+                        "availability": "https://schema.org/InStock"
+                    },
+                    {
+                        "@type": "Offer",
+                        "name": "Plus Plan",
+                        "price": "99",
+                        "priceCurrency": "USD",
+                        "priceValidUntil": "2026-12-31",
+                        "availability": "https://schema.org/InStock"
+                    },
+                    {
+                        "@type": "Offer",
+                        "name": "Premium Plan",
+                        "price": "199",
+                        "priceCurrency": "USD",
+                        "priceValidUntil": "2026-12-31",
+                        "availability": "https://schema.org/InStock"
+                    }
+                ]
+            }}
+        />
         <div className="min-h-screen bg-gradient-to-br from-[#F8F7F4] via-white to-[#F8F7F4]">
             <div className="max-w-7xl mx-auto px-6 py-12">
                 {/* Header */}
@@ -300,6 +345,7 @@ export default function Pricing() {
                     </div>
                 </div>
             </div>
-        </div>
-    );
-}
+            </div>
+            </>
+            );
+            }
