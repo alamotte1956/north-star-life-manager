@@ -131,7 +131,7 @@ export default function Pricing() {
                     <p className="text-xl text-black/70 font-light">
                         Unlock the full power of North Star Life Manager
                     </p>
-                    <Badge className="mt-4 bg-green-600 text-white px-6 py-2 text-base">
+                    <Badge className="mt-4 bg-green-600 text-white px-6 py-2 text-base animate-pulse shadow-lg shadow-green-500/50">
                         🎉 14-Day Free Trial - No Credit Card Required
                     </Badge>
                 </div>
