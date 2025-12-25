@@ -62,6 +62,9 @@ export default function Vault() {
                     </div>
                 </div>
 
+                {/* Demo CTA */}
+                <DemoCTA />
+
                 {/* Expiry Alerts */}
                 <div className="mb-6">
                     <ExpiryAlerts />

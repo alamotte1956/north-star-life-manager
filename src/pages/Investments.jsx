@@ -21,6 +21,7 @@ import MarketTrendMonitor from '../components/investments/MarketTrendMonitor';
 import RebalancingSuggestions from '../components/investments/RebalancingSuggestions';
 import PortfolioPerformanceChart from '../components/investments/PortfolioPerformanceChart';
 import RebalancingAlerts from '../components/investments/RebalancingAlerts';
+import DemoCTA from '../components/DemoCTA';
 import { toast } from 'sonner';
 
 const accountTypeLabels = {
@@ -420,6 +421,9 @@ export default function Investments() {
                         </CardContent>
                     </Card>
                 </div>
+
+                {/* Demo CTA */}
+                <DemoCTA />
 
                 {/* Rebalancing Alerts */}
                 <div className="mb-8">
