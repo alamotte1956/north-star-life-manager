@@ -91,7 +91,7 @@ export default function ChatAssistant() {
             {!isOpen && (
                 <button
                     onClick={() => setIsOpen(true)}
-                    className="fixed bottom-6 right-6 z-50 bg-gradient-to-br from-[#D4AF37] to-[#F4D03F] text-black p-4 rounded-full shadow-2xl hover:shadow-[#D4AF37]/50 transition-all hover:scale-110 touch-manipulation"
+                    className="fixed bottom-6 right-6 z-50 bg-gradient-to-br from-[#4A90E2] to-[#2E5C8A] text-white p-4 rounded-full shadow-2xl hover:shadow-blue-500/50 transition-all hover:scale-110 touch-manipulation"
                     aria-label="Open AI Assistant"
                 >
                     <MessageCircle className="w-6 h-6" />

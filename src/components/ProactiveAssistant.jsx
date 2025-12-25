@@ -79,7 +79,7 @@ export default function ProactiveAssistant() {
             {/* Floating Alert Button */}
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="fixed bottom-24 right-6 z-40 bg-gradient-to-br from-[#D4AF37] to-[#F4D03F] text-black p-4 rounded-full shadow-2xl hover:shadow-[#D4AF37]/50 transition-all hover:scale-110 touch-manipulation"
+                className="fixed bottom-24 right-6 z-40 bg-gradient-to-br from-[#4A90E2] to-[#2E5C8A] text-white p-4 rounded-full shadow-2xl hover:shadow-blue-500/50 transition-all hover:scale-110 touch-manipulation"
                 aria-label="View Alerts"
             >
                 <Bell className="w-6 h-6" />
