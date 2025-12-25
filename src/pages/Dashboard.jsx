@@ -51,6 +51,112 @@ export default function Dashboard() {
     const [showOnboarding, setShowOnboarding] = useState(false);
     const navigate = useNavigate();
 
+    const downloadGuideAsPDF = () => {
+        const doc = new jsPDF();
+        let y = 20;
+
+        // Title
+        doc.setFontSize(20);
+        doc.text('North Star - Getting Started Guide', 20, y);
+        y += 15;
+
+        // Welcome
+        doc.setFontSize(12);
+        doc.text('Welcome to Your Life Management Hub', 20, y);
+        y += 10;
+        doc.setFontSize(10);
+        const welcomeText = doc.splitTextToSize('North Star helps you organize and manage all aspects of your life in one secure place. From properties and vehicles to important documents and health records, everything is at your fingertips.', 170);
+        doc.text(welcomeText, 20, y);
+        y += welcomeText.length * 5 + 10;
+
+        // Quick Start Steps
+        doc.setFontSize(14);
+        doc.text('Quick Start Guide', 20, y);
+        y += 10;
+
+        const steps = [
+            { title: '1. Upload Your Documents', text: 'Start by visiting the Vault. Take photos or upload important documents like deeds, insurance policies, and legal papers. Our AI will automatically analyze and categorize them for you.' },
+            { title: '2. Add Your Properties & Assets', text: 'Go to Properties, Vehicles, and Valuables to create an inventory of your assets. Track values, maintenance schedules, and important details.' },
+            { title: '3. Set Up Maintenance & Rent Collection', text: 'Visit Maintenance to schedule recurring tasks. For rental properties, use Property Management to automate rent collection, send AI-powered reminders, and track payments with integrated Stripe processing.' },
+            { title: '4. Track Financial Goals & Investments', text: 'Set financial goals in Budget & Goals, track your investment portfolio in Investments, and manage recurring bills in Bill Payments. Get AI-driven insights on your financial health.' },
+            { title: '5. Organize Contacts & Communications', text: 'Add key contacts in the Contacts section. For rental properties, use AI-powered tenant communication tools to generate responses, analyze sentiment, and maintain professional tenant relationships.' },
+            { title: '6. Complete Medical & Estate Planning', text: 'Set up your Medical Profile with emergency contacts and medications. Configure Legal & Estate with beneficiaries and advance directives. Use Succession Dashboard for secure emergency access.' }
+        ];
+
+        doc.setFontSize(10);
+        steps.forEach(step => {
+            if (y > 250) {
+                doc.addPage();
+                y = 20;
+            }
+            doc.setFont(undefined, 'bold');
+            doc.text(step.title, 20, y);
+            y += 7;
+            doc.setFont(undefined, 'normal');
+            const text = doc.splitTextToSize(step.text, 170);
+            doc.text(text, 20, y);
+            y += text.length * 5 + 8;
+        });
+
+        // Key Features
+        if (y > 220) {
+            doc.addPage();
+            y = 20;
+        }
+        doc.setFontSize(14);
+        doc.text('Key Features', 20, y);
+        y += 10;
+
+        const features = [
+            'Smart Document Vault: Upload documents and photos. AI automatically extracts key information like expiry dates and document types.',
+            'Automated Rent Collection: Set up payment schedules, send AI-personalized reminders, and collect rent online with secure Stripe integration.',
+            'Smart Alerts: Receive notifications for upcoming maintenance, expiring documents, and vehicle registration renewals.',
+            'Print Anywhere: Every section includes a print button. Print lists, records, or your emergency medical card anytime.'
+        ];
+
+        doc.setFontSize(10);
+        features.forEach(feature => {
+            if (y > 260) {
+                doc.addPage();
+                y = 20;
+            }
+            const text = doc.splitTextToSize('• ' + feature, 170);
+            doc.text(text, 20, y);
+            y += text.length * 5 + 5;
+        });
+
+        // Pro Tips
+        if (y > 200) {
+            doc.addPage();
+            y = 20;
+        }
+        doc.setFontSize(14);
+        doc.text('Pro Tips', 20, y);
+        y += 10;
+
+        const tips = [
+            'Use your phone\'s camera to quickly capture documents - the app supports direct photo uploads with AI analysis',
+            'Set up payment schedules in Property Management to automate rent collection and reminders',
+            'Connect external services via Integrations - Google Calendar, Slack, Drive, and more',
+            'Use the Email Assistant to manage communications with AI-powered drafting and categorization',
+            'The Medical Profile includes a printable emergency card - keep a copy in your wallet',
+            'Share specific records with family or advisors using the Collaboration tools'
+        ];
+
+        doc.setFontSize(10);
+        tips.forEach(tip => {
+            if (y > 260) {
+                doc.addPage();
+                y = 20;
+            }
+            const text = doc.splitTextToSize('• ' + tip, 170);
+            doc.text(text, 20, y);
+            y += text.length * 5 + 5;
+        });
+
+        doc.save('North-Star-Getting-Started-Guide.pdf');
+    };
+
     useEffect(() => {
         base44.auth.me().then(userData => {
             setUser(userData);
@@ -163,12 +269,21 @@ export default function Dashboard() {
                                     <BookOpen className="w-8 h-8 text-white" />
                                     <h2 className="text-2xl font-light text-white">Getting Started with North Star</h2>
                                 </div>
-                                <button
-                                    onClick={() => setShowGuide(false)}
-                                    className="p-2 hover:bg-white/10 rounded-lg transition-colors"
-                                >
-                                    <X className="w-6 h-6 text-white" />
-                                </button>
+                                <div className="flex items-center gap-2">
+                                    <button
+                                        onClick={downloadGuideAsPDF}
+                                        className="flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors min-h-[50px]"
+                                    >
+                                        <Download className="w-5 h-5 text-white" />
+                                        <span className="text-white">Download PDF</span>
+                                    </button>
+                                    <button
+                                        onClick={() => setShowGuide(false)}
+                                        className="p-2 hover:bg-white/10 rounded-lg transition-colors"
+                                    >
+                                        <X className="w-6 h-6 text-white" />
+                                    </button>
+                                </div>
                             </div>
 
                             <div className="p-8 space-y-8">
