@@ -13,6 +13,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { format } from 'date-fns';
+import DemoCTA from '../components/DemoCTA';
 
 const propertyTypeLabels = {
     primary_residence: 'Primary Residence',
@@ -216,6 +217,9 @@ export default function Properties() {
                         </Dialog>
                         </div>
                         </div>
+
+                {/* Demo CTA */}
+                <DemoCTA />
 
                 {properties.length > 0 ? (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

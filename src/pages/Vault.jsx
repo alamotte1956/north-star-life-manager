@@ -9,6 +9,7 @@ import IntelligentSearch from '../components/vault/IntelligentSearch';
 import ExpiryAlerts from '../components/vault/ExpiryAlerts';
 import FolderManager from '../components/vault/FolderManager';
 import PermissionGuard from '@/components/PermissionGuard';
+import DemoCTA from '../components/DemoCTA';
 
 export default function Vault() {
     const [cabinMode, setCabinMode] = useState(false);
