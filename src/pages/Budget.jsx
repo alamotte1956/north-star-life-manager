@@ -363,7 +363,7 @@ export default function BudgetPage() {
                         <h2 className="text-2xl font-light text-black">Budgets</h2>
                         <Dialog open={budgetOpen} onOpenChange={setBudgetOpen}>
                             <DialogTrigger asChild>
-                                <Button className="bg-gradient-to-r from-black to-[#1a1a1a]">
+                                <Button className="bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] text-white">
                                     <Plus className="w-4 h-4 mr-2" />
                                     Add Budget
                                 </Button>
@@ -448,7 +448,7 @@ export default function BudgetPage() {
                                             placeholder="Optional notes about this budget..."
                                         />
                                     </div>
-                                    <Button type="submit" className="w-full bg-gradient-to-r from-[#D4AF37] to-[#F4D03F]">
+                                    <Button type="submit" className="w-full bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] text-white">
                                         Create Budget
                                     </Button>
                                 </form>
@@ -528,7 +528,7 @@ export default function BudgetPage() {
                         <h2 className="text-2xl font-light text-black">Financial Goals</h2>
                         <Dialog open={goalOpen} onOpenChange={setGoalOpen}>
                             <DialogTrigger asChild>
-                                <Button className="bg-gradient-to-r from-black to-[#1a1a1a]">
+                                <Button className="bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] text-white">
                                     <Target className="w-4 h-4 mr-2" />
                                     Add Goal
                                 </Button>
@@ -628,7 +628,7 @@ export default function BudgetPage() {
                                             onChange={(e) => setGoalForm({ ...goalForm, notes: e.target.value })}
                                         />
                                     </div>
-                                    <Button type="submit" className="w-full bg-gradient-to-r from-[#D4AF37] to-[#F4D03F]">
+                                    <Button type="submit" className="w-full bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] text-white">
                                         Create Goal
                                     </Button>
                                 </form>
