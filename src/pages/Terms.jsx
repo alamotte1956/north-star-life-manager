@@ -11,7 +11,7 @@ export default function Terms() {
                         <h1 className="text-4xl font-light text-[#C5A059]">Terms of Service</h1>
                     </div>
                     <p className="text-[#F4E4C1]/80">Last updated: December 25, 2025</p>
-                    <p className="text-[#F4E4C1]/60 mt-2">© 2025 North Star Life Manager. All rights reserved.</p>
+                    <p className="text-[#F4E4C1]/60 mt-2">© 2025 A.I. Help Pros LLP. All rights reserved.</p>
                 </div>
 
                 <div className="space-y-8 text-[#F4E4C1]">
@@ -51,7 +51,7 @@ export default function Terms() {
 
                     <section>
                         <h2 className="text-2xl font-light text-[#C5A059] mb-4">5. Intellectual Property Rights</h2>
-                        <p className="mb-3">The North Star platform, including its software, design, logos, features, and documentation, is protected by copyright, trademark, and other intellectual property laws. All rights, title, and interest in the platform belong to North Star.</p>
+                        <p className="mb-3">The North Star Life Manager platform, including its software, design, logos, features, and documentation, is protected by copyright, trademark, and other intellectual property laws. All rights, title, and interest in the platform belong to A.I. Help Pros LLP.</p>
                         <p>You may not copy, modify, distribute, sell, or lease any part of our platform without prior written permission.</p>
                     </section>
 
