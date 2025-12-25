@@ -3,20 +3,29 @@ import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { AlertTriangle, Trash2, Shield, Download } from 'lucide-react';
+import { AlertTriangle, Trash2, Shield, Download, Database } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { toast } from 'sonner';
+import { useSandboxData } from '@/components/sandbox/SandboxDataProvider';
 
 export default function AccountSettings() {
     const [showDeleteDialog, setShowDeleteDialog] = useState(false);
     const [confirmText, setConfirmText] = useState('');
     const [deleting, setDeleting] = useState(false);
+    const { clearSandboxData } = useSandboxData();
 
     const { data: user } = useQuery({
         queryKey: ['user'],
         queryFn: () => base44.auth.me()
     });
+
+    const handleClearDemoData = () => {
+        if (window.confirm('Are you sure you want to clear all demo/sandbox data from localStorage?')) {
+            clearSandboxData();
+            toast.success('Demo data cleared successfully');
+        }
+    };
 
     const handleDeleteAccount = async () => {
         if (confirmText !== 'DELETE MY ACCOUNT') {
@@ -65,6 +74,37 @@ export default function AccountSettings() {
                         <p className="text-[#0F1729]/60 font-light">Manage your account and privacy</p>
                     </div>
                 </div>
+
+                {/* Data Storage Info */}
+                <Card className="mb-6 bg-blue-50 border-blue-200">
+                    <CardHeader>
+                        <CardTitle className="flex items-center gap-2">
+                            <Database className="w-5 h-5 text-blue-600" />
+                            Your Data Storage
+                        </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <div className="space-y-4">
+                            <div className="p-4 bg-white rounded-lg border border-blue-200">
+                                <h3 className="font-medium text-blue-900 mb-2">✅ You're Logged In</h3>
+                                <p className="text-sm text-blue-800 mb-2">
+                                    All new records you create are now stored in your secure authenticated account (<strong>{user?.email}</strong>).
+                                </p>
+                                <p className="text-xs text-blue-700">
+                                    Any demo data from before you logged in is still in your browser's localStorage. You can clear it below if needed.
+                                </p>
+                            </div>
+                            <Button
+                                onClick={handleClearDemoData}
+                                variant="outline"
+                                className="w-full border-blue-300 text-blue-700 hover:bg-blue-100"
+                            >
+                                <Trash2 className="w-4 h-4 mr-2" />
+                                Clear Demo/Sandbox Data from Browser
+                            </Button>
+                        </div>
+                    </CardContent>
+                </Card>
 
                 {/* Privacy & Security */}
                 <Card className="mb-6">
