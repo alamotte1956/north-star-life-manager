@@ -17,7 +17,8 @@ export default function Home() {
             try {
                 const user = await base44.auth.me();
                 if (user?.username) {
-                    navigate(createPageUrl('Dashboard'));
+                    const defaultPage = user.default_page || 'Dashboard';
+                    navigate(createPageUrl(defaultPage));
                 } else {
                     setLoading(false);
                 }
@@ -34,7 +35,7 @@ export default function Home() {
 
         setSaving(true);
         try {
-            await base44.auth.updateMe({ username: username.trim() });
+            await base44.auth.updateMe({ username: username.trim(), default_page: 'Dashboard' });
             navigate(createPageUrl('Dashboard'));
         } catch (error) {
             console.error('Failed to save username:', error);
