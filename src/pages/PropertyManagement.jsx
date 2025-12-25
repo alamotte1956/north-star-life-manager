@@ -18,6 +18,10 @@ import TenantCommunicationHub from '@/components/property/TenantCommunicationHub
 import LeaseManagement from '@/components/property/LeaseManagement';
 import LeaseAlerts from '@/components/property/LeaseAlerts';
 import RenewalManagement from '@/components/property/RenewalManagement';
+import AITenantResponseDrafter from '@/components/property/AITenantResponseDrafter';
+import TenantSentimentAnalyzer from '@/components/property/TenantSentimentAnalyzer';
+import AIListingGenerator from '@/components/property/AIListingGenerator';
+import AIRentPredictor from '@/components/property/AIRentPredictor';
 
 export default function PropertyManagement() {
     const [selectedProperty, setSelectedProperty] = useState(null);
@@ -171,6 +175,7 @@ export default function PropertyManagement() {
                 <Tabs defaultValue="properties" className="space-y-6">
                     <TabsList>
                         <TabsTrigger value="properties">Properties</TabsTrigger>
+                        <TabsTrigger value="ai-tools">AI Tools</TabsTrigger>
                         <TabsTrigger value="pricing">AI Rent Pricing</TabsTrigger>
                         <TabsTrigger value="rent">Rent Collection</TabsTrigger>
                         <TabsTrigger value="maintenance">Maintenance</TabsTrigger>
@@ -178,6 +183,50 @@ export default function PropertyManagement() {
                         <TabsTrigger value="leases">Lease Management</TabsTrigger>
                         <TabsTrigger value="communications">Tenant Communications</TabsTrigger>
                     </TabsList>
+
+                    <TabsContent value="ai-tools">
+                        <div className="space-y-6">
+                            {properties.map(property => (
+                                <Card key={property.id} className="border-purple-200">
+                                    <CardHeader className="bg-gradient-to-r from-purple-50 to-blue-50">
+                                        <CardTitle className="text-xl font-light flex items-center gap-2">
+                                            <Sparkles className="w-5 h-5 text-purple-600" />
+                                            {property.name} - AI Landlord Assistant
+                                        </CardTitle>
+                                        {property.address && (
+                                            <p className="text-sm text-gray-600">{property.address}</p>
+                                        )}
+                                    </CardHeader>
+                                    <CardContent className="pt-6">
+                                        <Tabs defaultValue="responses">
+                                            <TabsList className="grid w-full grid-cols-4">
+                                                <TabsTrigger value="responses">Draft Responses</TabsTrigger>
+                                                <TabsTrigger value="sentiment">Sentiment</TabsTrigger>
+                                                <TabsTrigger value="listing">Listing</TabsTrigger>
+                                                <TabsTrigger value="pricing">Rent Pricing</TabsTrigger>
+                                            </TabsList>
+
+                                            <TabsContent value="responses" className="mt-4">
+                                                <AITenantResponseDrafter property={property} />
+                                            </TabsContent>
+
+                                            <TabsContent value="sentiment" className="mt-4">
+                                                <TenantSentimentAnalyzer property={property} />
+                                            </TabsContent>
+
+                                            <TabsContent value="listing" className="mt-4">
+                                                <AIListingGenerator property={property} />
+                                            </TabsContent>
+
+                                            <TabsContent value="pricing" className="mt-4">
+                                                <AIRentPredictor property={property} onUpdate={refetch} />
+                                            </TabsContent>
+                                        </Tabs>
+                                    </CardContent>
+                                </Card>
+                            ))}
+                        </div>
+                    </TabsContent>
 
                     <TabsContent value="pricing">
                         <div className="space-y-6">
