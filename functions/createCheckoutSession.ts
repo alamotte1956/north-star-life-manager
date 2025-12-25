@@ -6,9 +6,9 @@ const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY'), {
 });
 
 const PRICE_IDS = {
-    basic: Deno.env.get('STRIPE_PRICE_ID_BASIC'),
-    premium: Deno.env.get('STRIPE_PRICE_ID_PREMIUM'),
-    enterprise: Deno.env.get('STRIPE_PRICE_ID_ENTERPRISE')
+    basic: 'price_1SiIxfLV02BUsIMDilboDMGv',
+    premium: 'price_1SiJ3qLV02BUsIMD0kfW9BqX',
+    enterprise: 'price_1SiJ4oLV02BUsIMDrmKLoPkY'
 };
 
 Deno.serve(async (req) => {
