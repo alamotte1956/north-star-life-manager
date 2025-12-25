@@ -6,8 +6,9 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
-import { Bell, Mail, Smartphone, Save, Clock } from 'lucide-react';
+import { Bell, Mail, Smartphone, Save, Clock, Home } from 'lucide-react';
 import { toast } from 'sonner';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 export default function NotificationSettings() {
     const queryClient = useQueryClient();
@@ -37,6 +38,20 @@ export default function NotificationSettings() {
         queryFn: () => base44.auth.me()
     });
 
+    const { data: subscription } = useQuery({
+        queryKey: ['subscription'],
+        queryFn: async () => {
+            const subs = await base44.entities.Subscription_Plan.filter({ 
+                created_by: user?.email 
+            });
+            return subs[0];
+        },
+        enabled: !!user
+    });
+
+    const isPaidUser = user?.role === 'admin' || subscription?.status === 'active';
+    const [defaultPage, setDefaultPage] = useState(user?.default_page || 'Dashboard');
+
     const { data: existingPrefs } = useQuery({
         queryKey: ['notificationPreferences'],
         queryFn: () => base44.entities.NotificationPreference.filter({ user_email: user?.email }),
@@ -49,20 +64,37 @@ export default function NotificationSettings() {
         }
     }, [existingPrefs]);
 
+    useEffect(() => {
+        if (user?.default_page) {
+            setDefaultPage(user.default_page);
+        }
+    }, [user]);
+
     const saveMutation = useMutation({
         mutationFn: async () => {
+            const updates = [];
+            
+            // Save notification preferences
             if (existingPrefs && existingPrefs[0]) {
-                return base44.entities.NotificationPreference.update(existingPrefs[0].id, preferences);
+                updates.push(base44.entities.NotificationPreference.update(existingPrefs[0].id, preferences));
             } else {
-                return base44.entities.NotificationPreference.create({
+                updates.push(base44.entities.NotificationPreference.create({
                     user_email: user.email,
                     ...preferences
-                });
+                }));
             }
+
+            // Save default page if user is paid
+            if (isPaidUser && defaultPage !== user.default_page) {
+                updates.push(base44.auth.updateMe({ default_page: defaultPage }));
+            }
+
+            return Promise.all(updates);
         },
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['notificationPreferences'] });
-            toast.success('Notification preferences saved!');
+            queryClient.invalidateQueries({ queryKey: ['user'] });
+            toast.success('Settings saved!');
         }
     });
 
@@ -252,6 +284,42 @@ export default function NotificationSettings() {
                             </div>
                         </CardContent>
                     </Card>
+
+                    {/* Default Landing Page - Only for Paid Users */}
+                    {isPaidUser && (
+                        <Card>
+                            <CardHeader>
+                                <CardTitle className="text-xl font-light">Default Landing Page</CardTitle>
+                            </CardHeader>
+                            <CardContent>
+                                <div className="flex items-center gap-4">
+                                    <Home className="w-5 h-5 text-[#C5A059]" />
+                                    <div className="flex-1">
+                                        <Label className="text-base">Choose your default page after login</Label>
+                                        <p className="text-sm text-gray-500 mb-3">Free users always start at Dashboard</p>
+                                        <Select value={defaultPage} onValueChange={setDefaultPage}>
+                                            <SelectTrigger className="w-64">
+                                                <SelectValue />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                <SelectItem value="Dashboard">Dashboard</SelectItem>
+                                                <SelectItem value="Vault">Vault</SelectItem>
+                                                <SelectItem value="Properties">Properties</SelectItem>
+                                                <SelectItem value="FinancialDashboard">Financial Dashboard</SelectItem>
+                                                <SelectItem value="Investments">Investments</SelectItem>
+                                                <SelectItem value="BillPayments">Bill Payments</SelectItem>
+                                                <SelectItem value="Calendar">Calendar</SelectItem>
+                                                <SelectItem value="Health">Health</SelectItem>
+                                                <SelectItem value="Contacts">Contacts</SelectItem>
+                                                <SelectItem value="PropertyManagement">Property Management</SelectItem>
+                                                <SelectItem value="BusinessHub">Business Hub</SelectItem>
+                                            </SelectContent>
+                                        </Select>
+                                    </div>
+                                </div>
+                            </CardContent>
+                        </Card>
+                    )}
 
                     {/* Save Button */}
                     <Button
