@@ -129,7 +129,7 @@ export default function CustomReportBuilder({ open, onOpenChange, documents }) {
                         <Button
                             onClick={generateReport}
                             disabled={generating || Object.values(selectedFields).every(v => !v)}
-                            className="flex-1 bg-gradient-to-r from-[#C5A059] to-[#D4AF37] text-[#0F172A]"
+                            className="flex-1 bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] text-white"
                         >
                             {generating ? (
                                 <>
