@@ -41,6 +41,8 @@ import Vault from './pages/Vault';
 import Vehicles from './pages/Vehicles';
 import BankingHub from './pages/BankingHub';
 import BillNegotiation from './pages/BillNegotiation';
+import ProfessionalMarketplace from './pages/ProfessionalMarketplace';
+import InsuranceShopping from './pages/InsuranceShopping';
 import __Layout from './Layout.jsx';
 
 
@@ -88,6 +90,8 @@ export const PAGES = {
     "Vehicles": Vehicles,
     "BankingHub": BankingHub,
     "BillNegotiation": BillNegotiation,
+    "ProfessionalMarketplace": ProfessionalMarketplace,
+    "InsuranceShopping": InsuranceShopping,
 }
 
 export const pagesConfig = {
