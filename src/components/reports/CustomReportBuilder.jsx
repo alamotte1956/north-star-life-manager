@@ -3,12 +3,13 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Download, Loader2 } from 'lucide-react';
+import { Download, Loader2, Printer } from 'lucide-react';
 import { toast } from 'sonner';
 import { base44 } from '@/api/base44Client';
 
 export default function CustomReportBuilder({ open, onOpenChange, documents }) {
     const [generating, setGenerating] = useState(false);
+    const [generatedReport, setGeneratedReport] = useState(null);
     const [selectedFields, setSelectedFields] = useState({
         title: true,
         category: true,
@@ -69,19 +70,8 @@ export default function CustomReportBuilder({ open, onOpenChange, documents }) {
             );
             const csv = [headers, ...rows].join('\n');
 
-            // Download CSV
-            const blob = new Blob([csv], { type: 'text/csv' });
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `custom-report-${new Date().toISOString().split('T')[0]}.csv`;
-            document.body.appendChild(a);
-            a.click();
-            window.URL.revokeObjectURL(url);
-            a.remove();
-
+            setGeneratedReport(csv);
             toast.success('Custom report generated');
-            onOpenChange(false);
         } catch (error) {
             toast.error('Failed to generate report');
             console.error(error);
@@ -90,8 +80,53 @@ export default function CustomReportBuilder({ open, onOpenChange, documents }) {
         }
     };
 
+    const handleDownload = () => {
+        if (!generatedReport) return;
+        
+        const blob = new Blob([generatedReport], { type: 'text/csv' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `custom-report-${new Date().toISOString().split('T')[0]}.csv`;
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        a.remove();
+    };
+
+    const handlePrint = () => {
+        if (!generatedReport) return;
+        
+        const printWindow = window.open('', '_blank');
+        printWindow.document.write(`
+            <html>
+                <head>
+                    <title>Custom Document Report</title>
+                    <style>
+                        body { font-family: Arial, sans-serif; margin: 40px; }
+                        pre { white-space: pre-wrap; word-wrap: break-word; }
+                        @media print {
+                            body { margin: 20px; }
+                        }
+                    </style>
+                </head>
+                <body>
+                    <h1>Document Report</h1>
+                    <pre>${generatedReport}</pre>
+                    <script>window.print();</script>
+                </body>
+            </html>
+        `);
+        printWindow.document.close();
+    };
+
+    const handleClose = () => {
+        onOpenChange(false);
+        setGeneratedReport(null);
+    };
+
     return (
-        <Dialog open={open} onOpenChange={onOpenChange}>
+        <Dialog open={open} onOpenChange={handleClose}>
             <DialogContent className="max-w-md">
                 <DialogHeader>
                     <DialogTitle>Custom Report Builder</DialogTitle>
@@ -117,33 +152,59 @@ export default function CustomReportBuilder({ open, onOpenChange, documents }) {
                         ))}
                     </div>
 
-                    <div className="flex gap-2 pt-4 border-t">
-                        <Button
-                            variant="outline"
-                            onClick={() => onOpenChange(false)}
-                            className="flex-1"
-                            disabled={generating}
-                        >
-                            Cancel
-                        </Button>
-                        <Button
-                            onClick={generateReport}
-                            disabled={generating || Object.values(selectedFields).every(v => !v)}
-                            className="flex-1 bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] text-white"
-                        >
-                            {generating ? (
-                                <>
-                                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                                    Generating...
-                                </>
-                            ) : (
-                                <>
+                    {generatedReport ? (
+                        <div className="space-y-4 pt-4 border-t">
+                            <div className="bg-green-50 border border-green-200 rounded-lg p-3">
+                                <p className="text-sm text-green-900 font-medium">✓ Report ready!</p>
+                            </div>
+                            
+                            <div className="flex gap-2">
+                                <Button
+                                    variant="outline"
+                                    onClick={handlePrint}
+                                    className="flex-1"
+                                >
+                                    <Printer className="w-4 h-4 mr-2" />
+                                    Print
+                                </Button>
+                                <Button
+                                    onClick={handleDownload}
+                                    className="flex-1 bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] text-white"
+                                >
                                     <Download className="w-4 h-4 mr-2" />
-                                    Generate CSV
-                                </>
-                            )}
-                        </Button>
-                    </div>
+                                    Download CSV
+                                </Button>
+                            </div>
+                        </div>
+                    ) : (
+                        <div className="flex gap-2 pt-4 border-t">
+                            <Button
+                                variant="outline"
+                                onClick={handleClose}
+                                className="flex-1"
+                                disabled={generating}
+                            >
+                                Cancel
+                            </Button>
+                            <Button
+                                onClick={generateReport}
+                                disabled={generating || Object.values(selectedFields).every(v => !v)}
+                                className="flex-1 bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] text-white"
+                            >
+                                {generating ? (
+                                    <>
+                                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                                        Generating...
+                                    </>
+                                ) : (
+                                    <>
+                                        <Download className="w-4 h-4 mr-2" />
+                                        Generate CSV
+                                    </>
+                                )}
+                            </Button>
+                        </div>
+                    )}
                 </div>
             </DialogContent>
         </Dialog>

@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Sparkles, Download, Loader2, FileText, Calendar } from 'lucide-react';
+import { Sparkles, Download, Loader2, FileText, Calendar, Printer } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { toast } from 'sonner';
 
@@ -20,6 +20,7 @@ const reportTypes = [
 export default function AIReportGenerator({ onReportGenerated }) {
     const [dialogOpen, setDialogOpen] = useState(false);
     const [generating, setGenerating] = useState(false);
+    const [generatedReport, setGeneratedReport] = useState(null);
     const [selectedType, setSelectedType] = useState('monthly_spending');
     const [selectedFormat, setSelectedFormat] = useState('pdf');
 
@@ -31,26 +32,59 @@ export default function AIReportGenerator({ onReportGenerated }) {
                 format: selectedFormat
             });
 
-            // Download the file
-            const blob = new Blob([response.data], { 
-                type: selectedFormat === 'pdf' ? 'application/pdf' : 'text/csv' 
-            });
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `${selectedType}-report.${selectedFormat}`;
-            document.body.appendChild(a);
-            a.click();
-            window.URL.revokeObjectURL(url);
-            a.remove();
-
+            setGeneratedReport(response.data);
             toast.success('Report generated successfully!');
-            setDialogOpen(false);
             if (onReportGenerated) onReportGenerated();
         } catch (error) {
             toast.error('Failed to generate report');
         }
         setGenerating(false);
+    };
+
+    const handleDownload = () => {
+        if (!generatedReport) return;
+        
+        const blob = new Blob([generatedReport], { 
+            type: selectedFormat === 'pdf' ? 'application/pdf' : 'text/csv' 
+        });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${selectedType}-report.${selectedFormat}`;
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        a.remove();
+    };
+
+    const handlePrint = () => {
+        if (!generatedReport) return;
+        
+        const printWindow = window.open('', '_blank');
+        printWindow.document.write(`
+            <html>
+                <head>
+                    <title>${reportTypes.find(t => t.value === selectedType)?.label} Report</title>
+                    <style>
+                        body { font-family: Arial, sans-serif; margin: 40px; }
+                        h1 { color: #0F1729; }
+                        @media print {
+                            body { margin: 20px; }
+                        }
+                    </style>
+                </head>
+                <body>
+                    <pre>${generatedReport}</pre>
+                    <script>window.print();</script>
+                </body>
+            </html>
+        `);
+        printWindow.document.close();
+    };
+
+    const handleClose = () => {
+        setDialogOpen(false);
+        setGeneratedReport(null);
     };
 
     return (
@@ -63,7 +97,7 @@ export default function AIReportGenerator({ onReportGenerated }) {
                 AI Report Generator
             </Button>
 
-            <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+            <Dialog open={dialogOpen} onOpenChange={handleClose}>
                 <DialogContent className="max-w-2xl">
                     <DialogHeader>
                         <DialogTitle className="flex items-center gap-2">
@@ -115,32 +149,58 @@ export default function AIReportGenerator({ onReportGenerated }) {
                             </p>
                         </div>
 
-                        <div className="flex gap-3">
-                            <Button
-                                variant="outline"
-                                onClick={() => setDialogOpen(false)}
-                                className="flex-1"
-                            >
-                                Cancel
-                            </Button>
-                            <Button
-                                onClick={handleGenerate}
-                                disabled={generating}
-                                className="flex-1 bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] text-white"
-                            >
-                                {generating ? (
-                                    <>
-                                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                                        Generating...
-                                    </>
-                                ) : (
-                                    <>
+                        {generatedReport ? (
+                            <div className="space-y-4">
+                                <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+                                    <p className="text-sm text-green-900 font-medium">✓ Report generated successfully!</p>
+                                </div>
+                                
+                                <div className="flex gap-3">
+                                    <Button
+                                        variant="outline"
+                                        onClick={handlePrint}
+                                        className="flex-1"
+                                    >
+                                        <Printer className="w-4 h-4 mr-2" />
+                                        Print
+                                    </Button>
+                                    <Button
+                                        onClick={handleDownload}
+                                        className="flex-1 bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] text-white"
+                                    >
                                         <Download className="w-4 h-4 mr-2" />
-                                        Generate Report
-                                    </>
-                                )}
-                            </Button>
-                        </div>
+                                        Download {selectedFormat.toUpperCase()}
+                                    </Button>
+                                </div>
+                            </div>
+                        ) : (
+                            <div className="flex gap-3">
+                                <Button
+                                    variant="outline"
+                                    onClick={handleClose}
+                                    className="flex-1"
+                                >
+                                    Cancel
+                                </Button>
+                                <Button
+                                    onClick={handleGenerate}
+                                    disabled={generating}
+                                    className="flex-1 bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] text-white"
+                                >
+                                    {generating ? (
+                                        <>
+                                            <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                                            Generating...
+                                        </>
+                                    ) : (
+                                        <>
+                                            <Sparkles className="w-4 h-4 mr-2" />
+                                            Generate Report
+                                        </>
+                                    )}
+                                </Button>
+                            </div>
+                        )}
                     </div>
                 </DialogContent>
             </Dialog>

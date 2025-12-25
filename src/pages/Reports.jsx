@@ -6,7 +6,8 @@ import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Progress } from '@/components/ui/progress';
-import { FileText, Users, Zap, HardDrive, Calendar, CheckCircle, AlertCircle, TrendingUp, Clock, Download, Activity, Database } from 'lucide-react';
+import { FileText, Users, Zap, HardDrive, Calendar, CheckCircle, AlertCircle, TrendingUp, Clock, Download, Activity, Database, Printer } from 'lucide-react';
+import PrintButton from '@/components/PrintButton';
 import { BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area } from 'recharts';
 import { format, subDays, isWithinInterval, parseISO } from 'date-fns';
 import CustomReportBuilder from '../components/reports/CustomReportBuilder';
@@ -238,7 +239,8 @@ export default function Reports() {
                         </div>
                     </div>
 
-                    <div className="flex gap-2">
+                    <div className="flex gap-2 print:hidden">
+                        <PrintButton />
                         <AIReportGenerator />
                         <Popover>
                             <PopoverTrigger asChild>
