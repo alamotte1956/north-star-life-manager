@@ -131,6 +131,24 @@ button:active {
   white-space: nowrap;
 }
 
+/* Light/White Buttons - Dark Text */
+button[class*="bg-white"], 
+button[class*="bg-gray-"], 
+.bg-white button,
+button.outline {
+  color: #000000 !important;
+}
+
+button[class*="outline"] {
+  color: #F4E4C1;
+  border-color: #C5A059;
+}
+
+button[class*="outline"]:hover {
+  background-color: #C5A059;
+  color: #000000;
+}
+
 /* Safe Area Insets for Mobile */
 .pb-safe {
   padding-bottom: env(safe-area-inset-bottom);
