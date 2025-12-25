@@ -235,7 +235,7 @@ export default function Travel() {
                 <TripPlannerWizard 
                     open={showPlanner} 
                     onOpenChange={setShowPlanner}
-                    onComplete={() => refetch()}
+                    onComplete={() => queryClient.invalidateQueries({ queryKey: ['trips'] })}
                 />
 
                 {/* Upcoming Trips */}
