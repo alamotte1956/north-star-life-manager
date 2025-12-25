@@ -135,7 +135,8 @@ export default function Layout({ children, currentPageName }) {
         { name: 'Role Management', icon: Shield, path: 'RoleManagement' },
         { name: 'Voice Assistant', icon: Users, path: 'VoiceAssistant' },
         { name: 'Video Tutorials', icon: LayoutDashboard, path: 'VideoTutorials' },
-        { name: 'Account Settings', icon: Shield, path: 'AccountSettings' }
+        { name: 'Account Settings', icon: Shield, path: 'AccountSettings' },
+        { name: 'FAQ', icon: HelpCircle, path: 'FAQ' }
         ];
 
     return (

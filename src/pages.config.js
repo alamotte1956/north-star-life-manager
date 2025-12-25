@@ -75,6 +75,7 @@ import VideoCallScheduler from './pages/VideoCallScheduler';
 import VideoTutorials from './pages/VideoTutorials';
 import VoiceAssistant from './pages/VoiceAssistant';
 import AccountSettings from './pages/AccountSettings';
+import FAQ from './pages/FAQ';
 import __Layout from './Layout.jsx';
 
 
@@ -156,6 +157,7 @@ export const PAGES = {
     "VideoTutorials": VideoTutorials,
     "VoiceAssistant": VoiceAssistant,
     "AccountSettings": AccountSettings,
+    "FAQ": FAQ,
 }
 
 export const pagesConfig = {
