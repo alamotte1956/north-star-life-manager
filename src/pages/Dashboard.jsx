@@ -725,7 +725,7 @@ export default function Dashboard() {
 
                 {/* Wellness Insights - Correlation Engine */}
                 <div className="mb-8">
-                    <WellnessInsights />
+                    {/* Wellness insights component would go here */}
                 </div>
 
                 {/* AI Financial Advisor */}
