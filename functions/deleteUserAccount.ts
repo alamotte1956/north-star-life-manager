@@ -98,26 +98,25 @@ Deno.serve(async (req) => {
         // Delete each entity type using service role for admin privileges
         for (const entityName of entitiesToDelete) {
             try {
-                // Filter by user email or created_by
-                const records = await base44.asServiceRole.entities[entityName].filter({
-                    $or: [
-                        { user_email: userEmail },
-                        { created_by: userEmail },
-                        { creator_email: userEmail },
-                        { sender_email: userEmail },
-                        { recipient_email: userEmail }
-                    ]
-                });
+                // Get all records for this entity and filter by created_by
+                const records = await base44.asServiceRole.entities[entityName].list();
+                const userRecords = records.filter(r => 
+                    r.created_by === userEmail || 
+                    r.user_email === userEmail ||
+                    r.creator_email === userEmail ||
+                    r.sender_email === userEmail ||
+                    r.recipient_email === userEmail
+                );
 
                 // Delete each record
-                for (const record of records) {
+                for (const record of userRecords) {
                     await base44.asServiceRole.entities[entityName].delete(record.id);
                 }
 
-                if (records.length > 0) {
+                if (userRecords.length > 0) {
                     deletionLog.entities_deleted.push({
                         entity: entityName,
-                        count: records.length
+                        count: userRecords.length
                     });
                 }
             } catch (error) {
