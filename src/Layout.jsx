@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { createPageUrl } from './utils';
 import {
     LayoutDashboard, FileText, Shield, Home, Wrench, Users, Car,
-    DollarSign, Gem, Plane, Heart, Calendar, LogOut, Menu, X, Search, Plug, TrendingUp, Zap, CheckCircle, Activity, AlertCircle, Globe
+    DollarSign, Gem, Plane, Heart, Calendar, LogOut, Menu, X, Search, Plug, TrendingUp, Zap, CheckCircle, Activity, AlertCircle, Globe, Briefcase
 } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import GlobalSearch from '@/components/GlobalSearch';
@@ -79,7 +79,8 @@ export default function Layout({ children, currentPageName }) {
         { name: 'Concierge', icon: Users, path: 'ConciergeService' },
         { name: 'Emergency Response', icon: AlertCircle, path: 'EmergencyResponse' },
         { name: 'International Assets', icon: Globe, path: 'InternationalAssets' },
-        { name: 'Voice Assistant', icon: Users, path: 'VoiceAssistant' }
+        { name: 'Voice Assistant', icon: Users, path: 'VoiceAssistant' },
+        { name: 'Business Hub', icon: Briefcase, path: 'BusinessHub' }
         ];
 
     return (

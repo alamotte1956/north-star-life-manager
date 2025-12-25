@@ -50,6 +50,11 @@ import EmergencyResponse from './pages/EmergencyResponse';
 import InternationalAssets from './pages/InternationalAssets';
 import TaxExport from './pages/TaxExport';
 import VoiceAssistant from './pages/VoiceAssistant';
+import BusinessHub from './pages/BusinessHub';
+import BusinessClients from './pages/BusinessClients';
+import BusinessProjects from './pages/BusinessProjects';
+import BusinessInvoices from './pages/BusinessInvoices';
+import BusinessExpenses from './pages/BusinessExpenses';
 import __Layout from './Layout.jsx';
 
 
@@ -106,6 +111,11 @@ export const PAGES = {
     "InternationalAssets": InternationalAssets,
     "TaxExport": TaxExport,
     "VoiceAssistant": VoiceAssistant,
+    "BusinessHub": BusinessHub,
+    "BusinessClients": BusinessClients,
+    "BusinessProjects": BusinessProjects,
+    "BusinessInvoices": BusinessInvoices,
+    "BusinessExpenses": BusinessExpenses,
 }
 
 export const pagesConfig = {
