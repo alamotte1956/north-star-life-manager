@@ -43,14 +43,33 @@ Deno.serve(async (req) => {
                 if (billDate >= periodStart && billDate <= periodEnd) {
                     // Map bill category to budget category
                     if (bill.category === budget.category && !existingBillIds.includes(bill.id)) {
+                        // Auto-categorize using AI
+                        let aiCategory = budget.category;
+                        let aiConfidence = 1.0;
+                        try {
+                            const catResult = await base44.asServiceRole.functions.invoke('categorizeTransaction', {
+                                description: bill.bill_name,
+                                merchant: bill.merchant || bill.bill_name,
+                                amount: bill.amount,
+                                transaction_type: 'budget'
+                            });
+                            if (catResult.data.success) {
+                                aiCategory = catResult.data.category;
+                                aiConfidence = catResult.data.confidence;
+                            }
+                        } catch (error) {
+                            console.error('Auto-categorization failed, using budget category');
+                        }
+                        
                         await base44.asServiceRole.entities.BudgetTransaction.create({
                             budget_id: budget.id,
-                            category: budget.category,
+                            category: aiCategory,
                             amount: bill.amount,
                             description: bill.bill_name,
                             transaction_date: bill.due_date,
                             source_type: 'bill_payment',
-                            source_id: bill.id
+                            source_id: bill.id,
+                            ai_confidence: aiConfidence
                         });
                         totalSpending += bill.amount;
                     }

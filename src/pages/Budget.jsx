@@ -20,6 +20,7 @@ import GoalProgressCard from '../components/budget/GoalProgressCard';
 import GoalDetailDialog from '../components/goals/GoalDetailDialog';
 import AdvancedAIInsights from '../components/budget/AdvancedAIInsights';
 import CategoryReviewDialog from '../components/automation/CategoryReviewDialog';
+import CategoryRulesManager from '../components/automation/CategoryRulesManager';
 
 const categoryLabels = {
     property: 'Property',
@@ -688,6 +689,11 @@ export default function BudgetPage() {
                     open={showCategoryReview}
                     onOpenChange={setShowCategoryReview}
                 />
+
+                {/* Category Rules Manager */}
+                <div className="mt-12">
+                    <CategoryRulesManager />
+                </div>
             </div>
         </div>
     );
