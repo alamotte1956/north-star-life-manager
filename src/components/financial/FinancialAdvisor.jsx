@@ -1,31 +1,86 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { base44 } from '@/api/base44Client';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Input } from '@/components/ui/input';
 import { 
     Sparkles, TrendingUp, DollarSign, Target, AlertTriangle, 
-    CheckCircle, Clock, Lightbulb, PiggyBank, Shield 
+    CheckCircle, Clock, Lightbulb, PiggyBank, Shield, MessageCircle, Send, BarChart3 
 } from 'lucide-react';
 import { toast } from 'sonner';
 
 export default function FinancialAdvisor() {
     const [advice, setAdvice] = useState(null);
     const [snapshot, setSnapshot] = useState(null);
+    const [marketData, setMarketData] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [chatMessages, setChatMessages] = useState([]);
+    const [userQuestion, setUserQuestion] = useState('');
+    const [askingQuestion, setAskingQuestion] = useState(false);
+
+    useEffect(() => {
+        fetchMarketData();
+        const interval = setInterval(fetchMarketData, 5 * 60 * 1000); // Refresh every 5 min
+        return () => clearInterval(interval);
+    }, []);
+
+    const fetchMarketData = async () => {
+        try {
+            const result = await base44.functions.invoke('fetchMarketPrices', {});
+            setMarketData(result.data);
+        } catch (error) {
+            console.error('Failed to fetch market data:', error);
+        }
+    };
 
     const getAdvice = async (type = 'comprehensive') => {
         setLoading(true);
         try {
-            const result = await base44.functions.invoke('getFinancialAdvice', { advice_type: type });
+            const result = await base44.functions.invoke('getFinancialAdvice', { 
+                advice_type: type,
+                include_market_data: true
+            });
             setAdvice(result.data.advice);
             setSnapshot(result.data.financial_snapshot);
-            toast.success('Financial advice generated!');
+            toast.success('Financial advice generated with real-time market data!');
         } catch (error) {
             toast.error('Failed to generate advice');
         }
         setLoading(false);
+    };
+
+    const askQuestion = async (e) => {
+        e.preventDefault();
+        if (!userQuestion.trim() || askingQuestion) return;
+
+        const question = userQuestion.trim();
+        setUserQuestion('');
+        
+        setChatMessages(prev => [...prev, { role: 'user', content: question }]);
+        setAskingQuestion(true);
+
+        try {
+            const result = await base44.functions.invoke('answerInvestmentQuestion', {
+                question,
+                current_advice: advice,
+                financial_snapshot: snapshot,
+                market_data: marketData
+            });
+            
+            setChatMessages(prev => [...prev, { 
+                role: 'assistant', 
+                content: result.data.answer 
+            }]);
+        } catch (error) {
+            toast.error('Failed to get answer');
+            setChatMessages(prev => [...prev, { 
+                role: 'assistant', 
+                content: 'Sorry, I encountered an error. Please try again.' 
+            }]);
+        }
+        setAskingQuestion(false);
     };
 
     const getScoreColor = (score) => {
@@ -44,14 +99,33 @@ export default function FinancialAdvisor() {
                     </div>
                     <h3 className="text-xl font-light text-black mb-2">AI Financial Advisor</h3>
                     <p className="text-black/60 mb-6 max-w-md mx-auto">
-                        Get personalized financial advice on budgeting, investments, debt management, and more.
+                        Get personalized investment recommendations with real-time market data analysis, portfolio diversification strategies, and actionable rebalancing advice.
                     </p>
+                    {marketData && (
+                        <div className="grid grid-cols-3 gap-4 mb-6 max-w-md mx-auto">
+                            <div className="p-3 bg-blue-50 rounded-lg">
+                                <BarChart3 className="w-5 h-5 text-blue-600 mx-auto mb-1" />
+                                <div className="text-xs text-black/60">S&P 500</div>
+                                <div className="text-sm font-medium">{marketData.sp500?.toFixed(2)}</div>
+                            </div>
+                            <div className="p-3 bg-green-50 rounded-lg">
+                                <TrendingUp className="w-5 h-5 text-green-600 mx-auto mb-1" />
+                                <div className="text-xs text-black/60">VTI</div>
+                                <div className="text-sm font-medium">${marketData.vti?.toFixed(2)}</div>
+                            </div>
+                            <div className="p-3 bg-purple-50 rounded-lg">
+                                <DollarSign className="w-5 h-5 text-purple-600 mx-auto mb-1" />
+                                <div className="text-xs text-black/60">Gold</div>
+                                <div className="text-sm font-medium">${marketData.gold?.toFixed(0)}</div>
+                            </div>
+                        </div>
+                    )}
                     <Button 
                         onClick={() => getAdvice()}
                         disabled={loading}
                         className="bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] text-white"
                     >
-                        {loading ? 'Analyzing...' : 'Get Financial Advice'}
+                        {loading ? 'Analyzing Portfolio & Markets...' : 'Get Personalized Investment Strategy'}
                     </Button>
                 </CardContent>
             </Card>
@@ -594,6 +668,160 @@ export default function FinancialAdvisor() {
                     </Card>
                 </TabsContent>
             </Tabs>
+
+            {/* Interactive Q&A Section */}
+            <Card className="border-[#4A90E2]/30 mt-6">
+                <CardHeader>
+                    <CardTitle className="text-lg font-light flex items-center gap-2">
+                        <MessageCircle className="w-5 h-5 text-[#4A90E2]" />
+                        Ask Your Financial Advisor
+                    </CardTitle>
+                </CardHeader>
+                <CardContent>
+                    <div className="space-y-4">
+                        {chatMessages.length === 0 && (
+                            <div className="text-center py-8">
+                                <p className="text-sm text-black/60 mb-4">Ask about your investments, market trends, or portfolio performance</p>
+                                <div className="grid grid-cols-2 gap-2 max-w-2xl mx-auto">
+                                    <Button 
+                                        variant="outline" 
+                                        size="sm"
+                                        onClick={() => setUserQuestion("How is my portfolio performing compared to the market?")}
+                                    >
+                                        Portfolio vs Market
+                                    </Button>
+                                    <Button 
+                                        variant="outline" 
+                                        size="sm"
+                                        onClick={() => setUserQuestion("Should I rebalance my portfolio now?")}
+                                    >
+                                        Rebalancing Advice
+                                    </Button>
+                                    <Button 
+                                        variant="outline" 
+                                        size="sm"
+                                        onClick={() => setUserQuestion("What's the outlook for tech stocks?")}
+                                    >
+                                        Tech Outlook
+                                    </Button>
+                                    <Button 
+                                        variant="outline" 
+                                        size="sm"
+                                        onClick={() => setUserQuestion("How should I adjust for current market conditions?")}
+                                    >
+                                        Market Strategy
+                                    </Button>
+                                </div>
+                            </div>
+                        )}
+
+                        {chatMessages.length > 0 && (
+                            <div className="space-y-3 max-h-96 overflow-y-auto">
+                                {chatMessages.map((msg, idx) => (
+                                    <div 
+                                        key={idx}
+                                        className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
+                                    >
+                                        <div className={`max-w-[80%] rounded-lg px-4 py-3 ${
+                                            msg.role === 'user' 
+                                                ? 'bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] text-white'
+                                                : 'bg-gray-100 text-black'
+                                        }`}>
+                                            <p className="text-sm whitespace-pre-wrap">{msg.content}</p>
+                                        </div>
+                                    </div>
+                                ))}
+                                {askingQuestion && (
+                                    <div className="flex justify-start">
+                                        <div className="bg-gray-100 rounded-lg px-4 py-3">
+                                            <div className="flex items-center gap-2">
+                                                <div className="w-2 h-2 bg-[#4A90E2] rounded-full animate-bounce" />
+                                                <div className="w-2 h-2 bg-[#4A90E2] rounded-full animate-bounce" style={{ animationDelay: '0.2s' }} />
+                                                <div className="w-2 h-2 bg-[#4A90E2] rounded-full animate-bounce" style={{ animationDelay: '0.4s' }} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                        )}
+
+                        <form onSubmit={askQuestion} className="flex gap-2">
+                            <Input
+                                value={userQuestion}
+                                onChange={(e) => setUserQuestion(e.target.value)}
+                                placeholder="Ask about your investments, performance, or strategy..."
+                                disabled={askingQuestion}
+                                className="flex-1"
+                            />
+                            <Button 
+                                type="submit"
+                                disabled={askingQuestion || !userQuestion.trim()}
+                                className="bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] text-white"
+                            >
+                                <Send className="w-4 h-4" />
+                            </Button>
+                        </form>
+                    </div>
+                </CardContent>
+            </Card>
+
+            {/* Real-Time Market Data */}
+            {marketData && (
+                <Card className="border-green-200 bg-gradient-to-br from-green-50 to-blue-50 mt-6">
+                    <CardHeader>
+                        <CardTitle className="text-lg font-light flex items-center gap-2">
+                            <BarChart3 className="w-5 h-5 text-green-600" />
+                            Real-Time Market Data
+                        </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                            {marketData.sp500 && (
+                                <div className="p-3 bg-white rounded-lg">
+                                    <div className="text-xs text-black/60 mb-1">S&P 500</div>
+                                    <div className="text-xl font-light">{marketData.sp500.toFixed(2)}</div>
+                                    <Badge className={marketData.sp500_change >= 0 ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}>
+                                        {marketData.sp500_change >= 0 ? '+' : ''}{marketData.sp500_change?.toFixed(2)}%
+                                    </Badge>
+                                </div>
+                            )}
+                            {marketData.vti && (
+                                <div className="p-3 bg-white rounded-lg">
+                                    <div className="text-xs text-black/60 mb-1">VTI (Total Market)</div>
+                                    <div className="text-xl font-light">${marketData.vti.toFixed(2)}</div>
+                                    <Badge className={marketData.vti_change >= 0 ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}>
+                                        {marketData.vti_change >= 0 ? '+' : ''}{marketData.vti_change?.toFixed(2)}%
+                                    </Badge>
+                                </div>
+                            )}
+                            {marketData.bonds && (
+                                <div className="p-3 bg-white rounded-lg">
+                                    <div className="text-xs text-black/60 mb-1">Bonds (AGG)</div>
+                                    <div className="text-xl font-light">${marketData.bonds.toFixed(2)}</div>
+                                    <Badge className={marketData.bonds_change >= 0 ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}>
+                                        {marketData.bonds_change >= 0 ? '+' : ''}{marketData.bonds_change?.toFixed(2)}%
+                                    </Badge>
+                                </div>
+                            )}
+                            {marketData.gold && (
+                                <div className="p-3 bg-white rounded-lg">
+                                    <div className="text-xs text-black/60 mb-1">Gold</div>
+                                    <div className="text-xl font-light">${marketData.gold.toFixed(0)}</div>
+                                    <Badge className={marketData.gold_change >= 0 ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}>
+                                        {marketData.gold_change >= 0 ? '+' : ''}{marketData.gold_change?.toFixed(2)}%
+                                    </Badge>
+                                </div>
+                            )}
+                        </div>
+                        {marketData.market_sentiment && (
+                            <div className="mt-4 p-4 bg-white rounded-lg">
+                                <h4 className="font-medium mb-2">Market Sentiment</h4>
+                                <p className="text-sm text-black/70">{marketData.market_sentiment}</p>
+                            </div>
+                        )}
+                    </CardContent>
+                </Card>
+            )}
         </div>
     );
 }

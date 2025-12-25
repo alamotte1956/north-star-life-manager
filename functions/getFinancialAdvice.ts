@@ -9,7 +9,18 @@ Deno.serve(async (req) => {
             return Response.json({ error: 'Unauthorized' }, { status: 401 });
         }
 
-        const { advice_type, include_accounting_data = true } = await req.json();
+        const { advice_type, include_accounting_data = true, include_market_data = true } = await req.json();
+
+        // Fetch real-time market data
+        let marketData = null;
+        if (include_market_data) {
+            try {
+                const marketResult = await base44.functions.invoke('fetchMarketPrices', {});
+                marketData = marketResult.data;
+            } catch (error) {
+                console.log('Failed to fetch market data:', error);
+            }
+        }
 
         // Fetch comprehensive financial data
         const [
@@ -176,6 +187,16 @@ USER RISK PROFILE & PREFERENCES:
 - Current Portfolio Volatility: ${riskProfile.current_volatility}
 - Age: ${riskProfile.age}
 
+${marketData ? `
+REAL-TIME MARKET DATA:
+- S&P 500: ${marketData.sp500} (${marketData.sp500_change >= 0 ? '+' : ''}${marketData.sp500_change}%)
+- VTI (Total Market): $${marketData.vti} (${marketData.vti_change >= 0 ? '+' : ''}${marketData.vti_change}%)
+- AGG (Bonds): $${marketData.bonds} (${marketData.bonds_change >= 0 ? '+' : ''}${marketData.bonds_change}%)
+- Gold: $${marketData.gold} (${marketData.gold_change >= 0 ? '+' : ''}${marketData.gold_change}%)
+- Market Sentiment: ${marketData.market_sentiment}
+- VIX (Volatility Index): ${marketData.vix}
+` : ''}
+
 ${accountingData ? `
 EXTERNAL ACCOUNTING DATA (${accountingData.source}):
 ${JSON.stringify(accountingData, null, 2)}
@@ -202,8 +223,12 @@ CRITICAL INSTRUCTIONS:
 1. Analyze spending patterns from budget and bill payment data to identify savings opportunities
 2. Suggest specific investment opportunities based on identified potential savings
 3. Base ALL investment recommendations on the user's stated risk tolerance and investment horizon
-4. Consider current market conditions when making recommendations
-5. Integrate budget optimization with investment strategy - show how reducing certain expenses can fund investments
+4. **USE REAL-TIME MARKET DATA** to inform investment recommendations and timing
+5. Analyze current market sentiment and volatility to suggest optimal entry points
+6. Consider sector rotation opportunities based on current market trends
+7. Integrate budget optimization with investment strategy - show how reducing certain expenses can fund investments
+8. Provide specific rebalancing actions based on current market valuations
+9. Highlight diversification opportunities in undervalued sectors
 
 Provide advice in JSON format:
 1. financial_health_score - Overall score 1-10
