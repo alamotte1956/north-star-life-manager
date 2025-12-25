@@ -235,9 +235,9 @@ export default function Layout({ children, currentPageName }) {
                     </Link>
                     <Link
                         to={createPageUrl('Pricing')}
-                        className="w-full flex items-center justify-center px-3 py-3 mb-3 bg-gradient-to-r from-[#4A90E2] to-[#2E5C8A] hover:shadow-lg rounded-lg transition-all text-white text-lg font-semibold min-h-[50px]"
+                        className="w-full flex items-center justify-center px-3 py-3 mb-3 bg-gradient-to-r from-[#4A90E2] to-[#2E5C8A] hover:shadow-lg rounded-lg transition-all min-h-[50px]"
                     >
-                        <span>Sign Up / Upgrade</span>
+                        <span className="text-white text-xl font-bold">Sign Up / Upgrade</span>
                     </Link>
                     <button
                         onClick={() => setSearchOpen(true)}
@@ -320,9 +320,9 @@ export default function Layout({ children, currentPageName }) {
                         </Link>
                         <Link
                             to={createPageUrl('Pricing')}
-                            className="w-full flex items-center justify-center px-3 py-3 mb-3 bg-gradient-to-r from-[#4A90E2] to-[#2E5C8A] hover:shadow-lg rounded-lg transition-all text-white text-lg font-semibold min-h-[50px]"
+                            className="w-full flex items-center justify-center px-3 py-3 mb-3 bg-gradient-to-r from-[#4A90E2] to-[#2E5C8A] hover:shadow-lg rounded-lg transition-all min-h-[50px]"
                         >
-                            <span>Sign Up / Upgrade</span>
+                            <span className="text-white text-xl font-bold">Sign Up / Upgrade</span>
                         </Link>
                         <div className="flex items-center gap-2">
                         <button
