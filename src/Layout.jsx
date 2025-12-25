@@ -122,11 +122,11 @@ export default function Layout({ children, currentPageName }) {
         <div className="min-h-screen flex" style={{ backgroundColor: '#000000' }}>
             <style>{`
                 :root {
-                    --sage-green: #8A9A7B;
-                    --terracotta: #D4725E;
-                    --warm-brown: #8B6F47;
-                    --cream: #F5EFE6;
-                    --golden: #E5AE5D;
+                    --dark-blue: #0F1729;
+                    --medium-blue: #2E5C8A;
+                    --light-blue: #4A90E2;
+                    --pale-blue: #B8D4ED;
+                    --pure-white: #FFFFFF;
                 }
                 
                 body {
@@ -134,8 +134,8 @@ export default function Layout({ children, currentPageName }) {
                     -webkit-tap-highlight-color: transparent;
                     overscroll-behavior-y: contain;
                     -webkit-overflow-scrolling: touch;
-                    color: #8B6F47;
-                    background-color: #F5EFE6;
+                    color: #0F1729;
+                    background-color: #F8F9FA;
                 }
 
                 .touch-manipulation {
@@ -164,11 +164,11 @@ export default function Layout({ children, currentPageName }) {
                 h1, h2, h3, h4, h5, h6 {
                     font-family: 'Playfair Display', Georgia, serif;
                     font-weight: 500;
-                    color: #4A3D35;
+                    color: #000000;
                 }
 
                 p, span, div, a, button, label, input, textarea, select {
-                    color: #8B6F47;
+                    color: #0F1729;
                 }
                 
                 button, a[role="button"] {
@@ -199,8 +199,8 @@ export default function Layout({ children, currentPageName }) {
             `}</style>
 
             {/* Sidebar - Desktop */}
-            <aside className="hidden lg:flex flex-col w-64 bg-gradient-to-b from-[#E6D7C8] to-[#F5EFE6] border-r border-[#8A9A7B]">
-                <div className="p-6 border-b border-[#8A9A7B]/20">
+            <aside className="hidden lg:flex flex-col w-64 bg-gradient-to-b from-[#0F1729] to-[#1E3A5F] border-r border-[#2E5C8A]">
+                <div className="p-6 border-b border-[#2E5C8A]/20">
                     <Link to={createPageUrl('Dashboard')} className="flex items-center gap-3 mb-4 hover:opacity-80 transition-opacity">
                         <img 
                             src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6947dc1f392f53989af97bda/b516d228e_Gemini_Generated_Image_tp0qgztp0qgztp0q.png" 
@@ -208,13 +208,13 @@ export default function Layout({ children, currentPageName }) {
                             className="w-10 h-10 object-contain"
                         />
                         <div>
-                            <h1 className="text-lg font-light text-[#4A3D35] tracking-wide" style={{ fontFamily: 'Playfair Display, serif' }}>North Star</h1>
-                            <p className="text-[#8B6F47] text-xs font-light">Life Manager</p>
+                            <h1 className="text-lg font-light text-white tracking-wide" style={{ fontFamily: 'Playfair Display, serif' }}>North Star</h1>
+                            <p className="text-[#B8D4ED] text-xs font-light">Life Manager</p>
                         </div>
                     </Link>
                     <button
                         onClick={() => setSearchOpen(true)}
-                        className="w-full flex items-center gap-2 px-3 py-3 bg-[#8A9A7B]/10 hover:bg-[#8A9A7B]/20 rounded-lg transition-colors text-[#8B6F47] text-sm min-h-[50px]"
+                        className="w-full flex items-center gap-2 px-3 py-3 bg-white/10 hover:bg-white/15 rounded-lg transition-colors text-[#B8D4ED] text-sm min-h-[50px]"
                     >
                         <Search className="w-5 h-5" />
                         <span>Search...</span>
@@ -235,8 +235,8 @@ export default function Layout({ children, currentPageName }) {
                                 to={createPageUrl(item.path)}
                                 className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all font-light min-h-[50px] ${
                                     isActive
-                                        ? 'bg-[#8A9A7B] text-[#F5EFE6] shadow-lg'
-                                        : 'text-[#8B6F47] hover:text-[#4A3D35] hover:bg-[#8A9A7B]/10'
+                                        ? 'bg-[#4A90E2] text-white shadow-lg'
+                                        : 'text-[#B8D4ED] hover:text-white hover:bg-white/10'
                                 }`}
                             >
                                 <Icon className="w-5 h-5" />
@@ -246,19 +246,19 @@ export default function Layout({ children, currentPageName }) {
                         })}
                         </nav>
 
-                        <div className="p-4 border-t border-[#8A9A7B]/20">
+                        <div className="p-4 border-t border-[#2E5C8A]/20">
                         <button
                         onClick={handleLogout}
-                        className="flex items-center gap-3 px-4 py-4 rounded-lg text-[#8B6F47] hover:text-[#4A3D35] hover:bg-[#8A9A7B]/10 transition-all font-light w-full touch-manipulation active:bg-[#8A9A7B]/20 min-h-[50px]"
+                        className="flex items-center gap-3 px-4 py-4 rounded-lg text-[#B8D4ED] hover:text-white hover:bg-white/10 transition-all font-light w-full touch-manipulation active:bg-white/20 min-h-[50px]"
                         >
                         <LogOut className="w-5 h-5" />
                         <span className="text-base">Logout</span>
                     </button>
-                    <div className="flex justify-center gap-4 mt-4 text-xs text-[#8B6F47]">
-                        <Link to={createPageUrl('Privacy')} className="hover:text-[#8A9A7B] transition-colors">
+                    <div className="flex justify-center gap-4 mt-4 text-xs text-[#7BB3E0]">
+                        <Link to={createPageUrl('Privacy')} className="hover:text-white transition-colors">
                             Privacy
                         </Link>
-                        <Link to={createPageUrl('Terms')} className="hover:text-[#8A9A7B] transition-colors">
+                        <Link to={createPageUrl('Terms')} className="hover:text-white transition-colors">
                             Terms
                         </Link>
                     </div>
@@ -266,7 +266,7 @@ export default function Layout({ children, currentPageName }) {
                     </aside>
 
             {/* Mobile Header */}
-            <div className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-[#E6D7C8] to-[#F5EFE6] border-b border-[#8A9A7B] safe-area-inset">
+            <div className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-[#0F1729] to-[#1E3A5F] border-b border-[#2E5C8A] safe-area-inset">
                 <div className="flex items-center justify-between px-4 h-16">
                     <Link to={createPageUrl('Dashboard')} className="flex items-center gap-3 hover:opacity-80 transition-opacity">
                         <img 
@@ -275,13 +275,13 @@ export default function Layout({ children, currentPageName }) {
                             className="w-8 h-8 object-contain"
                         />
                         <div>
-                            <h1 className="text-sm font-light text-[#4A3D35]" style={{ fontFamily: 'Playfair Display, serif' }}>North Star</h1>
+                            <h1 className="text-sm font-light text-white" style={{ fontFamily: 'Playfair Display, serif' }}>North Star</h1>
                         </div>
                         </Link>
                         <div className="flex items-center gap-2">
                         <button
                             onClick={() => setSearchOpen(true)}
-                            className="p-3 text-[#8A9A7B] hover:bg-[#8A9A7B]/10 rounded-lg touch-manipulation active:scale-95 transition-transform min-h-[50px] min-w-[50px]"
+                            className="p-3 text-[#B8D4ED] hover:bg-white/10 rounded-lg touch-manipulation active:scale-95 transition-transform min-h-[50px] min-w-[50px]"
                             aria-label="Search"
                         >
                             <Search className="w-6 h-6" />
@@ -289,7 +289,7 @@ export default function Layout({ children, currentPageName }) {
                         <PushNotificationManager />
                         <button
                             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                            className="p-3 text-[#8A9A7B] hover:bg-[#8A9A7B]/10 rounded-lg touch-manipulation active:scale-95 transition-transform min-h-[50px] min-w-[50px] flex items-center flex-col justify-center gap-1"
+                            className="p-3 text-[#B8D4ED] hover:bg-white/10 rounded-lg touch-manipulation active:scale-95 transition-transform min-h-[50px] min-w-[50px] flex items-center flex-col justify-center gap-1"
                             aria-label="Toggle menu"
                         >
                             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -300,7 +300,7 @@ export default function Layout({ children, currentPageName }) {
 
                 {/* Mobile Menu */}
                 {mobileMenuOpen && (
-                    <div className="absolute top-16 left-0 right-0 bg-gradient-to-b from-[#E6D7C8] to-[#F5EFE6] border-b border-[#8A9A7B] p-4 space-y-2 max-h-[calc(100vh-4rem)] overflow-y-auto shadow-2xl">
+                    <div className="absolute top-16 left-0 right-0 bg-gradient-to-b from-[#0F1729] to-[#1E3A5F] border-b border-[#2E5C8A] p-4 space-y-2 max-h-[calc(100vh-4rem)] overflow-y-auto shadow-2xl">
                         {navItems.map((item) => {
                             const Icon = item.icon;
                             const isActive = currentPageName === item.path;
@@ -311,8 +311,8 @@ export default function Layout({ children, currentPageName }) {
                                     onClick={() => setMobileMenuOpen(false)}
                                     className={`flex items-center gap-3 px-4 py-4 rounded-lg transition-all font-light touch-manipulation active:scale-98 min-h-[50px] ${
                                         isActive
-                                            ? 'bg-[#8A9A7B] text-[#F5EFE6] shadow-lg'
-                                            : 'text-[#8B6F47] hover:text-[#4A3D35] hover:bg-[#8A9A7B]/10 active:bg-[#8A9A7B]/20'
+                                            ? 'bg-[#4A90E2] text-white shadow-lg'
+                                            : 'text-[#B8D4ED] hover:text-white hover:bg-white/10 active:bg-white/20'
                                     }`}
                                     >
                                     <Icon className="w-6 h-6" />
@@ -322,23 +322,23 @@ export default function Layout({ children, currentPageName }) {
                         })}
                         <button
                             onClick={handleLogout}
-                            className="flex items-center gap-3 px-4 py-4 rounded-lg text-[#8B6F47] hover:text-[#4A3D35] hover:bg-[#8A9A7B]/10 transition-all font-light w-full min-h-[50px]"
+                            className="flex items-center gap-3 px-4 py-4 rounded-lg text-[#B8D4ED] hover:text-white hover:bg-white/10 transition-all font-light w-full min-h-[50px]"
                         >
                             <LogOut className="w-6 h-6" />
                             <span className="text-base">Logout</span>
                         </button>
-                        <div className="flex justify-center gap-6 mt-4 text-sm text-[#8B6F47] pb-4">
+                        <div className="flex justify-center gap-6 mt-4 text-sm text-[#7BB3E0] pb-4">
                             <Link 
                                 to={createPageUrl('Privacy')} 
                                 onClick={() => setMobileMenuOpen(false)}
-                                className="hover:text-[#8A9A7B] transition-colors"
+                                className="hover:text-white transition-colors"
                             >
                                 Privacy
                             </Link>
                             <Link 
                                 to={createPageUrl('Terms')} 
                                 onClick={() => setMobileMenuOpen(false)}
-                                className="hover:text-[#8A9A7B] transition-colors"
+                                className="hover:text-white transition-colors"
                             >
                                 Terms
                             </Link>
