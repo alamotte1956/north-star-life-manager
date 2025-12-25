@@ -3,19 +3,20 @@ import { Shield } from 'lucide-react';
 
 export default function Privacy() {
     return (
-        <div className="min-h-screen bg-gradient-to-br from-black via-[#0a0a0a] to-black">
+        <div className="min-h-screen bg-gradient-to-br from-[#F8F9FA] via-white to-[#E8EEF5]">
             <div className="max-w-4xl mx-auto px-6 py-12">
                 <div className="mb-8">
                     <div className="flex items-center gap-3 mb-4">
-                        <Shield className="w-8 h-8 text-[#C5A059]" />
-                        <h1 className="text-4xl font-light text-[#C5A059]">Privacy Policy</h1>
+                        <Shield className="w-8 h-8 text-[#4A90E2]" />
+                        <h1 className="text-4xl font-light text-black">Privacy Policy</h1>
                     </div>
-                    <p className="text-[#F4E4C1]/80">Last updated: December 25, 2025</p>
+                    <p className="text-[#0F1729]/70">Last updated: December 25, 2025</p>
+                    <p className="text-[#0F1729]/60 mt-2">© 2025 A.I. Help Pros LLP. All rights reserved.</p>
                 </div>
 
-                <div className="space-y-8 text-[#F4E4C1]">
+                <div className="space-y-8 text-[#0F1729]">
                     <section>
-                        <h2 className="text-2xl font-light text-[#C5A059] mb-4">1. Information We Collect</h2>
+                        <h2 className="text-2xl font-light text-[#2E5C8A] mb-4">1. Information We Collect</h2>
                         <p className="mb-3">We collect information you provide directly to us, including:</p>
                         <ul className="list-disc list-inside space-y-2 ml-4">
                             <li>Account information (name, email, password)</li>
