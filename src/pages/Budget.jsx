@@ -18,6 +18,7 @@ import { Badge } from '@/components/ui/badge';
 import { format, startOfMonth, endOfMonth, startOfYear, endOfYear } from 'date-fns';
 import GoalProgressCard from '../components/budget/GoalProgressCard';
 import GoalDetailDialog from '../components/goals/GoalDetailDialog';
+import AdvancedAIInsights from '../components/budget/AdvancedAIInsights';
 
 const categoryLabels = {
     property: 'Property',
@@ -55,6 +56,8 @@ export default function BudgetPage() {
     const [loadingInsights, setLoadingInsights] = useState(false);
     const [syncingTransactions, setSyncingTransactions] = useState(false);
     const [selectedGoalForDetail, setSelectedGoalForDetail] = useState(null);
+    const [advancedInsights, setAdvancedInsights] = useState(null);
+    const [loadingAdvanced, setLoadingAdvanced] = useState(false);
     const [budgetForm, setBudgetForm] = useState({
         category: 'other',
         monthly_limit: '',
@@ -151,6 +154,19 @@ export default function BudgetPage() {
         setLoadingInsights(false);
     };
 
+    const runAdvancedAnalysis = async () => {
+        setLoadingAdvanced(true);
+        try {
+            const result = await base44.functions.invoke('advancedBudgetAI', {});
+            setAdvancedInsights(result.data);
+            toast.success('Advanced AI analysis complete!');
+        } catch (error) {
+            toast.error('Failed to run advanced analysis');
+            console.error(error);
+        }
+        setLoadingAdvanced(false);
+    };
+
     const handleGoalSubmit = async (e) => {
         e.preventDefault();
         await base44.entities.FinancialGoal.create(goalForm);
@@ -224,13 +240,26 @@ export default function BudgetPage() {
                         <Button
                             onClick={analyzePerformance}
                             disabled={loadingInsights}
+                            variant="outline"
+                        >
+                            <Sparkles className="w-4 h-4 mr-2" />
+                            {loadingInsights ? 'Analyzing...' : 'Basic Insights'}
+                        </Button>
+                        <Button
+                            onClick={runAdvancedAnalysis}
+                            disabled={loadingAdvanced}
                             className="bg-gradient-to-r from-[#D4AF37] to-[#F4D03F]"
                         >
                             <Sparkles className="w-4 h-4 mr-2" />
-                            {loadingInsights ? 'Analyzing...' : 'AI Insights'}
+                            {loadingAdvanced ? 'Analyzing...' : 'Advanced AI Analysis'}
                         </Button>
                     </div>
                 </div>
+
+                {/* Advanced AI Insights */}
+                {advancedInsights && (
+                    <AdvancedAIInsights insights={advancedInsights} />
+                )}
 
                 {/* AI Insights Section */}
                 {aiInsights && (
