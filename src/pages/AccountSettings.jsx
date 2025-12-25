@@ -20,6 +20,17 @@ export default function AccountSettings() {
         queryFn: () => base44.auth.me()
     });
 
+    const { data: currentSubscription } = useQuery({
+        queryKey: ['subscription'],
+        queryFn: async () => {
+            const subs = await base44.entities.Subscription_Plan.filter({ 
+                created_by: user?.email 
+            });
+            return subs[0];
+        },
+        enabled: !!user
+    });
+
     const hasSandboxData = () => {
         return Object.keys(localStorage).some(key => key.startsWith('sandbox_'));
     };
@@ -29,6 +40,16 @@ export default function AccountSettings() {
             clearSandboxData();
             toast.success('Demo data cleared successfully');
             window.location.reload(); // Refresh to update the display
+        }
+    };
+
+    const handleManageSubscription = async () => {
+        try {
+            const result = await base44.functions.invoke('createPortalSession');
+            window.location.href = result.data.portal_url;
+        } catch (error) {
+            console.error('Portal error:', error);
+            toast.error('Error opening subscription management. Please try again.');
         }
     };
 
@@ -79,6 +100,37 @@ export default function AccountSettings() {
                         <p className="text-[#0F1729]/60 font-light">Manage your account and privacy</p>
                     </div>
                 </div>
+
+                {/* Subscription Management */}
+                {currentSubscription && (
+                    <Card className="mb-6">
+                        <CardHeader>
+                            <CardTitle className="flex items-center gap-2">
+                                <Shield className="w-5 h-5 text-[#4A90E2]" />
+                                Subscription Management
+                            </CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                            <div className="space-y-4">
+                                <div className="p-4 bg-gray-50 rounded-lg">
+                                    <h3 className="font-medium mb-2">Current Plan</h3>
+                                    <p className="text-2xl font-bold capitalize text-[#2E5C8A] mb-1">
+                                        {currentSubscription.plan_name}
+                                    </p>
+                                    <p className="text-sm text-[#0F1729]/60">
+                                        Status: <span className="capitalize font-medium">{currentSubscription.status}</span>
+                                    </p>
+                                </div>
+                                <Button
+                                    onClick={handleManageSubscription}
+                                    className="w-full bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2]"
+                                >
+                                    Manage Subscription (Cancel, Change Plan, Update Payment)
+                                </Button>
+                            </div>
+                        </CardContent>
+                    </Card>
+                )}
 
                 {/* Data Storage Info - Only show if sandbox data exists */}
                 {hasSandboxData() && (
