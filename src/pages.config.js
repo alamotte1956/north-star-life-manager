@@ -43,6 +43,9 @@ import BankingHub from './pages/BankingHub';
 import BillNegotiation from './pages/BillNegotiation';
 import ProfessionalMarketplace from './pages/ProfessionalMarketplace';
 import InsuranceShopping from './pages/InsuranceShopping';
+import LegacyMessages from './pages/LegacyMessages';
+import HomeInventory from './pages/HomeInventory';
+import ConciergeService from './pages/ConciergeService';
 import __Layout from './Layout.jsx';
 
 
@@ -92,6 +95,9 @@ export const PAGES = {
     "BillNegotiation": BillNegotiation,
     "ProfessionalMarketplace": ProfessionalMarketplace,
     "InsuranceShopping": InsuranceShopping,
+    "LegacyMessages": LegacyMessages,
+    "HomeInventory": HomeInventory,
+    "ConciergeService": ConciergeService,
 }
 
 export const pagesConfig = {
