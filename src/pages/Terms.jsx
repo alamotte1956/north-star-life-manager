@@ -87,7 +87,7 @@ export default function Terms() {
 
                     <section>
                         <h2 className="text-2xl font-light text-[#2E5C8A] mb-4">12. Contact</h2>
-                        <p>For questions about these Terms of Service, contact us at legal@northstar.app</p>
+                        <p>For questions about these Terms of Service, contact us at support@aihelppros.com</p>
                     </section>
                 </div>
             </div>

@@ -78,7 +78,7 @@ export default function Privacy() {
 
                     <section>
                         <h2 className="text-2xl font-light text-[#2E5C8A] mb-4">7. Contact Us</h2>
-                        <p>If you have questions about this Privacy Policy, please contact us at privacy@northstar.app</p>
+                        <p>If you have questions about this Privacy Policy, please contact us at support@aihelppros.com</p>
                     </section>
                 </div>
             </div>
