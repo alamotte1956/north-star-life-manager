@@ -1,4 +1,4 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.4';
+import { createClientFromRequest } from 'npm:@base44/sdk@0.8.6';
 
 Deno.serve(async (req) => {
     try {
@@ -9,109 +9,211 @@ Deno.serve(async (req) => {
             return Response.json({ error: 'Unauthorized' }, { status: 401 });
         }
 
-        // Get all transactions from the last 6 months
-        const transactions = await base44.entities.Transaction.list('-date', 500);
-        
-        // Group transactions by merchant
-        const merchantGroups = {};
-        transactions.forEach(txn => {
-            if (txn.amount < 0 && txn.merchant) { // Only expenses
-                if (!merchantGroups[txn.merchant]) {
-                    merchantGroups[txn.merchant] = [];
+        // Get all budget transactions
+        const transactions = await base44.entities.BudgetTransaction.filter({
+            created_by: user.email
+        });
+
+        if (transactions.length < 3) {
+            return Response.json({
+                success: true,
+                detected_recurring: [],
+                message: 'Not enough transaction history'
+            });
+        }
+
+        // Group transactions by description similarity
+        const groups = {};
+        transactions.forEach(t => {
+            const desc = (t.description || '').toLowerCase().trim();
+            if (!desc) return;
+            
+            // Find similar group
+            let matched = false;
+            for (const groupKey in groups) {
+                if (desc.includes(groupKey) || groupKey.includes(desc) || 
+                    levenshteinDistance(desc, groupKey) < 3) {
+                    groups[groupKey].push(t);
+                    matched = true;
+                    break;
                 }
-                merchantGroups[txn.merchant].push({
-                    date: txn.date,
-                    amount: Math.abs(txn.amount),
-                    description: txn.description,
-                    category: txn.category
-                });
+            }
+            if (!matched) {
+                groups[desc] = [t];
             }
         });
 
-        // Analyze each merchant for recurring patterns
-        const recurringBills = [];
+        // Analyze groups for recurring patterns
+        const recurringItems = [];
         
-        for (const [merchant, txns] of Object.entries(merchantGroups)) {
-            if (txns.length < 2) continue; // Need at least 2 transactions
-            
+        for (const [description, groupTransactions] of Object.entries(groups)) {
+            if (groupTransactions.length < 2) continue;
+
             // Sort by date
-            txns.sort((a, b) => new Date(a.date) - new Date(b.date));
-            
+            groupTransactions.sort((a, b) => 
+                new Date(a.transaction_date) - new Date(b.transaction_date)
+            );
+
             // Calculate intervals between transactions
             const intervals = [];
-            for (let i = 1; i < txns.length; i++) {
-                const days = Math.round(
-                    (new Date(txns[i].date) - new Date(txns[i-1].date)) / (1000 * 60 * 60 * 24)
-                );
-                intervals.push(days);
+            for (let i = 1; i < groupTransactions.length; i++) {
+                const diff = Math.abs(
+                    new Date(groupTransactions[i].transaction_date) - 
+                    new Date(groupTransactions[i-1].transaction_date)
+                ) / (1000 * 60 * 60 * 24); // days
+                intervals.push(diff);
             }
-            
-            // Check if intervals are consistent (within 5 days variance)
+
+            // Check if intervals are consistent (within 5 days tolerance)
             const avgInterval = intervals.reduce((a, b) => a + b, 0) / intervals.length;
-            const isRecurring = intervals.every(interval => 
-                Math.abs(interval - avgInterval) <= 5
-            );
-            
-            if (isRecurring) {
-                // Determine frequency
-                let frequency = 'monthly';
-                if (avgInterval <= 10) frequency = 'weekly';
-                else if (avgInterval <= 17) frequency = 'biweekly';
-                else if (avgInterval <= 35) frequency = 'monthly';
-                else if (avgInterval <= 100) frequency = 'quarterly';
-                else frequency = 'annual';
+            const isConsistent = intervals.every(int => Math.abs(int - avgInterval) <= 5);
+
+            if (isConsistent && avgInterval >= 20 && avgInterval <= 40) {
+                // Likely monthly recurring
+                const amounts = groupTransactions.map(t => t.amount);
+                const avgAmount = amounts.reduce((a, b) => a + b, 0) / amounts.length;
+                const amountVariance = Math.max(...amounts) - Math.min(...amounts);
                 
-                // Calculate average amount
-                const avgAmount = txns.reduce((sum, t) => sum + t.amount, 0) / txns.length;
-                const amountVariance = Math.max(...txns.map(t => t.amount)) - Math.min(...txns.map(t => t.amount));
-                
-                // Calculate confidence score
-                const consistencyScore = intervals.length >= 3 ? 90 : 70;
-                const amountConsistency = amountVariance < (avgAmount * 0.1) ? 100 : 80;
-                const confidence = Math.round((consistencyScore + amountConsistency) / 2);
-                
-                // Estimate next payment date
-                const lastDate = new Date(txns[txns.length - 1].date);
-                const nextDate = new Date(lastDate);
-                nextDate.setDate(nextDate.getDate() + avgInterval);
-                
-                recurringBills.push({
-                    merchant,
-                    amount: Math.round(avgAmount * 100) / 100,
-                    frequency,
-                    category: txns[0].category || 'other',
-                    transaction_count: txns.length,
-                    avg_interval_days: Math.round(avgInterval),
-                    confidence_score: confidence,
-                    last_payment_date: txns[txns.length - 1].date,
-                    last_amount: txns[txns.length - 1].amount,
-                    next_estimated_date: nextDate.toISOString().split('T')[0],
-                    due_day: nextDate.getDate()
+                // Use AI to categorize and determine if it's a bill or subscription
+                const aiAnalysis = await base44.integrations.Core.InvokeLLM({
+                    prompt: `Analyze this recurring transaction pattern:
+                    
+Description: ${groupTransactions[0].description}
+Frequency: Every ~${Math.round(avgInterval)} days (monthly)
+Average Amount: $${avgAmount.toFixed(2)}
+Amount Range: $${Math.min(...amounts).toFixed(2)} - $${Math.max(...amounts).toFixed(2)}
+Transaction Count: ${groupTransactions.length}
+
+Determine:
+1. Is this a bill or subscription?
+2. What category best fits? (utilities, entertainment, insurance, services, etc.)
+3. What's the merchant/provider name?
+4. Is the amount variance normal or concerning?
+5. Provide a confidence score (0-1) that this is truly recurring`,
+                    response_json_schema: {
+                        type: 'object',
+                        properties: {
+                            type: { type: 'string', enum: ['bill', 'subscription'] },
+                            category: { type: 'string' },
+                            merchant: { type: 'string' },
+                            amount_variance_normal: { type: 'boolean' },
+                            confidence: { type: 'number' },
+                            reasoning: { type: 'string' }
+                        }
+                    }
                 });
+
+                if (aiAnalysis.confidence >= 0.6) {
+                    recurringItems.push({
+                        description: groupTransactions[0].description,
+                        merchant: aiAnalysis.merchant,
+                        type: aiAnalysis.type,
+                        category: aiAnalysis.category,
+                        average_amount: avgAmount,
+                        frequency_days: Math.round(avgInterval),
+                        transaction_count: groupTransactions.length,
+                        amount_variance: amountVariance,
+                        variance_normal: aiAnalysis.amount_variance_normal,
+                        confidence: aiAnalysis.confidence,
+                        reasoning: aiAnalysis.reasoning,
+                        last_transaction_date: groupTransactions[groupTransactions.length - 1].transaction_date,
+                        next_expected_date: calculateNextDate(
+                            groupTransactions[groupTransactions.length - 1].transaction_date,
+                            avgInterval
+                        ),
+                        sample_transactions: groupTransactions.slice(-3).map(t => ({
+                            date: t.transaction_date,
+                            amount: t.amount
+                        }))
+                    });
+                }
             }
         }
 
-        // Sort by confidence score
-        recurringBills.sort((a, b) => b.confidence_score - a.confidence_score);
+        // Check for anomalies in existing recurring items
+        const existingBills = await base44.entities.BillPayment.filter({
+            created_by: user.email,
+            is_recurring: true
+        });
 
-        // Check which bills are already saved
-        const existingBills = await base44.entities.BillPayment.list();
-        const existingMerchants = new Set(existingBills.map(b => b.merchant));
-        
-        const newBills = recurringBills.filter(b => !existingMerchants.has(b.merchant));
+        const existingSubscriptions = await base44.entities.Subscription.filter({
+            created_by: user.email,
+            status: 'active'
+        });
+
+        const anomalies = [];
+
+        // Check bills for anomalies
+        for (const bill of existingBills) {
+            const relatedTransactions = transactions.filter(t => 
+                t.description && bill.bill_name && 
+                t.description.toLowerCase().includes(bill.bill_name.toLowerCase())
+            ).slice(-5);
+
+            if (relatedTransactions.length >= 2) {
+                const amounts = relatedTransactions.map(t => t.amount);
+                const avgAmount = amounts.reduce((a, b) => a + b, 0) / amounts.length;
+                const latestAmount = amounts[amounts.length - 1];
+                
+                // Check for significant variance (>20%)
+                if (Math.abs(latestAmount - avgAmount) / avgAmount > 0.2) {
+                    anomalies.push({
+                        type: 'amount_change',
+                        entity_type: 'bill',
+                        entity_id: bill.id,
+                        name: bill.bill_name,
+                        expected_amount: avgAmount,
+                        actual_amount: latestAmount,
+                        variance_percent: ((latestAmount - avgAmount) / avgAmount * 100).toFixed(1),
+                        severity: Math.abs(latestAmount - avgAmount) / avgAmount > 0.5 ? 'high' : 'medium'
+                    });
+                }
+            }
+        }
 
         return Response.json({
             success: true,
-            detected_bills: recurringBills,
-            new_suggestions: newBills,
-            existing_count: existingMerchants.size
+            detected_recurring: recurringItems,
+            anomalies,
+            total_analyzed: transactions.length
         });
 
     } catch (error) {
-        console.error('Detect bills error:', error);
+        console.error('Detect recurring bills error:', error);
         return Response.json({ 
-            error: error.message,
-            success: false 
+            success: false,
+            error: error.message 
         }, { status: 500 });
     }
 });
+
+// Helper function for string similarity
+function levenshteinDistance(str1, str2) {
+    const matrix = [];
+    for (let i = 0; i <= str2.length; i++) {
+        matrix[i] = [i];
+    }
+    for (let j = 0; j <= str1.length; j++) {
+        matrix[0][j] = j;
+    }
+    for (let i = 1; i <= str2.length; i++) {
+        for (let j = 1; j <= str1.length; j++) {
+            if (str2.charAt(i - 1) === str1.charAt(j - 1)) {
+                matrix[i][j] = matrix[i - 1][j - 1];
+            } else {
+                matrix[i][j] = Math.min(
+                    matrix[i - 1][j - 1] + 1,
+                    matrix[i][j - 1] + 1,
+                    matrix[i - 1][j] + 1
+                );
+            }
+        }
+    }
+    return matrix[str2.length][str1.length];
+}
+
+function calculateNextDate(lastDate, intervalDays) {
+    const date = new Date(lastDate);
+    date.setDate(date.getDate() + intervalDays);
+    return date.toISOString().split('T')[0];
+}

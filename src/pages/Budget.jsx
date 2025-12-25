@@ -21,6 +21,7 @@ import GoalDetailDialog from '../components/goals/GoalDetailDialog';
 import AdvancedAIInsights from '../components/budget/AdvancedAIInsights';
 import CategoryReviewDialog from '../components/automation/CategoryReviewDialog';
 import CategoryRulesManager from '../components/automation/CategoryRulesManager';
+import RecurringItemsDetector from '../components/budget/RecurringItemsDetector';
 
 const categoryLabels = {
     property: 'Property',
@@ -61,6 +62,7 @@ export default function BudgetPage() {
     const [advancedInsights, setAdvancedInsights] = useState(null);
     const [loadingAdvanced, setLoadingAdvanced] = useState(false);
     const [showCategoryReview, setShowCategoryReview] = useState(false);
+    const [showRecurringDetector, setShowRecurringDetector] = useState(false);
     const [budgetForm, setBudgetForm] = useState({
         category: 'other',
         monthly_limit: '',
@@ -247,6 +249,14 @@ export default function BudgetPage() {
                         >
                             <Brain className="w-4 h-4 mr-2" />
                             Review Categories
+                        </Button>
+                        <Button
+                            onClick={() => setShowRecurringDetector(true)}
+                            variant="outline"
+                            className="border-blue-500 text-blue-600"
+                        >
+                            <Sparkles className="w-4 h-4 mr-2" />
+                            Detect Recurring
                         </Button>
                         <Button
                             onClick={analyzePerformance}
@@ -688,6 +698,12 @@ export default function BudgetPage() {
                 <CategoryReviewDialog 
                     open={showCategoryReview}
                     onOpenChange={setShowCategoryReview}
+                />
+
+                {/* Recurring Items Detector */}
+                <RecurringItemsDetector
+                    open={showRecurringDetector}
+                    onOpenChange={setShowRecurringDetector}
                 />
 
                 {/* Category Rules Manager */}
