@@ -17,6 +17,8 @@ import OfflineDataManager from '@/components/pwa/OfflineDataManager';
 import PWAManager from '@/components/pwa/PWAManager';
 import LargeTextToggle from '@/components/accessibility/LargeTextToggle';
 import SimplifiedViewToggle from '@/components/accessibility/SimplifiedViewToggle';
+import { SandboxDataProvider } from '@/components/sandbox/SandboxDataProvider';
+import SandboxBanner from '@/components/sandbox/SandboxBanner';
 
 export default function Layout({ children, currentPageName }) {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -136,6 +138,7 @@ export default function Layout({ children, currentPageName }) {
         ];
 
     return (
+        <SandboxDataProvider>
         <AuthGuard>
         <PWAManager />
         <OfflineDataManager />
@@ -407,7 +410,10 @@ export default function Layout({ children, currentPageName }) {
 
             {/* Main Content */}
             <main className="flex-1 lg:ml-0 mt-16 lg:mt-0 pb-safe">
-                {children}
+                <div className="p-6">
+                    <SandboxBanner />
+                    {children}
+                </div>
             </main>
 
             {/* Global Search */}
@@ -423,5 +429,6 @@ export default function Layout({ children, currentPageName }) {
             <PWAInstaller />
             </div>
             </AuthGuard>
+            </SandboxDataProvider>
             );
             }

@@ -16,6 +16,7 @@ import BusinessReports from './pages/BusinessReports';
 import Calendar from './pages/Calendar';
 import CaregiverCoordination from './pages/CaregiverCoordination';
 import CharitableGiving from './pages/CharitableGiving';
+import ClientDashboard from './pages/ClientDashboard';
 import Collaboration from './pages/Collaboration';
 import CommunicationsHub from './pages/CommunicationsHub';
 import ConciergeService from './pages/ConciergeService';
@@ -72,7 +73,6 @@ import Vehicles from './pages/Vehicles';
 import VideoCallScheduler from './pages/VideoCallScheduler';
 import VideoTutorials from './pages/VideoTutorials';
 import VoiceAssistant from './pages/VoiceAssistant';
-import ClientDashboard from './pages/ClientDashboard';
 import __Layout from './Layout.jsx';
 
 
@@ -95,6 +95,7 @@ export const PAGES = {
     "Calendar": Calendar,
     "CaregiverCoordination": CaregiverCoordination,
     "CharitableGiving": CharitableGiving,
+    "ClientDashboard": ClientDashboard,
     "Collaboration": Collaboration,
     "CommunicationsHub": CommunicationsHub,
     "ConciergeService": ConciergeService,
@@ -151,7 +152,6 @@ export const PAGES = {
     "VideoCallScheduler": VideoCallScheduler,
     "VideoTutorials": VideoTutorials,
     "VoiceAssistant": VoiceAssistant,
-    "ClientDashboard": ClientDashboard,
 }
 
 export const pagesConfig = {
