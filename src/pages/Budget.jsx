@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
-import { DollarSign, Plus, TrendingUp, AlertTriangle, Target, Sparkles, Users, RefreshCw, Loader2, TrendingDown } from 'lucide-react';
+import { DollarSign, Plus, TrendingUp, AlertTriangle, Target, Sparkles, Users, RefreshCw, Loader2, TrendingDown, Brain } from 'lucide-react';
 import { toast } from 'sonner';
 import AICollaborationInsights from '../components/collaboration/AICollaborationInsights';
 import ShareDialog from '../components/collaboration/ShareDialog';
@@ -19,6 +19,7 @@ import { format, startOfMonth, endOfMonth, startOfYear, endOfYear } from 'date-f
 import GoalProgressCard from '../components/budget/GoalProgressCard';
 import GoalDetailDialog from '../components/goals/GoalDetailDialog';
 import AdvancedAIInsights from '../components/budget/AdvancedAIInsights';
+import CategoryReviewDialog from '../components/automation/CategoryReviewDialog';
 
 const categoryLabels = {
     property: 'Property',
@@ -58,6 +59,7 @@ export default function BudgetPage() {
     const [selectedGoalForDetail, setSelectedGoalForDetail] = useState(null);
     const [advancedInsights, setAdvancedInsights] = useState(null);
     const [loadingAdvanced, setLoadingAdvanced] = useState(false);
+    const [showCategoryReview, setShowCategoryReview] = useState(false);
     const [budgetForm, setBudgetForm] = useState({
         category: 'other',
         monthly_limit: '',
@@ -236,6 +238,14 @@ export default function BudgetPage() {
                         >
                             <RefreshCw className={`w-4 h-4 mr-2 ${syncingTransactions ? 'animate-spin' : ''}`} />
                             Sync
+                        </Button>
+                        <Button
+                            onClick={() => setShowCategoryReview(true)}
+                            variant="outline"
+                            className="border-purple-500 text-purple-600"
+                        >
+                            <Brain className="w-4 h-4 mr-2" />
+                            Review Categories
                         </Button>
                         <Button
                             onClick={analyzePerformance}
@@ -672,6 +682,12 @@ export default function BudgetPage() {
                         onOpenChange={(open) => !open && setSelectedGoalForDetail(null)}
                     />
                 </div>
+
+                {/* Category Review Dialog */}
+                <CategoryReviewDialog 
+                    open={showCategoryReview}
+                    onOpenChange={setShowCategoryReview}
+                />
             </div>
         </div>
     );

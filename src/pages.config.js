@@ -1,9 +1,11 @@
+import AutomatedPayments from './pages/AutomatedPayments';
 import Automations from './pages/Automations';
 import BillPayments from './pages/BillPayments';
 import Budget from './pages/Budget';
 import Calendar from './pages/Calendar';
 import Collaboration from './pages/Collaboration';
 import Contacts from './pages/Contacts';
+import CreditScore from './pages/CreditScore';
 import Dashboard from './pages/Dashboard';
 import EmailAssistant from './pages/EmailAssistant';
 import FamilyManagement from './pages/FamilyManagement';
@@ -12,6 +14,7 @@ import FamilyRoleManagement from './pages/FamilyRoleManagement';
 import FamilyToDo from './pages/FamilyToDo';
 import FamilyWorkflows from './pages/FamilyWorkflows';
 import FinancialDashboard from './pages/FinancialDashboard';
+import FinancialHealth from './pages/FinancialHealth';
 import Health from './pages/Health';
 import Integrations from './pages/Integrations';
 import Investments from './pages/Investments';
@@ -33,19 +36,18 @@ import Travel from './pages/Travel';
 import Valuables from './pages/Valuables';
 import Vault from './pages/Vault';
 import Vehicles from './pages/Vehicles';
-import FinancialHealth from './pages/FinancialHealth';
-import AutomatedPayments from './pages/AutomatedPayments';
-import CreditScore from './pages/CreditScore';
 import __Layout from './Layout.jsx';
 
 
 export const PAGES = {
+    "AutomatedPayments": AutomatedPayments,
     "Automations": Automations,
     "BillPayments": BillPayments,
     "Budget": Budget,
     "Calendar": Calendar,
     "Collaboration": Collaboration,
     "Contacts": Contacts,
+    "CreditScore": CreditScore,
     "Dashboard": Dashboard,
     "EmailAssistant": EmailAssistant,
     "FamilyManagement": FamilyManagement,
@@ -54,6 +56,7 @@ export const PAGES = {
     "FamilyToDo": FamilyToDo,
     "FamilyWorkflows": FamilyWorkflows,
     "FinancialDashboard": FinancialDashboard,
+    "FinancialHealth": FinancialHealth,
     "Health": Health,
     "Integrations": Integrations,
     "Investments": Investments,
@@ -75,9 +78,6 @@ export const PAGES = {
     "Valuables": Valuables,
     "Vault": Vault,
     "Vehicles": Vehicles,
-    "FinancialHealth": FinancialHealth,
-    "AutomatedPayments": AutomatedPayments,
-    "CreditScore": CreditScore,
 }
 
 export const pagesConfig = {
