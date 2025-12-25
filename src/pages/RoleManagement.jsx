@@ -71,7 +71,7 @@ export default function RoleManagement() {
 
     const updateUserRoleMutation = useMutation({
         mutationFn: ({ userId, roleId, roleName }) => 
-            base44.auth.updateMe({ custom_role_id: roleId, custom_role_name: roleName }),
+            base44.entities.User.update(userId, { custom_role_id: roleId, custom_role_name: roleName }),
         onSuccess: () => {
             queryClient.invalidateQueries(['users']);
             toast.success('User role updated!');
@@ -136,8 +136,8 @@ export default function RoleManagement() {
                 <div className="max-w-7xl mx-auto px-6 py-12">
                     <div className="flex items-center justify-between mb-8">
                         <div className="flex items-center gap-4">
-                            <div className="p-4 bg-gradient-to-br from-[#0F172A] to-[#1e293b] rounded-2xl">
-                                <Shield className="w-8 h-8 text-[#C5A059]" />
+                            <div className="p-4 bg-gradient-to-br from-[#2E5C8A] to-[#4A90E2] rounded-2xl">
+                                <Shield className="w-8 h-8 text-white" />
                             </div>
                             <div>
                                 <h1 className="text-4xl font-light text-[#0F172A]">Role Management</h1>
@@ -155,7 +155,7 @@ export default function RoleManagement() {
                             </Button>
                             <Button
                                 onClick={() => handleOpenDialog()}
-                                className="bg-gradient-to-r from-[#C5A059] to-[#D4AF37] text-white gap-2"
+                                className="bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] text-white gap-2"
                             >
                                 <Plus className="w-4 h-4" />
                                 Create Role
@@ -171,7 +171,7 @@ export default function RoleManagement() {
                                     <div className="flex items-start justify-between">
                                         <div>
                                             <CardTitle className="text-xl font-light flex items-center gap-2">
-                                                <Lock className="w-5 h-5 text-[#C5A059]" />
+                                                <Lock className="w-5 h-5 text-[#4A90E2]" />
                                                 {role.role_name}
                                             </CardTitle>
                                             {role.description && (
@@ -351,7 +351,7 @@ export default function RoleManagement() {
                                     <Button type="button" variant="outline" onClick={() => setDialogOpen(false)}>
                                         Cancel
                                     </Button>
-                                    <Button type="submit" className="bg-gradient-to-r from-[#C5A059] to-[#D4AF37] text-white">
+                                    <Button type="submit" className="bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] text-white">
                                         {editingRole ? 'Update Role' : 'Create Role'}
                                     </Button>
                                 </div>
@@ -374,7 +374,7 @@ export default function RoleManagement() {
                                                     <div className="font-medium">{user.full_name}</div>
                                                     <div className="text-sm text-[#64748B]">{user.email}</div>
                                                     {user.custom_role_name && (
-                                                        <Badge className="mt-2 bg-[#C5A059]/10 text-[#C5A059]">
+                                                        <Badge className="mt-2 bg-[#4A90E2]/10 text-[#4A90E2]">
                                                             {user.custom_role_name}
                                                         </Badge>
                                                     )}
