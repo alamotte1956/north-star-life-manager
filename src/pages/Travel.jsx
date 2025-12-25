@@ -15,6 +15,7 @@ import { format, isPast, isFuture } from 'date-fns';
 import TripPlannerWizard from '@/components/travel/TripPlannerWizard';
 
 export default function Travel() {
+    const queryClient = useQueryClient();
     const [open, setOpen] = useState(false);
     const [showPlanner, setShowPlanner] = useState(false);
     const [formData, setFormData] = useState({
@@ -33,31 +34,37 @@ export default function Travel() {
         notes: ''
     });
 
-    const { data: trips = [], refetch } = useQuery({
+    const { data: trips = [] } = useQuery({
         queryKey: ['trips'],
         queryFn: () => base44.entities.TravelPlan.list('-start_date')
     });
 
+    const createTripMutation = useMutation({
+        mutationFn: (tripData) => base44.entities.TravelPlan.create(tripData),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['trips'] });
+            setOpen(false);
+            setFormData({
+                trip_name: '',
+                destination: '',
+                start_date: '',
+                end_date: '',
+                status: 'planned',
+                accommodation: '',
+                accommodation_confirmation: '',
+                flight_details: '',
+                flight_confirmation: '',
+                total_cost: '',
+                travel_documents: '',
+                activities: '',
+                notes: ''
+            });
+        }
+    });
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-        await base44.entities.TravelPlan.create(formData);
-        setOpen(false);
-        setFormData({
-            trip_name: '',
-            destination: '',
-            start_date: '',
-            end_date: '',
-            status: 'planned',
-            accommodation: '',
-            accommodation_confirmation: '',
-            flight_details: '',
-            flight_confirmation: '',
-            total_cost: '',
-            travel_documents: '',
-            activities: '',
-            notes: ''
-        });
-        refetch();
+        createTripMutation.mutate(formData);
     };
 
     const statusColors = {
