@@ -15,6 +15,12 @@ export default function Home() {
     useEffect(() => {
         const checkUser = async () => {
             try {
+                const isAuth = await base44.auth.isAuthenticated();
+                if (!isAuth) {
+                    setLoading(false);
+                    return;
+                }
+                
                 const user = await base44.auth.me();
                 if (user?.username) {
                     navigate(createPageUrl('Dashboard'));
@@ -22,6 +28,7 @@ export default function Home() {
                     setLoading(false);
                 }
             } catch (error) {
+                console.error('Auth check error:', error);
                 setLoading(false);
             }
         };
