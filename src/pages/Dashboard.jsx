@@ -446,12 +446,12 @@ export default function Dashboard() {
 
     return (
         <>
-            {/* Onboarding Flow */}
+            {/* White-Glove Onboarding */}
             {showOnboarding && (
                 <OnboardingFlow
                     onComplete={() => {
                         setShowOnboarding(false);
-                        navigate(createPageUrl('Dashboard'));
+                        window.location.reload();
                     }}
                     onSkip={() => setShowOnboarding(false)}
                 />
@@ -502,7 +502,7 @@ export default function Dashboard() {
                                         className="flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors min-h-[50px]"
                                     >
                                         <Download className="w-5 h-5 text-white" />
-                                        <span className="text-white text-sm">Getting Started</span>
+                                        <span className="text-white text-sm">PDF Guide</span>
                                     </button>
                                     <button
                                         onClick={() => setShowGuide(false)}
@@ -656,13 +656,22 @@ export default function Dashboard() {
                                 </div>
 
                                 {/* Close Button */}
-                                <div className="text-center">
+                                <div className="text-center space-y-3">
                                     <button
                                         onClick={() => setShowGuide(false)}
                                         className="px-8 py-3 bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] text-white rounded-full hover:shadow-lg transition-all font-light"
                                     >
                                         Get Started
                                     </button>
+                                    <div>
+                                        <Link 
+                                            to={createPageUrl('VideoCallScheduler')}
+                                            className="text-sm text-[#4A90E2] hover:text-[#2E5C8A] underline"
+                                            onClick={() => setShowGuide(false)}
+                                        >
+                                            Or schedule a personal video call for help
+                                        </Link>
+                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -62,13 +62,22 @@ export default function InternationalAssets() {
     }, {});
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-[#F8F7F4] via-white to-[#F8F7F4] p-6">
+        <div className="min-h-screen bg-gradient-to-br from-[#F8F9FA] via-white to-[#E8EEF5] p-6">
             <div className="max-w-7xl mx-auto">
                 <div className="mb-8">
                     <div className="flex items-center justify-between">
-                        <div>
-                            <h1 className="text-4xl font-light text-[#1A2B44] mb-2">International Assets</h1>
-                            <p className="text-[#1A2B44]/60">Track global assets with real-time currency conversion</p>
+                        <div className="flex items-center gap-4">
+                            <img 
+                                src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6947dc1f392f53989af97bda/b516d228e_Gemini_Generated_Image_tp0qgztp0qgztp0q.png" 
+                                alt="North Star Logo" 
+                                className="w-16 h-16 object-contain"
+                            />
+                            <div>
+                                <h1 className="text-4xl font-light text-black mb-2" style={{ fontFamily: 'Playfair Display, serif' }}>
+                                    International Assets
+                                </h1>
+                                <p className="text-[#0F1729]/60 font-light">Real-time multi-currency tracking</p>
+                            </div>
                         </div>
                         <div className="flex gap-2">
                             <Button 
@@ -79,7 +88,7 @@ export default function InternationalAssets() {
                                 <RefreshCw className={`w-5 h-5 mr-2 ${updateRatesMutation.isPending ? 'animate-spin' : ''}`} />
                                 Update Rates
                             </Button>
-                            <Button onClick={() => setShowAdd(true)} className="bg-gradient-to-r from-[#D4AF37] to-[#F4D03F] text-black">
+                            <Button onClick={() => setShowAdd(true)} className="bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] text-white">
                                 <Globe className="w-5 h-5 mr-2" />
                                 Add Asset
                             </Button>
@@ -89,37 +98,42 @@ export default function InternationalAssets() {
 
                 {/* Summary Cards */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                    <Card>
+                    <Card className="border-[#4A90E2]/20">
                         <CardContent className="pt-6">
                             <div className="flex items-center justify-between mb-2">
-                                <span className="text-sm text-[#1A2B44]/60">Total Value (USD)</span>
+                                <span className="text-sm text-[#0F1729]/60">Total Value (USD)</span>
                                 <DollarSign className="w-5 h-5 text-green-600" />
                             </div>
-                            <div className="text-3xl font-light text-[#1A2B44]">
+                            <div className="text-3xl font-light text-black">
                                 ${totalValueUSD.toLocaleString(undefined, { minimumFractionDigits: 2 })}
                             </div>
+                            {assets.length > 0 && assets[0]?.last_rate_update && (
+                                <p className="text-xs text-[#0F1729]/40 mt-2">
+                                    Updated: {new Date(assets[0].last_rate_update).toLocaleString()}
+                                </p>
+                            )}
                         </CardContent>
                     </Card>
 
-                    <Card>
+                    <Card className="border-[#4A90E2]/20">
                         <CardContent className="pt-6">
                             <div className="flex items-center justify-between mb-2">
-                                <span className="text-sm text-[#1A2B44]/60">Countries</span>
+                                <span className="text-sm text-[#0F1729]/60">Countries</span>
                                 <Globe className="w-5 h-5 text-blue-600" />
                             </div>
-                            <div className="text-3xl font-light text-[#1A2B44]">
+                            <div className="text-3xl font-light text-black">
                                 {Object.keys(groupedByCountry).length}
                             </div>
                         </CardContent>
                     </Card>
 
-                    <Card>
+                    <Card className="border-[#4A90E2]/20">
                         <CardContent className="pt-6">
                             <div className="flex items-center justify-between mb-2">
-                                <span className="text-sm text-[#1A2B44]/60">Total Assets</span>
+                                <span className="text-sm text-[#0F1729]/60">Total Assets</span>
                                 <Building2 className="w-5 h-5 text-purple-600" />
                             </div>
-                            <div className="text-3xl font-light text-[#1A2B44]">{assets.length}</div>
+                            <div className="text-3xl font-light text-black">{assets.length}</div>
                         </CardContent>
                     </Card>
                 </div>
@@ -127,18 +141,18 @@ export default function InternationalAssets() {
                 {/* Assets by Country */}
                 {Object.entries(groupedByCountry).map(([country, countryAssets]) => (
                     <div key={country} className="mb-8">
-                        <h2 className="text-2xl font-light text-[#1A2B44] mb-4 flex items-center gap-2">
-                            <Globe className="w-6 h-6 text-[#D4AF37]" />
+                        <h2 className="text-2xl font-light text-black mb-4 flex items-center gap-2">
+                            <Globe className="w-6 h-6 text-[#4A90E2]" />
                             {country}
                         </h2>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             {countryAssets.map((asset) => (
-                                <Card key={asset.id}>
+                                <Card key={asset.id} className="border-[#4A90E2]/20">
                                     <CardHeader>
                                         <div className="flex items-start justify-between">
                                             <div>
-                                                <CardTitle className="text-lg">{asset.asset_name}</CardTitle>
-                                                <p className="text-sm text-[#1A2B44]/60 capitalize">
+                                                <CardTitle className="text-lg text-black">{asset.asset_name}</CardTitle>
+                                                <p className="text-sm text-[#0F1729]/60 capitalize">
                                                     {asset.asset_type.replace('_', ' ')}
                                                 </p>
                                             </div>
@@ -285,7 +299,7 @@ export default function InternationalAssets() {
                                 <Button type="button" variant="outline" onClick={() => setShowAdd(false)} className="flex-1">
                                     Cancel
                                 </Button>
-                                <Button type="submit" disabled={createMutation.isPending} className="flex-1 bg-gradient-to-r from-[#D4AF37] to-[#F4D03F] text-black">
+                                <Button type="submit" disabled={createMutation.isPending} className="flex-1 bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] text-white">
                                     Add Asset
                                 </Button>
                             </div>
@@ -294,10 +308,10 @@ export default function InternationalAssets() {
                 </Dialog>
 
                 {/* Info Card */}
-                <Card className="mt-8 bg-purple-50 border-purple-200">
+                <Card className="mt-8 bg-blue-50 border-blue-200">
                     <CardContent className="pt-6">
-                        <h3 className="font-medium text-purple-900 mb-3">💼 International Asset Management</h3>
-                        <ul className="space-y-2 text-sm text-purple-800">
+                        <h3 className="font-medium text-blue-900 mb-3">💼 International Asset Management</h3>
+                        <ul className="space-y-2 text-sm text-blue-800">
                             <li>• Real-time currency conversion using live exchange rates</li>
                             <li>• Track properties, bank accounts, investments, and businesses worldwide</li>
                             <li>• FBAR and tax reporting flags for U.S. compliance</li>
