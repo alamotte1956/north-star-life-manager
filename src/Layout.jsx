@@ -142,6 +142,7 @@ export default function Layout({ children, currentPageName }) {
 
     return (
         <SandboxDataProvider>
+        <AuthGuard>
         <PWAManager />
         <OfflineDataManager />
         <OfflineIndicator />
@@ -418,6 +419,7 @@ export default function Layout({ children, currentPageName }) {
             {/* PWA Install Prompt */}
             <PWAInstaller />
             </div>
+            </AuthGuard>
             </SandboxDataProvider>
             );
             }

@@ -30,19 +30,38 @@ export default function SandboxBanner() {
     };
 
     return (
-        <Alert className="bg-gradient-to-r from-green-50 to-blue-50 border-green-300 mb-6">
-            <Info className="h-5 w-5 text-green-600" />
+        <Alert className="bg-gradient-to-r from-blue-50 to-purple-50 border-blue-300 mb-6">
+            <Info className="h-5 w-5 text-blue-600" />
             <AlertDescription className="ml-2">
                 <div className="flex items-center justify-between">
                     <div>
-                        <p className="font-medium text-green-900 mb-1">
-                            ✨ Free & Public Access - No Login Required
+                        <p className="font-medium text-blue-900 mb-1">
+                            🎮 Demo Mode - Very Limited Access
                         </p>
-                        <p className="text-sm text-green-800">
-                            This app is completely free for everyone. All your data is stored locally in your browser for privacy.
+                        <p className="text-sm text-blue-800 mb-1">
+                            <strong>Demo Limits:</strong> 2 documents, 0 properties, 2 bills, 3 investments, 1 vehicle, 5 contacts, 10 transactions
+                        </p>
+                        <p className="text-xs text-blue-700">
+                            ⚠️ Data is temporary and will be lost when you close the browser. Sign up for unlimited access!
                         </p>
                     </div>
                     <div className="flex gap-2 ml-4">
+                        <Button
+                            size="sm"
+                            variant="outline"
+                            onClick={handleLogin}
+                            className="border-blue-300 text-blue-900"
+                        >
+                            <User className="w-4 h-4 mr-2" />
+                            Log In
+                        </Button>
+                        <Button
+                            size="sm"
+                            onClick={handleSignUp}
+                            className="bg-gradient-to-r from-[#4A90E2] to-[#2E5C8A] text-white"
+                        >
+                            Sign Up Free
+                        </Button>
                         <Button
                             size="sm"
                             variant="outline"
@@ -50,7 +69,7 @@ export default function SandboxBanner() {
                             className="border-red-300 text-red-700 hover:bg-red-50 gap-2"
                         >
                             <Trash2 className="w-4 h-4" />
-                            Clear All Data
+                            Clear Demo Data
                         </Button>
                     </div>
                 </div>
