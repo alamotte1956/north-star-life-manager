@@ -129,6 +129,33 @@ export default function DocumentCard({ document }) {
                 )}
             </div>
 
+            {/* AI Summary Preview */}
+            {document.ai_summary && document.analysis_status === 'completed' && (
+                <div className="mt-4 bg-gradient-to-br from-blue-50 to-purple-50 border border-blue-200 rounded-lg p-4">
+                    <div className="flex items-start gap-2 mb-2">
+                        <span className="text-lg">✨</span>
+                        <h4 className="text-sm font-medium text-blue-900">AI Summary</h4>
+                    </div>
+                    <p className="text-sm text-blue-800 line-clamp-3 mb-3">
+                        {document.ai_summary}
+                    </p>
+                    
+                    {/* Quick Info Badges */}
+                    <div className="flex flex-wrap gap-2">
+                        {document.key_points?.length > 0 && (
+                            <Badge className="bg-purple-100 text-purple-700 text-xs">
+                                {document.key_points.length} Key Points
+                            </Badge>
+                        )}
+                        {document.action_items?.length > 0 && (
+                            <Badge className="bg-orange-100 text-orange-700 text-xs">
+                                {document.action_items.length} Action Items
+                            </Badge>
+                        )}
+                    </div>
+                </div>
+            )}
+
             {/* Actions */}
             <div className="mt-4 space-y-2">
                 <div className="flex gap-2">
