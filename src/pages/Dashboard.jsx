@@ -487,7 +487,7 @@ export default function Dashboard() {
                             <div className="sticky top-0 bg-gradient-to-r from-[#0F2847] to-[#1B4B7F] p-6 flex items-center justify-between">
                                 <div className="flex items-center gap-3">
                                     <BookOpen className="w-8 h-8 text-white" />
-                                    <h2 className="text-2xl font-light text-white">Getting Started with North Star</h2>
+                                    <h2 className="text-2xl font-light text-white">Getting Started with North Star Life Manager</h2>
                                 </div>
                                 <div className="flex items-center gap-2">
                                     <button
