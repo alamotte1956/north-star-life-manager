@@ -35,11 +35,32 @@ export default function ProfessionalMarketplace() {
     });
 
     const bookMutation = useMutation({
-        mutationFn: (data) => base44.entities.ProfessionalBooking.create(data),
+        mutationFn: async (data) => {
+            const user = await base44.auth.me();
+            
+            // Create booking
+            const booking = await base44.entities.ProfessionalBooking.create(data);
+
+            // Automatically create video meeting and send invites
+            try {
+                await base44.functions.invoke('createVideoMeeting', {
+                    booking_id: booking.id,
+                    professional_email: showBooking.email,
+                    user_email: user.email,
+                    service_type: data.service_type,
+                    appointment_date: data.appointment_date,
+                    duration_minutes: data.duration_minutes
+                });
+            } catch (error) {
+                console.error('Error creating meeting:', error);
+            }
+
+            return booking;
+        },
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['my-bookings'] });
             setShowBooking(null);
-            toast.success('Booking request sent!');
+            toast.success('Appointment confirmed! Calendar invite and video link sent to both parties.');
         }
     });
 
