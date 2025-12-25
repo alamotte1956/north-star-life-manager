@@ -114,6 +114,8 @@ export default function Layout({ children, currentPageName }) {
         { name: 'Art & Collectibles', icon: Gem, path: 'ArtCollectibles', essential: false },
         { name: 'Doctor Appointments', icon: Heart, path: 'DoctorAppointments', essential: false },
         { name: 'Home Services', icon: Home, path: 'HomeServices', essential: false },
+        { name: 'Caregiver Coordination', icon: Users, path: 'CaregiverCoordination', essential: false },
+        { name: 'White-Glove Setup', icon: Users, path: 'WhiteGloveOnboarding', essential: false },
 
         // Planning & Calendar
         { name: 'Calendar', icon: Calendar, path: 'Calendar', essential: true },

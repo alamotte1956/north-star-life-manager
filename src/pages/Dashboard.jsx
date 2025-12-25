@@ -470,13 +470,22 @@ export default function Dashboard() {
                                 {format(new Date(), 'EEEE, MMMM d, yyyy')}
                             </p>
                         </div>
-                        <button
-                            onClick={() => setShowGuide(true)}
-                            className="flex items-center gap-3 px-6 py-4 min-h-[50px] bg-white border-2 border-[#4A90E2] text-[#0F1729] rounded-xl hover:bg-[#4A90E2] hover:text-white transition-all font-light shadow-sm"
+                        <div className="flex gap-3">
+                            <button
+                                onClick={() => setShowGuide(true)}
+                                className="flex items-center gap-3 px-6 py-4 min-h-[50px] bg-white border-2 border-[#4A90E2] text-[#0F1729] rounded-xl hover:bg-[#4A90E2] hover:text-white transition-all font-light shadow-sm"
                             >
-                            <BookOpen className="w-6 h-6" />
-                            <span className="text-base">Getting Started</span>
-                        </button>
+                                <BookOpen className="w-6 h-6" />
+                                <span className="text-base">Getting Started</span>
+                            </button>
+                            <button
+                                onClick={downloadMasterBinder}
+                                className="flex items-center gap-3 px-6 py-4 min-h-[50px] bg-white border-2 border-purple-600 text-[#0F1729] rounded-xl hover:bg-purple-600 hover:text-white transition-all font-light shadow-sm"
+                            >
+                                <Printer className="w-6 h-6" />
+                                <span className="text-base">Master Binder</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -823,7 +832,34 @@ export default function Dashboard() {
                     </Card>
                 </div>
 
-                {/* Quick Access Grid */}
+                {/* Quick Access Grid - Senior Priority Features */}
+                <div className="mb-6">
+                    <h2 className="text-2xl font-light text-black mb-4">Premium Features</h2>
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <Link to={createPageUrl('LegacyMessages')} className="p-6 bg-gradient-to-br from-purple-50 to-white border border-purple-200 rounded-xl hover:shadow-lg hover:border-purple-400 transition-all text-center group">
+                            <Video className="w-8 h-8 text-purple-600 mx-auto mb-3 group-hover:scale-110 transition-transform" />
+                            <div className="font-light text-black">Legacy Messages</div>
+                            <p className="text-xs text-purple-600 mt-1">Video to grandchildren</p>
+                        </Link>
+                        <Link to={createPageUrl('BillNegotiation')} className="p-6 bg-gradient-to-br from-green-50 to-white border border-green-200 rounded-xl hover:shadow-lg hover:border-green-400 transition-all text-center group">
+                            <DollarSign className="w-8 h-8 text-green-600 mx-auto mb-3 group-hover:scale-110 transition-transform" />
+                            <div className="font-light text-black">Bill Negotiation</div>
+                            <p className="text-xs text-green-600 mt-1">Save time & money</p>
+                        </Link>
+                        <Link to={createPageUrl('EmergencyResponse')} className="p-6 bg-gradient-to-br from-red-50 to-white border border-red-200 rounded-xl hover:shadow-lg hover:border-red-400 transition-all text-center group">
+                            <AlertCircle className="w-8 h-8 text-red-600 mx-auto mb-3 group-hover:scale-110 transition-transform" />
+                            <div className="font-light text-black">Emergency</div>
+                            <p className="text-xs text-red-600 mt-1">Quick response</p>
+                        </Link>
+                        <Link to={createPageUrl('Succession')} className="p-6 bg-gradient-to-br from-blue-50 to-white border border-blue-200 rounded-xl hover:shadow-lg hover:border-blue-400 transition-all text-center group">
+                            <Shield className="w-8 h-8 text-blue-600 mx-auto mb-3 group-hover:scale-110 transition-transform" />
+                            <div className="font-light text-black">Succession</div>
+                            <p className="text-xs text-blue-600 mt-1">Keycard access</p>
+                        </Link>
+                    </div>
+                </div>
+
+                {/* Standard Quick Access */}
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                     <Link to={createPageUrl('Contacts')} className="p-6 bg-white border border-[#B8D4ED] rounded-xl hover:shadow-lg hover:border-[#4A90E2] transition-all text-center group">
                         <Users className="w-8 h-8 text-[#4A90E2] mx-auto mb-3 group-hover:scale-110 transition-transform" />

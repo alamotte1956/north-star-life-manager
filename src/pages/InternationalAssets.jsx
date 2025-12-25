@@ -66,21 +66,28 @@ export default function InternationalAssets() {
             <div className="max-w-7xl mx-auto">
                 <div className="mb-8">
                     <div className="flex items-center justify-between">
-                        <div>
-                            <h1 className="text-4xl font-light text-[#1A2B44] mb-2">International Assets</h1>
-                            <p className="text-[#1A2B44]/60">Track global assets with real-time currency conversion</p>
+                        <div className="flex items-center gap-4">
+                            <img 
+                                src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6947dc1f392f53989af97bda/b516d228e_Gemini_Generated_Image_tp0qgztp0qgztp0q.png" 
+                                alt="North Star Logo" 
+                                className="w-16 h-16 object-contain"
+                            />
+                            <div>
+                                <h1 className="text-4xl font-light text-[#1A2B44] mb-2">International Assets</h1>
+                                <p className="text-[#1A2B44]/60">Real-time multi-currency portfolio tracking</p>
+                            </div>
                         </div>
                         <div className="flex gap-2">
                             <Button 
                                 onClick={() => updateRatesMutation.mutate()}
                                 disabled={updateRatesMutation.isPending}
-                                variant="outline"
+                                className="bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] text-white gap-2"
                             >
-                                <RefreshCw className={`w-5 h-5 mr-2 ${updateRatesMutation.isPending ? 'animate-spin' : ''}`} />
-                                Update Rates
+                                <RefreshCw className={`w-4 h-4 ${updateRatesMutation.isPending ? 'animate-spin' : ''}`} />
+                                Real-Time Rates
                             </Button>
-                            <Button onClick={() => setShowAdd(true)} className="bg-gradient-to-r from-[#D4AF37] to-[#F4D03F] text-black">
-                                <Globe className="w-5 h-5 mr-2" />
+                            <Button onClick={() => setShowAdd(true)} className="bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] text-white gap-2">
+                                <Globe className="w-5 h-5" />
                                 Add Asset
                             </Button>
                         </div>
@@ -285,7 +292,7 @@ export default function InternationalAssets() {
                                 <Button type="button" variant="outline" onClick={() => setShowAdd(false)} className="flex-1">
                                     Cancel
                                 </Button>
-                                <Button type="submit" disabled={createMutation.isPending} className="flex-1 bg-gradient-to-r from-[#D4AF37] to-[#F4D03F] text-black">
+                                <Button type="submit" disabled={createMutation.isPending} className="flex-1 bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] text-white">
                                     Add Asset
                                 </Button>
                             </div>

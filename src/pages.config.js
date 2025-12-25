@@ -68,6 +68,8 @@ import DigitalMemorial from './pages/DigitalMemorial';
 import ArtCollectibles from './pages/ArtCollectibles';
 import DoctorAppointments from './pages/DoctorAppointments';
 import HomeServices from './pages/HomeServices';
+import CaregiverCoordination from './pages/CaregiverCoordination';
+import WhiteGloveOnboarding from './pages/WhiteGloveOnboarding';
 import __Layout from './Layout.jsx';
 
 
@@ -142,6 +144,8 @@ export const PAGES = {
     "ArtCollectibles": ArtCollectibles,
     "DoctorAppointments": DoctorAppointments,
     "HomeServices": HomeServices,
+    "CaregiverCoordination": CaregiverCoordination,
+    "WhiteGloveOnboarding": WhiteGloveOnboarding,
 }
 
 export const pagesConfig = {
