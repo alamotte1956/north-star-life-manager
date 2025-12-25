@@ -46,6 +46,8 @@ import InsuranceShopping from './pages/InsuranceShopping';
 import LegacyMessages from './pages/LegacyMessages';
 import HomeInventory from './pages/HomeInventory';
 import ConciergeService from './pages/ConciergeService';
+import EmergencyResponse from './pages/EmergencyResponse';
+import InternationalAssets from './pages/InternationalAssets';
 import __Layout from './Layout.jsx';
 
 
@@ -98,6 +100,8 @@ export const PAGES = {
     "LegacyMessages": LegacyMessages,
     "HomeInventory": HomeInventory,
     "ConciergeService": ConciergeService,
+    "EmergencyResponse": EmergencyResponse,
+    "InternationalAssets": InternationalAssets,
 }
 
 export const pagesConfig = {
