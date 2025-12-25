@@ -64,6 +64,8 @@ import EstatePlanning from './pages/EstatePlanning';
 import CharitableGiving from './pages/CharitableGiving';
 import EducationFunds from './pages/EducationFunds';
 import MedicareNavigator from './pages/MedicareNavigator';
+import DigitalMemorial from './pages/DigitalMemorial';
+import ArtCollectibles from './pages/ArtCollectibles';
 import __Layout from './Layout.jsx';
 
 
@@ -134,6 +136,8 @@ export const PAGES = {
     "CharitableGiving": CharitableGiving,
     "EducationFunds": EducationFunds,
     "MedicareNavigator": MedicareNavigator,
+    "DigitalMemorial": DigitalMemorial,
+    "ArtCollectibles": ArtCollectibles,
 }
 
 export const pagesConfig = {
