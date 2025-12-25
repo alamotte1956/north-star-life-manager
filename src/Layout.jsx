@@ -45,6 +45,7 @@ export default function Layout({ children, currentPageName }) {
         { name: 'Subscriptions', icon: DollarSign, path: 'Subscriptions' },
         { name: 'Budget & Goals', icon: TrendingUp, path: 'Budget' },
         { name: 'Financial Health', icon: Activity, path: 'FinancialHealth' },
+        { name: 'Credit Score', icon: Shield, path: 'CreditScore' },
         { name: 'Financial Dashboard', icon: TrendingUp, path: 'FinancialDashboard' },
         { name: 'Bill Payments', icon: DollarSign, path: 'BillPayments' },
         { name: 'Auto Payments', icon: Zap, path: 'AutomatedPayments' },
