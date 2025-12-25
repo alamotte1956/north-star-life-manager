@@ -20,10 +20,15 @@ export default function AccountSettings() {
         queryFn: () => base44.auth.me()
     });
 
+    const hasSandboxData = () => {
+        return Object.keys(localStorage).some(key => key.startsWith('sandbox_'));
+    };
+
     const handleClearDemoData = () => {
         if (window.confirm('Are you sure you want to clear all demo/sandbox data from localStorage?')) {
             clearSandboxData();
             toast.success('Demo data cleared successfully');
+            window.location.reload(); // Refresh to update the display
         }
     };
 
@@ -75,36 +80,38 @@ export default function AccountSettings() {
                     </div>
                 </div>
 
-                {/* Data Storage Info */}
-                <Card className="mb-6 bg-blue-50 border-blue-200">
-                    <CardHeader>
-                        <CardTitle className="flex items-center gap-2">
-                            <Database className="w-5 h-5 text-blue-600" />
-                            Your Data Storage
-                        </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                        <div className="space-y-4">
-                            <div className="p-4 bg-white rounded-lg border border-blue-200">
-                                <h3 className="font-medium text-blue-900 mb-2">✅ You're Logged In</h3>
-                                <p className="text-sm text-blue-800 mb-2">
-                                    All new records you create are now stored in your secure authenticated account (<strong>{user?.email}</strong>).
-                                </p>
-                                <p className="text-xs text-blue-700">
-                                    Any demo data from before you logged in is still in your browser's localStorage. You can clear it below if needed.
-                                </p>
+                {/* Data Storage Info - Only show if sandbox data exists */}
+                {hasSandboxData() && (
+                    <Card className="mb-6 bg-blue-50 border-blue-200">
+                        <CardHeader>
+                            <CardTitle className="flex items-center gap-2">
+                                <Database className="w-5 h-5 text-blue-600" />
+                                Your Data Storage
+                            </CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                            <div className="space-y-4">
+                                <div className="p-4 bg-white rounded-lg border border-blue-200">
+                                    <h3 className="font-medium text-blue-900 mb-2">✅ You're Logged In</h3>
+                                    <p className="text-sm text-blue-800 mb-2">
+                                        All new records you create are now stored in your secure authenticated account (<strong>{user?.email}</strong>).
+                                    </p>
+                                    <p className="text-xs text-blue-700">
+                                        Any demo data from before you logged in is still in your browser's localStorage. You can clear it below if needed.
+                                    </p>
+                                </div>
+                                <Button
+                                    onClick={handleClearDemoData}
+                                    variant="outline"
+                                    className="w-full border-blue-300 text-blue-700 hover:bg-blue-100"
+                                >
+                                    <Trash2 className="w-4 h-4 mr-2" />
+                                    Clear Demo/Sandbox Data from Browser
+                                </Button>
                             </div>
-                            <Button
-                                onClick={handleClearDemoData}
-                                variant="outline"
-                                className="w-full border-blue-300 text-blue-700 hover:bg-blue-100"
-                            >
-                                <Trash2 className="w-4 h-4 mr-2" />
-                                Clear Demo/Sandbox Data from Browser
-                            </Button>
-                        </div>
-                    </CardContent>
-                </Card>
+                        </CardContent>
+                    </Card>
+                )}
 
                 {/* Privacy & Security */}
                 <Card className="mb-6">
