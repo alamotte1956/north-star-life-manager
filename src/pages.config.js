@@ -15,6 +15,7 @@ import FamilyToDo from './pages/FamilyToDo';
 import FamilyWorkflows from './pages/FamilyWorkflows';
 import FinancialDashboard from './pages/FinancialDashboard';
 import FinancialHealth from './pages/FinancialHealth';
+import FinancialLiteracy from './pages/FinancialLiteracy';
 import Health from './pages/Health';
 import Integrations from './pages/Integrations';
 import Investments from './pages/Investments';
@@ -36,7 +37,6 @@ import Travel from './pages/Travel';
 import Valuables from './pages/Valuables';
 import Vault from './pages/Vault';
 import Vehicles from './pages/Vehicles';
-import FinancialLiteracy from './pages/FinancialLiteracy';
 import __Layout from './Layout.jsx';
 
 
@@ -58,6 +58,7 @@ export const PAGES = {
     "FamilyWorkflows": FamilyWorkflows,
     "FinancialDashboard": FinancialDashboard,
     "FinancialHealth": FinancialHealth,
+    "FinancialLiteracy": FinancialLiteracy,
     "Health": Health,
     "Integrations": Integrations,
     "Investments": Investments,
@@ -79,7 +80,6 @@ export const PAGES = {
     "Valuables": Valuables,
     "Vault": Vault,
     "Vehicles": Vehicles,
-    "FinancialLiteracy": FinancialLiteracy,
 }
 
 export const pagesConfig = {

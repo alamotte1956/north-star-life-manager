@@ -15,6 +15,10 @@ import AssetAllocation from '../components/investments/AssetAllocation';
 import InvestmentCard from '../components/investments/InvestmentCard';
 import InvestmentInsights from '../components/investments/InvestmentInsights';
 import InvestmentAdvisorChat from '../components/investments/InvestmentAdvisorChat';
+import PortfolioRiskAnalysis from '../components/investments/PortfolioRiskAnalysis';
+import PersonalizedStrategy from '../components/investments/PersonalizedStrategy';
+import MarketTrendMonitor from '../components/investments/MarketTrendMonitor';
+import RebalancingSuggestions from '../components/investments/RebalancingSuggestions';
 import { toast } from 'sonner';
 
 const accountTypeLabels = {
