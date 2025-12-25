@@ -13,6 +13,7 @@ import { format, isAfter, isBefore, addDays } from 'date-fns';
 import FinancialAdvisor from '../components/financial/FinancialAdvisor';
 import OnboardingFlow from '../components/onboarding/OnboardingFlow';
 import FinancialHealthAlerts from '../components/alerts/FinancialHealthAlerts';
+import WellnessInsights from '../components/wellness/WellnessInsights';
 import { useNavigate } from 'react-router-dom';
 import jsPDF from 'jspdf';
 
@@ -725,7 +726,7 @@ export default function Dashboard() {
 
                 {/* Wellness Insights - Correlation Engine */}
                 <div className="mb-8">
-                    {/* Wellness insights component would go here */}
+                    <WellnessInsights />
                 </div>
 
                 {/* AI Financial Advisor */}
