@@ -470,13 +470,21 @@ export default function Dashboard() {
                                 {format(new Date(), 'EEEE, MMMM d, yyyy')}
                             </p>
                         </div>
-                        <button
-                            onClick={() => setShowGuide(true)}
-                            className="flex items-center gap-3 px-6 py-4 min-h-[50px] bg-white border-2 border-[#4A90E2] text-[#0F1729] rounded-xl hover:bg-[#4A90E2] hover:text-white transition-all font-light shadow-sm"
+                        <div className="flex flex-col gap-3">
+                            <Link
+                                to={createPageUrl('Pricing')}
+                                className="flex items-center justify-center px-6 py-4 min-h-[50px] bg-gradient-to-r from-[#4A90E2] to-[#2E5C8A] text-white rounded-xl hover:shadow-lg transition-all font-medium text-lg"
                             >
-                            <BookOpen className="w-6 h-6" />
-                            <span className="text-base">Getting Started</span>
-                        </button>
+                                Sign Up / Upgrade
+                            </Link>
+                            <button
+                                onClick={() => setShowGuide(true)}
+                                className="flex items-center gap-3 px-6 py-4 min-h-[50px] bg-white border-2 border-[#4A90E2] text-[#0F1729] rounded-xl hover:bg-[#4A90E2] hover:text-white transition-all font-light shadow-sm"
+                            >
+                                <BookOpen className="w-6 h-6" />
+                                <span className="text-base">Getting Started</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
 
