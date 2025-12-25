@@ -44,10 +44,23 @@ export default function RoleManagement() {
         queryFn: () => base44.entities.CustomRole.list()
     });
 
-    const { data: users = [] } = useQuery({
-        queryKey: ['users'],
-        queryFn: () => base44.entities.User.list()
+    const { data: user } = useQuery({
+        queryKey: ['currentUser'],
+        queryFn: () => base44.auth.me()
     });
+
+    const isMasterAdmin = user?.user_type === 'master_admin' || user?.role === 'admin';
+
+    const { data: usersData } = useQuery({
+        queryKey: ['users'],
+        queryFn: async () => {
+            const result = await base44.functions.invoke('listUsers');
+            return result.data;
+        },
+        enabled: isMasterAdmin
+    });
+
+    const users = usersData?.users || [];
 
     const createRoleMutation = useMutation({
         mutationFn: (data) => editingRole 
@@ -70,8 +83,10 @@ export default function RoleManagement() {
     });
 
     const updateUserRoleMutation = useMutation({
-        mutationFn: ({ userId, userData }) => 
-            base44.entities.User.update(userId, userData),
+        mutationFn: async ({ userId, userData }) => {
+            const result = await base44.functions.invoke('updateUser', { userId, userData });
+            return result.data;
+        },
         onSuccess: () => {
             queryClient.invalidateQueries(['users']);
             toast.success('User updated!');
@@ -129,6 +144,18 @@ export default function RoleManagement() {
         e.preventDefault();
         createRoleMutation.mutate(formData);
     };
+
+    if (!isMasterAdmin) {
+        return (
+            <div className="min-h-screen bg-gradient-to-br from-[#F8F9FA] via-white to-[#F8F9FA] flex items-center justify-center">
+                <div className="text-center">
+                    <Shield className="w-16 h-16 text-red-500 mx-auto mb-4" />
+                    <h2 className="text-2xl font-light text-[#0F172A] mb-2">Access Denied</h2>
+                    <p className="text-[#64748B]">Only Master Admin can access role management.</p>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <PermissionGuard section="user_management" action="view">
