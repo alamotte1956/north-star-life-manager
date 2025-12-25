@@ -36,6 +36,7 @@ import Travel from './pages/Travel';
 import Valuables from './pages/Valuables';
 import Vault from './pages/Vault';
 import Vehicles from './pages/Vehicles';
+import FinancialLiteracy from './pages/FinancialLiteracy';
 import __Layout from './Layout.jsx';
 
 
@@ -78,6 +79,7 @@ export const PAGES = {
     "Valuables": Valuables,
     "Vault": Vault,
     "Vehicles": Vehicles,
+    "FinancialLiteracy": FinancialLiteracy,
 }
 
 export const pagesConfig = {
