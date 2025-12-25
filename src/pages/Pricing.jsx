@@ -10,7 +10,7 @@ const plans = [
     {
         id: 'basic',
         name: 'Basic',
-        price: 29,
+        price: 49,
         icon: Zap,
         features: [
             'Up to 50 documents',
@@ -22,8 +22,8 @@ const plans = [
     },
     {
         id: 'premium',
-        name: 'Premium',
-        price: 79,
+        name: 'Plus',
+        price: 99,
         icon: Crown,
         popular: true,
         features: [
@@ -39,11 +39,11 @@ const plans = [
     },
     {
         id: 'enterprise',
-        name: 'Enterprise',
-        price: 199,
+        name: 'Premium',
+        price: 99,
         icon: Building2,
         features: [
-            'Everything in Premium',
+            'Everything in Plus',
             'Team collaboration (up to 10 users)',
             'Advanced security',
             'Dedicated account manager',
