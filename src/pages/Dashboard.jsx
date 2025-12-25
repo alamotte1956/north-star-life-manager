@@ -538,66 +538,94 @@ export default function Dashboard() {
                                         <div className="flex gap-4 p-4 bg-[#E8EEF5] rounded-xl">
                                             <div className="flex-shrink-0 w-8 h-8 bg-[#4A90E2] text-white rounded-full flex items-center justify-center font-light">1</div>
                                             <div className="flex-1">
-                                                <h4 className="font-light text-black mb-1">Upload Your Documents</h4>
+                                                <h4 className="font-light text-black mb-1">Upload & Organize Documents</h4>
                                                 <p className="text-sm text-[#0F1729]/70 font-light">
-                                                    Start by visiting the <strong>Vault</strong>. Take photos or upload important documents like deeds, insurance policies, and legal papers. 
-                                                    Our AI will automatically analyze and categorize them for you.
+                                                    Start with the <strong>Vault</strong> - upload documents via mobile camera or desktop. 
+                                                    AI automatically extracts dates, amounts, and categories. Create folders for better organization.
                                                 </p>
                                             </div>
                                         </div>
 
                                         <div className="flex gap-4 p-4 bg-[#F8F7F4] rounded-xl">
-                                            <div className="flex-shrink-0 w-8 h-8 bg-[#8B2635] text-white rounded-full flex items-center justify-center font-light">2</div>
+                                            <div className="flex-shrink-0 w-8 h-8 bg-[#4A90E2] text-white rounded-full flex items-center justify-center font-light">2</div>
                                             <div className="flex-1">
-                                                <h4 className="font-light text-[#1A2B44] mb-1">Add Your Properties & Assets</h4>
-                                                <p className="text-sm text-[#1A2B44]/70 font-light">
-                                                    Go to <strong>Properties</strong>, <strong>Vehicles</strong>, and <strong>Valuables</strong> to create an inventory of your assets. 
-                                                    Track values, maintenance schedules, and important details.
+                                                <h4 className="font-light text-black mb-1">Connect Your Financial Life</h4>
+                                                <p className="text-sm text-[#0F1729]/70 font-light">
+                                                    Visit <strong>Banking Hub</strong> to connect bank accounts. Set up <strong>Bill Payments</strong> and 
+                                                    <strong> Automated Payments</strong>. Track <strong>Investments</strong> and analyze your 
+                                                    <strong> Financial Health</strong> dashboard for AI-driven insights.
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        <div className="flex gap-4 p-4 bg-[#E8EEF5] rounded-xl">
+                                            <div className="flex-shrink-0 w-8 h-8 bg-[#4A90E2] text-white rounded-full flex items-center justify-center font-light">3</div>
+                                            <div className="flex-1">
+                                                <h4 className="font-light text-black mb-1">Track Health & Wellness</h4>
+                                                <p className="text-sm text-[#0F1729]/70 font-light">
+                                                    Set up your <strong>Medical Profile</strong> with medications and conditions. 
+                                                    Log health data to enable our <strong>Wellness Insights</strong> correlation engine, 
+                                                    which reveals how your health impacts spending patterns.
                                                 </p>
                                             </div>
                                         </div>
 
                                         <div className="flex gap-4 p-4 bg-[#F8F7F4] rounded-xl">
-                                            <div className="flex-shrink-0 w-8 h-8 bg-[#8B2635] text-white rounded-full flex items-center justify-center font-light">3</div>
+                                            <div className="flex-shrink-0 w-8 h-8 bg-[#4A90E2] text-white rounded-full flex items-center justify-center font-light">4</div>
                                             <div className="flex-1">
-                                                <h4 className="font-light text-[#1A2B44] mb-1">Set Up Maintenance & Rent Collection</h4>
-                                                <p className="text-sm text-[#1A2B44]/70 font-light">
-                                                    Visit <strong>Maintenance</strong> to schedule recurring tasks. For rental properties, use <strong>Property Management</strong> 
-                                                    to automate rent collection, send AI-powered reminders, and track payments with integrated Stripe processing.
+                                                <h4 className="font-light text-black mb-1">Manage Properties & Assets</h4>
+                                                <p className="text-sm text-[#0F1729]/70 font-light">
+                                                    Add <strong>Properties</strong> (including rental properties with automated rent collection), 
+                                                    <strong> Vehicles</strong>, <strong>Valuables</strong>, and <strong>Home Inventory</strong>. 
+                                                    Set up <strong>Maintenance</strong> tasks with AI vendor assignment and smart scheduling.
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        <div className="flex gap-4 p-4 bg-[#E8EEF5] rounded-xl">
+                                            <div className="flex-shrink-0 w-8 h-8 bg-[#4A90E2] text-white rounded-full flex items-center justify-center font-light">5</div>
+                                            <div className="flex-1">
+                                                <h4 className="font-light text-black mb-1">Business Management (Optional)</h4>
+                                                <p className="text-sm text-[#0F1729]/70 font-light">
+                                                    If you run a business, explore <strong>Business Hub</strong> for client management, 
+                                                    project tracking, invoicing, contracts, and expense management with QuickBooks/Xero integration.
                                                 </p>
                                             </div>
                                         </div>
 
                                         <div className="flex gap-4 p-4 bg-[#F8F7F4] rounded-xl">
-                                            <div className="flex-shrink-0 w-8 h-8 bg-[#8B2635] text-white rounded-full flex items-center justify-center font-light">4</div>
+                                            <div className="flex-shrink-0 w-8 h-8 bg-[#4A90E2] text-white rounded-full flex items-center justify-center font-light">6</div>
                                             <div className="flex-1">
-                                                <h4 className="font-light text-[#1A2B44] mb-1">Track Financial Goals & Investments</h4>
-                                                <p className="text-sm text-[#1A2B44]/70 font-light">
-                                                    Set financial goals in <strong>Budget & Goals</strong>, track your investment portfolio in <strong>Investments</strong>, 
-                                                    and manage recurring bills in <strong>Bill Payments</strong>. Get AI-driven insights on your financial health.
+                                                <h4 className="font-light text-black mb-1">Estate Planning & Security</h4>
+                                                <p className="text-sm text-[#0F1729]/70 font-light">
+                                                    Complete <strong>Legal & Estate</strong> with beneficiaries, advance directives, and 
+                                                    <strong> Legacy Messages</strong>. Set up <strong>Succession</strong> for emergency access 
+                                                    and create your <strong>Emergency Response</strong> profile.
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        <div className="flex gap-4 p-4 bg-[#E8EEF5] rounded-xl">
+                                            <div className="flex-shrink-0 w-8 h-8 bg-[#4A90E2] text-white rounded-full flex items-center justify-center font-light">7</div>
+                                            <div className="flex-1">
+                                                <h4 className="font-light text-black mb-1">Optimize & Automate</h4>
+                                                <p className="text-sm text-[#0F1729]/70 font-light">
+                                                    Use <strong>Bill Negotiation</strong> to reduce recurring costs, 
+                                                    <strong> Insurance Shopping</strong> for better coverage, and 
+                                                    <strong> Concierge Service</strong> for white-glove task assistance. 
+                                                    Connect <strong>Integrations</strong> like Google Calendar and Slack.
                                                 </p>
                                             </div>
                                         </div>
 
                                         <div className="flex gap-4 p-4 bg-[#F8F7F4] rounded-xl">
-                                            <div className="flex-shrink-0 w-8 h-8 bg-[#8B2635] text-white rounded-full flex items-center justify-center font-light">5</div>
+                                            <div className="flex-shrink-0 w-8 h-8 bg-[#4A90E2] text-white rounded-full flex items-center justify-center font-light">8</div>
                                             <div className="flex-1">
-                                                <h4 className="font-light text-[#1A2B44] mb-1">Organize Contacts & Communications</h4>
-                                                <p className="text-sm text-[#1A2B44]/70 font-light">
-                                                    Add key contacts in the <strong>Contacts</strong> section. For rental properties, use AI-powered tenant communication tools 
-                                                    to generate responses, analyze sentiment, and maintain professional tenant relationships.
-                                                </p>
-                                            </div>
-                                        </div>
-
-                                        <div className="flex gap-4 p-4 bg-[#F8F7F4] rounded-xl">
-                                            <div className="flex-shrink-0 w-8 h-8 bg-[#8B2635] text-white rounded-full flex items-center justify-center font-light">6</div>
-                                            <div className="flex-1">
-                                                <h4 className="font-light text-[#1A2B44] mb-1">Complete Medical & Estate Planning</h4>
-                                                <p className="text-sm text-[#1A2B44]/70 font-light">
-                                                    Set up your <strong>Medical Profile</strong> with emergency contacts and medications. 
-                                                    Configure <strong>Legal & Estate</strong> with beneficiaries and advance directives. 
-                                                    Use <strong>Succession Dashboard</strong> for secure emergency access.
+                                                <h4 className="font-light text-black mb-1">Collaborate & Delegate</h4>
+                                                <p className="text-sm text-[#0F1729]/70 font-light">
+                                                    Invite family members via <strong>Collaboration</strong>, assign roles in 
+                                                    <strong> Family Roles</strong>, create <strong>Workflows</strong> for document handling, 
+                                                    and manage shared <strong>Family To-Do</strong> lists.
                                                 </p>
                                             </div>
                                         </div>
@@ -654,12 +682,16 @@ export default function Dashboard() {
                                 <div className="bg-gradient-to-br from-[#4A90E2]/5 to-[#2E5C8A]/5 p-6 rounded-xl border border-[#4A90E2]/20">
                                 <h3 className="text-xl font-light text-black mb-3">💡 Pro Tips</h3>
                                 <ul className="space-y-2 text-sm text-[#0F1729]/70 font-light">
-                                        <li>• Use your phone's camera to quickly capture documents - the app supports direct photo uploads with AI analysis</li>
-                                        <li>• Set up payment schedules in Property Management to automate rent collection and reminders</li>
-                                        <li>• Connect external services via Integrations - Google Calendar, Slack, Drive, and more</li>
-                                        <li>• Use the Email Assistant to manage communications with AI-powered drafting and categorization</li>
-                                        <li>• The Medical Profile includes a printable emergency card - keep a copy in your wallet</li>
-                                        <li>• Share specific records with family or advisors using the Collaboration tools</li>
+                                        <li>• <strong>Mobile Power:</strong> Use your phone camera to capture documents instantly - AI analyzes them in real-time</li>
+                                        <li>• <strong>Smart Automation:</strong> Set up automated rent collection, bill payments, and maintenance reminders to save hours each month</li>
+                                        <li>• <strong>Wellness-Money Link:</strong> Enable health tracking to discover how sleep, stress, and exercise affect your spending habits</li>
+                                        <li>• <strong>AI Advisor:</strong> Use the Financial Advisor and Investment Advisor chatbots for personalized guidance anytime</li>
+                                        <li>• <strong>External Integrations:</strong> Connect Google Calendar, Slack, Drive, QuickBooks, and more in the Integrations section</li>
+                                        <li>• <strong>Emergency Prepared:</strong> Print your Medical Emergency Card and set up Succession access for family members</li>
+                                        <li>• <strong>Professional Help:</strong> Book video calls with CPAs, attorneys, and advisors through Professional Network</li>
+                                        <li>• <strong>Cost Savings:</strong> Use Bill Negotiation and Insurance Shopping to reduce monthly expenses automatically</li>
+                                        <li>• <strong>Business Features:</strong> Freelancers and consultants can manage clients, projects, and invoices in Business Hub</li>
+                                        <li>• <strong>Global Search:</strong> Press ⌘K (Ctrl+K on Windows) to search across all your documents, contacts, and data instantly</li>
                                     </ul>
                                 </div>
 
