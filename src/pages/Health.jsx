@@ -163,19 +163,19 @@ export default function Health() {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-[#F8F7F4] via-white to-[#F8F7F4]">
+        <div className="min-h-screen bg-gradient-to-br from-[#F8F9FA] via-white to-[#E8EEF5]">
             <div className="max-w-7xl mx-auto px-6 py-12">
                 <div className="flex items-center justify-between mb-8">
                     <div className="flex items-center gap-4">
                         <div className="relative">
-                            <div className="absolute inset-0 bg-[#C9A95C]/30 rounded-2xl blur-xl" />
-                            <div className="relative bg-gradient-to-br from-[#1A2B44] to-[#0F1B2E] p-4 rounded-2xl">
-                                <Heart className="w-8 h-8 text-[#C9A95C]" />
+                            <div className="absolute inset-0 bg-[#4A90E2]/30 rounded-2xl blur-xl" />
+                            <div className="relative bg-gradient-to-br from-[#2E5C8A] to-[#4A90E2] p-4 rounded-2xl">
+                                <Heart className="w-8 h-8 text-white" />
                             </div>
                         </div>
                         <div>
-                            <h1 className="text-4xl font-light text-[#1A2B44]">Health</h1>
-                            <p className="text-[#1A2B44]/60 font-light">Medical records & wellness</p>
+                            <h1 className="text-4xl font-light text-black">Health</h1>
+                            <p className="text-[#0F1729]/60 font-light">Medical records & wellness</p>
                         </div>
                     </div>
                 </div>
@@ -183,7 +183,7 @@ export default function Health() {
                 <div className="flex items-center justify-between mb-6">
                     <div className="flex gap-4">
                         <Tabs value={filter} onValueChange={setFilter}>
-                            <TabsList className="bg-white border border-[#1A2B44]/10">
+                            <TabsList className="bg-white border border-[#4A90E2]/10">
                                 <TabsTrigger value="all">All</TabsTrigger>
                                 <TabsTrigger value="prescription">Prescriptions</TabsTrigger>
                                 <TabsTrigger value="insurance">Insurance</TabsTrigger>
@@ -199,7 +199,7 @@ export default function Health() {
                             onClick={getInsights}
                             disabled={loadingInsights}
                             variant="outline"
-                            className="border-[#D4AF37]/20"
+                            className="border-[#4A90E2]/20"
                         >
                             <Sparkles className={`w-4 h-4 mr-2 ${loadingInsights ? 'animate-spin' : ''}`} />
                             AI Insights
@@ -207,7 +207,7 @@ export default function Health() {
                         <Button
                             onClick={() => setSummaryOpen(true)}
                             variant="outline"
-                            className="border-[#D4AF37]/20"
+                            className="border-[#4A90E2]/20"
                         >
                             <FileUser className="w-4 h-4 mr-2" />
                             Health Summary
@@ -215,7 +215,7 @@ export default function Health() {
                         <Button
                             variant="outline"
                             onClick={() => setShowFamilyInsights(!showFamilyInsights)}
-                            className="border-[#D4AF37]/20"
+                            className="border-[#4A90E2]/20"
                         >
                             <Users className="w-4 h-4 mr-2" />
                             Family Insights
@@ -224,14 +224,14 @@ export default function Health() {
                             onClick={getHealthTrends}
                             disabled={loadingTrends}
                             variant="outline"
-                            className="border-[#D4AF37]/20"
+                            className="border-[#4A90E2]/20"
                         >
                             <Activity className={`w-4 h-4 mr-2 ${loadingTrends ? 'animate-spin' : ''}`} />
                             Health Trends
                         </Button>
                         <Dialog open={open} onOpenChange={setOpen}>
                         <DialogTrigger asChild>
-                            <Button className="bg-gradient-to-r from-[#1A2B44] to-[#0F1B2E] hover:shadow-lg text-white">
+                            <Button className="bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] hover:shadow-lg text-white">
                                 <Plus className="w-4 h-4 mr-2" />
                                 Add Record
                             </Button>
@@ -353,7 +353,7 @@ export default function Health() {
                                     />
                                 </div>
 
-                                <Button type="submit" className="w-full bg-gradient-to-r from-[#C9A95C] to-[#D4AF37]">
+                                <Button type="submit" className="w-full bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] text-white">
                                     Add Record
                                 </Button>
                             </form>
@@ -387,8 +387,8 @@ export default function Health() {
                 {/* Medication Tracker */}
                 {medications.length > 0 && (
                     <div className="mb-8">
-                        <h2 className="text-2xl font-light text-[#1A2B44] mb-4 flex items-center gap-2">
-                            <Pill className="w-6 h-6 text-[#D4AF37]" />
+                        <h2 className="text-2xl font-light text-black mb-4 flex items-center gap-2">
+                            <Pill className="w-6 h-6 text-[#4A90E2]" />
                             Medication Tracker
                         </h2>
                         <MedicationTracker medications={medications} onUpdate={refetchMeds} />
@@ -398,8 +398,8 @@ export default function Health() {
                 {/* Wearable Data Charts */}
                 {wearableData.length > 0 && (
                     <div className="mb-8">
-                        <h2 className="text-2xl font-light text-[#1A2B44] mb-4 flex items-center gap-2">
-                            <Activity className="w-6 h-6 text-[#D4AF37]" />
+                        <h2 className="text-2xl font-light text-black mb-4 flex items-center gap-2">
+                            <Activity className="w-6 h-6 text-[#4A90E2]" />
                             Health Metrics
                         </h2>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -412,7 +412,7 @@ export default function Health() {
                 )}
 
                 {/* Health Records */}
-                <h2 className="text-2xl font-light text-[#1A2B44] mb-4">Health Records</h2>
+                <h2 className="text-2xl font-light text-black mb-4">Health Records</h2>
                 {filteredRecords.length > 0 ? (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {filteredRecords.map(record => {
@@ -424,11 +424,11 @@ export default function Health() {
                                 <Card key={record.id} className="shadow-lg hover:shadow-xl transition-all">
                                     <CardContent className="pt-6">
                                         <div className="flex items-start gap-3 mb-4">
-                                            <div className="bg-[#C9A95C]/10 p-2 rounded-lg">
-                                                <Icon className="w-5 h-5 text-[#C9A95C]" />
+                                            <div className="bg-[#4A90E2]/10 p-2 rounded-lg">
+                                                <Icon className="w-5 h-5 text-[#4A90E2]" />
                                             </div>
                                             <div className="flex-1">
-                                                <h3 className="font-light text-[#1A2B44] mb-1">
+                                                <h3 className="font-light text-black mb-1">
                                                     {record.title}
                                                 </h3>
                                                 <Badge className="bg-blue-50 text-blue-700 border-blue-200 text-xs">
@@ -513,33 +513,33 @@ export default function Health() {
 
                                         <div className="space-y-2 text-sm">
                                             {record.provider_name && (
-                                                <div className="text-[#1A2B44]/70">
+                                                <div className="text-[#0F1729]/70">
                                                     Provider: {record.provider_name}
                                                 </div>
                                             )}
 
                                             {record.prescription_name && (
-                                                <div className="text-[#1A2B44]/70">
+                                                <div className="text-[#0F1729]/70">
                                                     Medication: {record.prescription_name}
                                                     {record.dosage && ` (${record.dosage})`}
                                                 </div>
                                             )}
 
                                             {record.policy_number && (
-                                                <div className="text-[#1A2B44]/70">
+                                                <div className="text-[#0F1729]/70">
                                                     Policy: {record.policy_number}
                                                 </div>
                                             )}
 
                                             {record.expiry_date && (
-                                                <div className={`${isExpiring ? 'text-orange-600' : 'text-[#1A2B44]/70'}`}>
+                                                <div className={`${isExpiring ? 'text-orange-600' : 'text-[#0F1729]/70'}`}>
                                                     {isExpiring && '⚠️ '}
                                                     Expires: {format(new Date(record.expiry_date), 'MMM d, yyyy')}
                                                 </div>
                                             )}
 
                                             {record.date && (
-                                                <div className="text-[#1A2B44]/50 text-xs">
+                                                <div className="text-[#0F1729]/50 text-xs">
                                                     {format(new Date(record.date), 'MMM d, yyyy')}
                                                 </div>
                                             )}
@@ -561,8 +561,8 @@ export default function Health() {
                     </div>
                 ) : (
                     <div className="text-center py-16">
-                        <Heart className="w-16 h-16 text-[#1A2B44]/20 mx-auto mb-4" />
-                        <p className="text-[#1A2B44]/40 font-light">No health records yet</p>
+                        <Heart className="w-16 h-16 text-[#0F1729]/20 mx-auto mb-4" />
+                        <p className="text-[#0F1729]/40 font-light">No health records yet</p>
                     </div>
                 )}
 
@@ -582,7 +582,7 @@ export default function Health() {
                                         placeholder="e.g., Annual checkup, Follow-up, New symptoms"
                                     />
                                 </div>
-                                <Button onClick={generateSummary} className="w-full bg-gradient-to-r from-[#D4AF37] to-[#F4D03F]">
+                                <Button onClick={generateSummary} className="w-full bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] text-white">
                                     <FileUser className="w-4 h-4 mr-2" />
                                     Generate Summary
                                 </Button>

@@ -140,26 +140,26 @@ export default function BillPayments() {
         .reduce((sum, b) => sum + (b.amount || 0), 0);
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-[#F8F7F4] via-white to-[#F8F7F4]">
+        <div className="min-h-screen bg-gradient-to-br from-[#F8F9FA] via-white to-[#E8EEF5]">
             <div className="max-w-7xl mx-auto px-6 py-12">
                 {/* Header */}
                 <div className="flex items-center justify-between mb-8">
                     <div className="flex items-center gap-4">
                         <div className="relative">
-                            <div className="absolute inset-0 bg-[#D4AF37]/30 rounded-2xl blur-xl" />
-                            <div className="relative bg-gradient-to-br from-black to-[#1a1a1a] p-4 rounded-2xl">
-                                <CreditCard className="w-8 h-8 text-[#D4AF37]" />
+                            <div className="absolute inset-0 bg-[#4A90E2]/30 rounded-2xl blur-xl" />
+                            <div className="relative bg-gradient-to-br from-[#2E5C8A] to-[#4A90E2] p-4 rounded-2xl">
+                                <CreditCard className="w-8 h-8 text-white" />
                             </div>
                         </div>
                         <div>
                             <h1 className="text-4xl font-light text-black">Bill Payments</h1>
-                            <p className="text-black/70 font-light">Automate recurring payments</p>
+                            <p className="text-[#0F1729]/60 font-light">Automate recurring payments</p>
                         </div>
                     </div>
                     <Button
                         onClick={detectBills}
                         disabled={detectingBills}
-                        className="bg-gradient-to-r from-[#D4AF37] to-[#F4D03F] text-black"
+                        className="bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] text-white"
                     >
                         {detectingBills ? (
                             <>
@@ -181,10 +181,10 @@ export default function BillPayments() {
                         <CardContent className="pt-6">
                             <div className="flex items-center justify-between">
                                 <div>
-                                    <p className="text-sm text-white/60 mb-1">Total Monthly Bills</p>
+                                    <p className="text-sm text-[#0F1729]/60 mb-1">Total Monthly Bills</p>
                                     <p className="text-3xl font-light">${totalMonthly.toLocaleString()}</p>
                                 </div>
-                                <DollarSign className="w-8 h-8 text-[#D4AF37]" />
+                                <DollarSign className="w-8 h-8 text-[#4A90E2]" />
                             </div>
                         </CardContent>
                     </Card>
@@ -193,7 +193,7 @@ export default function BillPayments() {
                         <CardContent className="pt-6">
                             <div className="flex items-center justify-between">
                                 <div>
-                                    <p className="text-sm text-white/60 mb-1">Active Bills</p>
+                                    <p className="text-sm text-[#0F1729]/60 mb-1">Active Bills</p>
                                     <p className="text-3xl font-light">{bills.filter(b => b.status === 'active').length}</p>
                                 </div>
                                 <CheckCircle className="w-8 h-8 text-green-600" />
@@ -205,12 +205,12 @@ export default function BillPayments() {
                         <CardContent className="pt-6">
                             <div className="flex items-center justify-between">
                                 <div>
-                                    <p className="text-sm text-white/60 mb-1">Auto-Pay Enabled</p>
+                                    <p className="text-sm text-[#0F1729]/60 mb-1">Auto-Pay Enabled</p>
                                     <p className="text-3xl font-light">
                                         {bills.filter(b => b.auto_pay_enabled).length}
                                     </p>
                                 </div>
-                                <Zap className="w-8 h-8 text-[#D4AF37]" />
+                                <Zap className="w-8 h-8 text-[#4A90E2]" />
                             </div>
                         </CardContent>
                     </Card>
@@ -222,27 +222,27 @@ export default function BillPayments() {
                         <h2 className="text-2xl font-light text-black mb-4">AI Detected Bills</h2>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             {suggestedBills.map((bill, idx) => (
-                                <Card key={idx} className="border-[#D4AF37]/30">
+                                <Card key={idx} className="border-[#4A90E2]/30">
                                     <CardContent className="pt-6">
                                         <div className="flex items-start justify-between">
                                             <div className="flex-1">
                                                 <div className="flex items-center gap-2 mb-2">
-                                                    <Sparkles className="w-4 h-4 text-[#D4AF37]" />
+                                                    <Sparkles className="w-4 h-4 text-[#4A90E2]" />
                                                     <h3 className="font-medium">{bill.merchant}</h3>
-                                                    <Badge className="bg-[#D4AF37]/20 text-[#D4AF37]">
+                                                    <Badge className="bg-[#4A90E2]/20 text-[#4A90E2]">
                                                         {bill.confidence_score}% confidence
                                                     </Badge>
                                                 </div>
                                                 <div className="space-y-1 text-sm">
                                                     <p>Amount: ${bill.amount} ({bill.frequency})</p>
                                                     <p>Next due: {format(new Date(bill.next_estimated_date), 'MMM d, yyyy')}</p>
-                                                    <p className="text-white/60">{bill.transaction_count} payments detected</p>
+                                                    <p className="text-[#0F1729]/60">{bill.transaction_count} payments detected</p>
                                                 </div>
                                             </div>
                                             <Button
                                                 size="sm"
                                                 onClick={() => addSuggestedBill(bill)}
-                                                className="bg-gradient-to-r from-[#D4AF37] to-[#F4D03F]"
+                                                className="bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] text-white"
                                             >
                                                 Add Bill
                                             </Button>
@@ -288,7 +288,7 @@ export default function BillPayments() {
                         <h2 className="text-2xl font-light text-black">All Bills</h2>
                         <Dialog open={billOpen} onOpenChange={setBillOpen}>
                             <DialogTrigger asChild>
-                                <Button className="bg-gradient-to-r from-black to-[#1a1a1a]">
+                                <Button className="bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] text-white">
                                     <Plus className="w-4 h-4 mr-2" />
                                     Add Bill
                                 </Button>
@@ -398,7 +398,7 @@ export default function BillPayments() {
                                     <div className="flex items-center justify-between p-4 bg-white/5 rounded-lg">
                                         <div>
                                             <Label>Enable Auto-Pay</Label>
-                                            <p className="text-sm text-white/60">Automatically pay on due date</p>
+                                            <p className="text-sm text-[#0F1729]/60">Automatically pay on due date</p>
                                         </div>
                                         <Switch
                                             checked={billForm.auto_pay_enabled}
@@ -416,7 +416,7 @@ export default function BillPayments() {
                                         />
                                     </div>
 
-                                    <Button type="submit" className="w-full bg-gradient-to-r from-[#D4AF37] to-[#F4D03F]">
+                                    <Button type="submit" className="w-full bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] text-white">
                                         Add Bill
                                     </Button>
                                 </form>
@@ -431,7 +431,7 @@ export default function BillPayments() {
                                     <CardTitle className="flex items-center justify-between">
                                         <span className="text-lg font-light">{bill.bill_name}</span>
                                         {bill.auto_pay_enabled && (
-                                            <Zap className="w-5 h-5 text-[#D4AF37]" />
+                                            <Zap className="w-5 h-5 text-[#4A90E2]" />
                                         )}
                                     </CardTitle>
                                     <Badge variant="outline" className="w-fit">
@@ -442,28 +442,28 @@ export default function BillPayments() {
                                     <div className="space-y-3">
                                         <div>
                                             <p className="text-2xl font-light">${bill.amount}</p>
-                                            <p className="text-sm text-white/60">{bill.frequency}</p>
+                                            <p className="text-sm text-[#0F1729]/60">{bill.frequency}</p>
                                         </div>
                                         
                                         {bill.next_payment_date && (
                                             <div className="flex items-center gap-2 text-sm">
-                                                <Calendar className="w-4 h-4 text-white/40" />
+                                                <Calendar className="w-4 h-4 text-[#0F1729]/40" />
                                                 <span>Next: {format(new Date(bill.next_payment_date), 'MMM d, yyyy')}</span>
                                             </div>
                                         )}
 
                                         {bill.payment_method && (
-                                            <p className="text-sm text-white/60">{bill.payment_method}</p>
+                                            <p className="text-sm text-[#0F1729]/60">{bill.payment_method}</p>
                                         )}
 
                                         {bill.ai_detected && (
-                                            <Badge className="bg-[#D4AF37]/20 text-[#D4AF37] w-fit">
+                                            <Badge className="bg-[#4A90E2]/20 text-[#4A90E2] w-fit">
                                                 <Sparkles className="w-3 h-3 mr-1" />
                                                 AI Detected
                                             </Badge>
                                         )}
 
-                                        <div className="pt-3 border-t border-white/10">
+                                        <div className="pt-3 border-t border-[#0F1729]/10">
                                             <div className="flex items-center justify-between">
                                                 <span className="text-sm">Auto-Pay</span>
                                                 <Switch

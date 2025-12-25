@@ -169,20 +169,20 @@ export default function Investments() {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-[#F8F7F4] via-white to-[#F8F7F4]">
+        <div className="min-h-screen bg-gradient-to-br from-[#F8F9FA] via-white to-[#E8EEF5]">
             <div className="max-w-7xl mx-auto px-6 py-12">
                 {/* Header */}
                 <div className="flex items-center justify-between mb-8">
                     <div className="flex items-center gap-4">
                         <div className="relative">
-                            <div className="absolute inset-0 bg-[#D4AF37]/30 rounded-2xl blur-xl" />
-                            <div className="relative bg-gradient-to-br from-black to-[#1a1a1a] p-4 rounded-2xl">
-                                <TrendingUp className="w-8 h-8 text-[#D4AF37]" />
+                            <div className="absolute inset-0 bg-[#4A90E2]/30 rounded-2xl blur-xl" />
+                            <div className="relative bg-gradient-to-br from-[#2E5C8A] to-[#4A90E2] p-4 rounded-2xl">
+                                <TrendingUp className="w-8 h-8 text-white" />
                             </div>
                         </div>
                         <div>
                             <h1 className="text-4xl font-light text-black">Investments</h1>
-                            <p className="text-black/70 font-light">Track your portfolio performance</p>
+                            <p className="text-[#0F1729]/60 font-light">Track your portfolio performance</p>
                         </div>
                     </div>
                     <div className="flex gap-2">
@@ -190,7 +190,7 @@ export default function Investments() {
                             onClick={updateAllPrices}
                             disabled={updatingPrices}
                             variant="outline"
-                            className="border-[#D4AF37]/20"
+                            className="border-[#4A90E2]/20"
                         >
                             <RefreshCw className={`w-4 h-4 mr-2 ${updatingPrices ? 'animate-spin' : ''}`} />
                             Update Prices
@@ -198,7 +198,7 @@ export default function Investments() {
                         <Button
                             onClick={analyzePortfolio}
                             disabled={analyzingPortfolio}
-                            className="bg-gradient-to-r from-[#D4AF37] to-[#F4D03F] text-black"
+                            className="bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] text-white"
                         >
                             {analyzingPortfolio ? (
                                 <>
@@ -215,7 +215,7 @@ export default function Investments() {
                     </div>
                     <Dialog open={investmentOpen} onOpenChange={setInvestmentOpen}>
                         <DialogTrigger asChild>
-                            <Button className="bg-gradient-to-r from-black to-[#1a1a1a]">
+                            <Button className="bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] text-white">
                                 <Plus className="w-4 h-4 mr-2" />
                                 Add Investment
                             </Button>
@@ -347,7 +347,7 @@ export default function Investments() {
                                     />
                                 </div>
 
-                                <Button type="submit" className="w-full bg-gradient-to-r from-[#D4AF37] to-[#F4D03F]">
+                                <Button type="submit" className="w-full bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] text-white">
                                     Add Investment
                                 </Button>
                             </form>
@@ -361,10 +361,10 @@ export default function Investments() {
                         <CardContent className="pt-6">
                             <div className="flex items-center justify-between">
                                 <div>
-                                    <p className="text-sm text-white/60 mb-1">Total Value</p>
+                                    <p className="text-sm text-[#0F1729]/60 mb-1">Total Value</p>
                                     <p className="text-3xl font-light">${totalCurrentValue.toLocaleString(undefined, { maximumFractionDigits: 0 })}</p>
                                 </div>
-                                <DollarSign className="w-8 h-8 text-[#D4AF37]" />
+                                <DollarSign className="w-8 h-8 text-[#4A90E2]" />
                             </div>
                         </CardContent>
                     </Card>
@@ -373,7 +373,7 @@ export default function Investments() {
                         <CardContent className="pt-6">
                             <div className="flex items-center justify-between">
                                 <div>
-                                    <p className="text-sm text-white/60 mb-1">Cost Basis</p>
+                                    <p className="text-sm text-[#0F1729]/60 mb-1">Cost Basis</p>
                                     <p className="text-3xl font-light">${totalCostBasis.toLocaleString(undefined, { maximumFractionDigits: 0 })}</p>
                                 </div>
                                 <Target className="w-8 h-8 text-blue-600" />
@@ -385,7 +385,7 @@ export default function Investments() {
                         <CardContent className="pt-6">
                             <div className="flex items-center justify-between">
                                 <div>
-                                    <p className="text-sm text-white/60 mb-1">Gain/Loss</p>
+                                    <p className="text-sm text-[#0F1729]/60 mb-1">Gain/Loss</p>
                                     <p className={`text-3xl font-light ${totalGainLoss >= 0 ? 'text-green-600' : 'text-red-600'}`}>
                                         {totalGainLoss >= 0 ? '+' : ''}${totalGainLoss.toLocaleString(undefined, { maximumFractionDigits: 0 })}
                                     </p>
@@ -399,7 +399,7 @@ export default function Investments() {
                         <CardContent className="pt-6">
                             <div className="flex items-center justify-between">
                                 <div>
-                                    <p className="text-sm text-white/60 mb-1">Return</p>
+                                    <p className="text-sm text-[#0F1729]/60 mb-1">Return</p>
                                     <p className={`text-3xl font-light ${totalGainLossPercent >= 0 ? 'text-green-600' : 'text-red-600'}`}>
                                         {totalGainLossPercent >= 0 ? '+' : ''}{totalGainLossPercent.toFixed(2)}%
                                     </p>
@@ -422,11 +422,11 @@ export default function Investments() {
                 {portfolioAnalysis && (
                     <div className="mb-8 space-y-6">
                         {/* Overall Health */}
-                        <Card className="bg-gradient-to-br from-[#D4AF37]/10 to-[#F4D03F]/10 border-[#D4AF37] border-2">
+                        <Card className="bg-gradient-to-br from-[#4A90E2]/10 to-[#7BB3E0]/10 border-[#4A90E2] border-2">
                             <CardHeader>
                                 <CardTitle className="flex items-center justify-between">
                                     <span className="flex items-center gap-2">
-                                        <Sparkles className="w-5 h-5 text-[#D4AF37]" />
+                                        <Sparkles className="w-5 h-5 text-[#4A90E2]" />
                                         AI Portfolio Analysis
                                     </span>
                                     <Badge className={`${
@@ -441,7 +441,7 @@ export default function Investments() {
                                 </CardTitle>
                             </CardHeader>
                             <CardContent>
-                                <p className="text-black/70 leading-relaxed">{portfolioAnalysis.ai_analysis.overall_health.summary}</p>
+                                <p className="text-[#0F1729]/70 leading-relaxed">{portfolioAnalysis.ai_analysis.overall_health.summary}</p>
                             </CardContent>
                         </Card>
 
@@ -477,8 +477,8 @@ export default function Investments() {
                                                         </Badge>
                                                     </div>
                                                 </div>
-                                                <p className="text-sm text-black/70 mb-2">{asset.issue}</p>
-                                                <p className="text-sm text-black/90 font-medium">{asset.recommendation}</p>
+                                                <p className="text-sm text-[#0F1729]/70 mb-2">{asset.issue}</p>
+                                                <p className="text-sm text-black font-medium">{asset.recommendation}</p>
                                             </div>
                                         ))}
                                     </div>
@@ -496,15 +496,15 @@ export default function Investments() {
                                     </CardTitle>
                                 </CardHeader>
                                 <CardContent>
-                                    <p className="text-black/70 mb-4">{portfolioAnalysis.ai_analysis.rebalancing_strategy.reason}</p>
+                                    <p className="text-[#0F1729]/70 mb-4">{portfolioAnalysis.ai_analysis.rebalancing_strategy.reason}</p>
                                     <div className="space-y-3">
                                         {portfolioAnalysis.ai_analysis.rebalancing_strategy.actions?.map((action, idx) => (
                                             <div key={idx} className="flex items-start gap-3 p-3 bg-blue-50 rounded-lg">
                                                 <ChevronRight className="w-5 h-5 text-blue-600 mt-0.5" />
                                                 <div>
                                                     <p className="font-medium text-black">{action.action}</p>
-                                                    <p className="text-sm text-black/70">{action.asset_type}: {action.amount}</p>
-                                                    <p className="text-sm text-black/60">{action.reason}</p>
+                                                    <p className="text-sm text-[#0F1729]/70">{action.asset_type}: {action.amount}</p>
+                                                    <p className="text-sm text-[#0F1729]/60">{action.reason}</p>
                                                 </div>
                                             </div>
                                         ))}
@@ -528,7 +528,7 @@ export default function Investments() {
                                             {portfolioAnalysis.ai_analysis.market_insights.map((insight, idx) => (
                                                 <div key={idx} className="p-3 bg-green-50 rounded-lg">
                                                     <p className="font-medium text-black mb-1">{insight.trend}</p>
-                                                    <p className="text-sm text-black/70 mb-1">{insight.impact}</p>
+                                                    <p className="text-sm text-[#0F1729]/70 mb-1">{insight.impact}</p>
                                                     <p className="text-sm text-green-700 font-medium">{insight.opportunity}</p>
                                                 </div>
                                             ))}
@@ -551,7 +551,7 @@ export default function Investments() {
                                             {portfolioAnalysis.ai_analysis.buy_opportunities.map((opp, idx) => (
                                                 <div key={idx} className="p-3 bg-green-50 rounded-lg">
                                                     <p className="font-medium text-black mb-1">{opp.asset_type}</p>
-                                                    <p className="text-sm text-black/70 mb-1">{opp.reason}</p>
+                                                    <p className="text-sm text-[#0F1729]/70 mb-1">{opp.reason}</p>
                                                     <p className="text-sm text-green-700">{opp.allocation_suggestion}</p>
                                                 </div>
                                             ))}
@@ -571,13 +571,13 @@ export default function Investments() {
                             </CardHeader>
                             <CardContent>
                                 <div className="mb-4">
-                                    <p className="text-sm text-black/60 mb-1">Current Risk Level</p>
+                                    <p className="text-sm text-[#0F1729]/60 mb-1">Current Risk Level</p>
                                     <p className="text-lg font-semibold text-black">{portfolioAnalysis.ai_analysis.risk_assessment.current_risk_level}</p>
                                 </div>
-                                <p className="text-black/70 mb-4">{portfolioAnalysis.ai_analysis.risk_assessment.alignment_with_tolerance}</p>
+                                <p className="text-[#0F1729]/70 mb-4">{portfolioAnalysis.ai_analysis.risk_assessment.alignment_with_tolerance}</p>
                                 <ul className="space-y-2">
                                     {portfolioAnalysis.ai_analysis.risk_assessment.suggestions?.map((suggestion, idx) => (
-                                        <li key={idx} className="flex items-start gap-2 text-black/70">
+                                        <li key={idx} className="flex items-start gap-2 text-[#0F1729]/70">
                                             <span>•</span>
                                             <span>{suggestion}</span>
                                         </li>
@@ -681,9 +681,9 @@ export default function Investments() {
                     ) : (
                         <Card>
                             <CardContent className="pt-6 text-center py-12">
-                                <TrendingUp className="w-12 h-12 text-black/20 mx-auto mb-4" />
-                                <p className="text-black/40">No investments tracked yet</p>
-                                <p className="text-sm text-black/30 mt-2">Add your first investment to start tracking portfolio performance</p>
+                                <TrendingUp className="w-12 h-12 text-[#0F1729]/20 mx-auto mb-4" />
+                                <p className="text-[#0F1729]/40">No investments tracked yet</p>
+                                <p className="text-sm text-[#0F1729]/30 mt-2">Add your first investment to start tracking portfolio performance</p>
                             </CardContent>
                         </Card>
                     )}

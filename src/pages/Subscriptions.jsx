@@ -93,19 +93,19 @@ export default function Subscriptions() {
         }, 0);
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-[#F8F7F4] via-white to-[#F8F7F4]">
+        <div className="min-h-screen bg-gradient-to-br from-[#F8F9FA] via-white to-[#E8EEF5]">
             <div className="max-w-7xl mx-auto px-6 py-12">
                 <div className="flex items-center justify-between mb-8">
                     <div className="flex items-center gap-4">
                         <div className="relative">
-                            <div className="absolute inset-0 bg-[#C9A95C]/30 rounded-2xl blur-xl" />
-                            <div className="relative bg-gradient-to-br from-[#1A2B44] to-[#0F1B2E] p-4 rounded-2xl">
-                                <DollarSign className="w-8 h-8 text-[#C9A95C]" />
+                            <div className="absolute inset-0 bg-[#4A90E2]/30 rounded-2xl blur-xl" />
+                            <div className="relative bg-gradient-to-br from-[#2E5C8A] to-[#4A90E2] p-4 rounded-2xl">
+                                <DollarSign className="w-8 h-8 text-white" />
                             </div>
                         </div>
                         <div>
-                            <h1 className="text-4xl font-light text-[#1A2B44]">Subscriptions</h1>
-                            <p className="text-[#1A2B44]/60 font-light">Track recurring expenses</p>
+                            <h1 className="text-4xl font-light text-black">Subscriptions</h1>
+                            <p className="text-[#0F1729]/60 font-light">Track recurring expenses</p>
                         </div>
                         </div>
 
@@ -113,7 +113,7 @@ export default function Subscriptions() {
                         <PrintButton />
                         <Dialog open={open} onOpenChange={setOpen}>
                         <DialogTrigger asChild>
-                            <Button className="bg-gradient-to-r from-[#1A2B44] to-[#0F1B2E] hover:shadow-lg text-white">
+                            <Button className="bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] hover:shadow-lg text-white">
                                 <Plus className="w-4 h-4 mr-2" />
                                 Add Subscription
                             </Button>
@@ -218,7 +218,7 @@ export default function Subscriptions() {
                                     />
                                 </div>
 
-                                <Button type="submit" className="w-full bg-gradient-to-r from-[#C9A95C] to-[#D4AF37]">
+                                <Button type="submit" className="w-full bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] text-white">
                                     Add Subscription
                                 </Button>
                             </form>
@@ -234,10 +234,10 @@ export default function Subscriptions() {
                             <CardTitle className="text-lg font-light">Monthly Total</CardTitle>
                         </CardHeader>
                         <CardContent>
-                            <div className="text-3xl font-light text-[#1A2B44]">
+                            <div className="text-3xl font-light text-black">
                                 ${monthlyTotal.toFixed(2)}
                             </div>
-                            <p className="text-sm text-[#1A2B44]/60 font-light mt-1">
+                            <p className="text-sm text-[#0F1729]/60 font-light mt-1">
                                 {subscriptions.filter(s => s.status === 'active').length} active subscriptions
                             </p>
                         </CardContent>
@@ -247,10 +247,10 @@ export default function Subscriptions() {
                             <CardTitle className="text-lg font-light">Annual Total</CardTitle>
                         </CardHeader>
                         <CardContent>
-                            <div className="text-3xl font-light text-[#1A2B44]">
+                            <div className="text-3xl font-light text-black">
                                 ${annualTotal.toFixed(2)}
                             </div>
-                            <p className="text-sm text-[#1A2B44]/60 font-light mt-1">
+                            <p className="text-sm text-[#0F1729]/60 font-light mt-1">
                                 Estimated yearly cost
                             </p>
                         </CardContent>
@@ -260,10 +260,10 @@ export default function Subscriptions() {
                             <CardTitle className="text-lg font-light">Average Cost</CardTitle>
                         </CardHeader>
                         <CardContent>
-                            <div className="text-3xl font-light text-[#1A2B44]">
+                            <div className="text-3xl font-light text-black">
                                 ${subscriptions.length > 0 ? (monthlyTotal / subscriptions.filter(s => s.status === 'active').length).toFixed(2) : '0.00'}
                             </div>
-                            <p className="text-sm text-[#1A2B44]/60 font-light mt-1">
+                            <p className="text-sm text-[#0F1729]/60 font-light mt-1">
                                 Per subscription/month
                             </p>
                         </CardContent>
@@ -277,8 +277,8 @@ export default function Subscriptions() {
                                 <CardContent className="pt-6">
                                     <div className="flex items-start justify-between mb-4">
                                         <div>
-                                            <h3 className="text-lg font-light text-[#1A2B44]">{sub.name}</h3>
-                                            <p className="text-sm text-[#1A2B44]/60">{categoryLabels[sub.category]}</p>
+                                            <h3 className="text-lg font-light text-black">{sub.name}</h3>
+                                            <p className="text-sm text-[#0F1729]/60">{categoryLabels[sub.category]}</p>
                                         </div>
                                         <Badge className={`${sub.status === 'active' ? 'bg-green-100 text-green-700 border-green-200' : 'bg-gray-100 text-gray-700 border-gray-200'} border`}>
                                             {sub.status}
@@ -286,16 +286,16 @@ export default function Subscriptions() {
                                     </div>
 
                                     <div className="space-y-2">
-                                        <div className="text-2xl font-light text-[#C9A95C]">
+                                        <div className="text-2xl font-light text-[#4A90E2]">
                                             ${sub.billing_amount}
-                                            <span className="text-sm text-[#1A2B44]/60 ml-1">
+                                            <span className="text-sm text-[#0F1729]/60 ml-1">
                                                 /{sub.billing_frequency === 'monthly' ? 'mo' : 'yr'}
                                             </span>
                                         </div>
 
                                         {sub.next_billing_date && (
-                                            <div className="flex items-center gap-2 text-sm text-[#1A2B44]/70">
-                                                <Calendar className="w-4 h-4 text-[#C9A95C]" />
+                                            <div className="flex items-center gap-2 text-sm text-[#0F1729]/70">
+                                                <Calendar className="w-4 h-4 text-[#4A90E2]" />
                                                 Next: {format(new Date(sub.next_billing_date), 'MMM d, yyyy')}
                                             </div>
                                         )}
@@ -312,8 +312,8 @@ export default function Subscriptions() {
                     </div>
                 ) : (
                     <div className="text-center py-16">
-                        <DollarSign className="w-16 h-16 text-[#1A2B44]/20 mx-auto mb-4" />
-                        <p className="text-[#1A2B44]/40 font-light">No subscriptions tracked yet</p>
+                        <DollarSign className="w-16 h-16 text-[#0F1729]/20 mx-auto mb-4" />
+                        <p className="text-[#0F1729]/40 font-light">No subscriptions tracked yet</p>
                     </div>
                 )}
             </div>

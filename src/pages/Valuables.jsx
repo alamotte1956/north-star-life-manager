@@ -78,19 +78,19 @@ export default function Valuables() {
         .reduce((sum, item) => sum + (item.insurance_value || 0), 0);
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-[#F8F7F4] via-white to-[#F8F7F4]">
+        <div className="min-h-screen bg-gradient-to-br from-[#F8F9FA] via-white to-[#E8EEF5]">
             <div className="max-w-7xl mx-auto px-6 py-12">
                 <div className="flex items-center justify-between mb-8">
                     <div className="flex items-center gap-4">
                         <div className="relative">
-                            <div className="absolute inset-0 bg-[#C9A95C]/30 rounded-2xl blur-xl" />
-                            <div className="relative bg-gradient-to-br from-[#1A2B44] to-[#0F1B2E] p-4 rounded-2xl">
-                                <Gem className="w-8 h-8 text-[#C9A95C]" />
+                            <div className="absolute inset-0 bg-[#4A90E2]/30 rounded-2xl blur-xl" />
+                            <div className="relative bg-gradient-to-br from-[#2E5C8A] to-[#4A90E2] p-4 rounded-2xl">
+                                <Gem className="w-8 h-8 text-white" />
                             </div>
                         </div>
                         <div>
-                            <h1 className="text-4xl font-light text-[#1A2B44]">Valuables</h1>
-                            <p className="text-[#1A2B44]/60 font-light">Your collection inventory</p>
+                            <h1 className="text-4xl font-light text-black">Valuables</h1>
+                            <p className="text-[#0F1729]/60 font-light">Your collection inventory</p>
                         </div>
                         </div>
 
@@ -98,7 +98,7 @@ export default function Valuables() {
                         <PrintButton />
                         <Dialog open={open} onOpenChange={setOpen}>
                         <DialogTrigger asChild>
-                            <Button className="bg-gradient-to-r from-[#1A2B44] to-[#0F1B2E] hover:shadow-lg text-white">
+                            <Button className="bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] hover:shadow-lg text-white">
                                 <Plus className="w-4 h-4 mr-2" />
                                 Add Item
                             </Button>
@@ -227,7 +227,7 @@ export default function Valuables() {
                                     />
                                 </div>
 
-                                <Button type="submit" className="w-full bg-gradient-to-r from-[#C9A95C] to-[#D4AF37]">
+                                <Button type="submit" className="w-full bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] text-white">
                                     Add Item
                                 </Button>
                             </form>
@@ -243,10 +243,10 @@ export default function Valuables() {
                             <CardTitle className="text-lg font-light">Total Value</CardTitle>
                         </CardHeader>
                         <CardContent>
-                            <div className="text-3xl font-light text-[#1A2B44]">
+                            <div className="text-3xl font-light text-black">
                                 ${totalValue.toLocaleString()}
                             </div>
-                            <p className="text-sm text-[#1A2B44]/60 font-light mt-1">
+                            <p className="text-sm text-[#0F1729]/60 font-light mt-1">
                                 {valuables.length} items
                             </p>
                         </CardContent>
@@ -256,10 +256,10 @@ export default function Valuables() {
                             <CardTitle className="text-lg font-light">Insured Value</CardTitle>
                         </CardHeader>
                         <CardContent>
-                            <div className="text-3xl font-light text-[#1A2B44]">
+                            <div className="text-3xl font-light text-black">
                                 ${insuredValue.toLocaleString()}
                             </div>
-                            <p className="text-sm text-[#1A2B44]/60 font-light mt-1">
+                            <p className="text-sm text-[#0F1729]/60 font-light mt-1">
                                 {valuables.filter(v => v.insured).length} insured items
                             </p>
                         </CardContent>
@@ -269,10 +269,10 @@ export default function Valuables() {
                             <CardTitle className="text-lg font-light">Categories</CardTitle>
                         </CardHeader>
                         <CardContent>
-                            <div className="text-3xl font-light text-[#1A2B44]">
+                            <div className="text-3xl font-light text-black">
                                 {new Set(valuables.map(v => v.category)).size}
                             </div>
-                            <p className="text-sm text-[#1A2B44]/60 font-light mt-1">
+                            <p className="text-sm text-[#0F1729]/60 font-light mt-1">
                                 Different types
                             </p>
                         </CardContent>
@@ -284,7 +284,7 @@ export default function Valuables() {
                         {valuables.map(item => (
                             <Card key={item.id} className="shadow-lg hover:shadow-xl transition-all overflow-hidden">
                                 {item.image_url && (
-                                    <div className="h-48 bg-gradient-to-br from-[#1A2B44] to-[#0F1B2E] flex items-center justify-center">
+                                    <div className="h-48 bg-gradient-to-br from-[#2E5C8A] to-[#4A90E2] flex items-center justify-center">
                                         <img
                                             src={item.image_url}
                                             alt={item.name}
@@ -295,10 +295,10 @@ export default function Valuables() {
                                 <CardContent className="pt-6">
                                     <div className="flex items-start justify-between mb-3">
                                         <div className="flex-1">
-                                            <h3 className="text-lg font-light text-[#1A2B44] mb-1">
+                                            <h3 className="text-lg font-light text-black mb-1">
                                                 {item.name}
                                             </h3>
-                                            <Badge className="bg-[#C9A95C]/10 text-[#C9A95C] border-[#C9A95C]/20">
+                                            <Badge className="bg-[#4A90E2]/10 text-[#4A90E2] border-[#4A90E2]/20">
                                                 {categoryLabels[item.category]}
                                             </Badge>
                                         </div>
@@ -309,19 +309,19 @@ export default function Valuables() {
 
                                     <div className="space-y-2">
                                         {item.current_value && (
-                                            <div className="text-2xl font-light text-[#C9A95C]">
+                                            <div className="text-2xl font-light text-[#4A90E2]">
                                                 ${item.current_value.toLocaleString()}
                                             </div>
                                         )}
 
                                         {item.location && (
-                                            <div className="text-sm text-[#1A2B44]/70">
+                                            <div className="text-sm text-[#0F1729]/70">
                                                 Location: {item.location}
                                             </div>
                                         )}
 
                                         {item.last_appraisal_date && (
-                                            <div className="text-sm text-[#1A2B44]/70">
+                                            <div className="text-sm text-[#0F1729]/70">
                                                 Appraised: {format(new Date(item.last_appraisal_date), 'MMM yyyy')}
                                             </div>
                                         )}
@@ -341,8 +341,8 @@ export default function Valuables() {
                     </div>
                 ) : (
                     <div className="text-center py-16">
-                        <Gem className="w-16 h-16 text-[#1A2B44]/20 mx-auto mb-4" />
-                        <p className="text-[#1A2B44]/40 font-light">No valuable items tracked yet</p>
+                        <Gem className="w-16 h-16 text-[#0F1729]/20 mx-auto mb-4" />
+                        <p className="text-[#0F1729]/40 font-light">No valuable items tracked yet</p>
                     </div>
                 )}
             </div>

@@ -66,19 +66,19 @@ export default function Vehicles() {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-[#F8F7F4] via-white to-[#F8F7F4]">
+        <div className="min-h-screen bg-gradient-to-br from-[#F8F9FA] via-white to-[#E8EEF5]">
             <div className="max-w-7xl mx-auto px-6 py-12">
                 <div className="flex items-center justify-between mb-8">
                     <div className="flex items-center gap-4">
                         <div className="relative">
-                            <div className="absolute inset-0 bg-[#C9A95C]/30 rounded-2xl blur-xl" />
-                            <div className="relative bg-gradient-to-br from-[#1A2B44] to-[#0F1B2E] p-4 rounded-2xl">
-                                <Car className="w-8 h-8 text-[#C9A95C]" />
+                            <div className="absolute inset-0 bg-[#4A90E2]/30 rounded-2xl blur-xl" />
+                            <div className="relative bg-gradient-to-br from-[#2E5C8A] to-[#4A90E2] p-4 rounded-2xl">
+                                <Car className="w-8 h-8 text-white" />
                             </div>
                         </div>
                         <div>
-                            <h1 className="text-4xl font-light text-[#1A2B44]">Vehicles</h1>
-                            <p className="text-[#1A2B44]/60 font-light">Manage your vehicle fleet</p>
+                            <h1 className="text-4xl font-light text-black">Vehicles</h1>
+                            <p className="text-[#0F1729]/60 font-light">Manage your vehicle fleet</p>
                         </div>
                         </div>
 
@@ -86,7 +86,7 @@ export default function Vehicles() {
                         <PrintButton />
                         <Dialog open={open} onOpenChange={setOpen}>
                         <DialogTrigger asChild>
-                            <Button className="bg-gradient-to-r from-[#1A2B44] to-[#0F1B2E] hover:shadow-lg text-white">
+                            <Button className="bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] hover:shadow-lg text-white">
                                 <Plus className="w-4 h-4 mr-2" />
                                 Add Vehicle
                             </Button>
@@ -198,7 +198,7 @@ export default function Vehicles() {
                                     />
                                 </div>
 
-                                <Button type="submit" className="w-full bg-gradient-to-r from-[#C9A95C] to-[#D4AF37]">
+                                <Button type="submit" className="w-full bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] text-white">
                                     Add Vehicle
                                 </Button>
                             </form>
@@ -220,16 +220,16 @@ export default function Vehicles() {
                                     <CardContent className="pt-6">
                                         <div className="flex items-start justify-between mb-4">
                                             <div className="flex items-center gap-3">
-                                                <div className="bg-[#C9A95C]/10 p-3 rounded-lg">
-                                                    <Car className="w-6 h-6 text-[#C9A95C]" />
+                                                <div className="bg-[#4A90E2]/10 p-3 rounded-lg">
+                                                    <Car className="w-6 h-6 text-[#4A90E2]" />
                                                 </div>
                                                 <div>
-                                                    <h3 className="text-lg font-light text-[#1A2B44]">
+                                                    <h3 className="text-lg font-light text-black">
                                                         {vehicle.year} {vehicle.make}
                                                     </h3>
-                                                    <p className="text-sm text-[#1A2B44]/60">{vehicle.model}</p>
+                                                    <p className="text-sm text-[#0F1729]/60">{vehicle.model}</p>
                                                     {vehicle.name && (
-                                                        <Badge className="mt-1 bg-[#C9A95C]/10 text-[#C9A95C] border-[#C9A95C]/20">
+                                                        <Badge className="mt-1 bg-[#4A90E2]/10 text-[#4A90E2] border-[#4A90E2]/20">
                                                             {vehicle.name}
                                                         </Badge>
                                                     )}
@@ -239,33 +239,33 @@ export default function Vehicles() {
 
                                         <div className="space-y-2 text-sm">
                                             {vehicle.license_plate && (
-                                                <div className="text-[#1A2B44]/70">
+                                                <div className="text-[#0F1729]/70">
                                                     Plate: {vehicle.license_plate}
                                                 </div>
                                             )}
                                             
                                             {vehicle.registration_expires && (
-                                                <div className={`flex items-center gap-2 ${regExpiring ? 'text-orange-600' : 'text-[#1A2B44]/70'}`}>
+                                                <div className={`flex items-center gap-2 ${regExpiring ? 'text-orange-600' : 'text-[#0F1729]/70'}`}>
                                                     {regExpiring && <AlertCircle className="w-4 h-4" />}
                                                     Registration: {format(new Date(vehicle.registration_expires), 'MMM yyyy')}
                                                 </div>
                                             )}
 
                                             {vehicle.next_service_due && (
-                                                <div className={`flex items-center gap-2 ${serviceUpcoming ? 'text-orange-600' : 'text-[#1A2B44]/70'}`}>
-                                                    <Calendar className="w-4 h-4 text-[#C9A95C]" />
+                                                <div className={`flex items-center gap-2 ${serviceUpcoming ? 'text-orange-600' : 'text-[#0F1729]/70'}`}>
+                                                    <Calendar className="w-4 h-4 text-[#4A90E2]" />
                                                     Service: {format(new Date(vehicle.next_service_due), 'MMM d')}
                                                 </div>
                                             )}
 
                                             {vehicle.stored_at && (
-                                                <div className="text-[#1A2B44]/70">
+                                                <div className="text-[#0F1729]/70">
                                                     Location: {vehicle.stored_at}
                                                 </div>
                                             )}
 
                                             {vehicle.insurance_provider && (
-                                                <div className="text-[#1A2B44]/70">
+                                                <div className="text-[#0F1729]/70">
                                                     Insured: {vehicle.insurance_provider}
                                                 </div>
                                             )}
@@ -289,8 +289,8 @@ export default function Vehicles() {
                     </div>
                 ) : (
                     <div className="text-center py-16">
-                        <Car className="w-16 h-16 text-[#1A2B44]/20 mx-auto mb-4" />
-                        <p className="text-[#1A2B44]/40 font-light">No vehicles added yet</p>
+                        <Car className="w-16 h-16 text-[#0F1729]/20 mx-auto mb-4" />
+                        <p className="text-[#0F1729]/40 font-light">No vehicles added yet</p>
                     </div>
                 )}
             </div>

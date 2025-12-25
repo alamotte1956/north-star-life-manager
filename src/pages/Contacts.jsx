@@ -71,26 +71,26 @@ export default function Contacts() {
         : contacts.filter(c => c.category === filter);
 
     const priorityColors = {
-        vip: 'bg-[#C9A95C]/10 text-[#C9A95C] border-[#C9A95C]/20',
+        vip: 'bg-[#4A90E2]/10 text-[#4A90E2] border-[#4A90E2]/20',
         high: 'bg-orange-100 text-orange-700 border-orange-200',
         medium: 'bg-blue-100 text-blue-700 border-blue-200',
         low: 'bg-gray-100 text-gray-700 border-gray-200'
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-[#F8F7F4] via-white to-[#F8F7F4]">
+        <div className="min-h-screen bg-gradient-to-br from-[#F8F9FA] via-white to-[#E8EEF5]">
             <div className="max-w-7xl mx-auto px-6 py-12">
                 <div className="flex items-center justify-between mb-8">
                     <div className="flex items-center gap-4">
                         <div className="relative">
-                            <div className="absolute inset-0 bg-[#C9A95C]/30 rounded-2xl blur-xl" />
-                            <div className="relative bg-gradient-to-br from-[#1A2B44] to-[#0F1B2E] p-4 rounded-2xl">
-                                <Users className="w-8 h-8 text-[#C9A95C]" />
+                            <div className="absolute inset-0 bg-[#4A90E2]/30 rounded-2xl blur-xl" />
+                            <div className="relative bg-gradient-to-br from-[#2E5C8A] to-[#4A90E2] p-4 rounded-2xl">
+                                <Users className="w-8 h-8 text-white" />
                             </div>
                         </div>
                         <div>
-                            <h1 className="text-4xl font-light text-[#1A2B44]">Contacts</h1>
-                            <p className="text-[#1A2B44]/60 font-light">Your professional network</p>
+                            <h1 className="text-4xl font-light text-black">Contacts</h1>
+                            <p className="text-[#0F1729]/60 font-light">Your professional network</p>
                         </div>
                         </div>
 
@@ -98,7 +98,7 @@ export default function Contacts() {
                         <PrintButton />
                         <Dialog open={open} onOpenChange={setOpen}>
                         <DialogTrigger asChild>
-                            <Button className="bg-gradient-to-r from-[#1A2B44] to-[#0F1B2E] hover:shadow-lg text-white">
+                            <Button className="bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] hover:shadow-lg text-white">
                                 <Plus className="w-4 h-4 mr-2" />
                                 Add Contact
                             </Button>
@@ -206,7 +206,7 @@ export default function Contacts() {
                                     />
                                 </div>
 
-                                <Button type="submit" className="w-full bg-gradient-to-r from-[#C9A95C] to-[#D4AF37]">
+                                <Button type="submit" className="w-full bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] text-white">
                                     Add Contact
                                 </Button>
                             </form>
@@ -217,7 +217,7 @@ export default function Contacts() {
 
                 <div className="mb-6">
                     <Tabs value={filter} onValueChange={setFilter}>
-                        <TabsList className="bg-white border border-[#1A2B44]/10">
+                        <TabsList className="bg-white border border-[#4A90E2]/10">
                             <TabsTrigger value="all">All</TabsTrigger>
                             <TabsTrigger value="attorney">Legal</TabsTrigger>
                             <TabsTrigger value="financial_advisor">Financial</TabsTrigger>
@@ -234,14 +234,14 @@ export default function Contacts() {
                                 <CardContent className="pt-6">
                                     <div className="flex items-start justify-between mb-4">
                                         <div>
-                                            <h3 className="text-lg font-light text-[#1A2B44] mb-1">
+                                            <h3 className="text-lg font-light text-black mb-1">
                                                 {contact.name}
                                                 {contact.priority === 'vip' && (
-                                                    <Star className="w-4 h-4 inline ml-2 text-[#C9A95C] fill-[#C9A95C]" />
+                                                    <Star className="w-4 h-4 inline ml-2 text-[#4A90E2] fill-[#4A90E2]" />
                                                 )}
                                             </h3>
                                             {contact.company && (
-                                                <p className="text-sm text-[#1A2B44]/60 font-light">{contact.company}</p>
+                                                <p className="text-sm text-[#0F1729]/60 font-light">{contact.company}</p>
                                             )}
                                         </div>
                                         <Badge className={`${priorityColors[contact.priority]} border font-light`}>
@@ -250,31 +250,31 @@ export default function Contacts() {
                                     </div>
 
                                     {contact.specialty && (
-                                        <p className="text-sm text-[#1A2B44]/70 mb-3 font-light italic">
+                                        <p className="text-sm text-[#0F1729]/70 mb-3 font-light italic">
                                             {contact.specialty}
                                         </p>
                                     )}
 
                                     <div className="space-y-2">
                                         {contact.phone && (
-                                            <div className="flex items-center gap-2 text-sm text-[#1A2B44]/70">
-                                                <Phone className="w-4 h-4 text-[#C9A95C]" />
-                                                <a href={`tel:${contact.phone}`} className="hover:text-[#C9A95C]">
+                                            <div className="flex items-center gap-2 text-sm text-[#0F1729]/70">
+                                                <Phone className="w-4 h-4 text-[#4A90E2]" />
+                                                <a href={`tel:${contact.phone}`} className="hover:text-[#4A90E2]">
                                                     {contact.phone}
                                                 </a>
                                             </div>
                                         )}
                                         {contact.email && (
-                                            <div className="flex items-center gap-2 text-sm text-[#1A2B44]/70">
-                                                <Mail className="w-4 h-4 text-[#C9A95C]" />
-                                                <a href={`mailto:${contact.email}`} className="hover:text-[#C9A95C] truncate">
+                                            <div className="flex items-center gap-2 text-sm text-[#0F1729]/70">
+                                                <Mail className="w-4 h-4 text-[#4A90E2]" />
+                                                <a href={`mailto:${contact.email}`} className="hover:text-[#4A90E2] truncate">
                                                     {contact.email}
                                                 </a>
                                             </div>
                                         )}
                                         {contact.address && (
-                                            <div className="flex items-start gap-2 text-sm text-[#1A2B44]/70">
-                                                <MapPin className="w-4 h-4 text-[#C9A95C] mt-0.5" />
+                                            <div className="flex items-start gap-2 text-sm text-[#0F1729]/70">
+                                                <MapPin className="w-4 h-4 text-[#4A90E2] mt-0.5" />
                                                 <span className="flex-1">{contact.address}</span>
                                             </div>
                                         )}
@@ -285,8 +285,8 @@ export default function Contacts() {
                     </div>
                 ) : (
                     <div className="text-center py-16">
-                        <Users className="w-16 h-16 text-[#1A2B44]/20 mx-auto mb-4" />
-                        <p className="text-[#1A2B44]/40 font-light">No contacts yet</p>
+                        <Users className="w-16 h-16 text-[#0F1729]/20 mx-auto mb-4" />
+                        <p className="text-[#0F1729]/40 font-light">No contacts yet</p>
                     </div>
                 )}
             </div>

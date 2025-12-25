@@ -100,20 +100,20 @@ export default function Maintenance() {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-[#F8F7F4] via-white to-[#F8F7F4]">
+        <div className="min-h-screen bg-gradient-to-br from-[#F8F9FA] via-white to-[#E8EEF5]">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-12">
                 <div className="flex flex-col gap-4 mb-6 sm:mb-8">
                     <div className="flex items-center justify-between">
                         <div className="flex items-center gap-3 sm:gap-4">
                             <div className="relative">
-                                <div className="absolute inset-0 bg-[#C9A95C]/30 rounded-2xl blur-xl" />
-                                <div className="relative bg-gradient-to-br from-[#1A2B44] to-[#0F1B2E] p-3 sm:p-4 rounded-2xl">
-                                    <Wrench className="w-6 h-6 sm:w-8 sm:h-8 text-[#C9A95C]" />
+                                <div className="absolute inset-0 bg-[#4A90E2]/30 rounded-2xl blur-xl" />
+                                <div className="relative bg-gradient-to-br from-[#2E5C8A] to-[#4A90E2] p-3 sm:p-4 rounded-2xl">
+                                    <Wrench className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
                                 </div>
                             </div>
                             <div>
-                                <h1 className="text-2xl sm:text-4xl font-light text-[#1A2B44]">Maintenance</h1>
-                                <p className="text-sm sm:text-base text-[#1A2B44]/60 font-light hidden sm:block">Property upkeep schedule</p>
+                                <h1 className="text-2xl sm:text-4xl font-light text-black">Maintenance</h1>
+                                <p className="text-sm sm:text-base text-[#0F1729]/60 font-light hidden sm:block">Property upkeep schedule</p>
                             </div>
                         </div>
                     </div>
@@ -124,7 +124,7 @@ export default function Maintenance() {
                             <PrintButton className="flex-1 sm:flex-none" />
                             <Dialog open={open} onOpenChange={setOpen}>
                                 <DialogTrigger asChild>
-                                    <Button className="bg-gradient-to-r from-[#1A2B44] to-[#0F1B2E] hover:shadow-lg text-white flex-1 sm:flex-none h-11 sm:h-10 touch-manipulation active:scale-98 transition-transform">
+                                    <Button className="bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] hover:shadow-lg text-white flex-1 sm:flex-none h-11 sm:h-10 touch-manipulation active:scale-98 transition-transform">
                                         <Plus className="w-5 h-5 sm:w-4 sm:h-4 mr-2" />
                                         <span className="hidden sm:inline">Add Task</span>
                                         <span className="sm:hidden">Add</span>
@@ -257,7 +257,7 @@ export default function Maintenance() {
                                         />
                                     </div>
 
-                                    <Button type="submit" className="w-full bg-gradient-to-r from-[#C9A95C] to-[#D4AF37] h-12 touch-manipulation">
+                                    <Button type="submit" className="w-full bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] text-white h-12 touch-manipulation">
                                         Add Task
                                     </Button>
                                 </form>
@@ -279,12 +279,12 @@ export default function Maintenance() {
                                 <CardContent className="pt-6">
                                     <div className="flex items-start justify-between mb-4">
                                         <div className="flex items-center gap-3">
-                                            <div className="bg-[#C9A95C]/10 p-2 rounded-lg">
-                                                <Wrench className="w-5 h-5 text-[#C9A95C]" />
+                                            <div className="bg-[#4A90E2]/10 p-2 rounded-lg">
+                                                <Wrench className="w-5 h-5 text-[#4A90E2]" />
                                             </div>
                                             <div>
-                                                <h3 className="font-light text-[#1A2B44]">{task.title}</h3>
-                                                <p className="text-xs text-[#1A2B44]/50">{task.property_name}</p>
+                                                <h3 className="font-light text-black">{task.title}</h3>
+                                                <p className="text-xs text-[#0F1729]/50">{task.property_name}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -294,27 +294,27 @@ export default function Maintenance() {
                                             {categoryLabels[task.category]}
                                         </Badge>
                                         {task.next_due_date && (
-                                            <div className="flex items-center gap-2 text-sm text-[#1A2B44]/70">
-                                                <Calendar className="w-4 h-4 text-[#C9A95C]" />
+                                            <div className="flex items-center gap-2 text-sm text-[#0F1729]/70">
+                                                <Calendar className="w-4 h-4 text-[#4A90E2]" />
                                                 Due: {format(new Date(task.next_due_date), 'MMM d, yyyy')}
                                             </div>
                                         )}
                                         {task.estimated_cost && (
-                                            <div className="text-sm text-[#1A2B44]/70">
+                                            <div className="text-sm text-[#0F1729]/70">
                                                 Est. ${task.estimated_cost}
                                             </div>
                                         )}
                                     </div>
 
                                     {task.provider_name && (
-                                        <div className="text-sm text-[#1A2B44]/60 font-light">
+                                        <div className="text-sm text-[#0F1729]/60 font-light">
                                             Provider: {task.provider_name}
                                         </div>
                                     )}
 
                                     {task.assigned_to && (
-                                        <div className="flex items-center gap-2 text-sm text-[#1A2B44]/70 mt-2">
-                                            <UserCircle className="w-4 h-4 text-[#C9A95C]" />
+                                        <div className="flex items-center gap-2 text-sm text-[#0F1729]/70 mt-2">
+                                            <UserCircle className="w-4 h-4 text-[#4A90E2]" />
                                             Assigned: {task.assigned_to}
                                         </div>
                                     )}
@@ -340,7 +340,7 @@ export default function Maintenance() {
                 ) : (
                     <div className="text-center py-16">
                         <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
-                        <p className="text-[#1A2B44]/40 font-light">
+                        <p className="text-[#0F1729]/40 font-light">
                             {cabinMode ? 'No cabin maintenance tasks' : 'No maintenance tasks scheduled'}
                         </p>
                     </div>

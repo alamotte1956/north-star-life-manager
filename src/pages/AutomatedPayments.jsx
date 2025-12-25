@@ -80,21 +80,21 @@ export default function AutomatedPayments() {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-black via-[#0a0a0a] to-black">
+        <div className="min-h-screen bg-gradient-to-br from-[#F8F9FA] via-white to-[#E8EEF5]">
             <div className="max-w-7xl mx-auto px-6 py-12">
                 {/* Header */}
                 <div className="mb-8">
                     <div className="flex items-center justify-between">
                         <div className="flex items-center gap-4">
                             <div className="relative">
-                                <div className="absolute inset-0 bg-[#C5A059]/50 rounded-2xl blur-xl" />
-                                <div className="relative bg-gradient-to-br from-[#C5A059] to-[#D4AF37] p-4 rounded-2xl">
-                                    <Zap className="w-8 h-8 text-black" />
+                                <div className="absolute inset-0 bg-[#4A90E2]/30 rounded-2xl blur-xl" />
+                                <div className="relative bg-gradient-to-br from-[#2E5C8A] to-[#4A90E2] p-4 rounded-2xl">
+                                    <Zap className="w-8 h-8 text-white" />
                                 </div>
                             </div>
                             <div>
-                                <h1 className="text-4xl font-light text-[#C5A059]">Automated Payments</h1>
-                                <p className="text-[#B8935E] font-light">AI-powered bill payment automation</p>
+                                <h1 className="text-4xl font-light text-black">Automated Payments</h1>
+                                <p className="text-[#0F1729]/60 font-light">AI-powered bill payment automation</p>
                             </div>
                         </div>
                         <div className="flex gap-2">
@@ -102,7 +102,7 @@ export default function AutomatedPayments() {
                                 onClick={schedulePayments}
                                 disabled={scheduling}
                                 variant="outline"
-                                className="border-[#C5A059]"
+                                className="border-[#4A90E2]"
                             >
                                 {scheduling ? (
                                     <>
@@ -119,7 +119,7 @@ export default function AutomatedPayments() {
                             <Button
                                 onClick={executePayments}
                                 disabled={executing || approvedPayments.length === 0}
-                                className="bg-gradient-to-r from-[#C5A059] to-[#D4AF37]"
+                                className="bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] text-white"
                             >
                                 {executing ? (
                                     <>
@@ -143,7 +143,7 @@ export default function AutomatedPayments() {
                         <CardContent className="pt-6">
                             <div className="flex items-center justify-between">
                                 <div>
-                                    <p className="text-sm text-[#B8935E]">Approved</p>
+                                    <p className="text-sm text-[#0F1729]/60">Approved</p>
                                     <p className="text-3xl font-light text-blue-500">{approvedPayments.length}</p>
                                 </div>
                                 <CheckCircle className="w-8 h-8 text-blue-500" />
@@ -155,7 +155,7 @@ export default function AutomatedPayments() {
                         <CardContent className="pt-6">
                             <div className="flex items-center justify-between">
                                 <div>
-                                    <p className="text-sm text-[#B8935E]">Completed</p>
+                                    <p className="text-sm text-[#0F1729]/60">Completed</p>
                                     <p className="text-3xl font-light text-green-500">{completedPayments.length}</p>
                                 </div>
                                 <CheckCircle className="w-8 h-8 text-green-500" />
@@ -167,7 +167,7 @@ export default function AutomatedPayments() {
                         <CardContent className="pt-6">
                             <div className="flex items-center justify-between">
                                 <div>
-                                    <p className="text-sm text-[#B8935E]">Failed</p>
+                                    <p className="text-sm text-[#0F1729]/60">Failed</p>
                                     <p className="text-3xl font-light text-red-500">{failedPayments.length}</p>
                                 </div>
                                 <XCircle className="w-8 h-8 text-red-500" />
@@ -179,10 +179,10 @@ export default function AutomatedPayments() {
                         <CardContent className="pt-6">
                             <div className="flex items-center justify-between">
                                 <div>
-                                    <p className="text-sm text-[#B8935E]">Total Scheduled</p>
-                                    <p className="text-3xl font-light text-[#C5A059]">{scheduledPayments.length}</p>
+                                    <p className="text-sm text-[#0F1729]/60">Total Scheduled</p>
+                                    <p className="text-3xl font-light text-[#4A90E2]">{scheduledPayments.length}</p>
                                 </div>
-                                <Calendar className="w-8 h-8 text-[#C5A059]" />
+                                <Calendar className="w-8 h-8 text-[#4A90E2]" />
                             </div>
                         </CardContent>
                     </Card>
@@ -205,12 +205,12 @@ export default function AutomatedPayments() {
                                 {[...approvedPayments, ...completedPayments, ...failedPayments]
                                     .sort((a, b) => new Date(a.scheduled_date) - new Date(b.scheduled_date))
                                     .map((payment) => (
-                                        <Card key={payment.id} className="bg-[#1a1a1a] border-[#C5A059]">
+                                        <Card key={payment.id} className="bg-white border-[#4A90E2]">
                                             <CardContent className="pt-6">
                                                 <div className="flex items-start justify-between mb-4">
                                                     <div className="flex-1">
                                                         <div className="flex items-center gap-2 mb-2">
-                                                            <h4 className="font-semibold text-[#C5A059]">{payment.bill_name}</h4>
+                                                            <h4 className="font-semibold text-black">{payment.bill_name}</h4>
                                                             <Badge className={getStatusColor(payment.status)}>
                                                                 <span className="flex items-center gap-1">
                                                                     {getStatusIcon(payment.status)}
@@ -218,8 +218,8 @@ export default function AutomatedPayments() {
                                                                 </span>
                                                             </Badge>
                                                         </div>
-                                                        <div className="space-y-1 text-sm text-[#B8935E]">
-                                                            <p className="text-lg font-semibold text-[#C5A059]">
+                                                        <div className="space-y-1 text-sm text-[#0F1729]/70">
+                                                            <p className="text-lg font-semibold text-[#4A90E2]">
                                                                 ${payment.amount.toLocaleString()}
                                                             </p>
                                                             <div className="flex items-center gap-2">
@@ -256,13 +256,13 @@ export default function AutomatedPayments() {
                                     ))}
                             </div>
                         ) : (
-                            <Card className="bg-[#1a1a1a] border-[#C5A059]">
+                            <Card className="bg-white border-[#4A90E2]">
                                 <CardContent className="py-12 text-center">
-                                    <Calendar className="w-12 h-12 mx-auto mb-4 text-[#C5A059]" />
-                                    <p className="text-[#B8935E] mb-4">No scheduled payments</p>
+                                    <Calendar className="w-12 h-12 mx-auto mb-4 text-[#4A90E2]" />
+                                    <p className="text-[#0F1729]/60 mb-4">No scheduled payments</p>
                                     <Button 
                                         onClick={schedulePayments}
-                                        className="bg-[#C5A059]"
+                                        className="bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] text-white"
                                     >
                                         Schedule Payments with AI
                                     </Button>
