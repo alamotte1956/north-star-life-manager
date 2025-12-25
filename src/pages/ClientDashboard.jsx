@@ -7,13 +7,19 @@ import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { 
     Briefcase, FileText, DollarSign, MessageSquare, 
-    Clock, CheckCircle, AlertCircle, Download, Eye
+    Clock, CheckCircle, AlertCircle, Download, Eye, Target, Send
 } from 'lucide-react';
 import { format } from 'date-fns';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Textarea } from '@/components/ui/textarea';
+import { toast } from 'sonner';
+import { Progress } from '@/components/ui/progress';
 
 export default function ClientDashboard() {
     const [selectedInvoice, setSelectedInvoice] = useState(null);
+    const [selectedProject, setSelectedProject] = useState(null);
+    const [messageText, setMessageText] = useState('');
+    const [sendingMessage, setSendingMessage] = useState(false);
     const [user, setUser] = React.useState(null);
 
     React.useEffect(() => {
@@ -100,6 +106,32 @@ export default function ClientDashboard() {
     const totalPaid = invoices.reduce((sum, inv) => sum + (inv.amount_paid || 0), 0);
     const totalOutstanding = invoices.reduce((sum, inv) => sum + (inv.balance_due || 0), 0);
 
+    const handleSendMessage = async (projectId) => {
+        if (!messageText.trim()) return;
+        
+        setSendingMessage(true);
+        try {
+            await base44.entities.Communication.create({
+                communication_type: 'in_app',
+                direction: 'inbound',
+                sender_email: user.email,
+                recipient_email: clientData.user_email,
+                subject: `Message regarding ${projects.find(p => p.id === projectId)?.project_name}`,
+                body: messageText,
+                linked_entity_type: 'Project',
+                linked_entity_id: projectId,
+                status: 'sent'
+            });
+            
+            setMessageText('');
+            toast.success('Message sent to project manager');
+        } catch (error) {
+            toast.error('Failed to send message');
+        } finally {
+            setSendingMessage(false);
+        }
+    };
+
     return (
         <div className="min-h-screen bg-gradient-to-br from-[#F8F9FA] via-white to-[#E8EEF5] p-6">
             <div className="max-w-7xl mx-auto">
@@ -172,8 +204,9 @@ export default function ClientDashboard() {
 
                 {/* Main Content Tabs */}
                 <Tabs defaultValue="projects" className="space-y-6">
-                    <TabsList className="grid w-full grid-cols-4">
+                    <TabsList className="grid w-full grid-cols-5">
                         <TabsTrigger value="projects">Projects</TabsTrigger>
+                        <TabsTrigger value="milestones">Milestones</TabsTrigger>
                         <TabsTrigger value="invoices">Invoices</TabsTrigger>
                         <TabsTrigger value="payments">Payments</TabsTrigger>
                         <TabsTrigger value="communications">Messages</TabsTrigger>
@@ -186,55 +219,92 @@ export default function ClientDashboard() {
                                 projects.map(project => (
                                     <Card key={project.id}>
                                         <CardHeader>
-                                            <div className="flex items-start justify-between">
-                                                <div>
-                                                    <CardTitle className="text-lg font-light mb-2">
-                                                        {project.project_name}
-                                                    </CardTitle>
-                                                    <p className="text-sm text-[#0F1729]/60">
-                                                        {project.description}
-                                                    </p>
-                                                </div>
-                                                <Badge className={statusColors[project.status]}>
-                                                    {project.status}
-                                                </Badge>
-                                            </div>
+                                           <div className="flex items-start justify-between">
+                                               <div className="flex-1">
+                                                   <CardTitle className="text-lg font-light mb-2">
+                                                       {project.project_name}
+                                                   </CardTitle>
+                                                   <p className="text-sm text-[#0F1729]/60">
+                                                       {project.description}
+                                                   </p>
+                                               </div>
+                                               <div className="flex items-center gap-2">
+                                                   <Button 
+                                                       size="sm" 
+                                                       variant="outline"
+                                                       onClick={() => setSelectedProject(project)}
+                                                       className="flex items-center gap-2"
+                                                   >
+                                                       <MessageSquare className="w-4 h-4" />
+                                                       Message PM
+                                                   </Button>
+                                                   <Badge className={statusColors[project.status]}>
+                                                       {project.status}
+                                                   </Badge>
+                                               </div>
+                                           </div>
                                         </CardHeader>
                                         <CardContent>
-                                            <div className="grid md:grid-cols-3 gap-4 text-sm">
-                                                <div>
-                                                    <p className="text-[#0F1729]/60 mb-1">Progress</p>
-                                                    <div className="flex items-center gap-2">
-                                                        <div className="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
-                                                            <div 
-                                                                className="h-full bg-[#4A90E2]"
-                                                                style={{ 
-                                                                    width: `${project.estimated_hours ? (project.actual_hours / project.estimated_hours * 100) : 0}%` 
-                                                                }}
-                                                            />
-                                                        </div>
-                                                        <span className="text-xs text-[#0F1729]/60">
-                                                            {project.actual_hours || 0}/{project.estimated_hours || 0}h
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                                {project.start_date && (
-                                                    <div>
-                                                        <p className="text-[#0F1729]/60 mb-1">Started</p>
-                                                        <p className="font-light">
-                                                            {format(new Date(project.start_date), 'MMM d, yyyy')}
-                                                        </p>
-                                                    </div>
-                                                )}
-                                                {project.end_date && (
-                                                    <div>
-                                                        <p className="text-[#0F1729]/60 mb-1">Target Date</p>
-                                                        <p className="font-light">
-                                                            {format(new Date(project.end_date), 'MMM d, yyyy')}
-                                                        </p>
-                                                    </div>
-                                                )}
-                                            </div>
+                                           <div className="grid md:grid-cols-3 gap-4 text-sm mb-4">
+                                               <div>
+                                                   <p className="text-[#0F1729]/60 mb-1">Progress</p>
+                                                   <div className="flex items-center gap-2">
+                                                       <div className="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
+                                                           <div 
+                                                               className="h-full bg-[#4A90E2]"
+                                                               style={{ 
+                                                                   width: `${project.estimated_hours ? (project.actual_hours / project.estimated_hours * 100) : 0}%` 
+                                                               }}
+                                                           />
+                                                       </div>
+                                                       <span className="text-xs text-[#0F1729]/60">
+                                                           {project.actual_hours || 0}/{project.estimated_hours || 0}h
+                                                       </span>
+                                                   </div>
+                                               </div>
+                                               {project.start_date && (
+                                                   <div>
+                                                       <p className="text-[#0F1729]/60 mb-1">Started</p>
+                                                       <p className="font-light">
+                                                           {format(new Date(project.start_date), 'MMM d, yyyy')}
+                                                       </p>
+                                                   </div>
+                                               )}
+                                               {project.end_date && (
+                                                   <div>
+                                                       <p className="text-[#0F1729]/60 mb-1">Target Date</p>
+                                                       <p className="font-light">
+                                                           {format(new Date(project.end_date), 'MMM d, yyyy')}
+                                                       </p>
+                                                   </div>
+                                               )}
+                                           </div>
+
+                                           {project.milestones && project.milestones.length > 0 && (
+                                               <div className="border-t pt-4">
+                                                   <p className="text-sm font-medium text-[#0F1729] mb-3 flex items-center gap-2">
+                                                       <Target className="w-4 h-4" />
+                                                       Quick Milestones
+                                                   </p>
+                                                   <div className="space-y-2">
+                                                       {project.milestones.slice(0, 3).map((milestone, idx) => (
+                                                           <div key={idx} className="flex items-center gap-3 text-sm">
+                                                               {milestone.completed ? (
+                                                                   <CheckCircle className="w-4 h-4 text-green-600 flex-shrink-0" />
+                                                               ) : (
+                                                                   <Clock className="w-4 h-4 text-orange-500 flex-shrink-0" />
+                                                               )}
+                                                               <span className={milestone.completed ? 'line-through text-[#0F1729]/60' : 'text-[#0F1729]'}>
+                                                                   {milestone.name}
+                                                               </span>
+                                                               <span className="text-xs text-[#0F1729]/60 ml-auto">
+                                                                   {milestone.due_date && format(new Date(milestone.due_date), 'MMM d')}
+                                                               </span>
+                                                           </div>
+                                                       ))}
+                                                   </div>
+                                               </div>
+                                           )}
                                         </CardContent>
                                     </Card>
                                 ))
@@ -242,6 +312,102 @@ export default function ClientDashboard() {
                                 <Card>
                                     <CardContent className="py-12 text-center text-[#0F1729]/60">
                                         No projects yet
+                                    </CardContent>
+                                </Card>
+                            )}
+                        </div>
+                    </TabsContent>
+
+                    {/* Milestones Tab */}
+                    <TabsContent value="milestones">
+                        <div className="space-y-6">
+                            {projects.filter(p => p.milestones && p.milestones.length > 0).length > 0 ? (
+                                projects.filter(p => p.milestones && p.milestones.length > 0).map(project => {
+                                    const completedMilestones = project.milestones.filter(m => m.completed).length;
+                                    const totalMilestones = project.milestones.length;
+                                    const progressPercent = (completedMilestones / totalMilestones) * 100;
+                                    
+                                    return (
+                                        <Card key={project.id}>
+                                            <CardHeader>
+                                                <div className="flex items-start justify-between mb-4">
+                                                    <div>
+                                                        <CardTitle className="text-lg font-light flex items-center gap-2">
+                                                            <Target className="w-5 h-5 text-[#4A90E2]" />
+                                                            {project.project_name}
+                                                        </CardTitle>
+                                                        <p className="text-sm text-[#0F1729]/60 mt-1">
+                                                            {completedMilestones} of {totalMilestones} milestones completed
+                                                        </p>
+                                                    </div>
+                                                    <Badge className={statusColors[project.status]}>
+                                                        {project.status}
+                                                    </Badge>
+                                                </div>
+                                                <div className="space-y-2">
+                                                    <div className="flex items-center justify-between text-sm">
+                                                        <span className="text-[#0F1729]/60">Overall Progress</span>
+                                                        <span className="font-medium text-[#4A90E2]">{Math.round(progressPercent)}%</span>
+                                                    </div>
+                                                    <Progress value={progressPercent} className="h-2" />
+                                                </div>
+                                            </CardHeader>
+                                            <CardContent>
+                                                <div className="space-y-4">
+                                                    {project.milestones
+                                                        .sort((a, b) => (a.due_date && b.due_date) ? new Date(a.due_date) - new Date(b.due_date) : 0)
+                                                        .map((milestone, idx) => {
+                                                            const isOverdue = milestone.due_date && !milestone.completed && new Date(milestone.due_date) < new Date();
+                                                            
+                                                            return (
+                                                                <div 
+                                                                    key={idx} 
+                                                                    className={`p-4 rounded-lg border-l-4 ${
+                                                                        milestone.completed 
+                                                                            ? 'bg-green-50 border-green-500' 
+                                                                            : isOverdue 
+                                                                                ? 'bg-red-50 border-red-500'
+                                                                                : 'bg-blue-50 border-blue-500'
+                                                                    }`}
+                                                                >
+                                                                    <div className="flex items-start gap-3">
+                                                                        {milestone.completed ? (
+                                                                            <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
+                                                                        ) : isOverdue ? (
+                                                                            <AlertCircle className="w-5 h-5 text-red-600 mt-0.5 flex-shrink-0" />
+                                                                        ) : (
+                                                                            <Clock className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
+                                                                        )}
+                                                                        <div className="flex-1">
+                                                                            <p className={`font-medium ${milestone.completed ? 'text-green-900 line-through' : 'text-[#0F1729]'}`}>
+                                                                                {milestone.name}
+                                                                            </p>
+                                                                            {milestone.due_date && (
+                                                                                <p className={`text-sm mt-1 ${
+                                                                                    milestone.completed 
+                                                                                        ? 'text-green-700'
+                                                                                        : isOverdue 
+                                                                                            ? 'text-red-700 font-medium'
+                                                                                            : 'text-blue-700'
+                                                                                }`}>
+                                                                                    {milestone.completed ? 'Completed' : isOverdue ? 'Overdue' : 'Due'}: {format(new Date(milestone.due_date), 'MMMM d, yyyy')}
+                                                                                </p>
+                                                                            )}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            );
+                                                        })}
+                                                </div>
+                                            </CardContent>
+                                        </Card>
+                                    );
+                                })
+                            ) : (
+                                <Card>
+                                    <CardContent className="py-12 text-center">
+                                        <Target className="w-12 h-12 text-[#0F1729]/20 mx-auto mb-4" />
+                                        <p className="text-[#0F1729]/60">No project milestones yet</p>
                                     </CardContent>
                                 </Card>
                             )}
@@ -503,6 +669,74 @@ export default function ClientDashboard() {
                                         <p className="text-sm text-[#0F1729]/80">{selectedInvoice.notes}</p>
                                     </div>
                                 )}
+                            </div>
+                        </DialogContent>
+                    </Dialog>
+                )}
+
+                {/* Message Project Manager Modal */}
+                {selectedProject && (
+                    <Dialog open={!!selectedProject} onOpenChange={() => setSelectedProject(null)}>
+                        <DialogContent className="max-w-2xl">
+                            <DialogHeader>
+                                <DialogTitle className="flex items-center gap-2">
+                                    <MessageSquare className="w-5 h-5 text-[#4A90E2]" />
+                                    Message Project Manager
+                                </DialogTitle>
+                                <p className="text-sm text-[#0F1729]/60 mt-2">
+                                    Project: {selectedProject.project_name}
+                                </p>
+                            </DialogHeader>
+                            
+                            <div className="space-y-4">
+                                <div>
+                                    <label className="text-sm font-medium text-[#0F1729] mb-2 block">
+                                        Your Message
+                                    </label>
+                                    <Textarea
+                                        value={messageText}
+                                        onChange={(e) => setMessageText(e.target.value)}
+                                        placeholder="Type your message here..."
+                                        rows={6}
+                                        className="w-full"
+                                    />
+                                </div>
+                                
+                                <div className="flex gap-3">
+                                    <Button
+                                        variant="outline"
+                                        onClick={() => {
+                                            setSelectedProject(null);
+                                            setMessageText('');
+                                        }}
+                                        className="flex-1"
+                                    >
+                                        Cancel
+                                    </Button>
+                                    <Button
+                                        onClick={() => handleSendMessage(selectedProject.id)}
+                                        disabled={!messageText.trim() || sendingMessage}
+                                        className="flex-1 bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] text-white"
+                                    >
+                                        {sendingMessage ? (
+                                            <>
+                                                <Clock className="w-4 h-4 mr-2 animate-spin" />
+                                                Sending...
+                                            </>
+                                        ) : (
+                                            <>
+                                                <Send className="w-4 h-4 mr-2" />
+                                                Send Message
+                                            </>
+                                        )}
+                                    </Button>
+                                </div>
+                                
+                                <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
+                                    <p className="text-xs text-blue-900">
+                                        💡 Your project manager will receive this message and respond via email or through the communications tab.
+                                    </p>
+                                </div>
                             </div>
                         </DialogContent>
                     </Dialog>
