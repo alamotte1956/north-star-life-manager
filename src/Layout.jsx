@@ -132,8 +132,7 @@ export default function Layout({ children, currentPageName }) {
         { name: 'Notifications', icon: LayoutDashboard, path: 'NotificationSettings' },
         { name: 'Integrations', icon: Plug, path: 'Integrations' },
         { name: 'Role Management', icon: Shield, path: 'RoleManagement' },
-        { name: 'Voice Assistant', icon: Users, path: 'VoiceAssistant' },
-        { name: 'Pricing', icon: DollarSign, path: 'Pricing' }
+        { name: 'Voice Assistant', icon: Users, path: 'VoiceAssistant' }
         ];
 
     return (
@@ -233,6 +232,13 @@ export default function Layout({ children, currentPageName }) {
                             <h1 className="text-lg font-light text-white tracking-wide" style={{ fontFamily: 'Playfair Display, serif' }}>North Star</h1>
                             <p className="text-[#B8D4ED] text-xs font-light">Life Manager</p>
                         </div>
+                    </Link>
+                    <Link
+                        to={createPageUrl('Pricing')}
+                        className="w-full flex items-center gap-2 px-3 py-3 mb-3 bg-gradient-to-r from-[#4A90E2] to-[#2E5C8A] hover:shadow-lg rounded-lg transition-all text-white text-sm font-medium min-h-[50px]"
+                    >
+                        <DollarSign className="w-5 h-5" />
+                        <span>Sign Up / Upgrade</span>
                     </Link>
                     <button
                         onClick={() => setSearchOpen(true)}

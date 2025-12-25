@@ -62,6 +62,8 @@ export default function Pricing() {
         queryFn: () => base44.auth.me()
     });
 
+    const isAdmin = user?.role === 'admin';
+
     const { data: currentSubscription } = useQuery({
         queryKey: ['subscription'],
         queryFn: async () => {
@@ -113,8 +115,20 @@ export default function Pricing() {
                     </Badge>
                 </div>
 
+                {/* Admin Banner */}
+                {isAdmin && (
+                    <div className="mb-8 bg-gradient-to-r from-green-500 to-green-600 rounded-2xl p-6 text-center">
+                        <p className="text-white font-light text-xl mb-2">
+                            🎉 Admin Access - All Features Unlocked
+                        </p>
+                        <p className="text-white/90 text-sm">
+                            As an admin, you have free access to all premium features
+                        </p>
+                    </div>
+                )}
+
                 {/* Current Subscription Banner */}
-                {currentSubscription && (
+                {!isAdmin && currentSubscription && (
                     <div className="mb-8 bg-gradient-to-r from-[#D4AF37] to-[#F4D03F] rounded-2xl p-6 text-center">
                         <p className="text-black font-light mb-3">
                             You're currently on the <strong>{currentSubscription.plan_name}</strong> plan
@@ -173,14 +187,16 @@ export default function Pricing() {
                                     
                                     <Button
                                         onClick={() => handleSubscribe(plan.id)}
-                                        disabled={loading === plan.id || isCurrentPlan}
+                                        disabled={loading === plan.id || isCurrentPlan || isAdmin}
                                         className={`w-full h-12 ${
                                             plan.popular 
                                                 ? 'bg-gradient-to-r from-[#D4AF37] to-[#F4D03F] hover:shadow-lg' 
                                                 : 'bg-gradient-to-r from-black to-[#1a1a1a]'
                                         }`}
                                     >
-                                        {loading === plan.id ? (
+                                        {isAdmin ? (
+                                            'Admin - Free Access'
+                                        ) : loading === plan.id ? (
                                             <>
                                                 <Loader2 className="w-4 h-4 mr-2 animate-spin" />
                                                 Loading...
