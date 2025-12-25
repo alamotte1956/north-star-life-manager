@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
-import { TrendingUp, Plus, DollarSign, PieChart, Target, RefreshCw, Sparkles, AlertTriangle, Shield, ChevronRight } from 'lucide-react';
+import { TrendingUp, Plus, DollarSign, PieChart, Target, RefreshCw, Sparkles, AlertTriangle, Shield, ChevronRight, BarChart3 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
@@ -19,6 +19,8 @@ import PortfolioRiskAnalysis from '../components/investments/PortfolioRiskAnalys
 import PersonalizedStrategy from '../components/investments/PersonalizedStrategy';
 import MarketTrendMonitor from '../components/investments/MarketTrendMonitor';
 import RebalancingSuggestions from '../components/investments/RebalancingSuggestions';
+import PortfolioPerformanceChart from '../components/investments/PortfolioPerformanceChart';
+import RebalancingAlerts from '../components/investments/RebalancingAlerts';
 import { toast } from 'sonner';
 
 const accountTypeLabels = {
@@ -74,6 +76,15 @@ export default function Investments() {
         queryKey: ['investments'],
         queryFn: () => base44.entities.Investment.list('-created_date')
     });
+
+    // Auto-refresh prices every 5 minutes
+    useEffect(() => {
+        const interval = setInterval(() => {
+            updateAllPrices();
+        }, 5 * 60 * 1000);
+        
+        return () => clearInterval(interval);
+    }, []);
 
     const { data: goals = [] } = useQuery({
         queryKey: ['goals'],
@@ -408,6 +419,16 @@ export default function Investments() {
                             </div>
                         </CardContent>
                     </Card>
+                </div>
+
+                {/* Rebalancing Alerts */}
+                <div className="mb-8">
+                    <RebalancingAlerts investments={investments} />
+                </div>
+
+                {/* Portfolio Performance Chart */}
+                <div className="mb-8">
+                    <PortfolioPerformanceChart investments={investments} />
                 </div>
 
                 {/* AI Investment Tools */}

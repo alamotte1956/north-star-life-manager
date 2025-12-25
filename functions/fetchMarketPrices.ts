@@ -9,7 +9,50 @@ Deno.serve(async (req) => {
             return Response.json({ error: 'Unauthorized' }, { status: 401 });
         }
 
-        const { investment_ids } = await req.json();
+        const { investment_ids, ticker, timeframe = '1M' } = await req.json();
+
+        // If requesting historical data for specific ticker
+        if (ticker && timeframe) {
+            const historicalPrompt = `Get historical price data for ${ticker} for the ${timeframe} timeframe.
+            Return daily closing prices as an array of objects with date and price.
+            For 1D: hourly data for today
+            For 1W: daily data for past week
+            For 1M: daily data for past month
+            For 1Y: weekly data for past year
+            For 5Y: monthly data for past 5 years
+            Format: [{date: "YYYY-MM-DD", price: number}]`;
+
+            const historicalResult = await base44.integrations.Core.InvokeLLM({
+                prompt: historicalPrompt,
+                add_context_from_internet: true,
+                response_json_schema: {
+                    type: 'object',
+                    properties: {
+                        data: {
+                            type: 'array',
+                            items: {
+                                type: 'object',
+                                properties: {
+                                    date: { type: 'string' },
+                                    price: { type: 'number' }
+                                }
+                            }
+                        },
+                        current_price: { type: 'number' },
+                        change_percent: { type: 'number' }
+                    }
+                }
+            });
+
+            return Response.json({
+                success: true,
+                ticker,
+                timeframe,
+                historical_data: historicalResult.data || [],
+                current_price: historicalResult.current_price,
+                change_percent: historicalResult.change_percent
+            });
+        }
 
         // Get investments to update
         const investments = await base44.entities.Investment.list();
