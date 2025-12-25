@@ -14,10 +14,24 @@ Deno.serve(async (req) => {
             return Response.json({ error: 'Unauthorized' }, { status: 401 });
         }
 
-        const { document_id, file_url } = await req.json();
+        const { document_id, file_url, is_financial = false } = await req.json();
 
         if (!document_id || !file_url) {
             return Response.json({ error: 'Missing document_id or file_url' }, { status: 400 });
+        }
+
+        // Get document to check if financial
+        const documents = await base44.entities.Document.filter({ id: document_id });
+        const doc = documents[0];
+        
+        // If it's a financial document, delegate to specialized handler
+        if (is_financial || ['invoice', 'receipt', 'bill', 'statement'].some(type => 
+            doc.title?.toLowerCase().includes(type)
+        )) {
+            const financialResult = await base44.functions.invoke('analyzeFinancialDocument', {
+                document_id
+            });
+            return Response.json(financialResult.data);
         }
 
         // Update status to analyzing
