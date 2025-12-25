@@ -19,14 +19,12 @@ export default function SimplifiedViewToggle() {
 
     return (
         <Button
-            variant={simplified ? "default" : "outline"}
-            size="sm"
             onClick={toggleView}
-            className="gap-2"
+            className="bg-gradient-to-r from-[#4A90E2] to-[#2E5C8A] text-white hover:shadow-lg gap-2 min-h-[50px]"
             title="Toggle Simplified Navigation"
         >
             {simplified ? <LayoutList className="w-4 h-4" /> : <LayoutGrid className="w-4 h-4" />}
-            {simplified ? 'Full Menu' : 'Simple Menu'}
+            <span className="hidden sm:inline">{simplified ? 'Full Menu' : 'Simple Menu'}</span>
         </Button>
     );
 }
