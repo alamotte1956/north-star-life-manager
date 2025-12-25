@@ -73,13 +73,69 @@ export default function ProfessionalMarketplace() {
         { value: 'real_estate_agent', label: 'Real Estate Agents' }
     ];
 
+    const estateAttorneys = professionals.filter(p => 
+        p.professional_type === 'estate_attorney' || p.professional_type === 'tax_attorney'
+    );
+
     return (
-        <div className="min-h-screen bg-gradient-to-br from-[#F8F7F4] via-white to-[#F8F7F4] p-6">
+        <div className="min-h-screen bg-gradient-to-br from-[#F8F9FA] via-white to-[#E8EEF5] p-6">
             <div className="max-w-7xl mx-auto">
-                <div className="mb-8">
-                    <h1 className="text-4xl font-light text-[#1A2B44] mb-2">Professional Marketplace</h1>
-                    <p className="text-[#1A2B44]/60">Connect with verified financial and legal professionals</p>
+                <div className="flex items-center gap-4 mb-8">
+                    <img 
+                        src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6947dc1f392f53989af97bda/b516d228e_Gemini_Generated_Image_tp0qgztp0qgztp0q.png" 
+                        alt="North Star Logo" 
+                        className="w-16 h-16 object-contain"
+                    />
+                    <div>
+                        <h1 className="text-4xl font-light text-black" style={{ fontFamily: 'Playfair Display, serif' }}>
+                            Professional Network
+                        </h1>
+                        <p className="text-[#0F1729]/60 font-light">Vetted estate attorneys, CPAs, and advisors</p>
+                    </div>
                 </div>
+
+                {/* Featured: Estate Planning Professionals */}
+                {estateAttorneys.length > 0 && (
+                    <Card className="mb-8 border-[#4A90E2] bg-gradient-to-br from-blue-50 to-white">
+                        <CardHeader>
+                            <CardTitle className="flex items-center gap-2">
+                                <Briefcase className="w-5 h-5 text-[#4A90E2]" />
+                                Estate Planning Specialists
+                            </CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                            <p className="text-sm text-[#0F1729]/60 mb-4">
+                                Connect with experienced estate attorneys to review your AI-generated trust and will documents
+                            </p>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                {estateAttorneys.slice(0, 2).map(attorney => (
+                                    <Card key={attorney.id} className="border-[#4A90E2]/20">
+                                        <CardContent className="pt-4">
+                                            <h3 className="font-medium text-black mb-1">{attorney.full_name}</h3>
+                                            <p className="text-sm text-[#0F1729]/60 mb-2">{attorney.firm_name}</p>
+                                            {attorney.specialties?.length > 0 && (
+                                                <div className="flex flex-wrap gap-1 mb-3">
+                                                    {attorney.specialties.map((spec, i) => (
+                                                        <Badge key={i} variant="outline" className="text-xs">
+                                                            {spec}
+                                                        </Badge>
+                                                    ))}
+                                                </div>
+                                            )}
+                                            <Button
+                                                onClick={() => handleBook(attorney)}
+                                                size="sm"
+                                                className="w-full bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] text-white"
+                                            >
+                                                Book Consultation
+                                            </Button>
+                                        </CardContent>
+                                    </Card>
+                                ))}
+                            </div>
+                        </CardContent>
+                    </Card>
+                )}
 
                 {/* Filter */}
                 <div className="mb-6">
@@ -125,10 +181,13 @@ export default function ProfessionalMarketplace() {
                     </div>
                 )}
 
-                {/* Professionals Grid */}
+                {/* All Professionals Grid */}
+                <div className="mb-4">
+                    <h2 className="text-2xl font-light text-black mb-2">All Professionals</h2>
+                </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {professionals.map((pro) => (
-                        <Card key={pro.id} className="hover:shadow-xl transition-shadow">
+                        <Card key={pro.id} className="hover:shadow-xl transition-shadow border-[#4A90E2]/20">
                             <CardHeader>
                                 <div className="flex items-start gap-4">
                                     <div className="w-16 h-16 bg-gradient-to-br from-[#1B4B7F] to-[#0F2847] rounded-full flex items-center justify-center">
@@ -189,7 +248,7 @@ export default function ProfessionalMarketplace() {
 
                                     <Button
                                         onClick={() => handleBook(pro)}
-                                        className="w-full bg-gradient-to-r from-[#D4AF37] to-[#F4D03F] text-black"
+                                        className="w-full bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] text-white"
                                     >
                                         <Calendar className="w-4 h-4 mr-2" />
                                         Book Appointment
@@ -274,7 +333,7 @@ export default function ProfessionalMarketplace() {
                                 <Button type="button" variant="outline" onClick={() => setShowBooking(null)} className="flex-1">
                                     Cancel
                                 </Button>
-                                <Button type="submit" disabled={bookMutation.isPending} className="flex-1 bg-gradient-to-r from-[#D4AF37] to-[#F4D03F] text-black">
+                                <Button type="submit" disabled={bookMutation.isPending} className="flex-1 bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] text-white">
                                     Request Booking
                                 </Button>
                             </div>

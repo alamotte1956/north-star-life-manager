@@ -9,8 +9,11 @@ import { Progress } from '@/components/ui/progress';
 import { Shield, CheckCircle, FileText, Users, Home, DollarSign, Heart, ArrowRight, Loader2 } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { toast } from 'sonner';
+import { Link } from 'react-router-dom';
+import { createPageUrl } from '../utils';
 
 export default function EstatePlanning() {
+    const [user, setUser] = useState(null);
     const [step, setStep] = useState(1);
     const [formData, setFormData] = useState({
         // Step 1: Basic Info
@@ -42,6 +45,10 @@ export default function EstatePlanning() {
 
     const totalSteps = 5;
     const progress = (step / totalSteps) * 100;
+
+    React.useEffect(() => {
+        base44.auth.me().then(setUser);
+    }, []);
 
     const handleNext = () => {
         if (step < totalSteps) setStep(step + 1);
@@ -464,6 +471,31 @@ Provide:
                                     </p>
                                 </CardContent>
                             </Card>
+                        )}
+
+                        {step === totalSteps && (
+                            <div className="mt-6">
+                                <Card className="border-green-500 bg-green-50">
+                                    <CardContent className="pt-6">
+                                        <div className="flex items-center gap-3">
+                                            <Users className="w-8 h-8 text-green-600" />
+                                            <div>
+                                                <h3 className="font-medium text-green-900 mb-1">
+                                                    Ready for Professional Review?
+                                                </h3>
+                                                <p className="text-sm text-green-800 mb-3">
+                                                    Connect with vetted estate attorneys to finalize your documents
+                                                </p>
+                                                <Link to={createPageUrl('ProfessionalMarketplace')}>
+                                                    <Button variant="outline" className="border-green-600 text-green-700 hover:bg-green-100">
+                                                        Browse Estate Attorneys
+                                                    </Button>
+                                                </Link>
+                                            </div>
+                                        </div>
+                                    </CardContent>
+                                </Card>
+                            </div>
                         )}
                     </div>
                 )}
