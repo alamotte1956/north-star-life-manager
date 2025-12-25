@@ -19,6 +19,7 @@ import LargeTextToggle from '@/components/accessibility/LargeTextToggle';
 import SimplifiedViewToggle from '@/components/accessibility/SimplifiedViewToggle';
 import { SandboxDataProvider } from '@/components/sandbox/SandboxDataProvider';
 import SandboxBanner from '@/components/sandbox/SandboxBanner';
+import FinancialAdvisorChatbot from '@/components/financial/FinancialAdvisorChatbot';
 
 export default function Layout({ children, currentPageName }) {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -413,6 +414,9 @@ export default function Layout({ children, currentPageName }) {
             
             {/* AI Chat Assistant */}
             <ChatAssistant />
+
+            {/* Financial Advisor Chatbot */}
+            <FinancialAdvisorChatbot />
 
             {/* Proactive Assistant */}
             <ProactiveAssistant />
