@@ -410,6 +410,14 @@ export default function Investments() {
                     </Card>
                 </div>
 
+                {/* AI Investment Tools */}
+                <div className="grid grid-cols-1 gap-6 mb-8">
+                    <PortfolioRiskAnalysis />
+                    <PersonalizedStrategy />
+                    <MarketTrendMonitor />
+                    <RebalancingSuggestions />
+                </div>
+
                 {/* AI Portfolio Analysis */}
                 {portfolioAnalysis && (
                     <div className="mb-8 space-y-6">
