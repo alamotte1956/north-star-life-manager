@@ -9,11 +9,13 @@ import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
-import { Users, Plus, Mail, Phone, Building2, TrendingUp } from 'lucide-react';
+import { Users, Plus, Mail, Phone, Building2, TrendingUp, DollarSign, Sparkles } from 'lucide-react';
 import { toast } from 'sonner';
+import ClientOnboardingWizard from '@/components/business/ClientOnboardingWizard';
 
 export default function BusinessClients() {
     const [showForm, setShowForm] = useState(false);
+    const [showWizard, setShowWizard] = useState(false);
     const [editingClient, setEditingClient] = useState(null);
     const [formData, setFormData] = useState({
         company_name: '',
@@ -105,10 +107,16 @@ export default function BusinessClients() {
                             <h1 className="text-4xl font-light text-black mb-2">Clients</h1>
                             <p className="text-[#0F1729]/60">Manage your client relationships</p>
                         </div>
-                        <Button onClick={() => setShowForm(true)} className="bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] text-white">
-                            <Plus className="w-5 h-5 mr-2" />
-                            Add Client
-                        </Button>
+                        <div className="flex gap-2">
+                            <Button onClick={() => setShowWizard(true)} className="bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] text-white">
+                                <Sparkles className="w-5 h-5 mr-2" />
+                                AI Onboarding
+                            </Button>
+                            <Button onClick={() => setShowForm(true)} variant="outline" className="border-[#4A90E2] text-[#4A90E2]">
+                                <Plus className="w-5 h-5 mr-2" />
+                                Quick Add
+                            </Button>
+                        </div>
                     </div>
                 </div>
 
@@ -294,6 +302,15 @@ export default function BusinessClients() {
                         </form>
                     </DialogContent>
                 </Dialog>
+
+                {/* AI Onboarding Wizard */}
+                <ClientOnboardingWizard
+                    open={showWizard}
+                    onOpenChange={setShowWizard}
+                    onComplete={() => {
+                        queryClient.invalidateQueries({ queryKey: ['business-clients'] });
+                    }}
+                />
             </div>
         </div>
     );
