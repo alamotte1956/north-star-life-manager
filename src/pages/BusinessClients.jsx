@@ -9,12 +9,18 @@ import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
-import { Users, Plus, Mail, Phone, Building2, TrendingUp, DollarSign, Sparkles, MessageSquare } from 'lucide-react';
+import { Users, Plus, Mail, Phone, Building2, TrendingUp, DollarSign, Sparkles, MessageSquare, FileText, Edit2 } from 'lucide-react';
 import { toast } from 'sonner';
+import { useNavigate } from 'react-router-dom';
+import { createPageUrl } from '../utils';
 import ClientOnboardingWizard from '@/components/business/ClientOnboardingWizard';
 import ClientCommunicationHub from '@/components/business/ClientCommunicationHub';
+import ClientInteractionsTracker from '@/components/business/ClientInteractionsTracker';
+import ClientImportantDates from '@/components/business/ClientImportantDates';
+import ClientFollowUpTasks from '@/components/business/ClientFollowUpTasks';
 
 export default function BusinessClients() {
+    const navigate = useNavigate();
     const [showForm, setShowForm] = useState(false);
     const [showWizard, setShowWizard] = useState(false);
     const [editingClient, setEditingClient] = useState(null);
@@ -124,10 +130,10 @@ export default function BusinessClients() {
                 {/* Clients Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {clients.map((client) => (
-                        <Card key={client.id} className="hover:shadow-xl transition-shadow cursor-pointer" onClick={() => handleEdit(client)}>
+                        <Card key={client.id} className="hover:shadow-xl transition-shadow">
                             <CardHeader>
                                 <div className="flex items-start justify-between">
-                                    <div>
+                                    <div className="cursor-pointer" onClick={() => handleEdit(client)}>
                                         <CardTitle className="text-lg">{client.company_name}</CardTitle>
                                         <p className="text-sm text-[#0F1729]/60">{client.contact_name}</p>
                                     </div>
@@ -137,7 +143,7 @@ export default function BusinessClients() {
                                 </div>
                             </CardHeader>
                             <CardContent>
-                                <div className="space-y-3">
+                                <div className="space-y-3" onClick={() => handleEdit(client)}>
                                     <div className="flex items-center gap-2 text-sm text-[#1A2B44]/60">
                                         <Mail className="w-4 h-4" />
                                         {client.email}
@@ -167,6 +173,25 @@ export default function BusinessClients() {
                                             </div>
                                         </div>
                                     )}
+                                </div>
+                                
+                                <div className="flex gap-2 mt-4 pt-4 border-t" onClick={(e) => e.stopPropagation()}>
+                                    <Button 
+                                        size="sm" 
+                                        onClick={() => {
+                                            navigate(createPageUrl('BusinessInvoices'), { 
+                                                state: { preselectedClientId: client.id } 
+                                            });
+                                        }}
+                                        className="flex-1 bg-green-600 hover:bg-green-700 text-white"
+                                    >
+                                        <FileText className="w-4 h-4 mr-1" />
+                                        Invoice
+                                    </Button>
+                                    <Button size="sm" variant="outline" onClick={() => handleEdit(client)} className="flex-1">
+                                        <Edit2 className="w-4 h-4 mr-1" />
+                                        Edit
+                                    </Button>
                                 </div>
                             </CardContent>
                         </Card>
@@ -318,13 +343,22 @@ export default function BusinessClients() {
                         </form>
                                 </div>
 
-                                {/* Communication Hub Section */}
-                                <div>
-                                    <h3 className="text-lg font-medium mb-4 flex items-center gap-2">
-                                        <MessageSquare className="w-5 h-5 text-[#4A90E2]" />
-                                        Communication Hub
-                                    </h3>
-                                    <ClientCommunicationHub client={editingClient} />
+                                {/* CRM Features Section */}
+                                <div className="space-y-6">
+                                    <div className="grid md:grid-cols-2 gap-6">
+                                        <ClientInteractionsTracker client={editingClient} />
+                                        <ClientImportantDates client={editingClient} />
+                                    </div>
+                                    
+                                    <ClientFollowUpTasks client={editingClient} />
+                                    
+                                    <div>
+                                        <h3 className="text-lg font-medium mb-4 flex items-center gap-2">
+                                            <MessageSquare className="w-5 h-5 text-[#4A90E2]" />
+                                            Communication Hub
+                                        </h3>
+                                        <ClientCommunicationHub client={editingClient} />
+                                    </div>
                                 </div>
                             </div>
                         ) : (
