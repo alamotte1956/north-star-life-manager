@@ -73,7 +73,7 @@ export default function BusinessReports() {
         amount
     }));
 
-    const COLORS = ['#D4AF37', '#C5A059', '#1B4B7F', '#8B2635', '#4ADE80', '#F59E0B', '#8B5CF6'];
+    const COLORS = ['#4A90E2', '#2E5C8A', '#7BB3E0', '#1E3A5F', '#4ADE80', '#F59E0B', '#8B5CF6'];
 
     const downloadReport = () => {
         const doc = new jsPDF();
@@ -150,7 +150,7 @@ export default function BusinessReports() {
                                         <YAxis />
                                         <Tooltip />
                                         <Legend />
-                                        <Line type="monotone" dataKey="revenue" stroke="#D4AF37" strokeWidth={2} />
+                                        <Line type="monotone" dataKey="revenue" stroke="#4A90E2" strokeWidth={2} />
                                     </LineChart>
                                 </ResponsiveContainer>
                             </CardContent>
@@ -163,7 +163,7 @@ export default function BusinessReports() {
                                         <span className="text-sm text-[#0F1729]/60">Total Revenue</span>
                                         <DollarSign className="w-5 h-5 text-green-600" />
                                     </div>
-                                    <div className="text-3xl font-light text-[#1A2B44]">
+                                    <div className="text-3xl font-light text-black">
                                         ${invoices.filter(i => i.status === 'paid').reduce((sum, i) => sum + i.total_amount, 0).toLocaleString()}
                                     </div>
                                 </CardContent>
@@ -172,10 +172,10 @@ export default function BusinessReports() {
                             <Card>
                                 <CardContent className="pt-6">
                                     <div className="flex items-center justify-between mb-2">
-                                        <span className="text-sm text-[#1A2B44]/60">Outstanding</span>
+                                        <span className="text-sm text-[#0F1729]/60">Outstanding</span>
                                         <TrendingUp className="w-5 h-5 text-orange-600" />
                                     </div>
-                                    <div className="text-3xl font-light text-[#1A2B44]">
+                                    <div className="text-3xl font-light text-black">
                                         ${invoices.filter(i => i.status !== 'paid').reduce((sum, i) => sum + i.balance_due, 0).toLocaleString()}
                                     </div>
                                 </CardContent>
@@ -184,10 +184,10 @@ export default function BusinessReports() {
                             <Card>
                                 <CardContent className="pt-6">
                                     <div className="flex items-center justify-between mb-2">
-                                        <span className="text-sm text-[#1A2B44]/60">Avg Invoice</span>
+                                        <span className="text-sm text-[#0F1729]/60">Avg Invoice</span>
                                         <FileText className="w-5 h-5 text-blue-600" />
                                     </div>
-                                    <div className="text-3xl font-light text-[#1A2B44]">
+                                    <div className="text-3xl font-light text-black">
                                         ${invoices.length > 0 ? (invoices.reduce((sum, i) => sum + i.total_amount, 0) / invoices.length).toFixed(0) : 0}
                                     </div>
                                 </CardContent>
@@ -247,14 +247,14 @@ export default function BusinessReports() {
                                 <CardContent className="pt-6">
                                     <div className="space-y-4">
                                         <div>
-                                            <div className="text-sm text-[#1A2B44]/60 mb-1">Active Clients</div>
-                                            <div className="text-3xl font-light text-[#1A2B44]">
+                                            <div className="text-sm text-[#0F1729]/60 mb-1">Active Clients</div>
+                                            <div className="text-3xl font-light text-black">
                                                 {clients.filter(c => c.status === 'active').length}
                                             </div>
                                         </div>
                                         <div>
-                                            <div className="text-sm text-[#1A2B44]/60 mb-1">Total Clients</div>
-                                            <div className="text-3xl font-light text-[#1A2B44]">{clients.length}</div>
+                                            <div className="text-sm text-[#0F1729]/60 mb-1">Total Clients</div>
+                                            <div className="text-3xl font-light text-black">{clients.length}</div>
                                         </div>
                                     </div>
                                 </CardContent>
@@ -304,7 +304,7 @@ export default function BusinessReports() {
                                                 <div key={project.id}>
                                                     <div className="flex items-center justify-between mb-1">
                                                         <span className="text-sm font-medium">{project.project_name}</span>
-                                                        <span className="text-xs text-[#0F1729]/60">{progress.toFixed(0)}%
+                                                        <span className="text-xs text-[#0F1729]/60">{progress.toFixed(0)}%</span>
                                                     </div>
                                                     <div className="w-full bg-gray-200 rounded-full h-2">
                                                         <div 
@@ -353,7 +353,7 @@ export default function BusinessReports() {
                                         <XAxis dataKey="category" />
                                         <YAxis />
                                         <Tooltip />
-                                        <Bar dataKey="amount" fill="#D4AF37" />
+                                        <Bar dataKey="amount" fill="#4A90E2" />
                                     </BarChart>
                                 </ResponsiveContainer>
                             </CardContent>
@@ -362,8 +362,8 @@ export default function BusinessReports() {
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                             <Card>
                                 <CardContent className="pt-6">
-                                    <div className="text-sm text-[#1A2B44]/60 mb-1">Total Expenses</div>
-                                    <div className="text-3xl font-light text-[#1A2B44]">
+                                    <div className="text-sm text-[#0F1729]/60 mb-1">Total Expenses</div>
+                                    <div className="text-3xl font-light text-black">
                                         ${expenses.reduce((sum, e) => sum + e.amount, 0).toLocaleString()}
                                     </div>
                                 </CardContent>
@@ -371,8 +371,8 @@ export default function BusinessReports() {
 
                             <Card>
                                 <CardContent className="pt-6">
-                                    <div className="text-sm text-[#1A2B44]/60 mb-1">Billable Expenses</div>
-                                    <div className="text-3xl font-light text-[#1A2B44]">
+                                    <div className="text-sm text-[#0F1729]/60 mb-1">Billable Expenses</div>
+                                    <div className="text-3xl font-light text-black">
                                         ${expenses.filter(e => e.billable).reduce((sum, e) => sum + e.amount, 0).toLocaleString()}
                                     </div>
                                 </CardContent>
@@ -380,8 +380,8 @@ export default function BusinessReports() {
 
                             <Card>
                                 <CardContent className="pt-6">
-                                    <div className="text-sm text-[#1A2B44]/60 mb-1">Tax Deductible</div>
-                                    <div className="text-3xl font-light text-[#1A2B44]">
+                                    <div className="text-sm text-[#0F1729]/60 mb-1">Tax Deductible</div>
+                                    <div className="text-3xl font-light text-black">
                                         ${expenses.filter(e => e.tax_deductible).reduce((sum, e) => sum + e.amount, 0).toLocaleString()}
                                     </div>
                                 </CardContent>
