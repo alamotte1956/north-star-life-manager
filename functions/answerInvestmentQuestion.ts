@@ -1,4 +1,9 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.6';
+import { sanitizePII, sanitizePrompt } from './sanitizePII.js';
+
+/**
+ * SECURITY: PII Sanitization implemented per Data Mapping & Compliance Checklist
+ */
 
 Deno.serve(async (req) => {
     try {
@@ -66,8 +71,12 @@ INSTRUCTIONS:
 
 Provide a clear, informative answer (2-4 paragraphs) that directly addresses their question.`;
 
+        // SECURITY: Sanitize all PII before AI call
+        const sanitizedInvestments = sanitizePII(investments);
+        const sanitizedPrompt = sanitizePrompt(answerPrompt, user);
+
         const answer = await base44.integrations.Core.InvokeLLM({
-            prompt: answerPrompt
+            prompt: sanitizedPrompt
         });
 
         return Response.json({

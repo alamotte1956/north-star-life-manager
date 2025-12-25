@@ -134,7 +134,8 @@ export default function Layout({ children, currentPageName }) {
         { name: 'Integrations', icon: Plug, path: 'Integrations' },
         { name: 'Role Management', icon: Shield, path: 'RoleManagement' },
         { name: 'Voice Assistant', icon: Users, path: 'VoiceAssistant' },
-        { name: 'Video Tutorials', icon: LayoutDashboard, path: 'VideoTutorials' }
+        { name: 'Video Tutorials', icon: LayoutDashboard, path: 'VideoTutorials' },
+        { name: 'Account Settings', icon: Shield, path: 'AccountSettings' }
         ];
 
     return (

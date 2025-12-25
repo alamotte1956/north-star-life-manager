@@ -1,4 +1,10 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.4';
+import { sanitizePII, sanitizePrompt } from './sanitizePII.js';
+
+/**
+ * SECURITY: PII Sanitization implemented per Data Mapping & Compliance Checklist
+ * All user data is anonymized before AI calls to protect privacy
+ */
 
 Deno.serve(async (req) => {
     try {
@@ -287,8 +293,11 @@ IMPORTANT:
 - Consider current market conditions (end of 2025) when making recommendations
 - Respect the user's stated risk tolerance - don't recommend aggressive investments to conservative investors or vice versa`;
 
+        // SECURITY: Sanitize prompt before sending to AI
+        const sanitizedPrompt = sanitizePrompt(advicePrompt, user);
+
         const advice = await base44.integrations.Core.InvokeLLM({
-            prompt: advicePrompt,
+            prompt: sanitizedPrompt,
             response_json_schema: {
                 type: 'object',
                 properties: {
