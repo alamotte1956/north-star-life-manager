@@ -5,24 +5,30 @@
 @tailwind utilities;
 
 :root {
-  /* Gold & Black Color Palette */
-  --pure-black: #000000;
-  --deep-black: #0a0a0a;
-  --champagne-gold: #C5A059;
-  --bright-gold: #D4AF37;
-  --soft-gold: #B8935E;
-  --muted-gold: #8B7355;
-  --dark-grey: #1a1a1a;
+  /* Earth Tones & Vintage Charm Palette */
+  --sage-green: #8A9A7B;
+  --terracotta: #D4725E;
+  --warm-brown: #8B6F47;
+  --cream: #F5EFE6;
+  --mustard: #D4A574;
+  --golden: #E5AE5D;
+  --soft-orange: #E89C6F;
+  --deep-yellow: #D4A76A;
+  --dusty-lavender: #B5A7C4;
+  --teal: #76A8A7;
+  --soft-pink: #D4A5B0;
+  --warm-neutral: #E6D7C8;
+  --dark-brown: #4A3D35;
   
   /* Semantic Colors */
-  --background: var(--pure-black);
-  --foreground: var(--soft-gold);
-  --primary: var(--champagne-gold);
-  --secondary: var(--champagne-gold);
-  --accent: var(--bright-gold);
+  --background: var(--cream);
+  --foreground: var(--warm-brown);
+  --primary: var(--sage-green);
+  --secondary: var(--terracotta);
+  --accent: var(--golden);
   
   /* Cabin Mode Override */
-  --cabin-accent: var(--champagne-gold);
+  --cabin-accent: var(--teal);
 }
 
 body.cabin-mode {
@@ -39,8 +45,8 @@ body.cabin-mode {
 
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  color: var(--soft-gold);
-  background-color: var(--pure-black);
+  color: var(--warm-brown);
+  background-color: var(--cream);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overscroll-behavior-y: contain;
@@ -50,7 +56,7 @@ body {
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Playfair Display', Georgia, serif;
   font-weight: 500;
-  color: var(--champagne-gold);
+  color: var(--dark-brown);
   line-height: 1.2;
 }
 
@@ -66,46 +72,46 @@ button, a[role="button"], input[type="button"], input[type="submit"] {
 
 /* High Contrast Text */
 p, span, div, label, input, textarea, select {
-  color: var(--soft-gold);
+  color: var(--warm-brown);
 }
 
 .text-secondary {
-  color: var(--muted-gold);
+  color: var(--sage-green);
 }
 
 /* Luxury Card System */
 .card, [class*="Card"] {
-  background: var(--dark-grey);
+  background: var(--warm-neutral);
   border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(197, 160, 89, 0.15);
-  border: 1px solid var(--champagne-gold);
+  box-shadow: 0 2px 8px rgba(138, 154, 123, 0.15);
+  border: 1px solid var(--sage-green);
   transition: box-shadow 0.3s ease, transform 0.2s ease;
 }
 
 .card:hover, [class*="Card"]:hover {
-  box-shadow: 0 8px 24px rgba(197, 160, 89, 0.3);
+  box-shadow: 0 8px 24px rgba(138, 154, 123, 0.3);
   transform: translateY(-2px);
-  border-color: var(--bright-gold);
+  border-color: var(--teal);
 }
 
-/* Primary Buttons - Gold on Black */
+/* Primary Buttons - Earth Tones */
 button[class*="bg-gradient"], button.primary {
-  background: linear-gradient(135deg, var(--champagne-gold) 0%, var(--bright-gold) 100%);
-  color: var(--pure-black);
+  background: linear-gradient(135deg, var(--sage-green) 0%, var(--teal) 100%);
+  color: var(--cream);
   font-weight: 600;
   border-radius: 8px;
   padding: 14px 24px;
   min-height: 50px;
   font-size: 16px;
-  border: 2px solid var(--champagne-gold);
+  border: 2px solid var(--sage-green);
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
 button[class*="bg-gradient"]:hover, button.primary:hover {
-  box-shadow: 0 4px 16px rgba(197, 160, 89, 0.6);
+  box-shadow: 0 4px 16px rgba(138, 154, 123, 0.6);
   transform: translateY(-2px);
-  border-color: var(--bright-gold);
+  border-color: var(--teal);
 }
 
 /* Haptic Feedback Simulation */
@@ -141,13 +147,13 @@ button.outline {
 }
 
 button[class*="outline"] {
-  color: #F4E4C1;
-  border-color: #C5A059;
+  color: var(--warm-brown);
+  border-color: var(--sage-green);
 }
 
 button[class*="outline"]:hover {
-  background-color: #C5A059;
-  color: #000000;
+  background-color: var(--sage-green);
+  color: var(--cream);
 }
 
 /* Safe Area Insets for Mobile */
@@ -187,7 +193,7 @@ button[class*="outline"]:hover {
 
 /* Accessibility - Focus States */
 *:focus-visible {
-  outline: 3px solid var(--bright-gold);
+  outline: 3px solid var(--teal);
   outline-offset: 2px;
 }
 
@@ -217,14 +223,14 @@ html {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--deep-black);
+  background: var(--warm-neutral);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--champagne-gold);
+  background: var(--sage-green);
   border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--bright-gold);
+  background: var(--teal);
 }
