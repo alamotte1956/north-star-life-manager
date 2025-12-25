@@ -5,22 +5,23 @@
 @tailwind utilities;
 
 :root {
-  /* The Midnight Forest Color Palette */
-  --deep-navy: #0F172A;
+  /* Gold & Black Color Palette */
+  --pure-black: #000000;
+  --deep-black: #0a0a0a;
   --champagne-gold: #C5A059;
-  --winter-cream: #F8F9FA;
-  --slate-grey: #64748B;
-  --forest-pine: #164E63;
+  --bright-gold: #D4AF37;
+  --soft-gold: #F4E4C1;
+  --dark-grey: #1a1a1a;
   
   /* Semantic Colors */
-  --background: var(--winter-cream);
-  --foreground: var(--deep-navy);
+  --background: var(--pure-black);
+  --foreground: var(--soft-gold);
   --primary: var(--champagne-gold);
-  --secondary: var(--slate-grey);
-  --accent: var(--champagne-gold);
+  --secondary: var(--champagne-gold);
+  --accent: var(--bright-gold);
   
   /* Cabin Mode Override */
-  --cabin-accent: var(--forest-pine);
+  --cabin-accent: var(--champagne-gold);
 }
 
 body.cabin-mode {
@@ -37,8 +38,8 @@ body.cabin-mode {
 
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  color: var(--deep-navy);
-  background-color: var(--winter-cream);
+  color: var(--soft-gold);
+  background-color: var(--pure-black);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overscroll-behavior-y: contain;
@@ -48,7 +49,7 @@ body {
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Playfair Display', Georgia, serif;
   font-weight: 500;
-  color: var(--deep-navy);
+  color: var(--champagne-gold);
   line-height: 1.2;
 }
 
@@ -64,44 +65,46 @@ button, a[role="button"], input[type="button"], input[type="submit"] {
 
 /* High Contrast Text */
 p, span, div, label, input, textarea, select {
-  color: var(--deep-navy);
+  color: var(--soft-gold);
 }
 
 .text-secondary {
-  color: var(--slate-grey);
+  color: var(--champagne-gold);
 }
 
-/* Quiet Luxury Card System */
+/* Luxury Card System */
 .card, [class*="Card"] {
-  background: white;
+  background: var(--dark-grey);
   border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
-  border: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow: 0 2px 8px rgba(197, 160, 89, 0.15);
+  border: 1px solid var(--champagne-gold);
   transition: box-shadow 0.3s ease, transform 0.2s ease;
 }
 
 .card:hover, [class*="Card"]:hover {
-  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.12);
+  box-shadow: 0 8px 24px rgba(197, 160, 89, 0.3);
   transform: translateY(-2px);
+  border-color: var(--bright-gold);
 }
 
-/* Primary Buttons - Champagne Gold */
+/* Primary Buttons - Gold on Black */
 button[class*="bg-gradient"], button.primary {
-  background: linear-gradient(135deg, var(--champagne-gold) 0%, #D4AF37 100%);
-  color: var(--deep-navy);
-  font-weight: 500;
+  background: linear-gradient(135deg, var(--champagne-gold) 0%, var(--bright-gold) 100%);
+  color: var(--pure-black);
+  font-weight: 600;
   border-radius: 8px;
   padding: 14px 24px;
   min-height: 50px;
   font-size: 16px;
-  border: none;
+  border: 2px solid var(--champagne-gold);
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
 button[class*="bg-gradient"]:hover, button.primary:hover {
-  box-shadow: 0 4px 16px rgba(197, 160, 89, 0.4);
+  box-shadow: 0 4px 16px rgba(197, 160, 89, 0.6);
   transform: translateY(-2px);
+  border-color: var(--bright-gold);
 }
 
 /* Haptic Feedback Simulation */
@@ -165,7 +168,7 @@ button:active {
 
 /* Accessibility - Focus States */
 *:focus-visible {
-  outline: 3px solid var(--champagne-gold);
+  outline: 3px solid var(--bright-gold);
   outline-offset: 2px;
 }
 
@@ -195,14 +198,14 @@ html {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--winter-cream);
+  background: var(--deep-black);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--slate-grey);
+  background: var(--champagne-gold);
   border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--deep-navy);
+  background: var(--bright-gold);
 }
