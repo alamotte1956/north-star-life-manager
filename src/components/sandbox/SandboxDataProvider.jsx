@@ -32,6 +32,19 @@ export function SandboxDataProvider({ children }) {
     // Sandbox localStorage key prefix
     const SANDBOX_PREFIX = 'northstar_sandbox_';
 
+    // Sandbox limits for demo users
+    const SANDBOX_LIMITS = {
+        Document: 2,
+        Property: 0,
+        BillPayment: 2,
+        Investment: 3,
+        Vehicle: 1,
+        Contact: 5,
+        Transaction: 10,
+        CalendarEvent: 5,
+        default: 5 // Default limit for other entities
+    };
+
     const sandboxData = {
         isAuthenticated,
         user,
@@ -69,10 +82,16 @@ export function SandboxDataProvider({ children }) {
             if (isAuthenticated) {
                 return await base44.entities[entityName].create(data);
             } else {
-                // Sandbox mode - add to localStorage
+                // Sandbox mode - check limits
                 const key = `${SANDBOX_PREFIX}${entityName}`;
                 const stored = localStorage.getItem(key);
                 const existing = stored ? JSON.parse(stored) : [];
+                
+                const limit = SANDBOX_LIMITS[entityName] || SANDBOX_LIMITS.default;
+                
+                if (existing.length >= limit) {
+                    throw new Error(`Demo limit reached: You can only create ${limit} ${entityName} items. Sign up for unlimited access!`);
+                }
                 
                 const newItem = {
                     ...data,
