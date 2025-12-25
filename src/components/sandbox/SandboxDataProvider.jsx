@@ -21,9 +21,14 @@ export function SandboxDataProvider({ children }) {
 
     const checkAuth = async () => {
         try {
-            const userData = await base44.auth.me();
-            setUser(userData);
-            setIsAuthenticated(true);
+            const isAuth = await base44.auth.isAuthenticated();
+            if (isAuth) {
+                const userData = await base44.auth.me();
+                setUser(userData);
+                setIsAuthenticated(true);
+            } else {
+                setIsAuthenticated(false);
+            }
         } catch {
             setIsAuthenticated(false);
         }
