@@ -55,17 +55,19 @@ import Vehicles from './pages/Vehicles';
 import VoiceAssistant from './pages/VoiceAssistant';
 import AuditLog from './pages/AuditLog';
 import FamilyTree from './pages/FamilyTree';
-import InternationalAssets from './pages/InternationalAssets';
-import Health from './pages/Health';
-import Home from './pages/Home';
-import Pricing from './pages/Pricing';
-import Dashboard from './pages/Dashboard';
 import EstatePlanning from './pages/EstatePlanning';
 import CharitableGiving from './pages/CharitableGiving';
 import EducationFunds from './pages/EducationFunds';
-import MedicareNavigator from './pages/MedicareNavigator';
 import DigitalMemorial from './pages/DigitalMemorial';
+import InternationalAssets from './pages/InternationalAssets';
+import MedicareNavigator from './pages/MedicareNavigator';
+import Health from './pages/Health';
 import ArtCollectibles from './pages/ArtCollectibles';
+import Home from './pages/Home';
+import Pricing from './pages/Pricing';
+import Dashboard from './pages/Dashboard';
+import VideoCallScheduler from './pages/VideoCallScheduler';
+import VideoTutorials from './pages/VideoTutorials';
 import __Layout from './Layout.jsx';
 
 
@@ -127,17 +129,19 @@ export const PAGES = {
     "VoiceAssistant": VoiceAssistant,
     "AuditLog": AuditLog,
     "FamilyTree": FamilyTree,
-    "InternationalAssets": InternationalAssets,
-    "Health": Health,
-    "Home": Home,
-    "Pricing": Pricing,
-    "Dashboard": Dashboard,
     "EstatePlanning": EstatePlanning,
     "CharitableGiving": CharitableGiving,
     "EducationFunds": EducationFunds,
-    "MedicareNavigator": MedicareNavigator,
     "DigitalMemorial": DigitalMemorial,
+    "InternationalAssets": InternationalAssets,
+    "MedicareNavigator": MedicareNavigator,
+    "Health": Health,
     "ArtCollectibles": ArtCollectibles,
+    "Home": Home,
+    "Pricing": Pricing,
+    "Dashboard": Dashboard,
+    "VideoCallScheduler": VideoCallScheduler,
+    "VideoTutorials": VideoTutorials,
 }
 
 export const pagesConfig = {

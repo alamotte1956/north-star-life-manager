@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { createPageUrl } from './utils';
 import {
     LayoutDashboard, FileText, Shield, Home, Wrench, Users, Car,
-    DollarSign, Gem, Plane, Heart, Calendar, LogOut, Menu, X, Search, Plug, TrendingUp, Zap, CheckCircle, Activity, AlertCircle, Globe, Briefcase
+    DollarSign, Gem, Plane, Heart, Calendar, LogOut, Menu, X, Search, Plug, TrendingUp, Zap, CheckCircle, Activity, AlertCircle, Globe, Briefcase, Video
 } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import GlobalSearch from '@/components/GlobalSearch';
@@ -121,6 +121,8 @@ export default function Layout({ children, currentPageName }) {
         { name: 'Emergency Response', icon: AlertCircle, path: 'EmergencyResponse' },
 
         // Settings & System
+        { name: 'Video Tutorials', icon: LayoutDashboard, path: 'VideoTutorials' },
+        { name: 'Schedule Video Call', icon: Video, path: 'VideoCallScheduler' },
         { name: 'Notifications', icon: LayoutDashboard, path: 'NotificationSettings' },
         { name: 'Integrations', icon: Plug, path: 'Integrations' },
         { name: 'Role Management', icon: Shield, path: 'RoleManagement' },
