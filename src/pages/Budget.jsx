@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
-import { DollarSign, Plus, TrendingUp, AlertTriangle, Target, Sparkles, Users } from 'lucide-react';
+import { DollarSign, Plus, TrendingUp, AlertTriangle, Target, Sparkles, Users, RefreshCw, Loader2, TrendingDown } from 'lucide-react';
+import { toast } from 'sonner';
 import AICollaborationInsights from '../components/collaboration/AICollaborationInsights';
 import ShareDialog from '../components/collaboration/ShareDialog';
 import CommentsSection from '../components/collaboration/CommentsSection';
@@ -44,16 +45,21 @@ const goalTypeLabels = {
 };
 
 export default function BudgetPage() {
+    const queryClient = useQueryClient();
     const [budgetOpen, setBudgetOpen] = useState(false);
     const [goalOpen, setGoalOpen] = useState(false);
     const [loadingSuggestions, setLoadingSuggestions] = useState({});
     const [selectedGoalForCollab, setSelectedGoalForCollab] = useState(null);
+    const [aiInsights, setAiInsights] = useState(null);
+    const [loadingInsights, setLoadingInsights] = useState(false);
+    const [syncingTransactions, setSyncingTransactions] = useState(false);
     const [budgetForm, setBudgetForm] = useState({
         category: 'other',
-        amount: '',
-        period: 'monthly',
-        start_date: format(new Date(), 'yyyy-MM-dd'),
+        monthly_limit: '',
+        period_start: format(startOfMonth(new Date()), 'yyyy-MM-dd'),
+        period_end: format(endOfMonth(new Date()), 'yyyy-MM-dd'),
         alert_threshold: 80,
+        auto_rollover: false,
         notes: ''
     });
     const [goalForm, setGoalForm] = useState({
@@ -82,19 +88,65 @@ export default function BudgetPage() {
         queryFn: () => base44.entities.Transaction.list('-date')
     });
 
+    const { data: budgetTransactions = [] } = useQuery({
+        queryKey: ['budgetTransactions'],
+        queryFn: () => base44.entities.BudgetTransaction.list('-transaction_date')
+    });
+
+    const { data: bills = [] } = useQuery({
+        queryKey: ['bills'],
+        queryFn: () => base44.entities.BillPayment.list()
+    });
+
+    const { data: subscriptions = [] } = useQuery({
+        queryKey: ['subscriptions'],
+        queryFn: () => base44.entities.Subscription.list()
+    });
+
     const handleBudgetSubmit = async (e) => {
         e.preventDefault();
-        await base44.entities.Budget.create(budgetForm);
-        setBudgetOpen(false);
-        setBudgetForm({
-            category: 'other',
-            amount: '',
-            period: 'monthly',
-            start_date: format(new Date(), 'yyyy-MM-dd'),
-            alert_threshold: 80,
-            notes: ''
-        });
-        refetchBudgets();
+        try {
+            await base44.entities.Budget.create(budgetForm);
+            setBudgetOpen(false);
+            setBudgetForm({
+                category: 'other',
+                monthly_limit: '',
+                period_start: format(startOfMonth(new Date()), 'yyyy-MM-dd'),
+                period_end: format(endOfMonth(new Date()), 'yyyy-MM-dd'),
+                alert_threshold: 80,
+                auto_rollover: false,
+                notes: ''
+            });
+            refetchBudgets();
+            toast.success('Budget created successfully!');
+        } catch (error) {
+            toast.error('Failed to create budget');
+        }
+    };
+
+    const syncTransactions = async () => {
+        setSyncingTransactions(true);
+        try {
+            await base44.functions.invoke('syncBudgetTransactions', {});
+            queryClient.invalidateQueries(['budgets']);
+            queryClient.invalidateQueries(['budgetTransactions']);
+            toast.success('Transactions synced successfully!');
+        } catch (error) {
+            toast.error('Failed to sync transactions');
+        }
+        setSyncingTransactions(false);
+    };
+
+    const analyzePerformance = async () => {
+        setLoadingInsights(true);
+        try {
+            const result = await base44.functions.invoke('analyzeBudgetPerformance', {});
+            setAiInsights(result.data);
+            toast.success('Budget analysis complete!');
+        } catch (error) {
+            toast.error('Failed to analyze budget');
+        }
+        setLoadingInsights(false);
     };
 
     const handleGoalSubmit = async (e) => {
@@ -128,20 +180,17 @@ export default function BudgetPage() {
         setLoadingSuggestions(prev => ({ ...prev, [goal.id]: false }));
     };
 
-    const calculateSpending = (category, period) => {
-        const now = new Date();
-        const start = period === 'monthly' ? startOfMonth(now) : startOfYear(now);
-        const end = period === 'monthly' ? endOfMonth(now) : endOfYear(now);
+    const calculateSpending = (budgetId) => {
+        return budgetTransactions
+            .filter(t => t.budget_id === budgetId)
+            .reduce((sum, t) => sum + (t.amount || 0), 0);
+    };
 
-        return transactions
-            .filter(t => {
-                const tDate = new Date(t.date);
-                return t.category === category && 
-                       tDate >= start && 
-                       tDate <= end &&
-                       t.amount < 0;
-            })
-            .reduce((sum, t) => sum + Math.abs(t.amount), 0);
+    const getDaysRemaining = (endDate) => {
+        const end = new Date(endDate);
+        const today = new Date();
+        const diff = Math.ceil((end - today) / (1000 * 60 * 60 * 24));
+        return Math.max(0, diff);
     };
 
     return (
@@ -158,10 +207,103 @@ export default function BudgetPage() {
                         </div>
                         <div>
                             <h1 className="text-4xl font-light text-black">Budget & Goals</h1>
-                            <p className="text-black/70 font-light">Track spending and financial goals</p>
+                            <p className="text-black/70 font-light">Real-time spending tracking with AI insights</p>
                         </div>
                     </div>
+                    <div className="flex gap-2">
+                        <Button
+                            onClick={syncTransactions}
+                            disabled={syncingTransactions}
+                            variant="outline"
+                        >
+                            <RefreshCw className={`w-4 h-4 mr-2 ${syncingTransactions ? 'animate-spin' : ''}`} />
+                            Sync
+                        </Button>
+                        <Button
+                            onClick={analyzePerformance}
+                            disabled={loadingInsights}
+                            className="bg-gradient-to-r from-[#D4AF37] to-[#F4D03F]"
+                        >
+                            <Sparkles className="w-4 h-4 mr-2" />
+                            {loadingInsights ? 'Analyzing...' : 'AI Insights'}
+                        </Button>
+                    </div>
                 </div>
+
+                {/* AI Insights Section */}
+                {aiInsights && (
+                    <Card className="mb-8 bg-gradient-to-br from-[#D4AF37]/10 to-[#F4D03F]/10 border-[#D4AF37]">
+                        <CardHeader>
+                            <CardTitle className="flex items-center gap-2">
+                                <Sparkles className="w-5 h-5 text-[#D4AF37]" />
+                                Budget Performance Insights
+                            </CardTitle>
+                        </CardHeader>
+                        <CardContent className="space-y-6">
+                            <div>
+                                <h3 className="font-medium mb-2">Health Assessment</h3>
+                                <p className="text-black/70">{aiInsights.ai_insights.health_assessment}</p>
+                            </div>
+
+                            {aiInsights.ai_insights.attention_required?.length > 0 && (
+                                <div>
+                                    <h3 className="font-medium mb-2 flex items-center gap-2">
+                                        <AlertTriangle className="w-4 h-4 text-red-500" />
+                                        Requires Attention
+                                    </h3>
+                                    <ul className="space-y-1">
+                                        {aiInsights.ai_insights.attention_required.map((item, idx) => (
+                                            <li key={idx} className="text-sm text-black/70">• {item}</li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            )}
+
+                            {aiInsights.ai_insights.spending_patterns?.length > 0 && (
+                                <div>
+                                    <h3 className="font-medium mb-2">Spending Patterns</h3>
+                                    <ul className="space-y-1">
+                                        {aiInsights.ai_insights.spending_patterns.map((pattern, idx) => (
+                                            <li key={idx} className="text-sm text-black/70">• {pattern}</li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            )}
+
+                            {aiInsights.ai_insights.forecast && (
+                                <div>
+                                    <h3 className="font-medium mb-2 flex items-center gap-2">
+                                        <TrendingUp className="w-4 h-4" />
+                                        Forecast
+                                    </h3>
+                                    <p className="text-sm text-black/70">{aiInsights.ai_insights.forecast}</p>
+                                </div>
+                            )}
+
+                            {aiInsights.ai_insights.recommendations?.length > 0 && (
+                                <div>
+                                    <h3 className="font-medium mb-2">Recommendations</h3>
+                                    <ul className="space-y-1">
+                                        {aiInsights.ai_insights.recommendations.map((rec, idx) => (
+                                            <li key={idx} className="text-sm text-black/70">• {rec}</li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            )}
+
+                            {aiInsights.ai_insights.reallocation_opportunities?.length > 0 && (
+                                <div>
+                                    <h3 className="font-medium mb-2">Reallocation Opportunities</h3>
+                                    <ul className="space-y-1">
+                                        {aiInsights.ai_insights.reallocation_opportunities.map((opp, idx) => (
+                                            <li key={idx} className="text-sm text-black/70">• {opp}</li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            )}
+                        </CardContent>
+                    </Card>
+                )}
 
                 {/* Budgets Section */}
                 <div className="mb-12">
@@ -180,61 +322,78 @@ export default function BudgetPage() {
                                 </DialogHeader>
                                 <form onSubmit={handleBudgetSubmit} className="space-y-4">
                                     <div>
-                                        <Label>Category</Label>
-                                        <Select
-                                            value={budgetForm.category}
-                                            onValueChange={(value) => setBudgetForm({ ...budgetForm, category: value })}
-                                        >
-                                            <SelectTrigger>
-                                                <SelectValue />
-                                            </SelectTrigger>
-                                            <SelectContent>
-                                                {Object.entries(categoryLabels).map(([key, label]) => (
-                                                    <SelectItem key={key} value={key}>{label}</SelectItem>
-                                                ))}
-                                            </SelectContent>
-                                        </Select>
+                                       <Label>Category</Label>
+                                       <Select
+                                           value={budgetForm.category}
+                                           onValueChange={(value) => setBudgetForm({ ...budgetForm, category: value })}
+                                       >
+                                           <SelectTrigger>
+                                               <SelectValue />
+                                           </SelectTrigger>
+                                           <SelectContent>
+                                               {Object.entries(categoryLabels).map(([key, label]) => (
+                                                   <SelectItem key={key} value={key}>{label}</SelectItem>
+                                               ))}
+                                           </SelectContent>
+                                       </Select>
+                                    </div>
+                                    <div>
+                                       <Label>Monthly Limit</Label>
+                                       <Input
+                                           type="number"
+                                           step="0.01"
+                                           value={budgetForm.monthly_limit}
+                                           onChange={(e) => setBudgetForm({ ...budgetForm, monthly_limit: e.target.value })}
+                                           placeholder="0.00"
+                                           required
+                                       />
+                                    </div>
+                                    <div className="grid grid-cols-2 gap-4">
+                                       <div>
+                                           <Label>Period Start</Label>
+                                           <Input
+                                               type="date"
+                                               value={budgetForm.period_start}
+                                               onChange={(e) => setBudgetForm({ ...budgetForm, period_start: e.target.value })}
+                                               required
+                                           />
+                                       </div>
+                                       <div>
+                                           <Label>Period End</Label>
+                                           <Input
+                                               type="date"
+                                               value={budgetForm.period_end}
+                                               onChange={(e) => setBudgetForm({ ...budgetForm, period_end: e.target.value })}
+                                               required
+                                           />
+                                       </div>
                                     </div>
                                     <div className="grid grid-cols-2 gap-4">
                                         <div>
-                                            <Label>Amount</Label>
+                                            <Label>Alert Threshold (%)</Label>
                                             <Input
                                                 type="number"
-                                                step="0.01"
-                                                value={budgetForm.amount}
-                                                onChange={(e) => setBudgetForm({ ...budgetForm, amount: e.target.value })}
-                                                required
+                                                value={budgetForm.alert_threshold}
+                                                onChange={(e) => setBudgetForm({ ...budgetForm, alert_threshold: e.target.value })}
                                             />
                                         </div>
-                                        <div>
-                                            <Label>Period</Label>
-                                            <Select
-                                                value={budgetForm.period}
-                                                onValueChange={(value) => setBudgetForm({ ...budgetForm, period: value })}
-                                            >
-                                                <SelectTrigger>
-                                                    <SelectValue />
-                                                </SelectTrigger>
-                                                <SelectContent>
-                                                    <SelectItem value="monthly">Monthly</SelectItem>
-                                                    <SelectItem value="yearly">Yearly</SelectItem>
-                                                </SelectContent>
-                                            </Select>
+                                        <div className="flex items-center gap-2 pt-6">
+                                            <input
+                                                type="checkbox"
+                                                id="autoRollover"
+                                                checked={budgetForm.auto_rollover}
+                                                onChange={(e) => setBudgetForm({ ...budgetForm, auto_rollover: e.target.checked })}
+                                                className="w-4 h-4"
+                                            />
+                                            <Label htmlFor="autoRollover" className="cursor-pointer">Auto rollover unused budget</Label>
                                         </div>
-                                    </div>
-                                    <div>
-                                        <Label>Alert Threshold (%)</Label>
-                                        <Input
-                                            type="number"
-                                            value={budgetForm.alert_threshold}
-                                            onChange={(e) => setBudgetForm({ ...budgetForm, alert_threshold: e.target.value })}
-                                        />
                                     </div>
                                     <div>
                                         <Label>Notes</Label>
                                         <Textarea
                                             value={budgetForm.notes}
                                             onChange={(e) => setBudgetForm({ ...budgetForm, notes: e.target.value })}
+                                            placeholder="Optional notes about this budget..."
                                         />
                                     </div>
                                     <Button type="submit" className="w-full bg-gradient-to-r from-[#D4AF37] to-[#F4D03F]">
@@ -247,10 +406,12 @@ export default function BudgetPage() {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {budgets.map(budget => {
-                            const spent = calculateSpending(budget.category, budget.period);
-                            const percentage = (spent / budget.amount) * 100;
+                            const spent = budget.current_spending || calculateSpending(budget.id);
+                            const percentage = budget.monthly_limit > 0 ? (spent / budget.monthly_limit) * 100 : 0;
+                            const remaining = budget.monthly_limit - spent;
                             const isOverBudget = percentage > 100;
                             const isNearThreshold = percentage >= budget.alert_threshold;
+                            const daysRemaining = getDaysRemaining(budget.period_end);
 
                             return (
                                 <Card key={budget.id} className="hover:shadow-xl transition-shadow">
@@ -261,25 +422,43 @@ export default function BudgetPage() {
                                                 <AlertTriangle className={`w-5 h-5 ${isOverBudget ? 'text-red-500' : 'text-yellow-500'}`} />
                                             )}
                                         </CardTitle>
-                                        <Badge variant="outline" className="w-fit">
-                                            {budget.period === 'monthly' ? 'Monthly' : 'Yearly'}
-                                        </Badge>
+                                        <div className="flex gap-2">
+                                            <Badge variant="outline" className="w-fit text-xs">
+                                                {daysRemaining} days left
+                                            </Badge>
+                                            {budget.auto_rollover && (
+                                                <Badge variant="outline" className="w-fit text-xs bg-blue-50">
+                                                    Auto-rollover
+                                                </Badge>
+                                            )}
+                                        </div>
                                     </CardHeader>
                                     <CardContent>
                                         <div className="space-y-4">
                                             <div>
                                                 <div className="flex items-center justify-between mb-2">
                                                     <span className="text-2xl font-light">${spent.toLocaleString()}</span>
-                                                    <span className="text-sm text-black/60">of ${budget.amount.toLocaleString()}</span>
+                                                    <span className="text-sm text-black/60">of ${budget.monthly_limit.toLocaleString()}</span>
                                                 </div>
                                                 <Progress 
                                                     value={Math.min(percentage, 100)} 
                                                     className={isOverBudget ? 'bg-red-100' : isNearThreshold ? 'bg-yellow-100' : ''}
                                                 />
-                                                <p className={`text-sm mt-2 ${isOverBudget ? 'text-red-600' : isNearThreshold ? 'text-yellow-600' : 'text-green-600'}`}>
-                                                    {percentage.toFixed(0)}% used
-                                                </p>
+                                                <div className="flex justify-between items-center mt-2">
+                                                    <p className={`text-sm ${isOverBudget ? 'text-red-600' : isNearThreshold ? 'text-yellow-600' : 'text-green-600'}`}>
+                                                        {percentage.toFixed(0)}% used
+                                                    </p>
+                                                    <p className={`text-sm font-medium ${remaining >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                                                        {remaining >= 0 ? `$${remaining.toLocaleString()} left` : `$${Math.abs(remaining).toLocaleString()} over`}
+                                                    </p>
+                                                </div>
                                             </div>
+                                            {budget.rollover_amount > 0 && (
+                                                <div className="flex items-center gap-2 text-xs text-blue-600 bg-blue-50 p-2 rounded">
+                                                    <TrendingDown className="w-3 h-3" />
+                                                    ${budget.rollover_amount.toLocaleString()} rolled over
+                                                </div>
+                                            )}
                                             {budget.notes && (
                                                 <p className="text-sm text-black/60">{budget.notes}</p>
                                             )}
