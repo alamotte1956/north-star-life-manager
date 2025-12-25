@@ -13,6 +13,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { toast } from 'sonner';
 import PrintButton from '@/components/PrintButton';
 import ExpenseTracker from '@/components/financial/ExpenseTracker';
+import DemoCTA from '../components/DemoCTA';
 import { LineChart, Line, BarChart, Bar, PieChart as RechartsPie, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 const COLORS = ['#4A90E2', '#2E5C8A', '#7BB3E0', '#1E3A5F', '#50C878', '#FF6B6B', '#9B59B6', '#F39C12'];
@@ -116,6 +117,9 @@ export default function FinancialDashboard() {
                         </Button>
                     </div>
                 </div>
+
+                {/* Demo CTA */}
+                <DemoCTA />
 
                 {/* Expense Tracker */}
                 <div className="mb-8">
