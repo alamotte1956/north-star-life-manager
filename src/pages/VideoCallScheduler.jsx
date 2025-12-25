@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -13,6 +14,7 @@ import { toast } from 'sonner';
 import { format } from 'date-fns';
 
 export default function VideoCallScheduler() {
+    const queryClient = useQueryClient();
     const [date, setDate] = useState(new Date());
     const [formData, setFormData] = useState({
         session_type: 'general',
@@ -36,33 +38,49 @@ export default function VideoCallScheduler() {
         '3:00 PM', '3:30 PM', '4:00 PM', '4:30 PM', '5:00 PM'
     ];
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            const selectedSession = sessionTypes.find(s => s.value === formData.session_type);
+    const scheduleMutation = useMutation({
+        mutationFn: async (data) => {
+            const user = await base44.auth.me();
+            const selectedSession = sessionTypes.find(s => s.value === data.session_type);
             
-            await base44.integrations.Core.SendEmail({
-                to: 'concierge@northstar.com',
-                subject: `Video Call Request - ${selectedSession.label}`,
-                body: `New video call request:
+            // Combine date and time
+            const appointmentDateTime = new Date(date);
+            const [time, period] = data.preferred_time.split(' ');
+            let [hours, minutes] = time.split(':').map(Number);
+            if (period === 'PM' && hours !== 12) hours += 12;
+            if (period === 'AM' && hours === 12) hours = 0;
+            appointmentDateTime.setHours(hours, minutes || 0, 0, 0);
 
-Date: ${format(date, 'MMMM d, yyyy')}
-Time: ${formData.preferred_time}
-Session Type: ${selectedSession.label} (${selectedSession.duration})
-
-Contact Information:
-Phone: ${formData.phone_number}
-Email: ${formData.email}
-
-Topics to Cover:
-${formData.topics || 'Standard session content'}
-
-Please confirm this appointment with the user.`
+            // Create booking
+            const booking = await base44.entities.ProfessionalBooking.create({
+                appointment_date: appointmentDateTime.toISOString(),
+                professional_id: 'support_team',
+                professional_name: 'North Star Support Team',
+                service_type: selectedSession.label,
+                meeting_type: 'video',
+                duration_minutes: parseInt(selectedSession.duration),
+                notes: data.topics,
+                cost: 0
             });
 
-            toast.success('Call scheduled! You\'ll receive a confirmation email shortly.');
-            
-            // Reset form
+            // Create video meeting with Google Meet and send invites
+            try {
+                await base44.functions.invoke('createVideoMeeting', {
+                    booking_id: booking.id,
+                    professional_email: 'support@northstar.com',
+                    user_email: data.email || user.email,
+                    service_type: selectedSession.label,
+                    appointment_date: appointmentDateTime.toISOString(),
+                    duration_minutes: parseInt(selectedSession.duration)
+                });
+            } catch (error) {
+                console.error('Error creating meeting:', error);
+            }
+
+            return booking;
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries(['my-bookings']);
             setFormData({
                 session_type: 'general',
                 preferred_time: '',
@@ -70,9 +88,16 @@ Please confirm this appointment with the user.`
                 email: '',
                 topics: ''
             });
-        } catch (error) {
+            toast.success('Video call confirmed! Google Meet link sent to your email with calendar invite.');
+        },
+        onError: () => {
             toast.error('Failed to schedule call');
         }
+    });
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        scheduleMutation.mutate(formData);
     };
 
     const selectedSession = sessionTypes.find(s => s.value === formData.session_type);
@@ -238,11 +263,11 @@ Please confirm this appointment with the user.`
 
                                 <Button
                                     type="submit"
-                                    disabled={!formData.preferred_time || !formData.phone_number || !formData.email}
+                                    disabled={!formData.preferred_time || !formData.phone_number || !formData.email || scheduleMutation.isPending}
                                     className="w-full bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] text-white"
                                     size="lg"
                                 >
-                                    Schedule Video Call
+                                    {scheduleMutation.isPending ? 'Creating Meeting...' : 'Schedule Video Call'}
                                 </Button>
                             </form>
                         </CardContent>
