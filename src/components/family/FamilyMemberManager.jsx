@@ -24,6 +24,14 @@ export default function FamilyMemberManager() {
 
     const family_id = userRecord?.[0]?.family_id;
     const isAdmin = userRecord?.[0]?.role === 'admin';
+    
+    const { data: family } = useQuery({
+        queryKey: ['family', family_id],
+        queryFn: () => base44.entities.Family.filter({ id: family_id }),
+        enabled: !!family_id
+    });
+    
+    const isMasterAdmin = user?.email === family?.[0]?.primary_admin_email;
 
     const { data: familyMembers = [] } = useQuery({
         queryKey: ['familyMembers', family_id],
@@ -124,7 +132,7 @@ export default function FamilyMemberManager() {
                                 </div>
                             </div>
 
-                            {member.email !== user.email && member.role !== 'admin' && (
+                            {member.email !== user.email && (isMasterAdmin || member.role !== 'admin') && (
                                 <div className="flex items-center gap-2">
                                     <Select
                                         value={memberRole?.role_id || ''}
