@@ -10,11 +10,14 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { FileText, Plus, Send, Download, Trash2 } from 'lucide-react';
 import { toast } from 'sonner';
+import { useLocation } from 'react-router-dom';
 
 export default function BusinessInvoices() {
-    const [showForm, setShowForm] = useState(false);
+    const location = useLocation();
+    const preselectedClientId = location.state?.preselectedClientId;
+    const [showForm, setShowForm] = useState(!!preselectedClientId);
     const [formData, setFormData] = useState({
-        client_id: '',
+        client_id: preselectedClientId || '',
         project_id: '',
         invoice_date: new Date().toISOString().split('T')[0],
         due_date: '',
