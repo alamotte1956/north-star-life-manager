@@ -67,14 +67,14 @@ export default function Layout({ children, currentPageName }) {
 
     return (
         <AuthGuard>
-        <div className="min-h-screen flex" style={{ backgroundColor: '#F8F9FA' }}>
+        <div className="min-h-screen flex" style={{ backgroundColor: '#000000' }}>
             <style>{`
                 :root {
-                    --deep-navy: #0F172A;
+                    --pure-black: #000000;
+                    --deep-black: #0a0a0a;
                     --champagne-gold: #C5A059;
-                    --winter-cream: #F8F9FA;
-                    --slate-grey: #64748B;
-                    --forest-pine: #164E63;
+                    --bright-gold: #D4AF37;
+                    --soft-gold: #F4E4C1;
                 }
                 
                 body {
@@ -82,8 +82,8 @@ export default function Layout({ children, currentPageName }) {
                     -webkit-tap-highlight-color: transparent;
                     overscroll-behavior-y: contain;
                     -webkit-overflow-scrolling: touch;
-                    color: #0F172A;
-                    background-color: #F8F9FA;
+                    color: #F4E4C1;
+                    background-color: #000000;
                 }
 
                 .touch-manipulation {
@@ -112,11 +112,11 @@ export default function Layout({ children, currentPageName }) {
                 h1, h2, h3, h4, h5, h6 {
                     font-family: 'Playfair Display', Georgia, serif;
                     font-weight: 500;
-                    color: #0F172A;
+                    color: #C5A059;
                 }
 
                 p, span, div, a, button, label, input, textarea, select {
-                    color: #0F172A;
+                    color: #F4E4C1;
                 }
                 
                 button, a[role="button"] {
@@ -147,7 +147,7 @@ export default function Layout({ children, currentPageName }) {
             `}</style>
 
             {/* Sidebar - Desktop */}
-            <aside className="hidden lg:flex flex-col w-64 bg-gradient-to-b from-[#0F172A] to-[#1e293b] border-r border-[#C5A059]/20">
+            <aside className="hidden lg:flex flex-col w-64 bg-gradient-to-b from-black to-[#0a0a0a] border-r border-[#C5A059]">
                 <div className="p-6 border-b border-[#C5A059]/20">
                     <div className="flex items-center gap-3 mb-4">
                         <img 
@@ -206,7 +206,7 @@ export default function Layout({ children, currentPageName }) {
             </aside>
 
             {/* Mobile Header */}
-            <div className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-[#0F172A] to-[#1e293b] border-b border-[#C5A059]/20 safe-area-inset">
+            <div className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-black to-[#0a0a0a] border-b border-[#C5A059] safe-area-inset">
                 <div className="flex items-center justify-between px-4 h-16">
                     <div className="flex items-center gap-3">
                         <img 
@@ -240,7 +240,7 @@ export default function Layout({ children, currentPageName }) {
 
                 {/* Mobile Menu */}
                 {mobileMenuOpen && (
-                    <div className="absolute top-16 left-0 right-0 bg-gradient-to-b from-[#0F172A] to-[#1e293b] border-b border-[#C5A059]/20 p-4 space-y-2 max-h-[calc(100vh-4rem)] overflow-y-auto shadow-2xl">
+                    <div className="absolute top-16 left-0 right-0 bg-gradient-to-b from-black to-[#0a0a0a] border-b border-[#C5A059] p-4 space-y-2 max-h-[calc(100vh-4rem)] overflow-y-auto shadow-2xl">
                         {navItems.map((item) => {
                             const Icon = item.icon;
                             const isActive = currentPageName === item.path;
