@@ -131,11 +131,24 @@ Deno.serve(async (req) => {
         const savingsRate = monthlyIncome > 0 ? ((monthlyIncome - monthlyExpenses) / monthlyIncome) * 100 : 0;
         const debtToIncomeRatio = monthlyIncome > 0 ? (monthlyBills / monthlyIncome) * 100 : 0;
 
-        // Risk profile assessment
+        // Risk profile assessment - Fetch from user preferences
+        let userRiskTolerance = user.risk_tolerance || 'medium';
+        let userInvestmentHorizon = user.investment_horizon || 'medium-term';
+        
+        // Override with goal-based assessment if applicable
+        const retirementGoal = financialGoals.find(g => g.goal_type === 'retirement');
+        if (retirementGoal) {
+            const yearsToRetirement = (new Date(retirementGoal.target_date) - now) / (1000 * 60 * 60 * 24 * 365);
+            if (yearsToRetirement > 15) userInvestmentHorizon = 'long-term';
+            else if (yearsToRetirement > 5) userInvestmentHorizon = 'medium-term';
+            else userInvestmentHorizon = 'short-term';
+        }
+        
         const riskProfile = {
             age: user.age || 40,
-            investment_horizon: financialGoals.find(g => g.goal_type === 'retirement') ? 'long-term' : 'medium-term',
-            volatility_tolerance: investmentReturn > 10 ? 'high' : investmentReturn > 0 ? 'medium' : 'conservative'
+            risk_tolerance: userRiskTolerance,
+            investment_horizon: userInvestmentHorizon,
+            current_volatility: investmentReturn > 10 ? 'high' : investmentReturn > 0 ? 'medium' : 'low'
         };
 
         // Generate AI financial advice
@@ -157,9 +170,11 @@ Investment Portfolio:
 - Number of Holdings: ${investments.length}
 - Asset Types: ${investments.map(i => i.asset_type).join(', ')}
 
-RISK PROFILE:
+USER RISK PROFILE & PREFERENCES:
 - Investment Horizon: ${riskProfile.investment_horizon}
-- Risk Tolerance: ${riskProfile.volatility_tolerance}
+- Risk Tolerance: ${riskProfile.risk_tolerance}
+- Current Portfolio Volatility: ${riskProfile.current_volatility}
+- Age: ${riskProfile.age}
 
 ${accountingData ? `
 EXTERNAL ACCOUNTING DATA (${accountingData.source}):
@@ -172,10 +187,23 @@ ${budgetStatus.map(b => `- ${b.category}: $${b.spent.toFixed(2)} / $${b.budget} 
 Active Financial Goals (${goalsAnalysis.length}):
 ${goalsAnalysis.map(g => `- ${g.title} (${g.on_track ? 'ON TRACK' : 'BEHIND'}): ${g.progress}% complete, needs $${g.required_monthly}/month (currently $${g.current_contribution}/month)`).join('\n')}
 
-Category Spending:
+Category Spending (This Month):
 ${Object.entries(categorySpending).map(([cat, amt]) => `- ${cat}: $${amt.toFixed(2)}`).join('\n')}
 
-ADVICE REQUEST: ${advice_type || 'comprehensive financial review with investment recommendations'}
+Recurring Subscriptions:
+${subscriptions.filter(s => s.status === 'active').map(s => `- ${s.name}: $${s.billing_amount}/${s.billing_frequency}`).join('\n')}
+
+Bill Payment Patterns:
+${billPayments.filter(b => b.status === 'active').map(b => `- ${b.name}: $${b.amount}/${b.frequency} (Due: ${b.next_due_date || 'Not set'})`).join('\n')}
+
+ADVICE REQUEST: ${advice_type || 'comprehensive financial review with personalized investment recommendations based on risk tolerance and current market conditions'}
+
+CRITICAL INSTRUCTIONS:
+1. Analyze spending patterns from budget and bill payment data to identify savings opportunities
+2. Suggest specific investment opportunities based on identified potential savings
+3. Base ALL investment recommendations on the user's stated risk tolerance and investment horizon
+4. Consider current market conditions when making recommendations
+5. Integrate budget optimization with investment strategy - show how reducing certain expenses can fund investments
 
 Provide advice in JSON format:
 1. financial_health_score - Overall score 1-10
@@ -184,15 +212,17 @@ Provide advice in JSON format:
    - current_status: Brief status
    - recommendations: Array of 3-4 specific actions
    - spending_red_flags: Array of concerning spending patterns
-   - optimization_opportunities: Array of ways to optimize spending
+   - optimization_opportunities: Array of ways to optimize spending WITH estimated monthly savings amount
+   - potential_monthly_savings: Total estimated savings from optimization opportunities
 4. investment_advice - Object with:
-   - portfolio_assessment: Brief assessment
-   - strategy_recommendations: Array of 4-5 specific investment actions based on risk profile
-   - risk_analysis: Risk level and recommendations
+   - portfolio_assessment: Brief assessment aligned with user's risk tolerance
+   - strategy_recommendations: Array of 4-5 specific investment actions TAILORED to user's risk profile and investment horizon
+   - risk_analysis: Risk level assessment and alignment with user's stated risk tolerance
    - diversification_score: Score 1-10
-   - recommended_allocations: Object with suggested % allocations (stocks, bonds, real_estate, crypto, cash)
-   - specific_recommendations: Array of 3-4 specific ETFs/funds to consider with ticker symbols
+   - recommended_allocations: Object with suggested % allocations (stocks, bonds, real_estate, crypto, cash) - MUST align with risk tolerance (conservative=more bonds/cash, aggressive=more stocks/growth)
+   - specific_recommendations: Array of 3-4 specific ETFs/funds to consider with ticker symbols, aligned with risk tolerance
    - rebalancing_advice: When and how to rebalance
+   - savings_to_investment_plan: Specific plan to redirect identified budget savings into investments (e.g., "Cancel unused subscription ($50/mo) → invest in VTI")
 5. debt_management - Object with:
    - current_status: Assessment of debt situation
    - recommendations: Array of 2-3 debt management strategies
@@ -212,7 +242,8 @@ Provide advice in JSON format:
    - short_term_actions: Array of 3 actions for this month
    - long_term_actions: Array of 2-3 actions for this quarter
 9. estimated_impact - Expected financial improvement in dollars/month
-10. proactive_alerts - Array of 3-4 proactive suggestions (e.g., "Tax season approaching - consider maxing 401k", "Interest rates dropped - refinance mortgage")
+10. proactive_alerts - Array of 3-4 proactive suggestions considering current market conditions and upcoming deadlines (e.g., "Tax season approaching - consider maxing 401k", "Interest rates dropped - refinance mortgage", "Market volatility - opportunity to buy the dip if aligned with risk tolerance")
+11. spending_to_investment_opportunities - Array of 3-5 SPECIFIC recommendations linking budget optimization to investment opportunities (e.g., "Reduce dining out by $200/mo → Increase monthly contribution to VTI ETF ($200/mo = $2,400/year + compound growth)")
 11. financial_forecast - Object with:
     - six_month_projection: Expected financial position in 6 months
     - one_year_projection: Expected position in 1 year
@@ -223,7 +254,13 @@ Provide advice in JSON format:
     - strategies: Array of 2-3 tax optimization strategies
     - estimated_savings: Estimated annual tax savings
 
-Be specific, actionable, and encouraging. Use actual numbers from their data. For investment recommendations, suggest specific, low-cost index funds and ETFs.`;
+IMPORTANT: 
+- Be specific, actionable, and encouraging
+- Use actual numbers from their data
+- For investment recommendations, suggest specific, low-cost index funds and ETFs that match their risk tolerance
+- Make clear connections between spending reductions and investment opportunities
+- Consider current market conditions (end of 2025) when making recommendations
+- Respect the user's stated risk tolerance - don't recommend aggressive investments to conservative investors or vice versa`;
 
         const advice = await base44.integrations.Core.InvokeLLM({
             prompt: advicePrompt,
@@ -238,7 +275,8 @@ Be specific, actionable, and encouraging. Use actual numbers from their data. Fo
                             current_status: { type: 'string' },
                             recommendations: { type: 'array', items: { type: 'string' } },
                             spending_red_flags: { type: 'array', items: { type: 'string' } },
-                            optimization_opportunities: { type: 'array', items: { type: 'string' } }
+                            optimization_opportunities: { type: 'array', items: { type: 'string' } },
+                            potential_monthly_savings: { type: 'number' }
                         }
                     },
                     investment_advice: {
@@ -270,7 +308,8 @@ Be specific, actionable, and encouraging. Use actual numbers from their data. Fo
                                     }
                                 }
                             },
-                            rebalancing_advice: { type: 'string' }
+                            rebalancing_advice: { type: 'string' },
+                            savings_to_investment_plan: { type: 'string' }
                         }
                     },
                     debt_management: {
@@ -309,6 +348,7 @@ Be specific, actionable, and encouraging. Use actual numbers from their data. Fo
                     },
                     estimated_impact: { type: 'number' },
                     proactive_alerts: { type: 'array', items: { type: 'string' } },
+                    spending_to_investment_opportunities: { type: 'array', items: { type: 'string' } },
                     financial_forecast: {
                         type: 'object',
                         properties: {

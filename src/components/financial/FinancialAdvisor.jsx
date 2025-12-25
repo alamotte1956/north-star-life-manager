@@ -124,7 +124,7 @@ export default function FinancialAdvisor() {
                     <CardHeader>
                         <CardTitle className="text-lg font-light flex items-center gap-2">
                             <AlertTriangle className="w-5 h-5 text-orange-600" />
-                            Proactive Alerts & Opportunities
+                            Proactive Alerts & Market Opportunities
                         </CardTitle>
                     </CardHeader>
                     <CardContent>
@@ -133,6 +133,31 @@ export default function FinancialAdvisor() {
                                 <li key={i} className="flex items-start gap-2 text-sm text-orange-900">
                                     <Sparkles className="w-4 h-4 text-orange-600 mt-0.5 flex-shrink-0" />
                                     <span>{alert}</span>
+                                </li>
+                            ))}
+                        </ul>
+                    </CardContent>
+                </Card>
+            )}
+
+            {/* Spending to Investment Opportunities */}
+            {advice.spending_to_investment_opportunities?.length > 0 && (
+                <Card className="border-green-200 bg-gradient-to-br from-green-50 to-blue-50">
+                    <CardHeader>
+                        <CardTitle className="text-lg font-light flex items-center gap-2">
+                            <TrendingUp className="w-5 h-5 text-green-600" />
+                            Turn Savings Into Investments
+                        </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <p className="text-sm text-black/70 mb-4">
+                            By optimizing your spending, you can redirect funds toward wealth-building investments:
+                        </p>
+                        <ul className="space-y-3">
+                            {advice.spending_to_investment_opportunities.map((opp, i) => (
+                                <li key={i} className="flex items-start gap-2 text-sm p-3 bg-white rounded-lg border border-green-200">
+                                    <DollarSign className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
+                                    <span className="text-green-900">{opp}</span>
                                 </li>
                             ))}
                         </ul>
@@ -193,10 +218,17 @@ export default function FinancialAdvisor() {
                             )}
                             {advice.budgeting_advice.optimization_opportunities?.length > 0 && (
                                 <div>
-                                    <h4 className="font-medium mb-2 flex items-center gap-2">
-                                        <Lightbulb className="w-4 h-4 text-yellow-600" />
-                                        Optimization Opportunities
-                                    </h4>
+                                    <div className="flex items-center justify-between mb-2">
+                                        <h4 className="font-medium flex items-center gap-2">
+                                            <Lightbulb className="w-4 h-4 text-yellow-600" />
+                                            Optimization Opportunities
+                                        </h4>
+                                        {advice.budgeting_advice.potential_monthly_savings && (
+                                            <Badge className="bg-green-100 text-green-800">
+                                                ${advice.budgeting_advice.potential_monthly_savings}/mo potential savings
+                                            </Badge>
+                                        )}
+                                    </div>
                                     <ul className="space-y-1">
                                         {advice.budgeting_advice.optimization_opportunities.map((opp, i) => (
                                             <li key={i} className="text-sm text-black/70">• {opp}</li>
@@ -280,6 +312,16 @@ export default function FinancialAdvisor() {
                                 <div className="bg-indigo-50 border border-indigo-200 rounded-lg p-4">
                                     <h4 className="font-medium mb-2 text-indigo-900">Rebalancing Strategy</h4>
                                     <p className="text-sm text-indigo-800">{advice.investment_advice.rebalancing_advice}</p>
+                                </div>
+                            )}
+
+                            {advice.investment_advice.savings_to_investment_plan && (
+                                <div className="bg-gradient-to-br from-green-50 to-emerald-50 border border-green-300 rounded-lg p-4">
+                                    <h4 className="font-medium mb-2 text-green-900 flex items-center gap-2">
+                                        <PiggyBank className="w-4 h-4" />
+                                        Savings → Investment Plan
+                                    </h4>
+                                    <p className="text-sm text-green-800">{advice.investment_advice.savings_to_investment_plan}</p>
                                 </div>
                             )}
                         </CardContent>
