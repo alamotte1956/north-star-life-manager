@@ -236,7 +236,7 @@ export default function Layout({ children, currentPageName }) {
                         <div>
                             <h1 className="text-lg font-light text-white tracking-wide" style={{ fontFamily: 'Playfair Display, serif' }}>North Star</h1>
                             <p className="text-[#B8D4ED] text-xs font-light">Life Manager</p>
-                            <p className="text-[#B8D4ED]/70 text-[10px] font-light italic mt-1">Safeguarding Health, Wealth, and Legacy.</p>
+                            <p className="text-[#B8D4ED]/70 text-[10px] font-light italic mt-1">Managing Health, Wealth, and Legacy.</p>
                         </div>
                     </Link>
                     <Link
@@ -320,7 +320,7 @@ export default function Layout({ children, currentPageName }) {
                         />
                         <div>
                             <h1 className="text-sm font-light text-white" style={{ fontFamily: 'Playfair Display, serif' }}>North Star</h1>
-                            <p className="text-[#B8D4ED]/70 text-[9px] font-light italic">Safeguarding Health, Wealth, and Legacy.</p>
+                            <p className="text-[#B8D4ED]/70 text-[9px] font-light italic">Managing Health, Wealth, and Legacy.</p>
                         </div>
                         </Link>
                         <div className="flex items-center gap-2">
