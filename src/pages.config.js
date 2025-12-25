@@ -1,3 +1,4 @@
+import AccountSettings from './pages/AccountSettings';
 import ArtCollectibles from './pages/ArtCollectibles';
 import AuditLog from './pages/AuditLog';
 import AutomatedPayments from './pages/AutomatedPayments';
@@ -29,6 +30,7 @@ import EducationFunds from './pages/EducationFunds';
 import EmailAssistant from './pages/EmailAssistant';
 import EmergencyResponse from './pages/EmergencyResponse';
 import EstatePlanning from './pages/EstatePlanning';
+import FAQ from './pages/FAQ';
 import FamilyManagement from './pages/FamilyManagement';
 import FamilyNotifications from './pages/FamilyNotifications';
 import FamilyRoleManagement from './pages/FamilyRoleManagement';
@@ -74,12 +76,11 @@ import Vehicles from './pages/Vehicles';
 import VideoCallScheduler from './pages/VideoCallScheduler';
 import VideoTutorials from './pages/VideoTutorials';
 import VoiceAssistant from './pages/VoiceAssistant';
-import AccountSettings from './pages/AccountSettings';
-import FAQ from './pages/FAQ';
 import __Layout from './Layout.jsx';
 
 
 export const PAGES = {
+    "AccountSettings": AccountSettings,
     "ArtCollectibles": ArtCollectibles,
     "AuditLog": AuditLog,
     "AutomatedPayments": AutomatedPayments,
@@ -111,6 +112,7 @@ export const PAGES = {
     "EmailAssistant": EmailAssistant,
     "EmergencyResponse": EmergencyResponse,
     "EstatePlanning": EstatePlanning,
+    "FAQ": FAQ,
     "FamilyManagement": FamilyManagement,
     "FamilyNotifications": FamilyNotifications,
     "FamilyRoleManagement": FamilyRoleManagement,
@@ -156,8 +158,6 @@ export const PAGES = {
     "VideoCallScheduler": VideoCallScheduler,
     "VideoTutorials": VideoTutorials,
     "VoiceAssistant": VoiceAssistant,
-    "AccountSettings": AccountSettings,
-    "FAQ": FAQ,
 }
 
 export const pagesConfig = {

@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
+import { Link } from 'react-router-dom';
+import { createPageUrl } from '../utils';
 import { Check, Zap, Crown, Building2, Loader2 } from 'lucide-react';
+import { Checkbox } from '@/components/ui/checkbox';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -56,6 +59,7 @@ const plans = [
 
 export default function Pricing() {
     const [loading, setLoading] = useState(null);
+    const [acceptedTerms, setAcceptedTerms] = useState({});
 
     const { data: user } = useQuery({
         queryKey: ['user'],
@@ -76,6 +80,11 @@ export default function Pricing() {
     });
 
     const handleSubscribe = async (planId) => {
+        if (!acceptedTerms[planId]) {
+            alert('Please accept the Terms of Service and Privacy Policy to continue.');
+            return;
+        }
+        
         setLoading(planId);
         try {
             const result = await base44.functions.invoke('createCheckoutSession', {
@@ -183,17 +192,40 @@ export default function Pricing() {
                                                 <span className="text-black/80 font-light">{feature}</span>
                                             </li>
                                         ))}
-                                    </ul>
-                                    
-                                    <Button
+                                        </ul>
+
+                                        {!isAdmin && !isCurrentPlan && (
+                                        <div className="flex items-start gap-2 p-3 bg-amber-50 rounded-lg border border-amber-200">
+                                            <Checkbox
+                                                id={`terms-${plan.id}`}
+                                                checked={acceptedTerms[plan.id] || false}
+                                                onCheckedChange={(checked) => 
+                                                    setAcceptedTerms(prev => ({ ...prev, [plan.id]: checked }))
+                                                }
+                                                className="mt-1"
+                                            />
+                                            <label htmlFor={`terms-${plan.id}`} className="text-xs text-black/80 cursor-pointer">
+                                                I acknowledge that this platform is for informational purposes only and does not constitute legal, financial, or medical advice. I have read and agree to the{' '}
+                                                <Link to={createPageUrl('Terms')} className="text-blue-600 underline" target="_blank">
+                                                    Terms of Service
+                                                </Link>
+                                                {' '}and{' '}
+                                                <Link to={createPageUrl('Privacy')} className="text-blue-600 underline" target="_blank">
+                                                    Privacy Policy
+                                                </Link>.
+                                            </label>
+                                        </div>
+                                        )}
+
+                                        <Button
                                         onClick={() => handleSubscribe(plan.id)}
-                                        disabled={loading === plan.id || isCurrentPlan || isAdmin}
+                                        disabled={loading === plan.id || isCurrentPlan || isAdmin || (!acceptedTerms[plan.id] && !isAdmin && !isCurrentPlan)}
                                         className={`w-full h-12 ${
                                             plan.popular 
                                                 ? 'bg-gradient-to-r from-[#D4AF37] to-[#F4D03F] hover:shadow-lg' 
                                                 : 'bg-gradient-to-r from-black to-[#1a1a1a]'
                                         }`}
-                                    >
+                                        >
                                         {isAdmin ? (
                                             'Admin - Free Access'
                                         ) : loading === plan.id ? (
@@ -206,7 +238,7 @@ export default function Pricing() {
                                         ) : (
                                             'Get Started'
                                         )}
-                                    </Button>
+                                        </Button>
                                 </CardContent>
                             </Card>
                         );
