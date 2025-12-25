@@ -88,11 +88,11 @@ export default function BusinessHub() {
     ];
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-[#F8F7F4] via-white to-[#F8F7F4] p-6">
+        <div className="min-h-screen bg-gradient-to-br from-[#F8F9FA] via-white to-[#E8EEF5] p-6">
             <div className="max-w-7xl mx-auto">
                 <div className="mb-8">
-                    <h1 className="text-4xl font-light text-[#1A2B44] mb-2">Business Management</h1>
-                    <p className="text-[#1A2B44]/60">Complete small business operations hub</p>
+                    <h1 className="text-4xl font-light text-black mb-2">Business Management</h1>
+                    <p className="text-[#0F1729]/60">Complete small business operations hub</p>
                 </div>
 
                 {/* Quick Stats */}
@@ -104,10 +104,10 @@ export default function BusinessHub() {
                                 <Card className="hover:shadow-xl transition-shadow cursor-pointer">
                                     <CardContent className="pt-6">
                                         <div className="flex items-center justify-between mb-2">
-                                            <span className="text-sm text-[#1A2B44]/60">{stat.label}</span>
+                                            <span className="text-sm text-[#0F1729]/60">{stat.label}</span>
                                             <Icon className={`w-5 h-5 ${stat.color}`} />
                                         </div>
-                                        <div className="text-3xl font-light text-[#1A2B44]">{stat.value}</div>
+                                        <div className="text-3xl font-light text-black">{stat.value}</div>
                                     </CardContent>
                                 </Card>
                             </Link>
@@ -144,8 +144,8 @@ export default function BusinessHub() {
                         <Card className="hover:shadow-lg transition-shadow cursor-pointer h-full">
                             <CardContent className="pt-6 text-center">
                                 <Users className="w-12 h-12 mx-auto mb-4 text-blue-600" />
-                                <h3 className="font-medium text-[#1A2B44] mb-2">Clients</h3>
-                                <p className="text-sm text-[#1A2B44]/60">Manage your client relationships</p>
+                                <h3 className="font-medium text-black mb-2">Clients</h3>
+                                <p className="text-sm text-[#0F1729]/60">Manage your client relationships</p>
                             </CardContent>
                         </Card>
                     </Link>
@@ -243,15 +243,15 @@ export default function BusinessHub() {
                             {invoices.slice(0, 5).map(invoice => (
                                 <div key={invoice.id} className="flex items-center justify-between py-3 border-b border-[#1A2B44]/5 last:border-0">
                                     <div>
-                                        <div className="font-medium text-[#1A2B44] text-sm">
+                                        <div className="font-medium text-black text-sm">
                                             {invoice.invoice_number} - {invoice.client_name}
                                         </div>
-                                        <div className="text-xs text-[#1A2B44]/60">
+                                        <div className="text-xs text-[#0F1729]/60">
                                             {new Date(invoice.invoice_date).toLocaleDateString()}
                                         </div>
                                     </div>
                                     <div className="text-right">
-                                        <div className="font-medium text-[#1A2B44]">
+                                        <div className="font-medium text-black">
                                             ${invoice.total_amount?.toLocaleString()}
                                         </div>
                                         <Badge className={
@@ -284,14 +284,14 @@ export default function BusinessHub() {
                             {projects.filter(p => p.status === 'active').slice(0, 5).map(project => (
                                 <div key={project.id} className="flex items-center justify-between py-3 border-b border-[#1A2B44]/5 last:border-0">
                                     <div className="flex-1">
-                                        <div className="font-medium text-[#1A2B44] text-sm">
+                                        <div className="font-medium text-black text-sm">
                                             {project.project_name}
                                         </div>
-                                        <div className="text-xs text-[#1A2B44]/60">
+                                        <div className="text-xs text-[#0F1729]/60">
                                             {project.client_name}
                                         </div>
                                     </div>
-                                    <div className="text-sm text-[#1A2B44]/60">
+                                    <div className="text-sm text-[#0F1729]/60">
                                         {project.actual_hours || 0}h / {project.estimated_hours || 0}h
                                     </div>
                                 </div>
@@ -301,19 +301,19 @@ export default function BusinessHub() {
                 </div>
 
                 {/* Professional Services Integration */}
-                <Card className="mt-6 border-[#D4AF37]/30 bg-gradient-to-br from-amber-50 to-yellow-50">
+                <Card className="mt-6 border-[#4A90E2]/30 bg-gradient-to-br from-blue-50 to-sky-50">
                     <CardContent className="pt-6">
                         <div className="flex items-start gap-4">
-                            <Users className="w-10 h-10 text-[#D4AF37] flex-shrink-0" />
+                            <Users className="w-10 h-10 text-[#4A90E2] flex-shrink-0" />
                             <div className="flex-1">
-                                <h3 className="text-lg font-medium text-[#1A2B44] mb-2">
+                                <h3 className="text-lg font-medium text-black mb-2">
                                     Need Professional Help?
                                 </h3>
-                                <p className="text-sm text-[#1A2B44]/70 mb-4">
+                                <p className="text-sm text-[#0F1729]/70 mb-4">
                                     Connect with verified CPAs, tax attorneys, and business advisors from our professional network.
                                 </p>
                                 <Link to={createPageUrl('ProfessionalMarketplace')}>
-                                    <button className="px-6 py-3 bg-gradient-to-r from-[#D4AF37] to-[#F4D03F] text-black rounded-lg hover:shadow-lg transition-all">
+                                    <button className="px-6 py-3 bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] text-white rounded-lg hover:shadow-lg transition-all">
                                         Browse Professionals
                                     </button>
                                 </Link>

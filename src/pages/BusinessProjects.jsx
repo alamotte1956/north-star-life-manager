@@ -106,15 +106,15 @@ export default function BusinessProjects() {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-[#F8F7F4] via-white to-[#F8F7F4] p-6">
+        <div className="min-h-screen bg-gradient-to-br from-[#F8F9FA] via-white to-[#E8EEF5] p-6">
             <div className="max-w-7xl mx-auto">
                 <div className="mb-8">
                     <div className="flex items-center justify-between">
                         <div>
-                            <h1 className="text-4xl font-light text-[#1A2B44] mb-2">Projects</h1>
-                            <p className="text-[#1A2B44]/60">Track time, budget, and deliverables</p>
+                            <h1 className="text-4xl font-light text-black mb-2">Projects</h1>
+                            <p className="text-[#0F1729]/60">Track time, budget, and deliverables</p>
                         </div>
-                        <Button onClick={() => setShowForm(true)} className="bg-gradient-to-r from-[#D4AF37] to-[#F4D03F] text-black">
+                        <Button onClick={() => setShowForm(true)} className="bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] text-white">
                             <Plus className="w-5 h-5 mr-2" />
                             New Project
                         </Button>
@@ -133,7 +133,7 @@ export default function BusinessProjects() {
                                     <div className="flex items-start justify-between">
                                         <div>
                                             <CardTitle className="text-lg">{project.project_name}</CardTitle>
-                                            <p className="text-sm text-[#1A2B44]/60">{project.client_name}</p>
+                                            <p className="text-sm text-[#0F1729]/60">{project.client_name}</p>
                                         </div>
                                         <Badge className={statusColors[project.status]}>
                                             {project.status.replace('_', ' ')}
@@ -143,7 +143,7 @@ export default function BusinessProjects() {
                                 <CardContent>
                                     <div className="space-y-4">
                                         {project.description && (
-                                            <p className="text-sm text-[#1A2B44]/70">{project.description}</p>
+                                            <p className="text-sm text-[#0F1729]/70">{project.description}</p>
                                         )}
 
                                         {/* Hours Progress */}
@@ -179,15 +179,15 @@ export default function BusinessProjects() {
                                         )}
 
                                         {/* Financial Summary */}
-                                        <div className="grid grid-cols-2 gap-3 pt-3 border-t border-[#1A2B44]/10">
+                                        <div className="grid grid-cols-2 gap-3 pt-3 border-t border-[#0F1729]/10">
                                             <div>
-                                                <div className="text-xs text-[#1A2B44]/60">Invoiced</div>
+                                                <div className="text-xs text-[#0F1729]/60">Invoiced</div>
                                                 <div className="text-sm font-medium text-green-600">
                                                     ${project.total_invoiced?.toLocaleString() || 0}
                                                 </div>
                                             </div>
                                             <div>
-                                                <div className="text-xs text-[#1A2B44]/60">Paid</div>
+                                                <div className="text-xs text-[#0F1729]/60">Paid</div>
                                                 <div className="text-sm font-medium text-blue-600">
                                                     ${project.total_paid?.toLocaleString() || 0}
                                                 </div>
@@ -315,7 +315,7 @@ export default function BusinessProjects() {
                                 <Button type="button" variant="outline" onClick={resetForm} className="flex-1">
                                     Cancel
                                 </Button>
-                                <Button type="submit" className="flex-1 bg-gradient-to-r from-[#D4AF37] to-[#F4D03F] text-black">
+                                <Button type="submit" className="flex-1 bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] text-white">
                                     {editingProject ? 'Update' : 'Create'} Project
                                 </Button>
                             </div>

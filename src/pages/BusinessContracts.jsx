@@ -95,15 +95,15 @@ export default function BusinessContracts() {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-[#F8F7F4] via-white to-[#F8F7F4] p-6">
+        <div className="min-h-screen bg-gradient-to-br from-[#F8F9FA] via-white to-[#E8EEF5] p-6">
             <div className="max-w-7xl mx-auto">
                 <div className="mb-8">
                     <div className="flex items-center justify-between">
                         <div>
-                            <h1 className="text-4xl font-light text-[#1A2B44] mb-2">Contracts</h1>
-                            <p className="text-[#1A2B44]/60">Manage contracts with AI templates & e-signatures</p>
+                            <h1 className="text-4xl font-light text-black mb-2">Contracts</h1>
+                            <p className="text-[#0F1729]/60">Manage contracts with AI templates & e-signatures</p>
                         </div>
-                        <Button onClick={() => setShowForm(true)} className="bg-gradient-to-r from-[#D4AF37] to-[#F4D03F] text-black">
+                        <Button onClick={() => setShowForm(true)} className="bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] text-white">
                             <Plus className="w-5 h-5 mr-2" />
                             New Contract
                         </Button>
@@ -121,7 +121,7 @@ export default function BusinessContracts() {
                                 {templates.map(template => (
                                     <Card 
                                         key={template.value}
-                                        className="cursor-pointer hover:shadow-lg transition-shadow border-2 hover:border-[#D4AF37]"
+                                        className="cursor-pointer hover:shadow-lg transition-shadow border-2 hover:border-[#4A90E2]"
                                         onClick={() => {
                                             setSelectedTemplate(template.value);
                                             setFormData({ ...formData, contract_type: template.value });
@@ -129,7 +129,7 @@ export default function BusinessContracts() {
                                     >
                                         <CardContent className="pt-6 text-center">
                                             <div className="text-4xl mb-3">{template.icon}</div>
-                                            <div className="font-medium text-[#1A2B44]">{template.label}</div>
+                                            <div className="font-medium text-black">{template.label}</div>
                                         </CardContent>
                                     </Card>
                                 ))}
@@ -146,7 +146,7 @@ export default function BusinessContracts() {
                                 <div className="flex items-start justify-between">
                                     <div>
                                         <CardTitle className="text-lg">{contract.contract_title}</CardTitle>
-                                        <p className="text-sm text-[#1A2B44]/60">{contract.client_name}</p>
+                                        <p className="text-sm text-[#0F1729]/60">{contract.client_name}</p>
                                     </div>
                                     <Badge className={statusColors[contract.status]}>
                                         {contract.status}
@@ -156,12 +156,12 @@ export default function BusinessContracts() {
                             <CardContent>
                                 <div className="space-y-3">
                                     <div className="flex items-center justify-between text-sm">
-                                        <span className="text-[#1A2B44]/60">Type</span>
+                                        <span className="text-[#0F1729]/60">Type</span>
                                         <span className="capitalize">{contract.contract_type.replace('_', ' ')}</span>
                                     </div>
                                     {contract.contract_value && (
                                         <div className="flex items-center justify-between text-sm">
-                                            <span className="text-[#1A2B44]/60">Value</span>
+                                            <span className="text-[#0F1729]/60">Value</span>
                                             <span className="font-medium text-green-600">
                                                 ${contract.contract_value.toLocaleString()}
                                             </span>
@@ -169,7 +169,7 @@ export default function BusinessContracts() {
                                     )}
                                     {contract.start_date && contract.end_date && (
                                         <div className="flex items-center justify-between text-sm">
-                                            <span className="text-[#1A2B44]/60">Period</span>
+                                            <span className="text-[#0F1729]/60">Period</span>
                                             <span>
                                                 {new Date(contract.start_date).toLocaleDateString()} - {new Date(contract.end_date).toLocaleDateString()}
                                             </span>
@@ -182,8 +182,8 @@ export default function BusinessContracts() {
                                                 size="sm" 
                                                 onClick={() => signMutation.mutate(contract.id)}
                                                 disabled={signMutation.isPending}
-                                                className="flex-1 bg-[#D4AF37] hover:bg-[#C5A059] text-black"
-                                            >
+                                                className="flex-1 bg-[#4A90E2] hover:bg-[#2E5C8A] text-white"
+                                                >
                                                 <Send className="w-4 h-4 mr-2" />
                                                 Send for Signature
                                             </Button>
@@ -293,7 +293,7 @@ export default function BusinessContracts() {
                                 <Button type="button" variant="outline" onClick={resetForm} className="flex-1">
                                     Cancel
                                 </Button>
-                                <Button type="submit" disabled={createMutation.isPending} className="flex-1 bg-gradient-to-r from-[#D4AF37] to-[#F4D03F] text-black">
+                                <Button type="submit" disabled={createMutation.isPending} className="flex-1 bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] text-white">
                                     {createMutation.isPending ? (
                                         <Loader2 className="w-4 h-4 mr-2 animate-spin" />
                                     ) : (

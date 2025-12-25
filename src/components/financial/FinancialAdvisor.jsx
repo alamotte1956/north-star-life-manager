@@ -39,7 +39,7 @@ export default function FinancialAdvisor() {
         return (
             <Card className="border-[#D4AF37]/30">
                 <CardContent className="pt-6 text-center py-12">
-                    <div className="w-16 h-16 bg-gradient-to-br from-[#D4AF37] to-[#F4D03F] rounded-full flex items-center justify-center mx-auto mb-4">
+                    <div className="w-16 h-16 bg-gradient-to-br from-[#2E5C8A] to-[#4A90E2] rounded-full flex items-center justify-center mx-auto mb-4">
                         <Sparkles className="w-8 h-8 text-white" />
                     </div>
                     <h3 className="text-xl font-light text-black mb-2">AI Financial Advisor</h3>
@@ -49,7 +49,7 @@ export default function FinancialAdvisor() {
                     <Button 
                         onClick={() => getAdvice()}
                         disabled={loading}
-                        className="bg-gradient-to-r from-[#D4AF37] to-[#F4D03F] text-black"
+                        className="bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] text-white"
                     >
                         {loading ? 'Analyzing...' : 'Get Financial Advice'}
                     </Button>
@@ -61,7 +61,7 @@ export default function FinancialAdvisor() {
     return (
         <div className="space-y-6">
             {/* Financial Health Score */}
-            <Card className={`border-2 ${getScoreColor(advice.financial_health_score)}`}>
+            <Card className={`border-2 ${getScoreColor(advice.financial_health_score)} bg-white`}>
                 <CardContent className="pt-6">
                     <div className="flex items-center justify-between mb-4">
                         <div className="flex items-center gap-4">
@@ -182,8 +182,8 @@ export default function FinancialAdvisor() {
                 <TabsContent value="budget" className="space-y-4 mt-4">
                     <Card>
                         <CardHeader>
-                            <CardTitle className="text-lg font-light flex items-center gap-2">
-                                <DollarSign className="w-5 h-5 text-[#D4AF37]" />
+                                    <CardTitle className="text-lg font-light flex items-center gap-2">
+                                        <DollarSign className="w-5 h-5 text-[#4A90E2]" />
                                 Budgeting Strategy
                             </CardTitle>
                         </CardHeader>
@@ -245,7 +245,7 @@ export default function FinancialAdvisor() {
                     <Card>
                         <CardHeader>
                             <CardTitle className="text-lg font-light flex items-center gap-2">
-                                <TrendingUp className="w-5 h-5 text-[#D4AF37]" />
+                                <TrendingUp className="w-5 h-5 text-[#4A90E2]" />
                                 Investment Strategy
                             </CardTitle>
                         </CardHeader>
@@ -333,7 +333,7 @@ export default function FinancialAdvisor() {
                     <Card>
                         <CardHeader>
                             <CardTitle className="text-lg font-light flex items-center gap-2">
-                                <Shield className="w-5 h-5 text-[#D4AF37]" />
+                                <Shield className="w-5 h-5 text-[#4A90E2]" />
                                 Debt Management
                             </CardTitle>
                         </CardHeader>
@@ -382,7 +382,7 @@ export default function FinancialAdvisor() {
                     <Card>
                         <CardHeader>
                             <CardTitle className="text-lg font-light flex items-center gap-2">
-                                <Target className="w-5 h-5 text-[#D4AF37]" />
+                                <Target className="w-5 h-5 text-[#4A90E2]" />
                                 Goals Coaching
                             </CardTitle>
                         </CardHeader>
@@ -421,7 +421,7 @@ export default function FinancialAdvisor() {
                     <Card>
                         <CardHeader>
                             <CardTitle className="text-lg font-light flex items-center gap-2">
-                                <PiggyBank className="w-5 h-5 text-[#D4AF37]" />
+                                <PiggyBank className="w-5 h-5 text-[#4A90E2]" />
                                 Savings Strategy
                             </CardTitle>
                         </CardHeader>
@@ -535,7 +535,7 @@ export default function FinancialAdvisor() {
 
                 {/* Action Plan */}
                 <TabsContent value="action" className="space-y-4 mt-4">
-                    <Card className="border-[#D4AF37]/30">
+                    <Card className="border-[#4A90E2]/30">
                         <CardHeader>
                             <CardTitle className="text-lg font-light flex items-center justify-between">
                                 <span className="flex items-center gap-2">

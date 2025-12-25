@@ -119,7 +119,7 @@ export default function Layout({ children, currentPageName }) {
         <PWAManager />
         <OfflineDataManager />
         <OfflineIndicator />
-        <div className="min-h-screen flex" style={{ backgroundColor: '#000000' }}>
+        <div className="min-h-screen flex" style={{ backgroundColor: '#F8F9FA' }}>
             <style>{`
                 :root {
                     --dark-blue: #0F1729;

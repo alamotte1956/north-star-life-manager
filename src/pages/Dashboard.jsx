@@ -457,23 +457,23 @@ export default function Dashboard() {
                 />
             )}
 
-            <div className="min-h-screen bg-gradient-to-br from-[#F8F7F4] via-white to-[#F8F7F4]">
+            <div className="min-h-screen bg-gradient-to-br from-[#F8F9FA] via-white to-[#E8EEF5]">
                 <div className="max-w-7xl mx-auto px-6 py-12">
                 {/* Welcome Header */}
                 <div className="mb-12">
                     <div className="flex items-center justify-between">
                         <div>
-                            <h1 className="text-4xl font-light text-[#1A2B44] mb-2">
+                            <h1 className="text-4xl font-light text-black mb-2">
                                 Welcome back{user?.full_name ? `, ${user.full_name.split(' ')[0]}` : ''}
                             </h1>
-                            <p className="text-[#1A2B44]/60 font-light">
+                            <p className="text-[#0F1729]/60 font-light">
                                 {format(new Date(), 'EEEE, MMMM d, yyyy')}
                             </p>
                         </div>
                         <button
                             onClick={() => setShowGuide(true)}
-                            className="flex items-center gap-3 px-6 py-4 min-h-[50px] bg-white border-2 border-[#C5A059] text-[#0F172A] rounded-xl hover:bg-[#C5A059] hover:text-white transition-all font-light shadow-sm"
-                        >
+                            className="flex items-center gap-3 px-6 py-4 min-h-[50px] bg-white border-2 border-[#4A90E2] text-[#0F1729] rounded-xl hover:bg-[#4A90E2] hover:text-white transition-all font-light shadow-sm"
+                            >
                             <BookOpen className="w-6 h-6" />
                             <span className="text-base">Getting Started</span>
                         </button>
@@ -484,7 +484,7 @@ export default function Dashboard() {
                 {showGuide && (
                     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
                         <div className="bg-white rounded-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
-                            <div className="sticky top-0 bg-gradient-to-r from-[#0F2847] to-[#1B4B7F] p-6 flex items-center justify-between">
+                            <div className="sticky top-0 bg-gradient-to-r from-[#0F1729] to-[#2E5C8A] p-6 flex items-center justify-between">
                                 <div className="flex items-center gap-3">
                                     <BookOpen className="w-8 h-8 text-white" />
                                     <h2 className="text-2xl font-light text-white">Getting Started with North Star Life Manager</h2>
@@ -492,7 +492,7 @@ export default function Dashboard() {
                                 <div className="flex items-center gap-2">
                                     <button
                                         onClick={downloadExecutiveSummary}
-                                        className="flex items-center gap-2 px-4 py-2 bg-[#C5A059] hover:bg-[#D4AF37] rounded-lg transition-colors min-h-[50px]"
+                                        className="flex items-center gap-2 px-4 py-2 bg-[#4A90E2] hover:bg-[#2E5C8A] rounded-lg transition-colors min-h-[50px]"
                                     >
                                         <FileText className="w-5 h-5 text-white" />
                                         <span className="text-white text-sm">Executive Summary</span>
@@ -516,8 +516,8 @@ export default function Dashboard() {
                             <div className="p-8 space-y-8">
                                 {/* Welcome Section */}
                                 <div>
-                                    <h3 className="text-xl font-light text-[#1A2B44] mb-3">Welcome to Your Life Management Hub</h3>
-                                    <p className="text-[#1A2B44]/70 font-light leading-relaxed">
+                                    <h3 className="text-xl font-light text-black mb-3">Welcome to Your Life Management Hub</h3>
+                                    <p className="text-[#0F1729]/70 font-light leading-relaxed">
                                         North Star helps you organize and manage all aspects of your life in one secure place. 
                                         From properties and vehicles to important documents and health records, everything is at your fingertips.
                                     </p>
@@ -525,13 +525,13 @@ export default function Dashboard() {
 
                                 {/* Quick Start Steps */}
                                 <div>
-                                    <h3 className="text-xl font-light text-[#1A2B44] mb-4">Quick Start Guide</h3>
+                                    <h3 className="text-xl font-light text-black mb-4">Quick Start Guide</h3>
                                     <div className="space-y-4">
-                                        <div className="flex gap-4 p-4 bg-[#F8F7F4] rounded-xl">
-                                            <div className="flex-shrink-0 w-8 h-8 bg-[#8B2635] text-white rounded-full flex items-center justify-center font-light">1</div>
+                                        <div className="flex gap-4 p-4 bg-[#E8EEF5] rounded-xl">
+                                            <div className="flex-shrink-0 w-8 h-8 bg-[#4A90E2] text-white rounded-full flex items-center justify-center font-light">1</div>
                                             <div className="flex-1">
-                                                <h4 className="font-light text-[#1A2B44] mb-1">Upload Your Documents</h4>
-                                                <p className="text-sm text-[#1A2B44]/70 font-light">
+                                                <h4 className="font-light text-black mb-1">Upload Your Documents</h4>
+                                                <p className="text-sm text-[#0F1729]/70 font-light">
                                                     Start by visiting the <strong>Vault</strong>. Take photos or upload important documents like deeds, insurance policies, and legal papers. 
                                                     Our AI will automatically analyze and categorize them for you.
                                                 </p>
@@ -598,14 +598,14 @@ export default function Dashboard() {
 
                                 {/* Key Features */}
                                 <div>
-                                    <h3 className="text-xl font-light text-[#1A2B44] mb-4">Key Features</h3>
+                                    <h3 className="text-xl font-light text-black mb-4">Key Features</h3>
                                     <div className="grid md:grid-cols-2 gap-4">
                                         <div className="p-4 border border-[#1B4B7F]/20 rounded-xl">
                                             <div className="flex items-center gap-2 mb-2">
                                                 <FileText className="w-5 h-5 text-[#8B2635]" />
-                                                <h4 className="font-light text-[#1A2B44]">Smart Document Vault</h4>
-                                            </div>
-                                            <p className="text-sm text-[#1A2B44]/70 font-light">
+                                                <h4 className="font-light text-black">Smart Document Vault</h4>
+                                                </div>
+                                                <p className="text-sm text-[#0F1729]/70 font-light">
                                                 Upload documents and photos. AI automatically extracts key information like expiry dates and document types.
                                             </p>
                                         </div>
@@ -643,9 +643,9 @@ export default function Dashboard() {
                                 </div>
 
                                 {/* Pro Tips */}
-                                <div className="bg-gradient-to-br from-[#8B2635]/5 to-[#1B4B7F]/5 p-6 rounded-xl border border-[#8B2635]/20">
-                                    <h3 className="text-xl font-light text-[#1A2B44] mb-3">💡 Pro Tips</h3>
-                                    <ul className="space-y-2 text-sm text-[#1A2B44]/70 font-light">
+                                <div className="bg-gradient-to-br from-[#4A90E2]/5 to-[#2E5C8A]/5 p-6 rounded-xl border border-[#4A90E2]/20">
+                                <h3 className="text-xl font-light text-black mb-3">💡 Pro Tips</h3>
+                                <ul className="space-y-2 text-sm text-[#0F1729]/70 font-light">
                                         <li>• Use your phone's camera to quickly capture documents - the app supports direct photo uploads with AI analysis</li>
                                         <li>• Set up payment schedules in Property Management to automate rent collection and reminders</li>
                                         <li>• Connect external services via Integrations - Google Calendar, Slack, Drive, and more</li>
@@ -659,7 +659,7 @@ export default function Dashboard() {
                                 <div className="text-center">
                                     <button
                                         onClick={() => setShowGuide(false)}
-                                        className="px-8 py-3 bg-gradient-to-r from-[#8B2635] to-[#A63446] text-white rounded-full hover:shadow-lg transition-all font-light"
+                                        className="px-8 py-3 bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] text-white rounded-full hover:shadow-lg transition-all font-light"
                                     >
                                         Get Started
                                     </button>
@@ -744,7 +744,7 @@ export default function Dashboard() {
                                     <Wrench className="w-5 h-5 text-[#C9A95C]" />
                                     Upcoming Maintenance
                                 </CardTitle>
-                                <Link to={createPageUrl('Maintenance')} className="text-sm text-[#C9A95C] hover:text-[#1A2B44] font-light">
+                                <Link to={createPageUrl('Maintenance')} className="text-sm text-[#4A90E2] hover:text-black font-light">
                                     View all
                                 </Link>
                             </div>
@@ -753,11 +753,11 @@ export default function Dashboard() {
                             {dueTasks.length > 0 ? (
                                 <div className="space-y-3">
                                     {dueTasks.slice(0, 4).map(task => (
-                                        <div key={task.id} className="flex items-start gap-3 p-3 bg-[#F8F7F4] rounded-lg">
-                                            <Wrench className="w-4 h-4 text-[#C9A95C] mt-1" />
+                                        <div key={task.id} className="flex items-start gap-3 p-3 bg-[#E8EEF5] rounded-lg">
+                                            <Wrench className="w-4 h-4 text-[#4A90E2] mt-1" />
                                             <div className="flex-1">
                                                 <div className="font-light text-[#1A2B44]">{task.title}</div>
-                                                <div className="text-sm text-[#1A2B44]/60 font-light">
+                                                <div className="text-sm text-[#0F1729]/60 font-light">
                                                     {task.property_name} • Due {format(new Date(task.next_due_date), 'MMM d')}
                                                 </div>
                                             </div>
@@ -781,14 +781,14 @@ export default function Dashboard() {
                                     <DollarSign className="w-5 h-5 text-[#C9A95C]" />
                                     Monthly Subscriptions
                                 </CardTitle>
-                                <Link to={createPageUrl('Subscriptions')} className="text-sm text-[#C9A95C] hover:text-[#1A2B44] font-light">
+                                <Link to={createPageUrl('Subscriptions')} className="text-sm text-[#4A90E2] hover:text-black font-light">
                                     View all
                                 </Link>
                             </div>
                         </CardHeader>
                         <CardContent className="pt-6">
                             <div className="text-center mb-6">
-                                <div className="text-4xl font-light text-[#1A2B44] mb-1">
+                                <div className="text-4xl font-light text-black mb-1">
                                     ${monthlySubscriptions.toFixed(0)}
                                 </div>
                                 <div className="text-sm text-[#1A2B44]/60 font-light">
@@ -797,9 +797,9 @@ export default function Dashboard() {
                             </div>
                             <div className="space-y-2">
                                 {subscriptions.filter(s => s.status === 'active').slice(0, 3).map(sub => (
-                                    <div key={sub.id} className="flex justify-between items-center p-3 bg-[#F8F7F4] rounded-lg">
-                                        <span className="font-light text-[#1A2B44]">{sub.name}</span>
-                                        <span className="text-[#C9A95C] font-light">
+                                    <div key={sub.id} className="flex justify-between items-center p-3 bg-[#E8EEF5] rounded-lg">
+                                        <span className="font-light text-black">{sub.name}</span>
+                                        <span className="text-[#4A90E2] font-light">
                                             ${sub.billing_amount}/{sub.billing_frequency === 'monthly' ? 'mo' : 'yr'}
                                         </span>
                                     </div>
@@ -811,21 +811,21 @@ export default function Dashboard() {
 
                 {/* Quick Access Grid */}
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <Link to={createPageUrl('Contacts')} className="p-6 bg-white border border-[#1A2B44]/10 rounded-xl hover:shadow-lg hover:border-[#C9A95C]/30 transition-all text-center group">
-                        <Users className="w-8 h-8 text-[#C9A95C] mx-auto mb-3 group-hover:scale-110 transition-transform" />
-                        <div className="font-light text-[#1A2B44]">Contacts</div>
+                    <Link to={createPageUrl('Contacts')} className="p-6 bg-white border border-[#B8D4ED] rounded-xl hover:shadow-lg hover:border-[#4A90E2] transition-all text-center group">
+                        <Users className="w-8 h-8 text-[#4A90E2] mx-auto mb-3 group-hover:scale-110 transition-transform" />
+                        <div className="font-light text-black">Contacts</div>
                     </Link>
-                    <Link to={createPageUrl('Travel')} className="p-6 bg-white border border-[#1A2B44]/10 rounded-xl hover:shadow-lg hover:border-[#C9A95C]/30 transition-all text-center group">
-                        <Plane className="w-8 h-8 text-[#C9A95C] mx-auto mb-3 group-hover:scale-110 transition-transform" />
-                        <div className="font-light text-[#1A2B44]">Travel</div>
+                    <Link to={createPageUrl('Travel')} className="p-6 bg-white border border-[#B8D4ED] rounded-xl hover:shadow-lg hover:border-[#4A90E2] transition-all text-center group">
+                        <Plane className="w-8 h-8 text-[#4A90E2] mx-auto mb-3 group-hover:scale-110 transition-transform" />
+                        <div className="font-light text-black">Travel</div>
                     </Link>
-                    <Link to={createPageUrl('Health')} className="p-6 bg-white border border-[#1A2B44]/10 rounded-xl hover:shadow-lg hover:border-[#C9A95C]/30 transition-all text-center group">
-                        <Heart className="w-8 h-8 text-[#C9A95C] mx-auto mb-3 group-hover:scale-110 transition-transform" />
-                        <div className="font-light text-[#1A2B44]">Health</div>
+                    <Link to={createPageUrl('Health')} className="p-6 bg-white border border-[#B8D4ED] rounded-xl hover:shadow-lg hover:border-[#4A90E2] transition-all text-center group">
+                        <Heart className="w-8 h-8 text-[#4A90E2] mx-auto mb-3 group-hover:scale-110 transition-transform" />
+                        <div className="font-light text-black">Health</div>
                     </Link>
-                    <Link to={createPageUrl('Calendar')} className="p-6 bg-white border border-[#1A2B44]/10 rounded-xl hover:shadow-lg hover:border-[#C9A95C]/30 transition-all text-center group">
-                        <Calendar className="w-8 h-8 text-[#C9A95C] mx-auto mb-3 group-hover:scale-110 transition-transform" />
-                        <div className="font-light text-[#1A2B44]">Calendar</div>
+                    <Link to={createPageUrl('Calendar')} className="p-6 bg-white border border-[#B8D4ED] rounded-xl hover:shadow-lg hover:border-[#4A90E2] transition-all text-center group">
+                        <Calendar className="w-8 h-8 text-[#4A90E2] mx-auto mb-3 group-hover:scale-110 transition-transform" />
+                        <div className="font-light text-black">Calendar</div>
                     </Link>
                 </div>
             </div>

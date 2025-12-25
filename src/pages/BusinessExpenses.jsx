@@ -96,15 +96,15 @@ export default function BusinessExpenses() {
     const totalBillable = billableExpenses.reduce((sum, e) => sum + (e.amount || 0), 0);
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-[#F8F7F4] via-white to-[#F8F7F4] p-6">
+        <div className="min-h-screen bg-gradient-to-br from-[#F8F9FA] via-white to-[#E8EEF5] p-6">
             <div className="max-w-7xl mx-auto">
                 <div className="mb-8">
                     <div className="flex items-center justify-between">
                         <div>
-                            <h1 className="text-4xl font-light text-[#1A2B44] mb-2">Business Expenses</h1>
-                            <p className="text-[#1A2B44]/60">Track and categorize business expenses</p>
+                            <h1 className="text-4xl font-light text-black mb-2">Business Expenses</h1>
+                            <p className="text-[#0F1729]/60">Track and categorize business expenses</p>
                         </div>
-                        <Button onClick={() => setShowForm(true)} className="bg-gradient-to-r from-[#D4AF37] to-[#F4D03F] text-black">
+                        <Button onClick={() => setShowForm(true)} className="bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] text-white">
                             <Plus className="w-5 h-5 mr-2" />
                             Add Expense
                         </Button>
@@ -116,7 +116,7 @@ export default function BusinessExpenses() {
                     <Card>
                         <CardContent className="pt-6">
                             <div className="flex items-center justify-between mb-2">
-                                <span className="text-sm text-[#1A2B44]/60">This Month</span>
+                                <span className="text-sm text-[#0F1729]/60">This Month</span>
                                 <TrendingDown className="w-5 h-5 text-red-600" />
                             </div>
                             <div className="text-3xl font-light text-[#1A2B44]">
@@ -134,7 +134,7 @@ export default function BusinessExpenses() {
                             <div className="text-3xl font-light text-[#1A2B44]">
                                 ${totalBillable.toLocaleString()}
                             </div>
-                            <div className="text-xs text-[#1A2B44]/60 mt-1">
+                            <div className="text-xs text-[#0F1729]/60 mt-1">
                                 {billableExpenses.length} expenses
                             </div>
                         </CardContent>
@@ -158,10 +158,10 @@ export default function BusinessExpenses() {
                             <CardContent className="pt-6">
                                 <div className="flex items-center justify-between">
                                     <div className="flex-1">
-                                        <div className="font-medium text-[#1A2B44] mb-1">
+                                        <div className="font-medium text-black mb-1">
                                             {expense.description}
                                         </div>
-                                        <div className="text-sm text-[#1A2B44]/60">
+                                        <div className="text-sm text-[#0F1729]/60">
                                             {new Date(expense.expense_date).toLocaleDateString()} • {expense.vendor}
                                             {expense.project_name && ` • ${expense.project_name}`}
                                         </div>
@@ -187,7 +187,7 @@ export default function BusinessExpenses() {
                                             )}
                                         </div>
                                     </div>
-                                    <div className="text-2xl font-light text-[#1A2B44]">
+                                    <div className="text-2xl font-light text-black">
                                         ${expense.amount?.toLocaleString()}
                                     </div>
                                 </div>
@@ -307,7 +307,7 @@ export default function BusinessExpenses() {
                                 <Button type="button" variant="outline" onClick={resetForm} className="flex-1">
                                     Cancel
                                 </Button>
-                                <Button type="submit" className="flex-1 bg-gradient-to-r from-[#D4AF37] to-[#F4D03F] text-black">
+                                <Button type="submit" className="flex-1 bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] text-white">
                                     Add Expense
                                 </Button>
                             </div>

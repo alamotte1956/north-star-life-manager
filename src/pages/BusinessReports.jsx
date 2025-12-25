@@ -113,13 +113,13 @@ export default function BusinessReports() {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-[#F8F7F4] via-white to-[#F8F7F4] p-6">
+        <div className="min-h-screen bg-gradient-to-br from-[#F8F9FA] via-white to-[#E8EEF5] p-6">
             <div className="max-w-7xl mx-auto">
                 <div className="mb-8">
                     <div className="flex items-center justify-between">
                         <div>
-                            <h1 className="text-4xl font-light text-[#1A2B44] mb-2">Business Analytics</h1>
-                            <p className="text-[#1A2B44]/60">Comprehensive insights & reports</p>
+                            <h1 className="text-4xl font-light text-black mb-2">Business Analytics</h1>
+                            <p className="text-[#0F1729]/60">Comprehensive insights & reports</p>
                         </div>
                         <Button onClick={downloadReport} variant="outline">
                             <Download className="w-4 h-4 mr-2" />
@@ -160,7 +160,7 @@ export default function BusinessReports() {
                             <Card>
                                 <CardContent className="pt-6">
                                     <div className="flex items-center justify-between mb-2">
-                                        <span className="text-sm text-[#1A2B44]/60">Total Revenue</span>
+                                        <span className="text-sm text-[#0F1729]/60">Total Revenue</span>
                                         <DollarSign className="w-5 h-5 text-green-600" />
                                     </div>
                                     <div className="text-3xl font-light text-[#1A2B44]">
@@ -304,11 +304,11 @@ export default function BusinessReports() {
                                                 <div key={project.id}>
                                                     <div className="flex items-center justify-between mb-1">
                                                         <span className="text-sm font-medium">{project.project_name}</span>
-                                                        <span className="text-xs text-[#1A2B44]/60">{progress.toFixed(0)}%</span>
+                                                        <span className="text-xs text-[#0F1729]/60">{progress.toFixed(0)}%
                                                     </div>
                                                     <div className="w-full bg-gray-200 rounded-full h-2">
                                                         <div 
-                                                            className="bg-gradient-to-r from-[#D4AF37] to-[#F4D03F] h-2 rounded-full transition-all"
+                                                            className="bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] h-2 rounded-full transition-all"
                                                             style={{ width: `${Math.min(progress, 100)}%` }}
                                                         />
                                                     </div>
@@ -323,14 +323,14 @@ export default function BusinessReports() {
                                 <CardContent className="pt-6">
                                     <div className="space-y-4">
                                         <div>
-                                            <div className="text-sm text-[#1A2B44]/60 mb-1">Active Projects</div>
-                                            <div className="text-3xl font-light text-[#1A2B44]">
+                                            <div className="text-sm text-[#0F1729]/60 mb-1">Active Projects</div>
+                                            <div className="text-3xl font-light text-black">
                                                 {projects.filter(p => p.status === 'active').length}
                                             </div>
                                         </div>
                                         <div>
-                                            <div className="text-sm text-[#1A2B44]/60 mb-1">Completed Projects</div>
-                                            <div className="text-3xl font-light text-[#1A2B44]">
+                                            <div className="text-sm text-[#0F1729]/60 mb-1">Completed Projects</div>
+                                            <div className="text-3xl font-light text-black">
                                                 {projects.filter(p => p.status === 'completed').length}
                                             </div>
                                         </div>

@@ -97,15 +97,15 @@ export default function BusinessClients() {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-[#F8F7F4] via-white to-[#F8F7F4] p-6">
+        <div className="min-h-screen bg-gradient-to-br from-[#F8F9FA] via-white to-[#E8EEF5] p-6">
             <div className="max-w-7xl mx-auto">
                 <div className="mb-8">
                     <div className="flex items-center justify-between">
                         <div>
-                            <h1 className="text-4xl font-light text-[#1A2B44] mb-2">Clients</h1>
-                            <p className="text-[#1A2B44]/60">Manage your client relationships</p>
+                            <h1 className="text-4xl font-light text-black mb-2">Clients</h1>
+                            <p className="text-[#0F1729]/60">Manage your client relationships</p>
                         </div>
-                        <Button onClick={() => setShowForm(true)} className="bg-gradient-to-r from-[#D4AF37] to-[#F4D03F] text-black">
+                        <Button onClick={() => setShowForm(true)} className="bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] text-white">
                             <Plus className="w-5 h-5 mr-2" />
                             Add Client
                         </Button>
@@ -120,7 +120,7 @@ export default function BusinessClients() {
                                 <div className="flex items-start justify-between">
                                     <div>
                                         <CardTitle className="text-lg">{client.company_name}</CardTitle>
-                                        <p className="text-sm text-[#1A2B44]/60">{client.contact_name}</p>
+                                        <p className="text-sm text-[#0F1729]/60">{client.contact_name}</p>
                                     </div>
                                     <Badge className={statusColors[client.status]}>
                                         {client.status}
@@ -146,7 +146,7 @@ export default function BusinessClients() {
                                         </div>
                                     )}
                                     {client.billing_rate && (
-                                        <div className="flex items-center gap-2 text-sm text-[#D4AF37] font-medium">
+                                        <div className="flex items-center gap-2 text-sm text-[#4A90E2] font-medium">
                                             <DollarSign className="w-4 h-4" />
                                             ${client.billing_rate}/hour
                                         </div>
@@ -287,7 +287,7 @@ export default function BusinessClients() {
                                 <Button type="button" variant="outline" onClick={resetForm} className="flex-1">
                                     Cancel
                                 </Button>
-                                <Button type="submit" className="flex-1 bg-gradient-to-r from-[#D4AF37] to-[#F4D03F] text-black">
+                                <Button type="submit" className="flex-1 bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] text-white">
                                     {editingClient ? 'Update' : 'Create'} Client
                                 </Button>
                             </div>
