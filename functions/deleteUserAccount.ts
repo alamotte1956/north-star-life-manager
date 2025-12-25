@@ -95,28 +95,24 @@ Deno.serve(async (req) => {
             'TransactionCorrection'
         ];
 
-        // Delete each entity type using service role for admin privileges
+        // Delete each entity type
         for (const entityName of entitiesToDelete) {
             try {
-                // Get all records for this entity and filter by created_by
-                const records = await base44.asServiceRole.entities[entityName].list();
-                const userRecords = records.filter(r => 
-                    r.created_by === userEmail || 
-                    r.user_email === userEmail ||
-                    r.creator_email === userEmail ||
-                    r.sender_email === userEmail ||
-                    r.recipient_email === userEmail
-                );
-
-                // Delete each record
-                for (const record of userRecords) {
-                    await base44.asServiceRole.entities[entityName].delete(record.id);
+                // Get records created by this user
+                const records = await base44.entities[entityName].list();
+                
+                // Delete each record that belongs to the user
+                for (const record of records) {
+                    if (record.created_by === userEmail) {
+                        await base44.entities[entityName].delete(record.id);
+                    }
                 }
 
-                if (userRecords.length > 0) {
+                const deletedCount = records.filter(r => r.created_by === userEmail).length;
+                if (deletedCount > 0) {
                     deletionLog.entities_deleted.push({
                         entity: entityName,
-                        count: userRecords.length
+                        count: deletedCount
                     });
                 }
             } catch (error) {
@@ -125,36 +121,45 @@ Deno.serve(async (req) => {
             }
         }
 
-        // PHASE 2: Delete shared access records
+        // PHASE 2: Delete shared access and family records (best effort)
         try {
-            const sharedAccess = await base44.asServiceRole.entities.SharedAccess.filter({
-                shared_with_email: userEmail
-            });
-            for (const access of sharedAccess) {
-                await base44.asServiceRole.entities.SharedAccess.delete(access.id);
+            const sharedAccess = await base44.entities.SharedAccess.list();
+            const userSharedAccess = sharedAccess.filter(a => 
+                a.shared_with_email === userEmail || a.created_by === userEmail
+            );
+            for (const access of userSharedAccess) {
+                try {
+                    await base44.entities.SharedAccess.delete(access.id);
+                } catch (e) {
+                    console.warn('Could not delete shared access:', e.message);
+                }
             }
-            if (sharedAccess.length > 0) {
+            if (userSharedAccess.length > 0) {
                 deletionLog.entities_deleted.push({
-                    entity: 'SharedAccess (received)',
-                    count: sharedAccess.length
+                    entity: 'SharedAccess',
+                    count: userSharedAccess.length
                 });
             }
         } catch (error) {
             console.warn('Warning: Could not delete shared access:', error.message);
         }
 
-        // PHASE 3: Delete family member roles
         try {
-            const familyRoles = await base44.asServiceRole.entities.FamilyMemberRole.filter({
-                member_email: userEmail
-            });
-            for (const role of familyRoles) {
-                await base44.asServiceRole.entities.FamilyMemberRole.delete(role.id);
+            const familyRoles = await base44.entities.FamilyMemberRole.list();
+            const userRoles = familyRoles.filter(r => 
+                r.member_email === userEmail || r.created_by === userEmail
+            );
+            for (const role of userRoles) {
+                try {
+                    await base44.entities.FamilyMemberRole.delete(role.id);
+                } catch (e) {
+                    console.warn('Could not delete role:', e.message);
+                }
             }
-            if (familyRoles.length > 0) {
+            if (userRoles.length > 0) {
                 deletionLog.entities_deleted.push({
                     entity: 'FamilyMemberRole',
-                    count: familyRoles.length
+                    count: userRoles.length
                 });
             }
         } catch (error) {
