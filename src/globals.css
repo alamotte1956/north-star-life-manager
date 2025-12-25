@@ -10,7 +10,8 @@
   --deep-black: #0a0a0a;
   --champagne-gold: #C5A059;
   --bright-gold: #D4AF37;
-  --soft-gold: #F4E4C1;
+  --soft-gold: #B8935E;
+  --muted-gold: #8B7355;
   --dark-grey: #1a1a1a;
   
   /* Semantic Colors */
@@ -69,7 +70,7 @@ p, span, div, label, input, textarea, select {
 }
 
 .text-secondary {
-  color: var(--champagne-gold);
+  color: var(--muted-gold);
 }
 
 /* Luxury Card System */

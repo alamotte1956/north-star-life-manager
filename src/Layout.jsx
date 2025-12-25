@@ -82,7 +82,7 @@ export default function Layout({ children, currentPageName }) {
                     -webkit-tap-highlight-color: transparent;
                     overscroll-behavior-y: contain;
                     -webkit-overflow-scrolling: touch;
-                    color: #F4E4C1;
+                    color: #B8935E;
                     background-color: #000000;
                 }
 
@@ -116,7 +116,7 @@ export default function Layout({ children, currentPageName }) {
                 }
 
                 p, span, div, a, button, label, input, textarea, select {
-                    color: #F4E4C1;
+                    color: #B8935E;
                 }
                 
                 button, a[role="button"] {
@@ -162,7 +162,7 @@ export default function Layout({ children, currentPageName }) {
                     </div>
                     <button
                         onClick={() => setSearchOpen(true)}
-                        className="w-full flex items-center gap-2 px-3 py-3 bg-white/10 hover:bg-white/15 rounded-lg transition-colors text-[#F8F9FA]/80 text-sm min-h-[50px]"
+                        className="w-full flex items-center gap-2 px-3 py-3 bg-white/10 hover:bg-white/15 rounded-lg transition-colors text-[#B8935E] text-sm min-h-[50px]"
                     >
                         <Search className="w-5 h-5" />
                         <span>Search...</span>
@@ -184,7 +184,7 @@ export default function Layout({ children, currentPageName }) {
                                 className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all font-light min-h-[50px] ${
                                     isActive
                                         ? 'bg-[#C5A059] text-[#0F172A] shadow-lg'
-                                        : 'text-[#F8F9FA]/80 hover:text-[#C5A059] hover:bg-white/5'
+                                        : 'text-[#B8935E] hover:text-[#C5A059] hover:bg-white/5'
                                 }`}
                             >
                                 <Icon className="w-5 h-5" />
@@ -197,12 +197,12 @@ export default function Layout({ children, currentPageName }) {
                         <div className="p-4 border-t border-[#C5A059]/20">
                     <button
                         onClick={handleLogout}
-                        className="flex items-center gap-3 px-4 py-4 rounded-lg text-[#F8F9FA]/80 hover:text-[#C5A059] hover:bg-white/5 transition-all font-light w-full touch-manipulation active:bg-white/10 min-h-[50px]"
+                        className="flex items-center gap-3 px-4 py-4 rounded-lg text-[#B8935E] hover:text-[#C5A059] hover:bg-white/5 transition-all font-light w-full touch-manipulation active:bg-white/10 min-h-[50px]"
                     >
                         <LogOut className="w-5 h-5" />
                         <span className="text-base">Logout</span>
                     </button>
-                    <div className="flex justify-center gap-4 mt-4 text-xs text-[#F8F9FA]/60">
+                    <div className="flex justify-center gap-4 mt-4 text-xs text-[#8B7355]">
                         <Link to={createPageUrl('Privacy')} className="hover:text-[#C5A059] transition-colors">
                             Privacy
                         </Link>
@@ -229,7 +229,7 @@ export default function Layout({ children, currentPageName }) {
                     <div className="flex items-center gap-2">
                         <button
                             onClick={() => setSearchOpen(true)}
-                            className="p-3 text-[#F8F9FA] hover:bg-white/5 rounded-lg touch-manipulation active:scale-95 transition-transform min-h-[50px] min-w-[50px]"
+                            className="p-3 text-[#C5A059] hover:bg-white/5 rounded-lg touch-manipulation active:scale-95 transition-transform min-h-[50px] min-w-[50px]"
                             aria-label="Search"
                         >
                             <Search className="w-6 h-6" />
@@ -237,7 +237,7 @@ export default function Layout({ children, currentPageName }) {
                         <PushNotificationManager />
                         <button
                             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                            className="p-3 text-[#F8F9FA] hover:bg-white/5 rounded-lg touch-manipulation active:scale-95 transition-transform min-h-[50px] min-w-[50px] flex items-center flex-col justify-center gap-1"
+                            className="p-3 text-[#C5A059] hover:bg-white/5 rounded-lg touch-manipulation active:scale-95 transition-transform min-h-[50px] min-w-[50px] flex items-center flex-col justify-center gap-1"
                             aria-label="Toggle menu"
                         >
                             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -260,7 +260,7 @@ export default function Layout({ children, currentPageName }) {
                                     className={`flex items-center gap-3 px-4 py-4 rounded-lg transition-all font-light touch-manipulation active:scale-98 min-h-[50px] ${
                                         isActive
                                             ? 'bg-[#C5A059] text-[#0F172A] shadow-lg'
-                                            : 'text-[#F8F9FA]/80 hover:text-[#C5A059] hover:bg-white/5 active:bg-white/10'
+                                            : 'text-[#B8935E] hover:text-[#C5A059] hover:bg-white/5 active:bg-white/10'
                                     }`}
                                 >
                                     <Icon className="w-6 h-6" />
@@ -270,12 +270,12 @@ export default function Layout({ children, currentPageName }) {
                         })}
                         <button
                             onClick={handleLogout}
-                            className="flex items-center gap-3 px-4 py-4 rounded-lg text-[#F8F9FA]/80 hover:text-[#C5A059] hover:bg-white/5 transition-all font-light w-full min-h-[50px]"
+                            className="flex items-center gap-3 px-4 py-4 rounded-lg text-[#B8935E] hover:text-[#C5A059] hover:bg-white/5 transition-all font-light w-full min-h-[50px]"
                         >
                             <LogOut className="w-6 h-6" />
                             <span className="text-base">Logout</span>
                         </button>
-                        <div className="flex justify-center gap-6 mt-4 text-sm text-[#F8F9FA]/60 pb-4">
+                        <div className="flex justify-center gap-6 mt-4 text-sm text-[#8B7355] pb-4">
                             <Link 
                                 to={createPageUrl('Privacy')} 
                                 onClick={() => setMobileMenuOpen(false)}
