@@ -675,6 +675,9 @@ export default function Investments() {
                         </Card>
                     )}
                 </div>
+
+                {/* Investment Advisor Chatbot */}
+                <InvestmentAdvisorChat />
             </div>
         </div>
     );
