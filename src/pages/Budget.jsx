@@ -17,6 +17,7 @@ import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
 import { format, startOfMonth, endOfMonth, startOfYear, endOfYear } from 'date-fns';
 import GoalProgressCard from '../components/budget/GoalProgressCard';
+import GoalDetailDialog from '../components/goals/GoalDetailDialog';
 
 const categoryLabels = {
     property: 'Property',
@@ -53,6 +54,7 @@ export default function BudgetPage() {
     const [aiInsights, setAiInsights] = useState(null);
     const [loadingInsights, setLoadingInsights] = useState(false);
     const [syncingTransactions, setSyncingTransactions] = useState(false);
+    const [selectedGoalForDetail, setSelectedGoalForDetail] = useState(null);
     const [budgetForm, setBudgetForm] = useState({
         category: 'other',
         monthly_limit: '',
@@ -587,11 +589,22 @@ export default function BudgetPage() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         {goals.map(goal => (
                             <div key={goal.id} className="space-y-2">
-                                <GoalProgressCard 
-                                    goal={goal} 
-                                    onUpdate={refetchGoals}
-                                />
+                                <div className="cursor-pointer" onClick={() => setSelectedGoalForDetail(goal)}>
+                                    <GoalProgressCard 
+                                        goal={goal} 
+                                        onUpdate={refetchGoals}
+                                    />
+                                </div>
                                 <div className="flex gap-2">
+                                    <Button
+                                        variant="outline"
+                                        size="sm"
+                                        onClick={() => setSelectedGoalForDetail(goal)}
+                                        className="flex-1"
+                                    >
+                                        <Target className="w-4 h-4 mr-2" />
+                                        View Details & AI Analysis
+                                    </Button>
                                     <ShareDialog
                                         entityType="FinancialGoal"
                                         entityId={goal.id}
@@ -622,6 +635,13 @@ export default function BudgetPage() {
                             </div>
                         ))}
                     </div>
+                    
+                    {/* Goal Detail Dialog */}
+                    <GoalDetailDialog
+                        goal={selectedGoalForDetail}
+                        open={!!selectedGoalForDetail}
+                        onOpenChange={(open) => !open && setSelectedGoalForDetail(null)}
+                    />
                 </div>
             </div>
         </div>
