@@ -12,6 +12,8 @@ import PWAInstaller from '@/components/PWAInstaller';
 import ProactiveAssistant from '@/components/ProactiveAssistant';
 import PushNotificationManager from '@/components/PushNotificationManager';
 import AuthGuard from '@/components/auth/AuthGuard';
+import OfflineIndicator from '@/components/pwa/OfflineIndicator';
+import OfflineDataManager from '@/components/pwa/OfflineDataManager';
 
 export default function Layout({ children, currentPageName }) {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -81,6 +83,8 @@ export default function Layout({ children, currentPageName }) {
 
     return (
         <AuthGuard>
+        <OfflineDataManager />
+        <OfflineIndicator />
         <div className="min-h-screen flex" style={{ backgroundColor: '#000000' }}>
             <style>{`
                 :root {
