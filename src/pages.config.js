@@ -38,6 +38,7 @@ import Valuables from './pages/Valuables';
 import Vault from './pages/Vault';
 import Vehicles from './pages/Vehicles';
 import CommunicationsHub from './pages/CommunicationsHub';
+import FinancialForecasting from './pages/FinancialForecasting';
 import __Layout from './Layout.jsx';
 
 
@@ -82,6 +83,7 @@ export const PAGES = {
     "Vault": Vault,
     "Vehicles": Vehicles,
     "CommunicationsHub": CommunicationsHub,
+    "FinancialForecasting": FinancialForecasting,
 }
 
 export const pagesConfig = {
