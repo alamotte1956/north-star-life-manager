@@ -691,6 +691,11 @@ export default function Dashboard() {
                     <FinancialHealthAlerts />
                 </div>
 
+                {/* Wellness Insights - Correlation Engine */}
+                <div className="mb-8">
+                    <WellnessInsights />
+                </div>
+
                 {/* AI Financial Advisor */}
                 <div className="mb-8">
                     <FinancialAdvisor />
