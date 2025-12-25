@@ -112,6 +112,7 @@ export default function Layout({ children, currentPageName }) {
         { name: 'Family Tree', icon: Users, path: 'FamilyTree', essential: false },
         { name: 'Audit Log', icon: Shield, path: 'AuditLog', essential: false },
         { name: 'Estate Planning', icon: FileText, path: 'EstatePlanning', essential: false },
+        { name: 'Trust Management', icon: Shield, path: 'TrustManagement', essential: false },
         { name: 'Digital Memorial', icon: Heart, path: 'DigitalMemorial', essential: false },
 
         // Planning & Calendar

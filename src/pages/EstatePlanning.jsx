@@ -6,7 +6,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Progress } from '@/components/ui/progress';
-import { Shield, CheckCircle, FileText, Users, Home, DollarSign, Heart, ArrowRight } from 'lucide-react';
+import { Shield, CheckCircle, FileText, Users, Home, DollarSign, Heart, ArrowRight, Loader2 } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { toast } from 'sonner';
 
@@ -49,6 +49,41 @@ export default function EstatePlanning() {
 
     const handleBack = () => {
         if (step > 1) setStep(step - 1);
+    };
+
+    const [generatingWill, setGeneratingWill] = useState(false);
+
+    const generateWill = async () => {
+        setGeneratingWill(true);
+        try {
+            const response = await base44.functions.invoke('generateWill', {
+                testator_name: formData.grantor_name || user.full_name,
+                state: 'California', // Could add state selector
+                marital_status: formData.marital_status,
+                spouse_name: formData.marital_status === 'married' ? 'Spouse' : null,
+                children: formData.has_children === 'yes' ? `${formData.num_children} children` : 'None',
+                executor: formData.executor,
+                beneficiaries: formData.primary_beneficiaries,
+                asset_distribution: `Estate valued at $${formData.total_estate_value.toLocaleString()}`,
+                special_bequests: formData.charitable_bequests,
+                funeral_wishes: formData.burial_preferences
+            });
+
+            const blob = new Blob([response.data], { type: 'application/pdf' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'Last-Will-Testament.pdf';
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+            a.remove();
+            
+            toast.success('Will generated! Have it reviewed by an attorney.');
+        } catch (error) {
+            toast.error('Failed to generate will');
+        }
+        setGeneratingWill(false);
     };
 
     const handleSubmit = async () => {
@@ -379,30 +414,56 @@ Provide:
 
                 {/* Navigation Buttons */}
                 {step <= totalSteps && (
-                    <div className="flex justify-between mt-6">
-                        <Button
-                            variant="outline"
-                            onClick={handleBack}
-                            disabled={step === 1}
-                        >
-                            Back
-                        </Button>
-                        {step < totalSteps ? (
+                    <div className="space-y-4">
+                        <div className="flex justify-between mt-6">
                             <Button
-                                onClick={handleNext}
-                                className="bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] text-white gap-2"
+                                variant="outline"
+                                onClick={handleBack}
+                                disabled={step === 1}
                             >
-                                Next
-                                <ArrowRight className="w-4 h-4" />
+                                Back
                             </Button>
-                        ) : (
-                            <Button
-                                onClick={handleSubmit}
-                                className="bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] text-white gap-2"
-                            >
-                                <CheckCircle className="w-4 h-4" />
-                                Generate Recommendations
-                            </Button>
+                            {step < totalSteps ? (
+                                <Button
+                                    onClick={handleNext}
+                                    className="bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] text-white gap-2"
+                                >
+                                    Next
+                                    <ArrowRight className="w-4 h-4" />
+                                </Button>
+                            ) : (
+                                <div className="flex gap-2">
+                                    <Button
+                                        onClick={generateWill}
+                                        disabled={generatingWill}
+                                        variant="outline"
+                                        className="gap-2"
+                                    >
+                                        {generatingWill ? (
+                                            <><Loader2 className="w-4 h-4 animate-spin" />Generating...</>
+                                        ) : (
+                                            <><FileText className="w-4 h-4" />Generate Will</>
+                                        )}
+                                    </Button>
+                                    <Button
+                                        onClick={handleSubmit}
+                                        className="bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] text-white gap-2"
+                                    >
+                                        <CheckCircle className="w-4 h-4" />
+                                        Get Recommendations
+                                    </Button>
+                                </div>
+                            )}
+                        </div>
+                        
+                        {step === totalSteps && (
+                            <Card className="bg-blue-50 border-blue-200">
+                                <CardContent className="pt-4 pb-4">
+                                    <p className="text-sm text-blue-900 text-center">
+                                        💡 Generate a draft will now, or get personalized recommendations first
+                                    </p>
+                                </CardContent>
+                            </Card>
                         )}
                     </div>
                 )}

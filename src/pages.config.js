@@ -17,6 +17,7 @@ import CommunicationsHub from './pages/CommunicationsHub';
 import ConciergeService from './pages/ConciergeService';
 import Contacts from './pages/Contacts';
 import CreditScore from './pages/CreditScore';
+import CaregiverCoordination from './pages/CaregiverCoordination';
 import EmailAssistant from './pages/EmailAssistant';
 import EmergencyResponse from './pages/EmergencyResponse';
 import FamilyManagement from './pages/FamilyManagement';
@@ -59,18 +60,18 @@ import EstatePlanning from './pages/EstatePlanning';
 import CharitableGiving from './pages/CharitableGiving';
 import EducationFunds from './pages/EducationFunds';
 import DigitalMemorial from './pages/DigitalMemorial';
+import VideoTutorials from './pages/VideoTutorials';
 import InternationalAssets from './pages/InternationalAssets';
 import MedicareNavigator from './pages/MedicareNavigator';
+import DoctorAppointments from './pages/DoctorAppointments';
 import Health from './pages/Health';
 import ArtCollectibles from './pages/ArtCollectibles';
+import HomeServices from './pages/HomeServices';
 import Home from './pages/Home';
 import Pricing from './pages/Pricing';
 import Dashboard from './pages/Dashboard';
 import VideoCallScheduler from './pages/VideoCallScheduler';
-import VideoTutorials from './pages/VideoTutorials';
-import DoctorAppointments from './pages/DoctorAppointments';
-import HomeServices from './pages/HomeServices';
-import CaregiverCoordination from './pages/CaregiverCoordination';
+import TrustManagement from './pages/TrustManagement';
 import __Layout from './Layout.jsx';
 
 
@@ -94,6 +95,7 @@ export const PAGES = {
     "ConciergeService": ConciergeService,
     "Contacts": Contacts,
     "CreditScore": CreditScore,
+    "CaregiverCoordination": CaregiverCoordination,
     "EmailAssistant": EmailAssistant,
     "EmergencyResponse": EmergencyResponse,
     "FamilyManagement": FamilyManagement,
@@ -136,18 +138,18 @@ export const PAGES = {
     "CharitableGiving": CharitableGiving,
     "EducationFunds": EducationFunds,
     "DigitalMemorial": DigitalMemorial,
+    "VideoTutorials": VideoTutorials,
     "InternationalAssets": InternationalAssets,
     "MedicareNavigator": MedicareNavigator,
+    "DoctorAppointments": DoctorAppointments,
     "Health": Health,
     "ArtCollectibles": ArtCollectibles,
+    "HomeServices": HomeServices,
     "Home": Home,
     "Pricing": Pricing,
     "Dashboard": Dashboard,
     "VideoCallScheduler": VideoCallScheduler,
-    "VideoTutorials": VideoTutorials,
-    "DoctorAppointments": DoctorAppointments,
-    "HomeServices": HomeServices,
-    "CaregiverCoordination": CaregiverCoordination,
+    "TrustManagement": TrustManagement,
 }
 
 export const pagesConfig = {
