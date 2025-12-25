@@ -284,8 +284,8 @@ export default function Layout({ children, currentPageName }) {
                         onClick={handleLogout}
                         className="flex items-center gap-3 px-4 py-4 rounded-lg text-white hover:bg-white/10 transition-all font-light w-full touch-manipulation active:bg-white/20 min-h-[50px]"
                         >
-                        <LogOut className="w-5 h-5" />
-                        <span className="text-base">Logout</span>
+                        <LogOut className="w-5 h-5 text-white" />
+                        <span className="text-base text-white">Logout</span>
                         </button>
                     <div className="mt-4 p-3 bg-[#1E3A5F]/50 rounded-lg border border-[#2E5C8A]/30">
                         <p className="text-[10px] text-[#B8D4ED]/80 leading-relaxed mb-2">
@@ -371,8 +371,8 @@ export default function Layout({ children, currentPageName }) {
                             onClick={handleLogout}
                             className="flex items-center gap-3 px-4 py-4 rounded-lg text-white hover:bg-white/10 transition-all font-light w-full min-h-[50px]"
                         >
-                            <LogOut className="w-6 h-6" />
-                            <span className="text-base">Logout</span>
+                            <LogOut className="w-6 h-6 text-white" />
+                            <span className="text-base text-white">Logout</span>
                         </button>
                         <div className="mt-4 p-3 bg-[#1E3A5F]/50 rounded-lg border border-[#2E5C8A]/30">
                             <p className="text-[10px] text-[#B8D4ED]/80 leading-relaxed mb-2">
