@@ -250,9 +250,7 @@ export default function Layout({ children, currentPageName }) {
                         <span>Search...</span>
                         <kbd className="ml-auto text-xs bg-[#8A9A7B]/10 px-1.5 py-0.5 rounded">⌘K</kbd>
                     </button>
-                    <div className="mt-4 space-y-2">
-                        <LargeTextToggle />
-                        <SimplifiedViewToggle />
+                    <div className="mt-4">
                         <PushNotificationManager />
                     </div>
                 </div>
@@ -321,13 +319,9 @@ export default function Layout({ children, currentPageName }) {
                             <h1 className="text-sm font-light text-white" style={{ fontFamily: 'Playfair Display, serif' }}>North Star</h1>
                         </div>
                         </Link>
-                        <Link
-                            to={createPageUrl('Pricing')}
-                            className="w-full flex items-center justify-center px-3 py-3 mb-3 bg-gradient-to-r from-[#4A90E2] to-[#2E5C8A] hover:shadow-lg rounded-lg transition-all min-h-[50px]"
-                        >
-                            <span className="text-white text-xl font-bold">Sign Up / Upgrade</span>
-                        </Link>
                         <div className="flex items-center gap-2">
+                        <LargeTextToggle />
+                        <SimplifiedViewToggle />
                         <button
                             onClick={() => setSearchOpen(true)}
                             className="p-3 text-[#B8D4ED] hover:bg-white/10 rounded-lg touch-manipulation active:scale-95 transition-transform min-h-[50px] min-w-[50px]"
@@ -350,10 +344,6 @@ export default function Layout({ children, currentPageName }) {
                 {/* Mobile Menu */}
                 {mobileMenuOpen && (
                     <div className="absolute top-16 left-0 right-0 bg-gradient-to-b from-[#0F1729] to-[#1E3A5F] border-b border-[#2E5C8A] p-4 space-y-2 max-h-[calc(100vh-4rem)] overflow-y-auto shadow-2xl">
-                        <div className="mb-4 space-y-2">
-                            <LargeTextToggle />
-                            <SimplifiedViewToggle />
-                        </div>
                         {navItems.filter(item => !simplifiedView || item.essential).map((item) => {
                             const Icon = item.icon;
                             const isActive = currentPageName === item.path;

@@ -27,14 +27,12 @@ export default function LargeTextToggle() {
 
     return (
         <Button
-            variant={largeText ? "default" : "outline"}
-            size="sm"
             onClick={toggleLargeText}
-            className="gap-2"
+            className="bg-gradient-to-r from-[#4A90E2] to-[#2E5C8A] text-white hover:shadow-lg gap-2 min-h-[50px]"
             title="Toggle Large Text Mode"
         >
             <Type className="w-4 h-4" />
-            {largeText ? 'Normal Text' : 'Large Text'}
+            <span className="hidden sm:inline">{largeText ? 'Normal Text' : 'Large Text'}</span>
         </Button>
     );
 }
