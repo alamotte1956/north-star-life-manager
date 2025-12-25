@@ -61,19 +61,19 @@ export default function MedicalProfile() {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-[#F8F7F4] via-white to-[#F8F7F4]">
+        <div className="min-h-screen bg-gradient-to-br from-[#F8F9FA] via-white to-[#E8EEF5]">
             <div className="max-w-5xl mx-auto px-6 py-12">
                 <div className="flex items-center justify-between mb-8">
                     <div className="flex items-center gap-4">
                         <div className="relative">
-                            <div className="absolute inset-0 bg-[#8B2635]/30 rounded-2xl blur-xl" />
-                            <div className="relative bg-gradient-to-br from-[#1B4B7F] to-[#0F2847] p-4 rounded-2xl">
-                                <Heart className="w-8 h-8 text-[#E8DCC4]" />
+                            <div className="absolute inset-0 bg-[#4A90E2]/30 rounded-2xl blur-xl" />
+                            <div className="relative bg-gradient-to-br from-[#2E5C8A] to-[#4A90E2] p-4 rounded-2xl">
+                                <Heart className="w-8 h-8 text-white" />
                             </div>
                         </div>
                         <div>
-                            <h1 className="text-4xl font-light text-[#1B4B7F]">Medical Emergency Profile</h1>
-                            <p className="text-[#1B4B7F]/60 font-light">Critical information for first responders and physicians</p>
+                            <h1 className="text-4xl font-light text-black">Medical Emergency Profile</h1>
+                            <p className="text-[#0F1729]/60 font-light">Critical information for first responders and physicians</p>
                         </div>
                     </div>
 
@@ -82,7 +82,7 @@ export default function MedicalProfile() {
                             <Button
                                 variant="outline"
                                 onClick={handlePrintCard}
-                                className="border-[#1B4B7F]/20"
+                                className="border-[#4A90E2]/20"
                             >
                                 <Download className="w-4 h-4 mr-2" />
                                 Print Card
@@ -90,7 +90,7 @@ export default function MedicalProfile() {
                         )}
                         <Dialog open={open} onOpenChange={setOpen}>
                             <DialogTrigger asChild>
-                                <Button className="bg-gradient-to-r from-[#1B4B7F] to-[#0F2847] hover:shadow-lg text-white">
+                                <Button className="bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] hover:shadow-lg text-white">
                                     <Edit className="w-4 h-4 mr-2" />
                                     {profile ? 'Update' : 'Create'} Profile
                                 </Button>
@@ -176,7 +176,7 @@ export default function MedicalProfile() {
                                     </div>
 
                                     <div className="border-t pt-4">
-                                        <h4 className="font-medium text-[#1B4B7F] mb-3">Emergency Contact</h4>
+                                        <h4 className="font-medium text-black mb-3">Emergency Contact</h4>
                                         <div className="grid grid-cols-3 gap-4">
                                             <div>
                                                 <Label>Name</Label>
@@ -204,7 +204,7 @@ export default function MedicalProfile() {
                                     </div>
 
                                     <div className="border-t pt-4">
-                                        <h4 className="font-medium text-[#1B4B7F] mb-3">Primary Physician</h4>
+                                        <h4 className="font-medium text-black mb-3">Primary Physician</h4>
                                         <div className="grid grid-cols-2 gap-4">
                                             <div>
                                                 <Label>Physician Name</Label>
@@ -233,7 +233,7 @@ export default function MedicalProfile() {
                                     </div>
 
                                     <div className="border-t pt-4">
-                                        <h4 className="font-medium text-[#1B4B7F] mb-3">Insurance</h4>
+                                        <h4 className="font-medium text-black mb-3">Insurance</h4>
                                         <div className="grid grid-cols-3 gap-4">
                                             <div>
                                                 <Label>Provider</Label>
@@ -269,7 +269,7 @@ export default function MedicalProfile() {
                                         />
                                     </div>
 
-                                    <Button type="submit" className="w-full bg-gradient-to-r from-[#8B2635] to-[#A63446]">
+                                    <Button type="submit" className="w-full bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] text-white">
                                         {profile ? 'Update' : 'Create'} Profile
                                     </Button>
                                 </form>
@@ -281,15 +281,15 @@ export default function MedicalProfile() {
                 {profile ? (
                     <div className="space-y-6">
                         {/* Critical Alert Banner */}
-                        <Card className="border-2 border-[#8B2635] bg-gradient-to-r from-red-50 to-orange-50">
+                        <Card className="border-2 border-red-500 bg-gradient-to-r from-red-50 to-orange-50">
                             <CardContent className="pt-6">
                                 <div className="flex items-start gap-3">
-                                    <AlertCircle className="w-6 h-6 text-[#8B2635] mt-1" />
+                                    <AlertCircle className="w-6 h-6 text-red-600 mt-1" />
                                     <div>
-                                        <h3 className="text-lg font-medium text-[#8B2635] mb-2">
+                                        <h3 className="text-lg font-medium text-red-700 mb-2">
                                             Emergency Medical Information
                                         </h3>
-                                        <p className="text-sm text-[#8B2635]/80">
+                                        <p className="text-sm text-red-600">
                                             This information is critical for first responders and medical personnel. Keep it current and accessible.
                                         </p>
                                     </div>
@@ -299,17 +299,17 @@ export default function MedicalProfile() {
 
                         {/* Emergency Card - Printable */}
                         <Card className="shadow-xl print:shadow-none print:border-2">
-                            <CardHeader className="bg-gradient-to-r from-[#1B4B7F] to-[#0F2847] text-white">
+                            <CardHeader className="bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] text-white">
                                 <CardTitle className="text-2xl font-light">Medical Emergency Card</CardTitle>
                             </CardHeader>
                             <CardContent className="pt-6">
                                 <div className="grid grid-cols-2 gap-6">
                                     <div>
-                                        <div className="text-sm text-[#1B4B7F]/50 mb-1">Blood Type</div>
-                                        <div className="text-3xl font-light text-[#8B2635]">{profile.blood_type}</div>
+                                        <div className="text-sm text-[#0F1729]/50 mb-1">Blood Type</div>
+                                        <div className="text-3xl font-light text-red-600">{profile.blood_type}</div>
                                     </div>
                                     <div>
-                                        <div className="text-sm text-[#1B4B7F]/50 mb-1">Status</div>
+                                        <div className="text-sm text-[#0F1729]/50 mb-1">Status</div>
                                         <div className="flex gap-2">
                                             {profile.organ_donor && (
                                                 <Badge className="bg-green-50 text-green-700 border-green-200">
@@ -334,15 +334,15 @@ export default function MedicalProfile() {
 
                                 {profile.current_medications && (
                                     <div className="mt-4">
-                                        <div className="text-sm text-[#1B4B7F]/50 mb-2">Current Medications</div>
-                                        <div className="text-[#1B4B7F] whitespace-pre-line">{profile.current_medications}</div>
+                                        <div className="text-sm text-[#0F1729]/50 mb-2">Current Medications</div>
+                                        <div className="text-black whitespace-pre-line">{profile.current_medications}</div>
                                     </div>
                                 )}
 
                                 {profile.chronic_conditions && (
                                     <div className="mt-4">
-                                        <div className="text-sm text-[#1B4B7F]/50 mb-2">Chronic Conditions</div>
-                                        <div className="text-[#1B4B7F]">{profile.chronic_conditions}</div>
+                                        <div className="text-sm text-[#0F1729]/50 mb-2">Chronic Conditions</div>
+                                        <div className="text-black">{profile.chronic_conditions}</div>
                                     </div>
                                 )}
 
@@ -360,19 +360,19 @@ export default function MedicalProfile() {
                             <Card className="shadow-lg">
                                 <CardHeader>
                                     <CardTitle className="text-lg font-light flex items-center gap-2">
-                                        <Phone className="w-5 h-5 text-[#8B2635]" />
+                                        <Phone className="w-5 h-5 text-[#4A90E2]" />
                                         Emergency Contact
                                     </CardTitle>
                                 </CardHeader>
                                 <CardContent>
                                     {profile.emergency_contact_name ? (
                                         <div className="space-y-2">
-                                            <div className="font-medium text-[#1B4B7F]">{profile.emergency_contact_name}</div>
+                                            <div className="font-medium text-black">{profile.emergency_contact_name}</div>
                                             {profile.emergency_contact_relationship && (
-                                                <div className="text-sm text-[#1B4B7F]/60">{profile.emergency_contact_relationship}</div>
+                                                <div className="text-sm text-[#0F1729]/60">{profile.emergency_contact_relationship}</div>
                                             )}
                                             {profile.emergency_contact_phone && (
-                                                <div className="text-[#8B2635] font-medium">
+                                                <div className="text-[#4A90E2] font-medium">
                                                     <a href={`tel:${profile.emergency_contact_phone}`}>{profile.emergency_contact_phone}</a>
                                                 </div>
                                             )}
@@ -390,9 +390,9 @@ export default function MedicalProfile() {
                                 <CardContent>
                                     {profile.primary_physician ? (
                                         <div className="space-y-2">
-                                            <div className="font-medium text-[#1B4B7F]">{profile.primary_physician}</div>
+                                            <div className="font-medium text-black">{profile.primary_physician}</div>
                                             {profile.primary_physician_phone && (
-                                                <div className="text-[#8B2635] font-medium">
+                                                <div className="text-[#4A90E2] font-medium">
                                                     <a href={`tel:${profile.primary_physician_phone}`}>{profile.primary_physician_phone}</a>
                                                 </div>
                                             )}
@@ -410,9 +410,9 @@ export default function MedicalProfile() {
                                 <CardContent>
                                     {profile.insurance_provider ? (
                                         <div className="space-y-2">
-                                            <div className="font-medium text-[#1B4B7F]">{profile.insurance_provider}</div>
+                                            <div className="font-medium text-black">{profile.insurance_provider}</div>
                                             {profile.insurance_policy_number && (
-                                                <div className="text-sm text-[#1B4B7F]/70">
+                                                <div className="text-sm text-[#0F1729]/70">
                                                     Policy: {profile.insurance_policy_number}
                                                 </div>
                                             )}
@@ -426,9 +426,9 @@ export default function MedicalProfile() {
                     </div>
                 ) : (
                     <Card className="text-center py-16">
-                        <Heart className="w-16 h-16 text-[#1B4B7F]/20 mx-auto mb-4" />
-                        <p className="text-[#1B4B7F]/40 font-light mb-6">No medical emergency profile created</p>
-                        <p className="text-[#1B4B7F]/30 text-sm mb-6">
+                        <Heart className="w-16 h-16 text-[#0F1729]/20 mx-auto mb-4" />
+                        <p className="text-[#0F1729]/40 font-light mb-6">No medical emergency profile created</p>
+                        <p className="text-[#0F1729]/30 text-sm mb-6">
                             Create a profile with critical medical information for first responders
                         </p>
                     </Card>

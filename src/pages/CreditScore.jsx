@@ -85,21 +85,21 @@ export default function CreditScore() {
     ] : [];
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-black via-[#0a0a0a] to-black">
+        <div className="min-h-screen bg-gradient-to-br from-[#F8F9FA] via-white to-[#E8EEF5]">
             <div className="max-w-7xl mx-auto px-6 py-12">
                 {/* Header */}
                 <div className="mb-8">
                     <div className="flex items-center justify-between">
                         <div className="flex items-center gap-4">
                             <div className="relative">
-                                <div className="absolute inset-0 bg-[#C5A059]/50 rounded-2xl blur-xl" />
-                                <div className="relative bg-gradient-to-br from-[#C5A059] to-[#D4AF37] p-4 rounded-2xl">
-                                    <Shield className="w-8 h-8 text-black" />
+                                <div className="absolute inset-0 bg-[#4A90E2]/30 rounded-2xl blur-xl" />
+                                <div className="relative bg-gradient-to-br from-[#2E5C8A] to-[#4A90E2] p-4 rounded-2xl">
+                                    <Shield className="w-8 h-8 text-white" />
                                 </div>
                             </div>
                             <div>
-                                <h1 className="text-4xl font-light text-[#C5A059]">Credit Score Monitoring</h1>
-                                <p className="text-[#B8935E] font-light">AI-powered insights and improvement tips</p>
+                                <h1 className="text-4xl font-light text-black">Credit Score Monitoring</h1>
+                                <p className="text-[#0F1729]/60 font-light">AI-powered insights and improvement tips</p>
                             </div>
                         </div>
                         <div className="flex gap-2">
@@ -108,7 +108,7 @@ export default function CreditScore() {
                                     onClick={analyzeScore}
                                     disabled={analyzing}
                                     variant="outline"
-                                    className="border-[#C5A059]"
+                                    className="border-[#4A90E2]"
                                 >
                                     {analyzing ? (
                                         <>
@@ -126,7 +126,7 @@ export default function CreditScore() {
                             <Button
                                 onClick={() => fetchScoreMutation.mutate()}
                                 disabled={fetchScoreMutation.isPending}
-                                className="bg-gradient-to-r from-[#C5A059] to-[#D4AF37]"
+                                className="bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] text-white"
                             >
                                 {fetchScoreMutation.isPending ? (
                                     <>
@@ -150,17 +150,17 @@ export default function CreditScore() {
                 </div>
 
                 {!latestScore && !isLoading && (
-                    <Card className="bg-[#1a1a1a] border-[#C5A059]">
+                    <Card className="bg-white border-[#4A90E2]">
                         <CardContent className="py-12 text-center">
-                            <Shield className="w-16 h-16 mx-auto mb-4 text-[#C5A059]" />
-                            <h3 className="text-xl font-semibold text-[#C5A059] mb-2">Link Your Credit Report</h3>
-                            <p className="text-[#B8935E] mb-4">
+                            <Shield className="w-16 h-16 mx-auto mb-4 text-[#4A90E2]" />
+                            <h3 className="text-xl font-semibold text-black mb-2">Link Your Credit Report</h3>
+                            <p className="text-[#0F1729]/60 mb-4">
                                 Securely connect your credit report to get AI-powered insights and improvement tips
                             </p>
                             <Button
                                 onClick={() => fetchScoreMutation.mutate()}
                                 disabled={fetchScoreMutation.isPending}
-                                className="bg-[#C5A059]"
+                                className="bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] text-white"
                             >
                                 <Link className="w-4 h-4 mr-2" />
                                 Link Credit Report
@@ -172,7 +172,7 @@ export default function CreditScore() {
                 {latestScore && (
                     <div className="space-y-8">
                         {/* Credit Score Card */}
-                        <Card className="bg-gradient-to-br from-[#C5A059]/10 to-[#D4AF37]/10 border-[#C5A059] border-2">
+                        <Card className="bg-gradient-to-br from-[#4A90E2]/10 to-[#7BB3E0]/10 border-[#4A90E2] border-2">
                             <CardContent className="pt-8">
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                     <div className="text-center md:text-left">
@@ -193,13 +193,13 @@ export default function CreditScore() {
                                                 </span>
                                             )}
                                         </div>
-                                        <div className="text-7xl font-light text-[#C5A059] mb-2">
+                                        <div className="text-7xl font-light text-[#4A90E2] mb-2">
                                             {latestScore.score}
                                         </div>
-                                        <p className="text-[#B8935E] mb-4">
+                                        <p className="text-[#0F1729]/60 mb-4">
                                             Updated {format(new Date(latestScore.report_date), 'MMM d, yyyy')}
                                         </p>
-                                        <div className="flex items-center gap-2 text-sm text-[#B8935E] justify-center md:justify-start">
+                                        <div className="flex items-center gap-2 text-sm text-[#0F1729]/60 justify-center md:justify-start">
                                             <Shield className="w-4 h-4" />
                                             <span>Powered by {latestScore.provider}</span>
                                         </div>
@@ -208,34 +208,34 @@ export default function CreditScore() {
                                     <div className="space-y-4">
                                         <div>
                                             <div className="flex justify-between text-sm mb-1">
-                                                <span className="text-[#B8935E]">Credit Score Range</span>
-                                                <span className="text-[#C5A059]">{latestScore.score}/850</span>
+                                                <span className="text-[#0F1729]/60">Credit Score Range</span>
+                                                <span className="text-[#4A90E2]">{latestScore.score}/850</span>
                                             </div>
                                             <Progress value={(latestScore.score / 850) * 100} className="h-3" />
                                         </div>
 
                                         <div className="grid grid-cols-2 gap-4 text-sm">
                                             <div>
-                                                <p className="text-[#B8935E] mb-1">Utilization</p>
-                                                <p className="text-lg font-semibold text-[#C5A059]">
+                                                <p className="text-[#0F1729]/60 mb-1">Utilization</p>
+                                                <p className="text-lg font-semibold text-[#4A90E2]">
                                                     {latestScore.credit_utilization}%
                                                 </p>
                                             </div>
                                             <div>
-                                                <p className="text-[#B8935E] mb-1">On-Time Payments</p>
-                                                <p className="text-lg font-semibold text-[#C5A059]">
+                                                <p className="text-[#0F1729]/60 mb-1">On-Time Payments</p>
+                                                <p className="text-lg font-semibold text-[#4A90E2]">
                                                     {latestScore.on_time_payments}%
                                                 </p>
                                             </div>
                                             <div>
-                                                <p className="text-[#B8935E] mb-1">Hard Inquiries</p>
-                                                <p className="text-lg font-semibold text-[#C5A059]">
+                                                <p className="text-[#0F1729]/60 mb-1">Hard Inquiries</p>
+                                                <p className="text-lg font-semibold text-[#4A90E2]">
                                                     {latestScore.hard_inquiries}
                                                 </p>
                                             </div>
                                             <div>
-                                                <p className="text-[#B8935E] mb-1">Total Accounts</p>
-                                                <p className="text-lg font-semibold text-[#C5A059]">
+                                                <p className="text-[#0F1729]/60 mb-1">Total Accounts</p>
+                                                <p className="text-lg font-semibold text-[#4A90E2]">
                                                     {latestScore.total_accounts}
                                                 </p>
                                             </div>
@@ -247,47 +247,47 @@ export default function CreditScore() {
 
                         {/* Charts */}
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                            <Card className="bg-[#1a1a1a] border-[#C5A059]">
+                            <Card className="bg-white border-[#4A90E2]">
                                 <CardHeader>
-                                    <CardTitle className="text-[#C5A059]">Score History</CardTitle>
+                                    <CardTitle className="text-black">Score History</CardTitle>
                                 </CardHeader>
                                 <CardContent>
                                     {scoreHistory.length > 1 ? (
                                         <ResponsiveContainer width="100%" height={250}>
                                             <LineChart data={scoreHistory}>
-                                                <CartesianGrid strokeDasharray="3 3" stroke="#333" />
-                                                <XAxis dataKey="date" stroke="#B8935E" />
-                                                <YAxis stroke="#B8935E" domain={[300, 850]} />
+                                                <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                                                <XAxis dataKey="date" stroke="#64748B" />
+                                                <YAxis stroke="#64748B" domain={[300, 850]} />
                                                 <Tooltip 
-                                                    contentStyle={{ backgroundColor: '#1a1a1a', border: '1px solid #C5A059' }}
-                                                    labelStyle={{ color: '#C5A059' }}
+                                                    contentStyle={{ backgroundColor: 'white', border: '1px solid #4A90E2' }}
+                                                    labelStyle={{ color: '#4A90E2' }}
                                                 />
-                                                <Line type="monotone" dataKey="score" stroke="#C5A059" strokeWidth={2} />
+                                                <Line type="monotone" dataKey="score" stroke="#4A90E2" strokeWidth={2} />
                                             </LineChart>
                                         </ResponsiveContainer>
                                     ) : (
-                                        <div className="h-[250px] flex items-center justify-center text-[#B8935E]">
+                                        <div className="h-[250px] flex items-center justify-center text-[#0F1729]/60">
                                             More data needed for history
                                         </div>
                                     )}
                                 </CardContent>
                             </Card>
 
-                            <Card className="bg-[#1a1a1a] border-[#C5A059]">
+                            <Card className="bg-white border-[#4A90E2]">
                                 <CardHeader>
-                                    <CardTitle className="text-[#C5A059]">Factor Breakdown</CardTitle>
+                                    <CardTitle className="text-black">Factor Breakdown</CardTitle>
                                 </CardHeader>
                                 <CardContent>
                                     <ResponsiveContainer width="100%" height={250}>
                                         <BarChart data={factorBreakdown}>
-                                            <CartesianGrid strokeDasharray="3 3" stroke="#333" />
-                                            <XAxis dataKey="name" stroke="#B8935E" />
-                                            <YAxis stroke="#B8935E" />
+                                            <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                                            <XAxis dataKey="name" stroke="#64748B" />
+                                            <YAxis stroke="#64748B" />
                                             <Tooltip 
-                                                contentStyle={{ backgroundColor: '#1a1a1a', border: '1px solid #C5A059' }}
-                                                labelStyle={{ color: '#C5A059' }}
+                                                contentStyle={{ backgroundColor: 'white', border: '1px solid #4A90E2' }}
+                                                labelStyle={{ color: '#4A90E2' }}
                                             />
-                                            <Bar dataKey="value" fill="#C5A059" />
+                                            <Bar dataKey="value" fill="#4A90E2" />
                                         </BarChart>
                                     </ResponsiveContainer>
                                 </CardContent>
@@ -298,10 +298,10 @@ export default function CreditScore() {
                         {analysis && (
                             <div className="space-y-6">
                                 {/* Overall Assessment */}
-                                <Card className="bg-gradient-to-br from-[#C5A059]/10 to-[#D4AF37]/10 border-[#C5A059]">
+                                <Card className="bg-gradient-to-br from-[#4A90E2]/10 to-[#7BB3E0]/10 border-[#4A90E2]">
                                     <CardHeader>
                                         <CardTitle className="flex items-center justify-between">
-                                            <span className="flex items-center gap-2 text-[#C5A059]">
+                                            <span className="flex items-center gap-2 text-[#4A90E2]">
                                                 <Sparkles className="w-5 h-5" />
                                                 AI Analysis
                                             </span>
@@ -311,13 +311,13 @@ export default function CreditScore() {
                                         </CardTitle>
                                     </CardHeader>
                                     <CardContent>
-                                        <p className="text-[#B8935E] leading-relaxed">{analysis.overall_assessment}</p>
+                                        <p className="text-[#0F1729]/70 leading-relaxed">{analysis.overall_assessment}</p>
                                     </CardContent>
                                 </Card>
 
                                 {/* Factors */}
                                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                                    <Card className="bg-[#1a1a1a] border-green-500">
+                                    <Card className="bg-white border-green-500">
                                         <CardHeader>
                                             <CardTitle className="text-green-400 flex items-center gap-2">
                                                 <CheckCircle className="w-5 h-5" />
@@ -330,8 +330,8 @@ export default function CreditScore() {
                                                     <div key={idx} className="flex items-start gap-2">
                                                         <CheckCircle className="w-4 h-4 text-green-500 mt-0.5" />
                                                         <div>
-                                                            <p className="text-[#C5A059] font-medium">{factor.factor}</p>
-                                                            <p className="text-sm text-[#B8935E]">{factor.impact}</p>
+                                                            <p className="text-black font-medium">{factor.factor}</p>
+                                                            <p className="text-sm text-[#0F1729]/70">{factor.impact}</p>
                                                         </div>
                                                     </div>
                                                 ))}
@@ -353,7 +353,7 @@ export default function CreditScore() {
                                                         <AlertTriangle className="w-4 h-4 text-orange-500 mt-0.5" />
                                                         <div>
                                                             <div className="flex items-center gap-2">
-                                                                <p className="text-[#C5A059] font-medium">{factor.factor}</p>
+                                                                <p className="text-black font-medium">{factor.factor}</p>
                                                                 <Badge className={`text-xs ${
                                                                     factor.priority === 'high' ? 'bg-red-600' :
                                                                     factor.priority === 'medium' ? 'bg-orange-600' :
@@ -362,7 +362,7 @@ export default function CreditScore() {
                                                                     {factor.priority}
                                                                 </Badge>
                                                             </div>
-                                                            <p className="text-sm text-[#B8935E]">{factor.impact}</p>
+                                                            <p className="text-sm text-[#0F1729]/70">{factor.impact}</p>
                                                         </div>
                                                     </div>
                                                 ))}
@@ -384,10 +384,10 @@ export default function CreditScore() {
                                             {analysis.immediate_actions?.map((action, idx) => (
                                                 <div key={idx} className="p-4 bg-black/30 rounded-lg">
                                                     <div className="flex items-start gap-3">
-                                                        <ChevronRight className="w-5 h-5 text-[#C5A059] mt-0.5" />
+                                                        <ChevronRight className="w-5 h-5 text-[#4A90E2] mt-0.5" />
                                                         <div className="flex-1">
-                                                            <p className="text-[#C5A059] font-medium mb-1">{action.action}</p>
-                                                            <div className="flex items-center gap-4 text-sm text-[#B8935E]">
+                                                            <p className="text-black font-medium mb-1">{action.action}</p>
+                                                            <div className="flex items-center gap-4 text-sm text-[#0F1729]/70">
                                                                 <span>Impact: {action.expected_impact}</span>
                                                                 <span className="flex items-center gap-1">
                                                                     <Calendar className="w-3 h-3" />
@@ -404,32 +404,32 @@ export default function CreditScore() {
 
                                 {/* Additional Insights */}
                                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                                    <Card className="bg-[#1a1a1a] border-[#C5A059]">
+                                    <Card className="bg-white border-[#4A90E2]">
                                         <CardHeader>
-                                            <CardTitle className="text-[#C5A059] text-sm">Next Tier Estimate</CardTitle>
+                                            <CardTitle className="text-black text-sm">Next Tier Estimate</CardTitle>
                                         </CardHeader>
                                         <CardContent>
-                                            <p className="text-sm text-[#B8935E]">{analysis.next_tier_estimate}</p>
+                                            <p className="text-sm text-[#0F1729]/70">{analysis.next_tier_estimate}</p>
                                         </CardContent>
                                     </Card>
 
-                                    <Card className="bg-[#1a1a1a] border-[#C5A059]">
+                                    <Card className="bg-white border-[#4A90E2]">
                                         <CardHeader>
-                                            <CardTitle className="text-[#C5A059] text-sm">Credit Utilization</CardTitle>
+                                            <CardTitle className="text-black text-sm">Credit Utilization</CardTitle>
                                         </CardHeader>
                                         <CardContent>
-                                            <p className="text-sm text-[#B8935E]">
+                                            <p className="text-sm text-[#0F1729]/70">
                                                 {analysis.credit_utilization_recommendation}
                                             </p>
                                         </CardContent>
                                     </Card>
 
-                                    <Card className="bg-[#1a1a1a] border-[#C5A059]">
+                                    <Card className="bg-white border-[#4A90E2]">
                                         <CardHeader>
-                                            <CardTitle className="text-[#C5A059] text-sm">Improvement Potential</CardTitle>
+                                            <CardTitle className="text-black text-sm">Improvement Potential</CardTitle>
                                         </CardHeader>
                                         <CardContent>
-                                            <div className="space-y-1 text-sm text-[#B8935E]">
+                                            <div className="space-y-1 text-sm text-[#0F1729]/70">
                                                 <p>30 days: +{analysis.score_improvement_potential?.in_30_days} pts</p>
                                                 <p>90 days: +{analysis.score_improvement_potential?.in_90_days} pts</p>
                                                 <p>12 months: +{analysis.score_improvement_potential?.in_12_months} pts</p>
@@ -439,14 +439,14 @@ export default function CreditScore() {
                                 </div>
 
                                 {/* Long-term Strategies */}
-                                <Card className="bg-[#1a1a1a] border-[#C5A059]">
+                                <Card className="bg-white border-[#4A90E2]">
                                     <CardHeader>
-                                        <CardTitle className="text-[#C5A059]">Long-term Strategies</CardTitle>
+                                        <CardTitle className="text-black">Long-term Strategies</CardTitle>
                                     </CardHeader>
                                     <CardContent>
                                         <ul className="space-y-2">
                                             {analysis.long_term_strategies?.map((strategy, idx) => (
-                                                <li key={idx} className="flex items-start gap-2 text-[#B8935E]">
+                                                <li key={idx} className="flex items-start gap-2 text-[#0F1729]/70">
                                                     <span>•</span>
                                                     <span>{strategy}</span>
                                                 </li>
@@ -457,7 +457,7 @@ export default function CreditScore() {
 
                                 {/* Risk Factors */}
                                 {analysis.risk_factors?.length > 0 && (
-                                    <Card className="bg-[#1a1a1a] border-orange-500">
+                                    <Card className="bg-white border-orange-500">
                                         <CardHeader>
                                             <CardTitle className="text-orange-400 flex items-center gap-2">
                                                 <Shield className="w-5 h-5" />
@@ -467,7 +467,7 @@ export default function CreditScore() {
                                         <CardContent>
                                             <ul className="space-y-2">
                                                 {analysis.risk_factors.map((risk, idx) => (
-                                                    <li key={idx} className="flex items-start gap-2 text-[#B8935E]">
+                                                    <li key={idx} className="flex items-start gap-2 text-[#0F1729]/70">
                                                         <span className="text-orange-500">⚠</span>
                                                         <span>{risk}</span>
                                                     </li>

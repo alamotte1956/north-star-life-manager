@@ -22,16 +22,16 @@ export default function Succession() {
 
     if (!user || !user.keycard_code) {
         return (
-            <div className="min-h-screen bg-gradient-to-br from-[#0F1B2E] via-[#1A2B44] to-[#0F1B2E] flex items-center justify-center p-6">
+            <div className="min-h-screen bg-gradient-to-br from-[#F8F9FA] via-white to-[#E8EEF5] flex items-center justify-center p-6">
                 <div className="text-center max-w-md">
-                    <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8">
-                        <div className="inline-flex items-center justify-center w-20 h-20 bg-[#C5A059]/10 rounded-full mb-6">
-                            <Shield className="w-12 h-12 text-[#C5A059]" />
+                    <div className="bg-white backdrop-blur-xl border border-[#4A90E2]/20 rounded-2xl p-8">
+                        <div className="inline-flex items-center justify-center w-20 h-20 bg-[#4A90E2]/10 rounded-full mb-6">
+                            <Shield className="w-12 h-12 text-[#4A90E2]" />
                         </div>
-                        <h2 className="text-2xl font-light text-white mb-3">
+                        <h2 className="text-2xl font-light text-black mb-3">
                             Setup Required
                         </h2>
-                        <p className="text-white/70 font-light mb-8 leading-relaxed">
+                        <p className="text-[#0F1729]/70 font-light mb-8 leading-relaxed">
                             Set up your secure keycard code to access critical emergency information and succession details.
                         </p>
                         <Button
@@ -64,24 +64,24 @@ export default function Succession() {
     }
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-[#0F1B2E] via-[#1A2B44] to-[#0F1B2E]">
+        <div className="min-h-screen bg-gradient-to-br from-[#F8F9FA] via-white to-[#E8EEF5]">
             <div className="max-w-7xl mx-auto px-6 py-12">
                 {/* Header */}
                 <div className="mb-12">
                     <div className="flex items-center gap-4 mb-4">
                         <div className="relative">
-                            <div className="absolute inset-0 bg-[#C5A059]/30 rounded-2xl blur-xl" />
-                            <div className="relative bg-gradient-to-br from-[#C5A059] to-[#D4AF37] p-4 rounded-2xl shadow-lg">
+                            <div className="absolute inset-0 bg-[#4A90E2]/30 rounded-2xl blur-xl" />
+                            <div className="relative bg-gradient-to-br from-[#2E5C8A] to-[#4A90E2] p-4 rounded-2xl shadow-lg">
                                 <Shield className="w-8 h-8 text-white" />
                             </div>
                         </div>
                         <div>
-                            <h1 className="text-4xl font-light text-white mb-2">
+                            <h1 className="text-4xl font-light text-black mb-2">
                                 Succession Dashboard
                             </h1>
                             <div className="flex items-center gap-2">
                                 <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
-                                <p className="text-white/70 font-light">
+                                <p className="text-[#0F1729]/70 font-light">
                                     Succession Ready • Emergency Access Active
                                 </p>
                             </div>
@@ -98,10 +98,10 @@ export default function Succession() {
                     </div>
                 ) : (
                     <div className="text-center py-16">
-                        <div className="inline-flex items-center justify-center w-20 h-20 bg-white/5 rounded-full mb-4">
-                            <Shield className="w-10 h-10 text-white/20" />
+                        <div className="inline-flex items-center justify-center w-20 h-20 bg-[#4A90E2]/10 rounded-full mb-4">
+                            <Shield className="w-10 h-10 text-[#4A90E2]/40" />
                         </div>
-                        <p className="text-white/40 font-light mb-6">
+                        <p className="text-[#0F1729]/40 font-light mb-6">
                             No emergency information stored yet
                         </p>
                         <Button

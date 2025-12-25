@@ -124,19 +124,19 @@ export default function Legal() {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-[#F8F7F4] via-white to-[#F8F7F4]">
+        <div className="min-h-screen bg-gradient-to-br from-[#F8F9FA] via-white to-[#E8EEF5]">
             <div className="max-w-7xl mx-auto px-6 py-12">
                 <div className="mb-8">
                     <div className="flex items-center gap-4 mb-4">
                         <div className="relative">
-                            <div className="absolute inset-0 bg-[#8B2635]/30 rounded-2xl blur-xl" />
-                            <div className="relative bg-gradient-to-br from-[#1B4B7F] to-[#0F2847] p-4 rounded-2xl">
-                                <Scale className="w-8 h-8 text-[#E8DCC4]" />
+                            <div className="absolute inset-0 bg-[#4A90E2]/30 rounded-2xl blur-xl" />
+                            <div className="relative bg-gradient-to-br from-[#2E5C8A] to-[#4A90E2] p-4 rounded-2xl">
+                                <Scale className="w-8 h-8 text-white" />
                             </div>
                         </div>
                         <div>
-                            <h1 className="text-4xl font-light text-[#1B4B7F]">Legal & Estate</h1>
-                            <p className="text-[#1B4B7F]/60 font-light">Advance directives & beneficiary information</p>
+                            <h1 className="text-4xl font-light text-black">Legal & Estate</h1>
+                            <p className="text-[#0F1729]/60 font-light">Advance directives & beneficiary information</p>
                         </div>
                     </div>
                 </div>
@@ -146,7 +146,7 @@ export default function Legal() {
                 </div>
 
                 <Tabs defaultValue="directives" className="space-y-6">
-                    <TabsList className="bg-white border border-[#1B4B7F]/10 print:hidden">
+                    <TabsList className="bg-white border border-[#4A90E2]/10 print:hidden">
                         <TabsTrigger value="directives">Advance Directives</TabsTrigger>
                         <TabsTrigger value="beneficiaries">Beneficiaries</TabsTrigger>
                     </TabsList>
@@ -154,10 +154,10 @@ export default function Legal() {
                     {/* Advance Directives Tab */}
                     <TabsContent value="directives">
                         <div className="flex justify-between items-center mb-6">
-                            <p className="text-[#1B4B7F]/60 font-light">Critical legal documents for healthcare and financial decisions</p>
+                            <p className="text-[#0F1729]/60 font-light">Critical legal documents for healthcare and financial decisions</p>
                             <Dialog open={directiveOpen} onOpenChange={setDirectiveOpen} className="print:hidden">
                                 <DialogTrigger asChild>
-                                    <Button className="bg-gradient-to-r from-[#1B4B7F] to-[#0F2847] hover:shadow-lg text-white">
+                                    <Button className="bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] hover:shadow-lg text-white">
                                         <Plus className="w-4 h-4 mr-2" />
                                         Add Directive
                                     </Button>
@@ -282,11 +282,11 @@ export default function Legal() {
                                         <CardContent className="pt-6">
                                             <div className="flex items-start justify-between mb-4">
                                                 <div className="flex items-center gap-3">
-                                                    <div className="bg-[#8B2635]/10 p-2 rounded-lg">
-                                                        <Shield className="w-5 h-5 text-[#8B2635]" />
+                                                    <div className="bg-[#4A90E2]/10 p-2 rounded-lg">
+                                                        <Shield className="w-5 h-5 text-[#4A90E2]" />
                                                     </div>
                                                     <div>
-                                                        <h3 className="font-light text-[#1B4B7F]">{directive.title}</h3>
+                                                        <h3 className="font-light text-black">{directive.title}</h3>
                                                         <Badge className="mt-1 bg-blue-50 text-blue-700 border-blue-200 text-xs">
                                                             {directiveLabels[directive.document_type]}
                                                         </Badge>
@@ -302,20 +302,20 @@ export default function Legal() {
                                             <div className="space-y-2 text-sm">
                                                 {directive.agent_name && (
                                                     <div>
-                                                        <span className="text-[#1B4B7F]/50">Agent:</span>
-                                                        <span className="text-[#1B4B7F]/70 ml-2">{directive.agent_name}</span>
+                                                        <span className="text-[#0F1729]/50">Agent:</span>
+                                                        <span className="text-[#0F1729]/70 ml-2">{directive.agent_name}</span>
                                                     </div>
                                                 )}
                                                 {directive.agent_phone && (
-                                                    <div className="text-[#1B4B7F]/70">{directive.agent_phone}</div>
+                                                    <div className="text-[#0F1729]/70">{directive.agent_phone}</div>
                                                 )}
                                                 {directive.execution_date && (
-                                                    <div className="text-[#1B4B7F]/50 text-xs">
+                                                    <div className="text-[#0F1729]/50 text-xs">
                                                         Executed: {format(new Date(directive.execution_date), 'MMM d, yyyy')}
                                                     </div>
                                                 )}
                                                 {directive.stored_location && (
-                                                    <div className="text-[#1B4B7F]/50 text-xs">
+                                                    <div className="text-[#0F1729]/50 text-xs">
                                                         Location: {directive.stored_location}
                                                     </div>
                                                 )}
@@ -326,9 +326,9 @@ export default function Legal() {
                             </div>
                         ) : (
                             <Card className="text-center py-16">
-                                <Shield className="w-16 h-16 text-[#1B4B7F]/20 mx-auto mb-4" />
-                                <p className="text-[#1B4B7F]/40 font-light">No advance directives recorded</p>
-                                <p className="text-[#1B4B7F]/30 text-sm mt-2">Add critical legal documents for your attorney</p>
+                                <Shield className="w-16 h-16 text-[#0F1729]/20 mx-auto mb-4" />
+                                <p className="text-[#0F1729]/40 font-light">No advance directives recorded</p>
+                                <p className="text-[#0F1729]/30 text-sm mt-2">Add critical legal documents for your attorney</p>
                             </Card>
                         )}
                     </TabsContent>
@@ -336,10 +336,10 @@ export default function Legal() {
                     {/* Beneficiaries Tab */}
                     <TabsContent value="beneficiaries">
                         <div className="flex justify-between items-center mb-6">
-                            <p className="text-[#1B4B7F]/60 font-light">Track beneficiary designations across accounts</p>
+                            <p className="text-[#0F1729]/60 font-light">Track beneficiary designations across accounts</p>
                             <Dialog open={beneficiaryOpen} onOpenChange={setBeneficiaryOpen} className="print:hidden">
                                 <DialogTrigger asChild>
-                                    <Button className="bg-gradient-to-r from-[#1B4B7F] to-[#0F2847] hover:shadow-lg text-white">
+                                    <Button className="bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] hover:shadow-lg text-white">
                                         <Plus className="w-4 h-4 mr-2" />
                                         Add Beneficiary
                                     </Button>
@@ -394,7 +394,7 @@ export default function Legal() {
                                         </div>
 
                                         <div className="border-t pt-4">
-                                            <h4 className="font-medium text-[#1B4B7F] mb-3">Primary Beneficiary</h4>
+                                            <h4 className="font-medium text-black mb-3">Primary Beneficiary</h4>
                                             <div className="grid grid-cols-2 gap-4">
                                                 <div>
                                                     <Label>Name</Label>
@@ -415,7 +415,7 @@ export default function Legal() {
                                         </div>
 
                                         <div className="border-t pt-4">
-                                            <h4 className="font-medium text-[#1B4B7F] mb-3">Contingent Beneficiary</h4>
+                                            <h4 className="font-medium text-black mb-3">Contingent Beneficiary</h4>
                                             <div className="grid grid-cols-2 gap-4">
                                                 <div>
                                                     <Label>Name</Label>
@@ -457,11 +457,11 @@ export default function Legal() {
                                     <Card key={ben.id} className="shadow-lg hover:shadow-xl transition-all">
                                         <CardContent className="pt-6">
                                             <div className="flex items-start gap-3 mb-4">
-                                                <div className="bg-[#8B2635]/10 p-2 rounded-lg">
-                                                    <Users className="w-5 h-5 text-[#8B2635]" />
+                                                <div className="bg-[#4A90E2]/10 p-2 rounded-lg">
+                                                    <Users className="w-5 h-5 text-[#4A90E2]" />
                                                 </div>
                                                 <div className="flex-1">
-                                                    <h3 className="font-light text-[#1B4B7F]">{ben.account_name}</h3>
+                                                    <h3 className="font-light text-black">{ben.account_name}</h3>
                                                     <Badge className="mt-1 bg-purple-50 text-purple-700 border-purple-200 text-xs">
                                                         {accountTypeLabels[ben.account_type]}
                                                     </Badge>
@@ -470,16 +470,16 @@ export default function Legal() {
 
                                             <div className="space-y-3 text-sm">
                                                 {ben.institution && (
-                                                    <div className="text-[#1B4B7F]/60">{ben.institution}</div>
+                                                    <div className="text-[#0F1729]/60">{ben.institution}</div>
                                                 )}
                                                 {ben.primary_beneficiary_name && (
                                                     <div className="border-t pt-2">
-                                                        <div className="text-[#1B4B7F]/50 text-xs mb-1">Primary Beneficiary:</div>
-                                                        <div className="text-[#1B4B7F] font-medium">
+                                                        <div className="text-[#0F1729]/50 text-xs mb-1">Primary Beneficiary:</div>
+                                                        <div className="text-black font-medium">
                                                             {ben.primary_beneficiary_name}
                                                         </div>
                                                         {ben.primary_beneficiary_relationship && (
-                                                            <div className="text-[#1B4B7F]/60 text-xs">
+                                                            <div className="text-[#0F1729]/60 text-xs">
                                                                 {ben.primary_beneficiary_relationship}
                                                             </div>
                                                         )}
@@ -487,14 +487,14 @@ export default function Legal() {
                                                 )}
                                                 {ben.contingent_beneficiary_name && (
                                                     <div className="border-t pt-2">
-                                                        <div className="text-[#1B4B7F]/50 text-xs mb-1">Contingent:</div>
-                                                        <div className="text-[#1B4B7F]">
+                                                        <div className="text-[#0F1729]/50 text-xs mb-1">Contingent:</div>
+                                                        <div className="text-black">
                                                             {ben.contingent_beneficiary_name}
                                                         </div>
                                                     </div>
                                                 )}
                                                 {ben.last_updated && (
-                                                    <div className="text-[#1B4B7F]/40 text-xs">
+                                                    <div className="text-[#0F1729]/40 text-xs">
                                                         Updated: {format(new Date(ben.last_updated), 'MMM yyyy')}
                                                     </div>
                                                 )}
@@ -505,9 +505,9 @@ export default function Legal() {
                             </div>
                         ) : (
                             <Card className="text-center py-16">
-                                <Users className="w-16 h-16 text-[#1B4B7F]/20 mx-auto mb-4" />
-                                <p className="text-[#1B4B7F]/40 font-light">No beneficiary designations recorded</p>
-                                <p className="text-[#1B4B7F]/30 text-sm mt-2">Track who inherits your accounts and policies</p>
+                                <Users className="w-16 h-16 text-[#0F1729]/20 mx-auto mb-4" />
+                                <p className="text-[#0F1729]/40 font-light">No beneficiary designations recorded</p>
+                                <p className="text-[#0F1729]/30 text-sm mt-2">Track who inherits your accounts and policies</p>
                             </Card>
                         )}
                     </TabsContent>

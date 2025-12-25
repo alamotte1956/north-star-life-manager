@@ -48,18 +48,18 @@ export default function Collaboration() {
     });
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-[#F8F7F4] via-white to-[#F8F7F4]">
+        <div className="min-h-screen bg-gradient-to-br from-[#F8F9FA] via-white to-[#E8EEF5]">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-12">
                 <div className="flex items-center gap-4 mb-8">
                     <div className="relative">
-                        <div className="absolute inset-0 bg-[#C9A95C]/30 rounded-2xl blur-xl" />
-                        <div className="relative bg-gradient-to-br from-[#1A2B44] to-[#0F1B2E] p-4 rounded-2xl">
-                            <Users className="w-8 h-8 text-[#C9A95C]" />
+                        <div className="absolute inset-0 bg-[#4A90E2]/30 rounded-2xl blur-xl" />
+                        <div className="relative bg-gradient-to-br from-[#2E5C8A] to-[#4A90E2] p-4 rounded-2xl">
+                            <Users className="w-8 h-8 text-white" />
                         </div>
                     </div>
                     <div>
-                        <h1 className="text-4xl font-light text-[#1A2B44]">Collaboration</h1>
-                        <p className="text-[#1A2B44]/60 font-light">Shared items & team activity</p>
+                        <h1 className="text-4xl font-light text-black">Collaboration</h1>
+                        <p className="text-[#0F1729]/60 font-light">Shared items & team activity</p>
                     </div>
                 </div>
 
@@ -72,43 +72,43 @@ export default function Collaboration() {
                             </CardTitle>
                         </CardHeader>
                         <CardContent>
-                            <div className="text-3xl font-light text-[#1A2B44]">{sharedByMe.length}</div>
+                            <div className="text-3xl font-light text-black">{sharedByMe.length}</div>
                         </CardContent>
                     </Card>
 
                     <Card>
                         <CardHeader>
                             <CardTitle className="text-lg font-light flex items-center gap-2">
-                                <Share2 className="w-5 h-5 text-[#C9A95C]" />
+                                <Share2 className="w-5 h-5 text-[#4A90E2]" />
                                 Shared with Me
                             </CardTitle>
                         </CardHeader>
                         <CardContent>
-                            <div className="text-3xl font-light text-[#1A2B44]">{sharedWithMe.length}</div>
+                            <div className="text-3xl font-light text-black">{sharedWithMe.length}</div>
                         </CardContent>
                     </Card>
 
                     <Card>
                         <CardHeader>
                             <CardTitle className="text-lg font-light flex items-center gap-2">
-                                <CheckSquare className="w-5 h-5 text-[#C9A95C]" />
+                                <CheckSquare className="w-5 h-5 text-[#4A90E2]" />
                                 My Tasks
                             </CardTitle>
                         </CardHeader>
                         <CardContent>
-                            <div className="text-3xl font-light text-[#1A2B44]">{myTasks.length}</div>
+                            <div className="text-3xl font-light text-black">{myTasks.length}</div>
                         </CardContent>
                     </Card>
 
                     <Card>
                         <CardHeader>
                             <CardTitle className="text-lg font-light flex items-center gap-2">
-                                <MessageSquare className="w-5 h-5 text-[#C9A95C]" />
+                                <MessageSquare className="w-5 h-5 text-[#4A90E2]" />
                                 Comments
                             </CardTitle>
                         </CardHeader>
                         <CardContent>
-                            <div className="text-3xl font-light text-[#1A2B44]">{recentComments.length}</div>
+                            <div className="text-3xl font-light text-black">{recentComments.length}</div>
                         </CardContent>
                     </Card>
                 </div>
@@ -116,7 +116,7 @@ export default function Collaboration() {
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                     {/* Shared with Me */}
                     <div>
-                        <h2 className="text-2xl font-light text-[#1A2B44] mb-4">Shared with Me</h2>
+                        <h2 className="text-2xl font-light text-black mb-4">Shared with Me</h2>
                         {sharedWithMe.length > 0 ? (
                             <div className="space-y-3">
                                 {sharedWithMe.map(share => {
@@ -126,12 +126,12 @@ export default function Collaboration() {
                                             <CardContent className="pt-4">
                                                 <div className="flex items-start justify-between">
                                                     <div className="flex items-center gap-3">
-                                                        <div className="bg-[#D4AF37]/10 p-2 rounded-lg">
-                                                            <Icon className="w-4 h-4 text-[#D4AF37]" />
+                                                        <div className="bg-[#4A90E2]/10 p-2 rounded-lg">
+                                                            <Icon className="w-4 h-4 text-[#4A90E2]" />
                                                         </div>
                                                         <div>
-                                                            <h3 className="font-medium text-[#1A2B44]">{share.entity_name}</h3>
-                                                            <p className="text-sm text-[#1A2B44]/60">
+                                                            <h3 className="font-medium text-black">{share.entity_name}</h3>
+                                                            <p className="text-sm text-[#0F1729]/60">
                                                                 {share.entity_type} • Shared by {share.created_by}
                                                             </p>
                                                         </div>
@@ -144,13 +144,13 @@ export default function Collaboration() {
                                 })}
                             </div>
                         ) : (
-                            <p className="text-[#1A2B44]/40 text-center py-8">No items shared with you yet</p>
+                            <p className="text-[#0F1729]/40 text-center py-8">No items shared with you yet</p>
                         )}
                     </div>
 
                     {/* My Assigned Tasks */}
                     <div>
-                        <h2 className="text-2xl font-light text-[#1A2B44] mb-4">My Assigned Tasks</h2>
+                        <h2 className="text-2xl font-light text-black mb-4">My Assigned Tasks</h2>
                         {myTasks.length > 0 ? (
                             <div className="space-y-3">
                                 {myTasks.map(task => (
@@ -158,13 +158,13 @@ export default function Collaboration() {
                                         <CardContent className="pt-4">
                                             <div className="flex items-start justify-between mb-2">
                                                 <div>
-                                                    <h3 className="font-medium text-[#1A2B44]">{task.title}</h3>
-                                                    <p className="text-sm text-[#1A2B44]/60">{task.property_name}</p>
+                                                    <h3 className="font-medium text-black">{task.title}</h3>
+                                                    <p className="text-sm text-[#0F1729]/60">{task.property_name}</p>
                                                 </div>
                                                 <Badge>{task.status}</Badge>
                                             </div>
                                             {task.next_due_date && (
-                                                <p className="text-sm text-[#1A2B44]/70">
+                                                <p className="text-sm text-[#0F1729]/70">
                                                     Due: {format(new Date(task.next_due_date), 'MMM d, yyyy')}
                                                 </p>
                                             )}
@@ -173,7 +173,7 @@ export default function Collaboration() {
                                 ))}
                             </div>
                         ) : (
-                            <p className="text-[#1A2B44]/40 text-center py-8">No tasks assigned to you</p>
+                            <p className="text-[#0F1729]/40 text-center py-8">No tasks assigned to you</p>
                         )}
                     </div>
                 </div>

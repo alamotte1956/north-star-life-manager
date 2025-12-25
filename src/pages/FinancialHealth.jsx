@@ -12,7 +12,7 @@ import {
 } from 'lucide-react';
 import { LineChart, Line, AreaChart, Area, BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
-const COLORS = ['#C5A059', '#D4AF37', '#B8935E', '#8B7355', '#F4E4C1', '#A67C52'];
+const COLORS = ['#4A90E2', '#2E5C8A', '#7BB3E0', '#1E3A5F', '#B8D4ED', '#0F1729'];
 
 export default function FinancialHealthDashboard() {
     const [dashboardData, setDashboardData] = useState(null);
@@ -44,27 +44,27 @@ export default function FinancialHealthDashboard() {
     const insights = dashboardData?.ai_insights;
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-black via-[#0a0a0a] to-black">
+        <div className="min-h-screen bg-gradient-to-br from-[#F8F9FA] via-white to-[#E8EEF5]">
             <div className="max-w-7xl mx-auto px-6 py-12">
                 {/* Header */}
                 <div className="mb-8">
                     <div className="flex items-center justify-between">
                         <div className="flex items-center gap-4">
                             <div className="relative">
-                                <div className="absolute inset-0 bg-[#C5A059]/50 rounded-2xl blur-xl" />
-                                <div className="relative bg-gradient-to-br from-[#C5A059] to-[#D4AF37] p-4 rounded-2xl">
-                                    <Activity className="w-8 h-8 text-black" />
+                                <div className="absolute inset-0 bg-[#4A90E2]/30 rounded-2xl blur-xl" />
+                                <div className="relative bg-gradient-to-br from-[#2E5C8A] to-[#4A90E2] p-4 rounded-2xl">
+                                    <Activity className="w-8 h-8 text-white" />
                                 </div>
                             </div>
                             <div>
-                                <h1 className="text-4xl font-light text-[#C5A059]">Financial Health Dashboard</h1>
-                                <p className="text-[#B8935E] font-light">Comprehensive overview with AI-powered insights</p>
+                                <h1 className="text-4xl font-light text-black">Financial Health Dashboard</h1>
+                                <p className="text-[#0F1729]/60 font-light">Comprehensive overview with AI-powered insights</p>
                             </div>
                         </div>
                         <Button
                             onClick={loadDashboard}
                             disabled={loading}
-                            className="bg-gradient-to-r from-[#C5A059] to-[#D4AF37] text-black"
+                            className="bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] text-white"
                         >
                             {loading ? (
                                 <>
@@ -82,10 +82,10 @@ export default function FinancialHealthDashboard() {
                 </div>
 
                 {!dashboardData && !loading && (
-                    <Card className="bg-[#1a1a1a] border-[#C5A059]">
+                    <Card className="bg-white border-[#4A90E2]">
                         <CardContent className="py-12 text-center">
-                            <Activity className="w-16 h-16 mx-auto mb-4 text-[#C5A059]" />
-                            <p className="text-[#B8935E] mb-4">Click "Load Dashboard" to view your financial health metrics</p>
+                            <Activity className="w-16 h-16 mx-auto mb-4 text-[#4A90E2]" />
+                            <p className="text-[#0F1729]/60 mb-4">Click "Load Dashboard" to view your financial health metrics</p>
                         </CardContent>
                     </Card>
                 )}
@@ -94,10 +94,10 @@ export default function FinancialHealthDashboard() {
                     <div className="space-y-8">
                         {/* Overall Health Score */}
                         {insights && (
-                            <Card className="bg-gradient-to-br from-[#C5A059]/10 to-[#D4AF37]/10 border-[#C5A059] border-2">
+                            <Card className="bg-gradient-to-br from-[#4A90E2]/10 to-[#7BB3E0]/10 border-[#4A90E2] border-2">
                                 <CardHeader>
                                     <CardTitle className="flex items-center justify-between">
-                                        <span className="flex items-center gap-2 text-[#C5A059]">
+                                        <span className="flex items-center gap-2 text-[#4A90E2]">
                                             <Sparkles className="w-6 h-6" />
                                             Overall Financial Health
                                         </span>
@@ -109,29 +109,29 @@ export default function FinancialHealthDashboard() {
                                 <CardContent className="space-y-6">
                                     <div>
                                         <div className="flex items-center justify-between mb-2">
-                                            <span className="text-sm text-[#B8935E]">Health Score</span>
-                                            <span className="text-2xl font-bold text-[#C5A059]">
+                                            <span className="text-sm text-[#0F1729]/60">Health Score</span>
+                                            <span className="text-2xl font-bold text-[#4A90E2]">
                                                 {insights.overall_health_score}/100
                                             </span>
                                         </div>
                                         <Progress value={insights.overall_health_score} className="h-3" />
                                     </div>
-                                    <p className="text-[#B8935E] leading-relaxed">{insights.executive_summary}</p>
+                                    <p className="text-[#0F1729]/70 leading-relaxed">{insights.executive_summary}</p>
                                 </CardContent>
                             </Card>
                         )}
 
                         {/* Key Metrics */}
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                            <Card className="bg-[#1a1a1a] border-[#C5A059]">
+                            <Card className="bg-white border-[#4A90E2]">
                                 <CardHeader>
-                                    <CardTitle className="text-sm font-light text-[#B8935E]">Net Worth</CardTitle>
+                                    <CardTitle className="text-sm font-light text-[#0F1729]/60">Net Worth</CardTitle>
                                 </CardHeader>
                                 <CardContent>
                                     <div className="flex items-center gap-2">
-                                        <DollarSign className="w-5 h-5 text-[#C5A059]" />
+                                        <DollarSign className="w-5 h-5 text-[#4A90E2]" />
                                         <div>
-                                            <div className="text-2xl font-light text-[#C5A059]">
+                                            <div className="text-2xl font-light text-black">
                                                 ${metrics?.net_worth.toLocaleString()}
                                             </div>
                                             <div className="text-xs text-[#B8935E]">
@@ -142,9 +142,9 @@ export default function FinancialHealthDashboard() {
                                 </CardContent>
                             </Card>
 
-                            <Card className="bg-[#1a1a1a] border-[#C5A059]">
+                            <Card className="bg-white border-[#4A90E2]">
                                 <CardHeader>
-                                    <CardTitle className="text-sm font-light text-[#B8935E]">Monthly Cash Flow</CardTitle>
+                                    <CardTitle className="text-sm font-light text-[#0F1729]/60">Monthly Cash Flow</CardTitle>
                                 </CardHeader>
                                 <CardContent>
                                     <div className="flex items-center gap-2">
@@ -165,15 +165,15 @@ export default function FinancialHealthDashboard() {
                                 </CardContent>
                             </Card>
 
-                            <Card className="bg-[#1a1a1a] border-[#C5A059]">
+                            <Card className="bg-white border-[#4A90E2]">
                                 <CardHeader>
-                                    <CardTitle className="text-sm font-light text-[#B8935E]">Budget Adherence</CardTitle>
+                                    <CardTitle className="text-sm font-light text-[#0F1729]/60">Budget Adherence</CardTitle>
                                 </CardHeader>
                                 <CardContent>
                                     <div className="flex items-center gap-2">
-                                        <BarChart3 className="w-5 h-5 text-[#C5A059]" />
+                                        <BarChart3 className="w-5 h-5 text-[#4A90E2]" />
                                         <div className="flex-1">
-                                            <div className="text-2xl font-light text-[#C5A059]">
+                                            <div className="text-2xl font-light text-black">
                                                 {metrics?.budget_adherence_score}/100
                                             </div>
                                             <Progress value={metrics?.budget_adherence_score} className="h-1 mt-2" />
@@ -182,15 +182,15 @@ export default function FinancialHealthDashboard() {
                                 </CardContent>
                             </Card>
 
-                            <Card className="bg-[#1a1a1a] border-[#C5A059]">
+                            <Card className="bg-white border-[#4A90E2]">
                                 <CardHeader>
-                                    <CardTitle className="text-sm font-light text-[#B8935E]">Goal Progress</CardTitle>
+                                    <CardTitle className="text-sm font-light text-[#0F1729]/60">Goal Progress</CardTitle>
                                 </CardHeader>
                                 <CardContent>
                                     <div className="flex items-center gap-2">
-                                        <Target className="w-5 h-5 text-[#C5A059]" />
+                                        <Target className="w-5 h-5 text-[#4A90E2]" />
                                         <div className="flex-1">
-                                            <div className="text-2xl font-light text-[#C5A059]">
+                                            <div className="text-2xl font-light text-black">
                                                 {metrics?.goal_progress.toFixed(0)}%
                                             </div>
                                             <div className="text-xs text-[#B8935E]">
@@ -205,9 +205,9 @@ export default function FinancialHealthDashboard() {
                         {/* Charts Row */}
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                             {/* Category Performance */}
-                            <Card className="bg-[#1a1a1a] border-[#C5A059]">
+                            <Card className="bg-white border-[#4A90E2]">
                                 <CardHeader>
-                                    <CardTitle className="text-[#C5A059]">Budget by Category</CardTitle>
+                                    <CardTitle className="text-black">Budget by Category</CardTitle>
                                 </CardHeader>
                                 <CardContent>
                                     {Object.keys(dashboardData.category_performance).length > 0 ? (
@@ -217,20 +217,20 @@ export default function FinancialHealthDashboard() {
                                                 budget: data.budget,
                                                 spent: data.spent
                                             }))}>
-                                                <CartesianGrid strokeDasharray="3 3" stroke="#333" />
-                                                <XAxis dataKey="category" stroke="#B8935E" />
-                                                <YAxis stroke="#B8935E" />
+                                                <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                                                <XAxis dataKey="category" stroke="#64748B" />
+                                                <YAxis stroke="#64748B" />
                                                 <Tooltip 
-                                                    contentStyle={{ backgroundColor: '#1a1a1a', border: '1px solid #C5A059' }}
-                                                    labelStyle={{ color: '#C5A059' }}
+                                                    contentStyle={{ backgroundColor: 'white', border: '1px solid #4A90E2' }}
+                                                    labelStyle={{ color: '#4A90E2' }}
                                                 />
                                                 <Legend />
-                                                <Bar dataKey="budget" fill="#C5A059" name="Budget" />
-                                                <Bar dataKey="spent" fill="#D4AF37" name="Spent" />
+                                                <Bar dataKey="budget" fill="#4A90E2" name="Budget" />
+                                                <Bar dataKey="spent" fill="#2E5C8A" name="Spent" />
                                             </BarChart>
                                         </ResponsiveContainer>
                                     ) : (
-                                        <div className="h-[250px] flex items-center justify-center text-[#B8935E]">
+                                        <div className="h-[250px] flex items-center justify-center text-[#0F1729]/60">
                                             No budget data
                                         </div>
                                     )}
@@ -238,9 +238,9 @@ export default function FinancialHealthDashboard() {
                             </Card>
 
                             {/* Spending Trends */}
-                            <Card className="bg-[#1a1a1a] border-[#C5A059]">
+                            <Card className="bg-white border-[#4A90E2]">
                                 <CardHeader>
-                                    <CardTitle className="text-[#C5A059]">Spending Trend</CardTitle>
+                                    <CardTitle className="text-black">Spending Trend</CardTitle>
                                 </CardHeader>
                                 <CardContent>
                                     <ResponsiveContainer width="100%" height={250}>
@@ -250,18 +250,18 @@ export default function FinancialHealthDashboard() {
                                         })).slice(-6)}>
                                             <defs>
                                                 <linearGradient id="colorSpending" x1="0" y1="0" x2="0" y2="1">
-                                                    <stop offset="5%" stopColor="#C5A059" stopOpacity={0.3}/>
-                                                    <stop offset="95%" stopColor="#C5A059" stopOpacity={0}/>
+                                                    <stop offset="5%" stopColor="#4A90E2" stopOpacity={0.3}/>
+                                                    <stop offset="95%" stopColor="#4A90E2" stopOpacity={0}/>
                                                 </linearGradient>
                                             </defs>
-                                            <CartesianGrid strokeDasharray="3 3" stroke="#333" />
-                                            <XAxis dataKey="month" stroke="#B8935E" />
-                                            <YAxis stroke="#B8935E" />
+                                            <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                                            <XAxis dataKey="month" stroke="#64748B" />
+                                            <YAxis stroke="#64748B" />
                                             <Tooltip 
-                                                contentStyle={{ backgroundColor: '#1a1a1a', border: '1px solid #C5A059' }}
-                                                labelStyle={{ color: '#C5A059' }}
+                                                contentStyle={{ backgroundColor: 'white', border: '1px solid #4A90E2' }}
+                                                labelStyle={{ color: '#4A90E2' }}
                                             />
-                                            <Area type="monotone" dataKey="spending" stroke="#C5A059" fillOpacity={1} fill="url(#colorSpending)" />
+                                            <Area type="monotone" dataKey="spending" stroke="#4A90E2" fillOpacity={1} fill="url(#colorSpending)" />
                                         </AreaChart>
                                     </ResponsiveContainer>
                                 </CardContent>
@@ -282,7 +282,7 @@ export default function FinancialHealthDashboard() {
                                     <CardContent>
                                         <ul className="space-y-2">
                                             {insights.strengths?.map((strength, idx) => (
-                                                <li key={idx} className="flex items-start gap-2 text-[#B8935E]">
+                                                <li key={idx} className="flex items-start gap-2 text-[#0F1729]/70">
                                                     <span className="text-green-500">✓</span>
                                                     <span>{strength}</span>
                                                 </li>
@@ -301,7 +301,7 @@ export default function FinancialHealthDashboard() {
                                     <CardContent>
                                         <ul className="space-y-2">
                                             {insights.weaknesses?.map((weakness, idx) => (
-                                                <li key={idx} className="flex items-start gap-2 text-[#B8935E]">
+                                                <li key={idx} className="flex items-start gap-2 text-[#0F1729]/70">
                                                     <span className="text-yellow-500">!</span>
                                                     <span>{weakness}</span>
                                                 </li>
@@ -334,8 +334,8 @@ export default function FinancialHealthDashboard() {
                                                     {action.priority}
                                                 </Badge>
                                                 <div className="flex-1">
-                                                    <p className="text-[#C5A059] font-medium mb-1">{action.action}</p>
-                                                    <p className="text-sm text-[#B8935E]">{action.impact}</p>
+                                                    <p className="text-black font-medium mb-1">{action.action}</p>
+                                                    <p className="text-sm text-[#0F1729]/70">{action.impact}</p>
                                                 </div>
                                             </div>
                                         ))}
@@ -347,30 +347,30 @@ export default function FinancialHealthDashboard() {
                         {/* Additional Insights */}
                         {insights && (
                             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                                <Card className="bg-[#1a1a1a] border-[#C5A059]">
+                                <Card className="bg-white border-[#4A90E2]">
                                     <CardHeader>
-                                        <CardTitle className="text-[#C5A059] text-sm">Cash Flow</CardTitle>
+                                        <CardTitle className="text-black text-sm">Cash Flow</CardTitle>
                                     </CardHeader>
                                     <CardContent>
-                                        <p className="text-sm text-[#B8935E]">{insights.cash_flow_assessment}</p>
+                                        <p className="text-sm text-[#0F1729]/70">{insights.cash_flow_assessment}</p>
                                     </CardContent>
                                 </Card>
 
-                                <Card className="bg-[#1a1a1a] border-[#C5A059]">
+                                <Card className="bg-white border-[#4A90E2]">
                                     <CardHeader>
-                                        <CardTitle className="text-[#C5A059] text-sm">Net Worth Trajectory</CardTitle>
+                                        <CardTitle className="text-black text-sm">Net Worth Trajectory</CardTitle>
                                     </CardHeader>
                                     <CardContent>
-                                        <p className="text-sm text-[#B8935E]">{insights.net_worth_trajectory}</p>
+                                        <p className="text-sm text-[#0F1729]/70">{insights.net_worth_trajectory}</p>
                                     </CardContent>
                                 </Card>
 
-                                <Card className="bg-[#1a1a1a] border-[#C5A059]">
+                                <Card className="bg-white border-[#4A90E2]">
                                     <CardHeader>
-                                        <CardTitle className="text-[#C5A059] text-sm">Goal Achievement</CardTitle>
+                                        <CardTitle className="text-black text-sm">Goal Achievement</CardTitle>
                                     </CardHeader>
                                     <CardContent>
-                                        <p className="text-sm text-[#B8935E]">{insights.goal_achievement_likelihood}</p>
+                                        <p className="text-sm text-[#0F1729]/70">{insights.goal_achievement_likelihood}</p>
                                     </CardContent>
                                 </Card>
                             </div>
@@ -380,9 +380,9 @@ export default function FinancialHealthDashboard() {
                         {insights && (
                             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                                 {insights.opportunities?.length > 0 && (
-                                    <Card className="bg-[#1a1a1a] border-[#C5A059]">
+                                    <Card className="bg-white border-[#4A90E2]">
                                         <CardHeader>
-                                            <CardTitle className="text-[#C5A059] flex items-center gap-2">
+                                            <CardTitle className="text-black flex items-center gap-2">
                                                 <ArrowUpRight className="w-5 h-5 text-green-500" />
                                                 Opportunities
                                             </CardTitle>
@@ -390,7 +390,7 @@ export default function FinancialHealthDashboard() {
                                         <CardContent>
                                             <ul className="space-y-2">
                                                 {insights.opportunities.map((opp, idx) => (
-                                                    <li key={idx} className="flex items-start gap-2 text-[#B8935E]">
+                                                    <li key={idx} className="flex items-start gap-2 text-[#0F1729]/70">
                                                         <span>•</span>
                                                         <span>{opp}</span>
                                                     </li>
@@ -401,9 +401,9 @@ export default function FinancialHealthDashboard() {
                                 )}
 
                                 {insights.long_term_recommendations?.length > 0 && (
-                                    <Card className="bg-[#1a1a1a] border-[#C5A059]">
+                                    <Card className="bg-white border-[#4A90E2]">
                                         <CardHeader>
-                                            <CardTitle className="text-[#C5A059] flex items-center gap-2">
+                                            <CardTitle className="text-black flex items-center gap-2">
                                                 <Target className="w-5 h-5" />
                                                 Long-term Recommendations
                                             </CardTitle>
@@ -411,7 +411,7 @@ export default function FinancialHealthDashboard() {
                                         <CardContent>
                                             <ul className="space-y-2">
                                                 {insights.long_term_recommendations.map((rec, idx) => (
-                                                    <li key={idx} className="flex items-start gap-2 text-[#B8935E]">
+                                                    <li key={idx} className="flex items-start gap-2 text-[#0F1729]/70">
                                                         <span>•</span>
                                                         <span>{rec}</span>
                                                     </li>
@@ -425,7 +425,7 @@ export default function FinancialHealthDashboard() {
 
                         {/* Risk Factors */}
                         {insights?.risk_factors?.length > 0 && (
-                            <Card className="bg-[#1a1a1a] border-orange-500">
+                            <Card className="bg-white border-orange-500">
                                 <CardHeader>
                                     <CardTitle className="text-orange-400 flex items-center gap-2">
                                         <Shield className="w-5 h-5" />
@@ -435,7 +435,7 @@ export default function FinancialHealthDashboard() {
                                 <CardContent>
                                     <ul className="space-y-2">
                                         {insights.risk_factors.map((risk, idx) => (
-                                            <li key={idx} className="flex items-start gap-2 text-[#B8935E]">
+                                            <li key={idx} className="flex items-start gap-2 text-[#0F1729]/70">
                                                 <span className="text-orange-500">⚠</span>
                                                 <span>{risk}</span>
                                             </li>

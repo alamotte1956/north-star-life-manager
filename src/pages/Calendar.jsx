@@ -194,19 +194,19 @@ export default function CalendarPage() {
         .slice(0, 10);
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-[#F8F7F4] via-white to-[#F8F7F4]">
+        <div className="min-h-screen bg-gradient-to-br from-[#F8F9FA] via-white to-[#E8EEF5]">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-12">
                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
                     <div className="flex items-center gap-4">
                         <div className="relative">
-                            <div className="absolute inset-0 bg-[#C9A95C]/30 rounded-2xl blur-xl" />
-                            <div className="relative bg-gradient-to-br from-[#1A2B44] to-[#0F1B2E] p-4 rounded-2xl">
-                                <CalendarIcon className="w-8 h-8 text-[#C9A95C]" />
+                            <div className="absolute inset-0 bg-[#4A90E2]/30 rounded-2xl blur-xl" />
+                            <div className="relative bg-gradient-to-br from-[#2E5C8A] to-[#4A90E2] p-4 rounded-2xl">
+                                <CalendarIcon className="w-8 h-8 text-white" />
                             </div>
                         </div>
                         <div>
-                            <h1 className="text-4xl font-light text-[#1A2B44]">Calendar</h1>
-                            <p className="text-[#1A2B44]/60 font-light">All your events in one place</p>
+                            <h1 className="text-4xl font-light text-black">Calendar</h1>
+                            <p className="text-[#0F1729]/60 font-light">All your events in one place</p>
                         </div>
                     </div>
 
@@ -222,7 +222,7 @@ export default function CalendarPage() {
                         </Button>
                         <Dialog open={open} onOpenChange={setOpen}>
                             <DialogTrigger asChild>
-                                <Button className="bg-gradient-to-r from-[#1A2B44] to-[#0F1B2E] hover:shadow-lg text-white">
+                                <Button className="bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] hover:shadow-lg text-white">
                                     <Plus className="w-4 h-4 mr-2" />
                                     Add Event
                                 </Button>
@@ -297,7 +297,7 @@ export default function CalendarPage() {
                                         <Label>Recurring annually</Label>
                                     </div>
 
-                                    <Button type="submit" className="w-full bg-gradient-to-r from-[#C9A95C] to-[#D4AF37]">
+                                    <Button type="submit" className="w-full bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] text-white">
                                         Add Event
                                     </Button>
                                 </form>
@@ -365,7 +365,7 @@ export default function CalendarPage() {
                             <CardContent className="pt-6">
                                 <div className="grid grid-cols-7 gap-2 mb-4">
                                     {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
-                                        <div key={day} className="text-center text-xs font-medium text-[#1A2B44]/50 pb-2">
+                                        <div key={day} className="text-center text-xs font-medium text-[#0F1729]/50 pb-2">
                                             {day}
                                         </div>
                                     ))}
@@ -384,9 +384,9 @@ export default function CalendarPage() {
                                                 key={day.toISOString()}
                                                 className={`aspect-square border rounded-lg p-1 overflow-hidden ${
                                                     !isCurrentMonth ? 'bg-gray-50 opacity-50' : 'bg-white'
-                                                } ${isTodayDate ? 'ring-2 ring-[#C9A95C]' : ''}`}
+                                                } ${isTodayDate ? 'ring-2 ring-[#4A90E2]' : ''}`}
                                             >
-                                                <div className={`text-xs font-medium mb-1 ${isTodayDate ? 'text-[#C9A95C]' : 'text-[#1A2B44]/70'}`}>
+                                                <div className={`text-xs font-medium mb-1 ${isTodayDate ? 'text-[#4A90E2]' : 'text-[#0F1729]/70'}`}>
                                                     {format(day, 'd')}
                                                 </div>
                                                 <div className="space-y-0.5">
@@ -431,14 +431,14 @@ export default function CalendarPage() {
                                             }}
                                             className="w-full text-left p-3 rounded-lg border hover:bg-gray-50 transition-colors"
                                         >
-                                            <div className="font-medium text-[#1A2B44] text-sm mb-1">
+                                            <div className="font-medium text-black text-sm mb-1">
                                                 {event.title}
                                             </div>
-                                            <div className="text-xs text-[#1A2B44]/60">
+                                            <div className="text-xs text-[#0F1729]/60">
                                                 {format(new Date(event.date), 'MMM d, yyyy')}
                                             </div>
                                             {event.description && (
-                                                <div className="text-xs text-[#1A2B44]/50 mt-1">
+                                                <div className="text-xs text-[#0F1729]/50 mt-1">
                                                     {event.description}
                                                 </div>
                                             )}

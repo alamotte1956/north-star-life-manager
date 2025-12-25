@@ -216,7 +216,7 @@ export default function Reports() {
         });
     }, [activities, dateRange]);
 
-    const COLORS = ['#C5A059', '#0F172A', '#64748B', '#164E63', '#D4AF37', '#8B7355'];
+    const COLORS = ['#4A90E2', '#2E5C8A', '#7BB3E0', '#1E3A5F', '#B8D4ED', '#0F1729'];
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-[#F8F9FA] via-white to-[#F8F9FA]">
@@ -224,9 +224,9 @@ export default function Reports() {
                 <div className="flex items-center justify-between mb-8">
                     <div className="flex items-center gap-4">
                         <div className="relative">
-                            <div className="absolute inset-0 bg-[#C5A059]/30 rounded-2xl blur-xl" />
-                            <div className="relative bg-gradient-to-br from-[#0F172A] to-[#1e293b] p-4 rounded-2xl">
-                                <TrendingUp className="w-8 h-8 text-[#C5A059]" />
+                            <div className="absolute inset-0 bg-[#4A90E2]/30 rounded-2xl blur-xl" />
+                            <div className="relative bg-gradient-to-br from-[#2E5C8A] to-[#4A90E2] p-4 rounded-2xl">
+                                <TrendingUp className="w-8 h-8 text-white" />
                             </div>
                         </div>
                         <div>
@@ -358,9 +358,9 @@ export default function Reports() {
                                         <XAxis dataKey="date" tick={{ fill: '#64748B', fontSize: 12 }} />
                                         <YAxis tick={{ fill: '#64748B', fontSize: 12 }} />
                                         <Tooltip />
-                                        <Area type="monotone" dataKey="uploads" stackId="1" stroke="#C5A059" fill="#C5A059" fillOpacity={0.6} />
-                                        <Area type="monotone" dataKey="edits" stackId="1" stroke="#164E63" fill="#164E63" fillOpacity={0.6} />
-                                        <Area type="monotone" dataKey="views" stackId="1" stroke="#64748B" fill="#64748B" fillOpacity={0.6} />
+                                        <Area type="monotone" dataKey="uploads" stackId="1" stroke="#4A90E2" fill="#4A90E2" fillOpacity={0.6} />
+                                        <Area type="monotone" dataKey="edits" stackId="1" stroke="#2E5C8A" fill="#2E5C8A" fillOpacity={0.6} />
+                                        <Area type="monotone" dataKey="views" stackId="1" stroke="#7BB3E0" fill="#7BB3E0" fillOpacity={0.6} />
                                     </AreaChart>
                                 </ResponsiveContainer>
                             </CardContent>
@@ -406,7 +406,7 @@ export default function Reports() {
                                         <XAxis dataKey="email" tick={{ fill: '#64748B', fontSize: 11 }} />
                                         <YAxis tick={{ fill: '#64748B', fontSize: 12 }} />
                                         <Tooltip />
-                                        <Bar dataKey="uploads" fill="#C5A059" />
+                                        <Bar dataKey="uploads" fill="#4A90E2" />
                                     </BarChart>
                                 </ResponsiveContainer>
                             </CardContent>
@@ -641,7 +641,7 @@ export default function Reports() {
                                         <XAxis dataKey="name" tick={{ fill: '#64748B', fontSize: 11 }} />
                                         <YAxis tick={{ fill: '#64748B', fontSize: 12 }} />
                                         <Tooltip />
-                                        <Bar dataKey="triggers" fill="#C5A059" />
+                                        <Bar dataKey="triggers" fill="#4A90E2" />
                                     </BarChart>
                                 </ResponsiveContainer>
                             </CardContent>

@@ -50,11 +50,11 @@ export default function BankingHub() {
     }
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-[#F8F7F4] via-white to-[#F8F7F4] p-6">
+        <div className="min-h-screen bg-gradient-to-br from-[#F8F9FA] via-white to-[#E8EEF5] p-6">
             <div className="max-w-6xl mx-auto">
                 <div className="mb-8">
-                    <h1 className="text-4xl font-light text-[#1A2B44] mb-2">Banking Hub</h1>
-                    <p className="text-[#1A2B44]/60">Connect and sync your bank accounts automatically</p>
+                    <h1 className="text-4xl font-light text-black mb-2">Banking Hub</h1>
+                    <p className="text-[#0F1729]/60">Connect and sync your bank accounts automatically</p>
                 </div>
 
                 {/* Summary Cards */}
@@ -62,7 +62,7 @@ export default function BankingHub() {
                     <Card>
                         <CardContent className="pt-6">
                             <div className="flex items-center justify-between mb-2">
-                                <span className="text-sm text-[#1A2B44]/60">Total Balance</span>
+                                <span className="text-sm text-[#0F1729]/60">Total Balance</span>
                                 <DollarSign className="w-5 h-5 text-green-600" />
                             </div>
                             <div className="text-3xl font-light text-[#1A2B44]">
@@ -74,7 +74,7 @@ export default function BankingHub() {
                     <Card>
                         <CardContent className="pt-6">
                             <div className="flex items-center justify-between mb-2">
-                                <span className="text-sm text-[#1A2B44]/60">Available</span>
+                                <span className="text-sm text-[#0F1729]/60">Available</span>
                                 <CreditCard className="w-5 h-5 text-blue-600" />
                             </div>
                             <div className="text-3xl font-light text-[#1A2B44]">
@@ -86,8 +86,8 @@ export default function BankingHub() {
                     <Card>
                         <CardContent className="pt-6">
                             <div className="flex items-center justify-between mb-2">
-                                <span className="text-sm text-[#1A2B44]/60">Connected Accounts</span>
-                                <Building2 className="w-5 h-5 text-[#D4AF37]" />
+                                <span className="text-sm text-[#0F1729]/60">Connected Accounts</span>
+                                <Building2 className="w-5 h-5 text-[#4A90E2]" />
                             </div>
                             <div className="text-3xl font-light text-[#1A2B44]">{accounts.length}</div>
                         </CardContent>
@@ -96,14 +96,14 @@ export default function BankingHub() {
 
                 {/* Connect Account */}
                 {accounts.length === 0 && (
-                    <Card className="mb-8 border-[#D4AF37]/30">
+                    <Card className="mb-8 border-[#4A90E2]/30">
                         <CardContent className="pt-6 text-center py-12">
-                            <Building2 className="w-16 h-16 mx-auto mb-4 text-[#D4AF37]" />
-                            <h3 className="text-xl font-light text-[#1A2B44] mb-2">Connect Your Bank Account</h3>
-                            <p className="text-[#1A2B44]/60 mb-6">
+                            <Building2 className="w-16 h-16 mx-auto mb-4 text-[#4A90E2]" />
+                            <h3 className="text-xl font-light text-black mb-2">Connect Your Bank Account</h3>
+                            <p className="text-[#0F1729]/60 mb-6">
                                 Securely link your bank accounts to automatically import transactions
                             </p>
-                            <Button onClick={connectPlaid} className="bg-gradient-to-r from-[#D4AF37] to-[#F4D03F] text-black">
+                            <Button onClick={connectPlaid} className="bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] text-white">
                                 <Building2 className="w-5 h-5 mr-2" />
                                 Connect with Plaid
                             </Button>
@@ -118,12 +118,12 @@ export default function BankingHub() {
                             <CardHeader>
                                 <div className="flex items-center justify-between">
                                     <div className="flex items-center gap-3">
-                                        <div className="p-3 bg-gradient-to-br from-[#1B4B7F] to-[#0F2847] rounded-lg">
+                                        <div className="p-3 bg-gradient-to-br from-[#2E5C8A] to-[#4A90E2] rounded-lg">
                                             <Building2 className="w-6 h-6 text-white" />
                                         </div>
                                         <div>
                                             <CardTitle className="text-lg">{account.account_name}</CardTitle>
-                                            <p className="text-sm text-[#1A2B44]/60">
+                                            <p className="text-sm text-[#0F1729]/60">
                                                 {account.institution_name} •••• {account.last_four}
                                             </p>
                                         </div>
@@ -140,26 +140,26 @@ export default function BankingHub() {
                             <CardContent>
                                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
                                     <div>
-                                        <div className="text-sm text-[#1A2B44]/60 mb-1">Current Balance</div>
-                                        <div className="text-lg font-light text-[#1A2B44]">
+                                        <div className="text-sm text-[#0F1729]/60 mb-1">Current Balance</div>
+                                        <div className="text-lg font-light text-black">
                                             ${(account.current_balance || 0).toLocaleString()}
                                         </div>
                                     </div>
                                     <div>
-                                        <div className="text-sm text-[#1A2B44]/60 mb-1">Available</div>
-                                        <div className="text-lg font-light text-[#1A2B44]">
+                                        <div className="text-sm text-[#0F1729]/60 mb-1">Available</div>
+                                        <div className="text-lg font-light text-black">
                                             ${(account.available_balance || 0).toLocaleString()}
                                         </div>
                                     </div>
                                     <div>
-                                        <div className="text-sm text-[#1A2B44]/60 mb-1">Type</div>
-                                        <div className="text-lg font-light text-[#1A2B44] capitalize">
+                                        <div className="text-sm text-[#0F1729]/60 mb-1">Type</div>
+                                        <div className="text-lg font-light text-black capitalize">
                                             {account.account_type.replace('_', ' ')}
                                         </div>
                                     </div>
                                     <div>
-                                        <div className="text-sm text-[#1A2B44]/60 mb-1">Last Synced</div>
-                                        <div className="text-sm font-light text-[#1A2B44]">
+                                        <div className="text-sm text-[#0F1729]/60 mb-1">Last Synced</div>
+                                        <div className="text-sm font-light text-black">
                                             {account.last_sync ? new Date(account.last_sync).toLocaleDateString() : 'Never'}
                                         </div>
                                     </div>
@@ -170,7 +170,7 @@ export default function BankingHub() {
                                         size="sm"
                                         onClick={() => handleSync(account.id)}
                                         disabled={syncing === account.id}
-                                        className="bg-[#D4AF37] hover:bg-[#C5A059] text-black"
+                                        className="bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] text-white"
                                     >
                                         {syncing === account.id ? (
                                             <RefreshCw className="w-4 h-4 mr-2 animate-spin" />

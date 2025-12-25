@@ -110,20 +110,20 @@ export default function EmailAssistant() {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-[#F8F7F4] via-white to-[#F8F7F4]">
+        <div className="min-h-screen bg-gradient-to-br from-[#F8F9FA] via-white to-[#E8EEF5]">
             <div className="max-w-7xl mx-auto px-6 py-12">
                 {/* Header */}
                 <div className="flex items-center justify-between mb-8">
                     <div className="flex items-center gap-4">
                         <div className="relative">
-                            <div className="absolute inset-0 bg-[#D4AF37]/30 rounded-2xl blur-xl" />
-                            <div className="relative bg-gradient-to-br from-black to-[#1a1a1a] p-4 rounded-2xl">
-                                <Mail className="w-8 h-8 text-[#D4AF37]" />
+                            <div className="absolute inset-0 bg-[#4A90E2]/30 rounded-2xl blur-xl" />
+                            <div className="relative bg-gradient-to-br from-[#2E5C8A] to-[#4A90E2] p-4 rounded-2xl">
+                                <Mail className="w-8 h-8 text-white" />
                             </div>
                         </div>
                         <div>
                             <h1 className="text-4xl font-light text-black">AI Email Assistant</h1>
-                            <p className="text-black/70 font-light">Intelligent email management</p>
+                            <p className="text-[#0F1729]/60 font-light">Intelligent email management</p>
                         </div>
                     </div>
                     <div className="flex gap-2">
@@ -131,7 +131,7 @@ export default function EmailAssistant() {
                             onClick={() => prioritizeMutation.mutate()}
                             disabled={prioritizeMutation.isLoading}
                             variant="outline"
-                            className="border-[#D4AF37]/30"
+                            className="border-[#4A90E2]/30"
                         >
                             <Sparkles className="w-4 h-4 mr-2" />
                             Prioritize Inbox
@@ -139,14 +139,14 @@ export default function EmailAssistant() {
                         <Button
                             onClick={() => setDraftAssistOpen(true)}
                             variant="outline"
-                            className="border-[#D4AF37]/30"
+                            className="border-[#4A90E2]/30"
                         >
                             <Edit3 className="w-4 h-4 mr-2" />
                             Draft Email
                         </Button>
                         <Button
                             onClick={() => setComposeOpen(true)}
-                            className="bg-gradient-to-r from-[#D4AF37] to-[#F4D03F] text-black"
+                            className="bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] text-white"
                         >
                             <Plus className="w-4 h-4 mr-2" />
                             Compose
@@ -183,7 +183,7 @@ export default function EmailAssistant() {
                             <Card
                                 key={email.id}
                                 className={`cursor-pointer transition-all hover:shadow-lg ${
-                                    selectedEmail?.id === email.id ? 'border-[#D4AF37] border-2' : ''
+                                    selectedEmail?.id === email.id ? 'border-[#4A90E2] border-2' : ''
                                 } ${!email.read ? 'bg-blue-50/50' : ''}`}
                                 onClick={() => setSelectedEmail(email)}
                             >
@@ -373,7 +373,7 @@ export default function EmailAssistant() {
                             <Button
                                 onClick={() => draftEmailMutation.mutate(draftParams)}
                                 disabled={draftEmailMutation.isLoading}
-                                className="w-full bg-gradient-to-r from-[#D4AF37] to-[#F4D03F] text-black"
+                                className="w-full bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] text-white"
                             >
                                 <Sparkles className="w-4 h-4 mr-2" />
                                 Generate Draft
@@ -458,7 +458,7 @@ export default function EmailAssistant() {
                                     <Label>Reply</Label>
                                     <Textarea value={aiResult.reply_body} rows={10} />
                                 </div>
-                                <Button className="w-full bg-gradient-to-r from-[#D4AF37] to-[#F4D03F] text-black">
+                                <Button className="w-full bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] text-white">
                                     <Send className="w-4 h-4 mr-2" />
                                     Send Reply
                                 </Button>
