@@ -4,6 +4,7 @@ import BillPayments from './pages/BillPayments';
 import Budget from './pages/Budget';
 import Calendar from './pages/Calendar';
 import Collaboration from './pages/Collaboration';
+import CommunicationsHub from './pages/CommunicationsHub';
 import Contacts from './pages/Contacts';
 import CreditScore from './pages/CreditScore';
 import Dashboard from './pages/Dashboard';
@@ -14,6 +15,7 @@ import FamilyRoleManagement from './pages/FamilyRoleManagement';
 import FamilyToDo from './pages/FamilyToDo';
 import FamilyWorkflows from './pages/FamilyWorkflows';
 import FinancialDashboard from './pages/FinancialDashboard';
+import FinancialForecasting from './pages/FinancialForecasting';
 import FinancialHealth from './pages/FinancialHealth';
 import FinancialLiteracy from './pages/FinancialLiteracy';
 import Health from './pages/Health';
@@ -37,8 +39,8 @@ import Travel from './pages/Travel';
 import Valuables from './pages/Valuables';
 import Vault from './pages/Vault';
 import Vehicles from './pages/Vehicles';
-import CommunicationsHub from './pages/CommunicationsHub';
-import FinancialForecasting from './pages/FinancialForecasting';
+import BankingHub from './pages/BankingHub';
+import BillNegotiation from './pages/BillNegotiation';
 import __Layout from './Layout.jsx';
 
 
@@ -49,6 +51,7 @@ export const PAGES = {
     "Budget": Budget,
     "Calendar": Calendar,
     "Collaboration": Collaboration,
+    "CommunicationsHub": CommunicationsHub,
     "Contacts": Contacts,
     "CreditScore": CreditScore,
     "Dashboard": Dashboard,
@@ -59,6 +62,7 @@ export const PAGES = {
     "FamilyToDo": FamilyToDo,
     "FamilyWorkflows": FamilyWorkflows,
     "FinancialDashboard": FinancialDashboard,
+    "FinancialForecasting": FinancialForecasting,
     "FinancialHealth": FinancialHealth,
     "FinancialLiteracy": FinancialLiteracy,
     "Health": Health,
@@ -82,8 +86,8 @@ export const PAGES = {
     "Valuables": Valuables,
     "Vault": Vault,
     "Vehicles": Vehicles,
-    "CommunicationsHub": CommunicationsHub,
-    "FinancialForecasting": FinancialForecasting,
+    "BankingHub": BankingHub,
+    "BillNegotiation": BillNegotiation,
 }
 
 export const pagesConfig = {
