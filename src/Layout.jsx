@@ -230,7 +230,7 @@ export default function Layout({ children, currentPageName }) {
                 <div className="p-6 border-b border-[#2E5C8A]/20">
                     <Link to={createPageUrl('Home')} className="flex items-center gap-3 mb-4 hover:opacity-80 transition-opacity">
                         <img 
-                            src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6947dc1f392f53989af97bda/b516d228e_Gemini_Generated_Image_tp0qgztp0qgztp0q.png" 
+                            src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6947dc1f392f53989af97bda/2bced8a31_Gemini_Generated_Image_gyjjqjgyjjqjgyjj.jpg" 
                             alt="North Star Logo" 
                             className="w-10 h-10 object-contain"
                         />
@@ -314,7 +314,7 @@ export default function Layout({ children, currentPageName }) {
                 <div className="flex items-center justify-between px-4 h-16">
                     <Link to={createPageUrl('Home')} className="flex items-center gap-3 hover:opacity-80 transition-opacity">
                         <img 
-                            src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6947dc1f392f53989af97bda/b516d228e_Gemini_Generated_Image_tp0qgztp0qgztp0q.png" 
+                            src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6947dc1f392f53989af97bda/2bced8a31_Gemini_Generated_Image_gyjjqjgyjjqjgyjj.jpg" 
                             alt="North Star Logo" 
                             className="w-8 h-8 object-contain"
                         />

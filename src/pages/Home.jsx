@@ -56,7 +56,7 @@ export default function Home() {
             <div className="max-w-md w-full">
                 <div className="text-center mb-12">
                     <img 
-                        src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6947dc1f392f53989af97bda/b516d228e_Gemini_Generated_Image_tp0qgztp0qgztp0q.png" 
+                        src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6947dc1f392f53989af97bda/2bced8a31_Gemini_Generated_Image_gyjjqjgyjjqjgyjj.jpg" 
                         alt="North Star Logo" 
                         className="w-32 h-32 mx-auto mb-8 object-contain"
                     />
