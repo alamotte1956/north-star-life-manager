@@ -12,6 +12,7 @@ import { Badge } from '@/components/ui/badge';
 import { format, isAfter, isBefore, addDays } from 'date-fns';
 import FinancialAdvisor from '../components/financial/FinancialAdvisor';
 import OnboardingFlow from '../components/onboarding/OnboardingFlow';
+import FinancialHealthAlerts from '../components/alerts/FinancialHealthAlerts';
 import { useNavigate } from 'react-router-dom';
 
 const QuickStatCard = ({ icon: Icon, title, value, subtitle, trend, color, link }) => {
@@ -325,6 +326,11 @@ export default function Dashboard() {
                         </div>
                     </div>
                 )}
+
+                {/* Financial Health Alerts */}
+                <div className="mb-8">
+                    <FinancialHealthAlerts />
+                </div>
 
                 {/* AI Financial Advisor */}
                 <div className="mb-8">
