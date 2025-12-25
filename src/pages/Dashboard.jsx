@@ -503,13 +503,27 @@ export default function Dashboard() {
                                     >
                                         <Download className="w-5 h-5 text-white" />
                                         <span className="text-white text-sm">Getting Started</span>
-                                    </button>
-                                    <button
+                                        </button>
+                                        <button
+                                        onClick={downloadMasterBinder}
+                                        className="flex items-center gap-2 px-4 py-2 bg-purple-600 hover:bg-purple-700 rounded-lg transition-colors min-h-[50px]"
+                                        >
+                                        <Printer className="w-5 h-5 text-white" />
+                                        <span className="text-white text-sm">Master Binder</span>
+                                        </button>
+                                        <button
+                                        onClick={downloadAnnualReport}
+                                        className="flex items-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-700 rounded-lg transition-colors min-h-[50px]"
+                                        >
+                                        <Download className="w-5 h-5 text-white" />
+                                        <span className="text-white text-sm">Annual Report</span>
+                                        </button>
+                                        <button
                                         onClick={() => setShowGuide(false)}
                                         className="p-2 hover:bg-white/10 rounded-lg transition-colors"
-                                    >
+                                        >
                                         <X className="w-6 h-6 text-white" />
-                                    </button>
+                                        </button>
                                 </div>
                             </div>
 
