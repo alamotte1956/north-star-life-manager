@@ -95,34 +95,21 @@ Deno.serve(async (req) => {
             'TransactionCorrection'
         ];
 
-        // Delete each entity type - with robust error handling
+        // Delete each entity type - with maximum error handling
         for (const entityName of entitiesToDelete) {
             try {
-                // Try to get records - some entities may not be accessible
-                let records = [];
-                try {
-                    records = await base44.entities[entityName].filter({ 
-                        created_by: userEmail 
-                    });
-                } catch (filterError) {
-                    // If filter fails, try list and filter manually
-                    try {
-                        const allRecords = await base44.entities[entityName].list();
-                        records = allRecords.filter(r => r.created_by === userEmail);
-                    } catch (listError) {
-                        console.warn(`Cannot access ${entityName}:`, listError.message);
-                        continue;
-                    }
-                }
+                // Simple list and filter approach
+                const allRecords = await base44.entities[entityName].list();
+                const userRecords = allRecords.filter(r => r.created_by === userEmail);
                 
-                // Delete each record
                 let deletedCount = 0;
-                for (const record of records) {
+                for (const record of userRecords) {
                     try {
                         await base44.entities[entityName].delete(record.id);
                         deletedCount++;
                     } catch (deleteError) {
-                        console.warn(`Could not delete ${entityName} ${record.id}:`, deleteError.message);
+                        // Skip records we can't delete
+                        console.warn(`Skipped ${entityName} ${record.id}`);
                     }
                 }
 
@@ -133,8 +120,8 @@ Deno.serve(async (req) => {
                     });
                 }
             } catch (error) {
-                console.warn(`Warning: Error processing ${entityName}:`, error.message);
-                // Continue with other entities even if one fails
+                // Skip entities we can't access at all
+                console.warn(`Skipped entity ${entityName}`);
             }
         }
 
