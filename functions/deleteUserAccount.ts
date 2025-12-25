@@ -95,27 +95,45 @@ Deno.serve(async (req) => {
             'TransactionCorrection'
         ];
 
-        // Delete each entity type
+        // Delete each entity type - with robust error handling
         for (const entityName of entitiesToDelete) {
             try {
-                // Filter by created_by directly in the query
-                const records = await base44.entities[entityName].filter({ 
-                    created_by: userEmail 
-                });
+                // Try to get records - some entities may not be accessible
+                let records = [];
+                try {
+                    records = await base44.entities[entityName].filter({ 
+                        created_by: userEmail 
+                    });
+                } catch (filterError) {
+                    // If filter fails, try list and filter manually
+                    try {
+                        const allRecords = await base44.entities[entityName].list();
+                        records = allRecords.filter(r => r.created_by === userEmail);
+                    } catch (listError) {
+                        console.warn(`Cannot access ${entityName}:`, listError.message);
+                        continue;
+                    }
+                }
                 
                 // Delete each record
+                let deletedCount = 0;
                 for (const record of records) {
-                    await base44.entities[entityName].delete(record.id);
+                    try {
+                        await base44.entities[entityName].delete(record.id);
+                        deletedCount++;
+                    } catch (deleteError) {
+                        console.warn(`Could not delete ${entityName} ${record.id}:`, deleteError.message);
+                    }
                 }
 
-                if (records.length > 0) {
+                if (deletedCount > 0) {
                     deletionLog.entities_deleted.push({
                         entity: entityName,
-                        count: records.length
+                        count: deletedCount
                     });
                 }
             } catch (error) {
-                console.warn(`Warning: Could not delete ${entityName}:`, error.message);
+                console.warn(`Warning: Error processing ${entityName}:`, error.message);
                 // Continue with other entities even if one fails
             }
         }
