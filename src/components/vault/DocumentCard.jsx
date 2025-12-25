@@ -152,6 +152,11 @@ export default function DocumentCard({ document }) {
                                 {document.action_items.length} Action Items
                             </Badge>
                         )}
+                        {document.suggested_tags?.slice(0, 2).map((tag, i) => (
+                            <Badge key={i} className="bg-blue-100 text-blue-700 text-xs">
+                                #{tag}
+                            </Badge>
+                        ))}
                     </div>
                 </div>
             )}
@@ -308,6 +313,23 @@ export default function DocumentCard({ document }) {
                                         </li>
                                     ))}
                                 </ul>
+                            </div>
+                        )}
+
+                        {/* AI-Suggested Tags */}
+                        {document.suggested_tags?.length > 0 && (
+                            <div className="bg-indigo-50 border border-indigo-200 rounded-lg p-4">
+                                <h3 className="text-sm font-medium text-indigo-900 mb-3 flex items-center gap-2">
+                                    <Tag className="w-4 h-4" />
+                                    AI-Suggested Tags
+                                </h3>
+                                <div className="flex flex-wrap gap-2">
+                                    {document.suggested_tags.map((tag, i) => (
+                                        <Badge key={i} className="bg-indigo-100 text-indigo-700">
+                                            #{tag}
+                                        </Badge>
+                                    ))}
+                                </div>
                             </div>
                         )}
 

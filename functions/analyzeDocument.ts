@@ -61,31 +61,43 @@ Deno.serve(async (req) => {
 
         const extractedText = ocrResponse.choices[0].message.content;
 
-        // Step 2: Analyze, categorize, and summarize
+        // Step 2: Analyze, categorize, summarize, and extract key information
         const analysisResponse = await openai.chat.completions.create({
             model: "gpt-4o-mini",
             messages: [
                 {
                     role: "system",
-                    content: `You are an expert document analyzer. Analyze documents and extract structured information.
+                    content: `You are an expert document analyzer with expertise in extracting structured information from various document types.
 
-Extract:
-1. document_type: Specific type (e.g., "Vehicle Invoice", "Property Tax Bill", "Insurance Policy", "Maintenance Receipt", "Medical Bill", "Contract", "Lease Agreement", "Repair Invoice")
+CRITICAL: Extract ALL relevant information comprehensively:
+
+1. document_type: Specific type (e.g., "Vehicle Invoice", "Property Tax Bill", "Insurance Policy", "Contract", "Lease Agreement")
 2. category: One of: legal, financial, property, vehicle, health, insurance, tax, personal, other
-3. expiry_date: Any expiration/renewal date in YYYY-MM-DD or null
-4. amount: Total monetary amount (number) or null
+3. expiry_date: ANY expiration/renewal date in YYYY-MM-DD format or null
+4. amount: Total monetary amount (number only) or null
 5. cabin_related: Is this about a cabin/seasonal property? (boolean)
-6. extracted_data: Object with key details. FOR PROPERTY DOCUMENTS, include: property_address, rent_amount, tenant_name, tenant_contact, lease_start_date, lease_end_date, security_deposit, provider_contact, repair_type, warranty_expiration. FOR OTHER DOCS: vendor, vehicle_info, policy_number, invoice_number, date, parties_involved, etc.
-7. suggested_entity_link: If this relates to a specific entity type, suggest: {type: "Property"|"Vehicle"|"Subscription", name: "name to search for"}
-8. summary: 2-3 sentence summary highlighting the most important information
-9. key_points: Array of 3-5 key points from the document
-10. action_items: Array of action items or next steps (if any)
+
+6. extracted_data: COMPREHENSIVE object with all key details:
+   - FOR CONTRACTS: contract_date, parties_involved (array), contract_value, start_date, end_date, payment_terms, key_clauses (array), renewal_terms
+   - FOR PROPERTY DOCS: property_address, rent_amount, tenant_name, tenant_contact, lease_start_date, lease_end_date, security_deposit, provider_contact
+   - FOR FINANCIAL DOCS: invoice_number, invoice_date, vendor, due_date, payment_method, line_items (array)
+   - FOR ALL DOCS: date, parties_involved (array), amounts_breakdown, important_dates (array of {date, description}), contact_information
+
+7. suggested_entity_link: If relates to entity: {type: "Property"|"Vehicle"|"Subscription", name: "name to search for"}
+
+8. summary: 2-3 sentence executive summary highlighting MOST important information
+
+9. key_points: Array of 4-7 most critical points from the document
+
+10. action_items: Array of specific action items with deadlines if mentioned
+
+11. suggested_tags: Array of 3-5 relevant tags for organization (e.g., ["urgent", "renewal-needed", "high-value", "legal-review"])
 
 Return ONLY valid JSON.`
                 },
                 {
                     role: "user",
-                    content: `Analyze this document text and extract structured information:\n\n${extractedText}`
+                    content: `Analyze this document text and extract ALL structured information comprehensively:\n\n${extractedText}`
                 }
             ],
             response_format: { type: "json_object" }
@@ -148,6 +160,7 @@ Return ONLY valid JSON.`
             ai_summary: analysis.summary || null,
             key_points: analysis.key_points || [],
             action_items: analysis.action_items || [],
+            suggested_tags: analysis.suggested_tags || [],
             analysis_status: 'completed'
         });
 
