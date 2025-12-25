@@ -27,7 +27,7 @@ export default function Privacy() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-light text-[#C5A059] mb-4">2. How We Use Your Information</h2>
+                        <h2 className="text-2xl font-light text-[#2E5C8A] mb-4">2. How We Use Your Information</h2>
                         <p className="mb-3">We use the information we collect to:</p>
                         <ul className="list-disc list-inside space-y-2 ml-4">
                             <li>Provide, maintain, and improve our services</li>
@@ -39,7 +39,7 @@ export default function Privacy() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-light text-[#C5A059] mb-4">3. Data Security</h2>
+                        <h2 className="text-2xl font-light text-[#2E5C8A] mb-4">3. Data Security</h2>
                         <p>We implement industry-standard security measures to protect your data, including:</p>
                         <ul className="list-disc list-inside space-y-2 ml-4 mt-3">
                             <li>End-to-end encryption for sensitive documents</li>
@@ -50,7 +50,7 @@ export default function Privacy() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-light text-[#C5A059] mb-4">4. Data Sharing</h2>
+                        <h2 className="text-2xl font-light text-[#2E5C8A] mb-4">4. Data Sharing</h2>
                         <p>We do not sell your personal information. We may share data with:</p>
                         <ul className="list-disc list-inside space-y-2 ml-4 mt-3">
                             <li>Family members you explicitly authorize</li>
@@ -60,7 +60,7 @@ export default function Privacy() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-light text-[#C5A059] mb-4">5. Your Rights</h2>
+                        <h2 className="text-2xl font-light text-[#2E5C8A] mb-4">5. Your Rights</h2>
                         <p className="mb-3">You have the right to:</p>
                         <ul className="list-disc list-inside space-y-2 ml-4">
                             <li>Access your personal data</li>
@@ -72,12 +72,12 @@ export default function Privacy() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-light text-[#C5A059] mb-4">6. Cookies and Tracking</h2>
+                        <h2 className="text-2xl font-light text-[#2E5C8A] mb-4">6. Cookies and Tracking</h2>
                         <p>We use cookies and similar technologies to improve your experience, analyze usage, and deliver personalized content.</p>
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-light text-[#C5A059] mb-4">7. Contact Us</h2>
+                        <h2 className="text-2xl font-light text-[#2E5C8A] mb-4">7. Contact Us</h2>
                         <p>If you have questions about this Privacy Policy, please contact us at privacy@northstar.app</p>
                     </section>
                 </div>
