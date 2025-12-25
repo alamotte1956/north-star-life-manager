@@ -80,7 +80,13 @@ export default function Layout({ children, currentPageName }) {
         { name: 'Emergency Response', icon: AlertCircle, path: 'EmergencyResponse' },
         { name: 'International Assets', icon: Globe, path: 'InternationalAssets' },
         { name: 'Voice Assistant', icon: Users, path: 'VoiceAssistant' },
-        { name: 'Business Hub', icon: Briefcase, path: 'BusinessHub' }
+        { name: 'Business Hub', icon: Briefcase, path: 'BusinessHub' },
+        { name: 'Business Clients', icon: Users, path: 'BusinessClients' },
+        { name: 'Business Projects', icon: Briefcase, path: 'BusinessProjects' },
+        { name: 'Business Invoices', icon: FileText, path: 'BusinessInvoices' },
+        { name: 'Business Expenses', icon: DollarSign, path: 'BusinessExpenses' },
+        { name: 'Business Contracts', icon: FileText, path: 'BusinessContracts' },
+        { name: 'Business Reports', icon: TrendingUp, path: 'BusinessReports' }
         ];
 
     return (

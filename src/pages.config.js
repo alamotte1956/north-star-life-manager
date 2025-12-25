@@ -55,6 +55,8 @@ import BusinessClients from './pages/BusinessClients';
 import BusinessProjects from './pages/BusinessProjects';
 import BusinessInvoices from './pages/BusinessInvoices';
 import BusinessExpenses from './pages/BusinessExpenses';
+import BusinessContracts from './pages/BusinessContracts';
+import BusinessReports from './pages/BusinessReports';
 import __Layout from './Layout.jsx';
 
 
@@ -116,6 +118,8 @@ export const PAGES = {
     "BusinessProjects": BusinessProjects,
     "BusinessInvoices": BusinessInvoices,
     "BusinessExpenses": BusinessExpenses,
+    "BusinessContracts": BusinessContracts,
+    "BusinessReports": BusinessReports,
 }
 
 export const pagesConfig = {

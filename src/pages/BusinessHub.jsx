@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { createPageUrl } from '../utils';
 import { 
     Briefcase, Users, FileText, DollarSign, TrendingUp, 
-    AlertCircle, CheckCircle, Clock, BarChart3 
+    AlertCircle, CheckCircle, Clock, BarChart3
 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 
@@ -139,7 +139,7 @@ export default function BusinessHub() {
                 )}
 
                 {/* Quick Actions */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
                     <Link to={createPageUrl('BusinessClients')}>
                         <Card className="hover:shadow-lg transition-shadow cursor-pointer h-full">
                             <CardContent className="pt-6 text-center">
@@ -179,6 +179,49 @@ export default function BusinessHub() {
                             </CardContent>
                         </Card>
                     </Link>
+
+                    <Link to={createPageUrl('BusinessContracts')}>
+                        <Card className="hover:shadow-lg transition-shadow cursor-pointer h-full">
+                            <CardContent className="pt-6 text-center">
+                                <FileText className="w-12 h-12 mx-auto mb-4 text-purple-600" />
+                                <h3 className="font-medium text-[#1A2B44] mb-2">Contracts</h3>
+                                <p className="text-sm text-[#1A2B44]/60">Templates & e-signatures</p>
+                            </CardContent>
+                        </Card>
+                    </Link>
+                </div>
+
+                {/* Analytics & Accounting */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                    <Link to={createPageUrl('BusinessReports')}>
+                        <Card className="hover:shadow-lg transition-shadow cursor-pointer">
+                            <CardContent className="pt-6">
+                                <div className="flex items-center gap-4">
+                                    <BarChart3 className="w-12 h-12 text-[#D4AF37]" />
+                                    <div>
+                                        <h3 className="font-medium text-[#1A2B44] mb-1">Analytics & Reports</h3>
+                                        <p className="text-sm text-[#1A2B44]/60">
+                                            Revenue trends, client performance, expense analysis
+                                        </p>
+                                    </div>
+                                </div>
+                            </CardContent>
+                        </Card>
+                    </Link>
+
+                    <Card className="hover:shadow-lg transition-shadow cursor-pointer">
+                        <CardContent className="pt-6">
+                            <div className="flex items-center gap-4">
+                                <DollarSign className="w-12 h-12 text-green-600" />
+                                <div className="flex-1">
+                                    <h3 className="font-medium text-[#1A2B44] mb-1">Accounting Sync</h3>
+                                    <p className="text-sm text-[#1A2B44]/60">
+                                        QuickBooks & Xero integration available
+                                    </p>
+                                </div>
+                            </div>
+                        </CardContent>
+                    </Card>
                 </div>
 
                 {/* Recent Activity */}
