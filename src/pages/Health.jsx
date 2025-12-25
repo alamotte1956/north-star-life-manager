@@ -6,6 +6,7 @@ import PrintButton from '../components/PrintButton';
 import HealthInsights from '../components/health/HealthInsights';
 import MedicationTracker from '../components/health/MedicationTracker';
 import WearableDataChart from '../components/health/WearableDataChart';
+import MedicationInteractionChecker from '../components/health/MedicationInteractionChecker';
 import HealthTrendsInsights from '../components/health/HealthTrendsInsights';
 import AICollaborationInsights from '../components/collaboration/AICollaborationInsights';
 import ShareDialog from '../components/collaboration/ShareDialog';

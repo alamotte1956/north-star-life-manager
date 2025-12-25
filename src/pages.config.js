@@ -58,6 +58,8 @@ import Vault from './pages/Vault';
 import Vehicles from './pages/Vehicles';
 import VoiceAssistant from './pages/VoiceAssistant';
 import Home from './pages/Home';
+import FamilyTree from './pages/FamilyTree';
+import AuditLog from './pages/AuditLog';
 import __Layout from './Layout.jsx';
 
 
@@ -122,6 +124,8 @@ export const PAGES = {
     "Vehicles": Vehicles,
     "VoiceAssistant": VoiceAssistant,
     "Home": Home,
+    "FamilyTree": FamilyTree,
+    "AuditLog": AuditLog,
 }
 
 export const pagesConfig = {

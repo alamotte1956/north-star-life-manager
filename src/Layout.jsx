@@ -15,10 +15,18 @@ import AuthGuard from '@/components/auth/AuthGuard';
 import OfflineIndicator from '@/components/pwa/OfflineIndicator';
 import OfflineDataManager from '@/components/pwa/OfflineDataManager';
 import PWAManager from '@/components/pwa/PWAManager';
+import LargeTextToggle from '@/components/accessibility/LargeTextToggle';
+import SimplifiedViewToggle from '@/components/accessibility/SimplifiedViewToggle';
 
 export default function Layout({ children, currentPageName }) {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [searchOpen, setSearchOpen] = useState(false);
+    const [simplifiedView, setSimplifiedView] = useState(false);
+
+    useEffect(() => {
+        const saved = localStorage.getItem('simplifiedView') === 'true';
+        setSimplifiedView(saved);
+    }, []);
 
     const handleLogout = () => {
         base44.auth.logout();
@@ -37,34 +45,34 @@ export default function Layout({ children, currentPageName }) {
 
     const navItems = [
         // Main
-        { name: 'Dashboard', icon: LayoutDashboard, path: 'Dashboard' },
+        { name: 'Dashboard', icon: LayoutDashboard, path: 'Dashboard', essential: true },
 
         // Documents & Vault
-        { name: 'Vault', icon: FileText, path: 'Vault' },
-        { name: 'Reports', icon: FileText, path: 'Reports' },
+        { name: 'Vault', icon: FileText, path: 'Vault', essential: true },
+        { name: 'Reports', icon: FileText, path: 'Reports', essential: false },
 
         // Properties & Assets
-        { name: 'Properties', icon: Home, path: 'Properties' },
-        { name: 'Property Management', icon: TrendingUp, path: 'PropertyManagement' },
-        { name: 'Maintenance', icon: Wrench, path: 'Maintenance' },
-        { name: 'Vehicles', icon: Car, path: 'Vehicles' },
-        { name: 'Valuables', icon: Gem, path: 'Valuables' },
-        { name: 'Home Inventory', icon: Home, path: 'HomeInventory' },
+        { name: 'Properties', icon: Home, path: 'Properties', essential: true },
+        { name: 'Property Management', icon: TrendingUp, path: 'PropertyManagement', essential: false },
+        { name: 'Maintenance', icon: Wrench, path: 'Maintenance', essential: false },
+        { name: 'Vehicles', icon: Car, path: 'Vehicles', essential: true },
+        { name: 'Valuables', icon: Gem, path: 'Valuables', essential: false },
+        { name: 'Home Inventory', icon: Home, path: 'HomeInventory', essential: false },
 
         // Financial Management
-        { name: 'Financial Dashboard', icon: TrendingUp, path: 'FinancialDashboard' },
-        { name: 'Budget & Goals', icon: TrendingUp, path: 'Budget' },
-        { name: 'Financial Health', icon: Activity, path: 'FinancialHealth' },
-        { name: 'Banking Hub', icon: DollarSign, path: 'BankingHub' },
-        { name: 'Investments', icon: TrendingUp, path: 'Investments' },
-        { name: 'Bill Payments', icon: DollarSign, path: 'BillPayments' },
-        { name: 'Auto Payments', icon: Zap, path: 'AutomatedPayments' },
-        { name: 'Subscriptions', icon: DollarSign, path: 'Subscriptions' },
-        { name: 'Credit Score', icon: Shield, path: 'CreditScore' },
-        { name: 'Bill Negotiation', icon: TrendingUp, path: 'BillNegotiation' },
-        { name: 'Insurance Shopping', icon: Shield, path: 'InsuranceShopping' },
-        { name: 'Tax Export', icon: FileText, path: 'TaxExport' },
-        { name: 'International Assets', icon: Globe, path: 'InternationalAssets' },
+        { name: 'Financial Dashboard', icon: TrendingUp, path: 'FinancialDashboard', essential: true },
+        { name: 'Budget & Goals', icon: TrendingUp, path: 'Budget', essential: false },
+        { name: 'Financial Health', icon: Activity, path: 'FinancialHealth', essential: false },
+        { name: 'Banking Hub', icon: DollarSign, path: 'BankingHub', essential: false },
+        { name: 'Investments', icon: TrendingUp, path: 'Investments', essential: true },
+        { name: 'Bill Payments', icon: DollarSign, path: 'BillPayments', essential: false },
+        { name: 'Auto Payments', icon: Zap, path: 'AutomatedPayments', essential: false },
+        { name: 'Subscriptions', icon: DollarSign, path: 'Subscriptions', essential: false },
+        { name: 'Credit Score', icon: Shield, path: 'CreditScore', essential: false },
+        { name: 'Bill Negotiation', icon: TrendingUp, path: 'BillNegotiation', essential: false },
+        { name: 'Insurance Shopping', icon: Shield, path: 'InsuranceShopping', essential: false },
+        { name: 'Tax Export', icon: FileText, path: 'TaxExport', essential: false },
+        { name: 'International Assets', icon: Globe, path: 'InternationalAssets', essential: false },
 
         // Business Management
         { name: 'Business Hub', icon: Briefcase, path: 'BusinessHub' },
@@ -87,20 +95,22 @@ export default function Layout({ children, currentPageName }) {
         { name: 'Concierge', icon: Users, path: 'ConciergeService' },
 
         // Health & Medical
-        { name: 'Health', icon: Heart, path: 'Health' },
-        { name: 'Medical Profile', icon: Heart, path: 'MedicalProfile' },
+        { name: 'Health', icon: Heart, path: 'Health', essential: true },
+        { name: 'Medical Profile', icon: Heart, path: 'MedicalProfile', essential: false },
 
         // Legal & Estate
-        { name: 'Legal & Estate', icon: Shield, path: 'Legal' },
-        { name: 'Legacy Messages', icon: Heart, path: 'LegacyMessages' },
-        { name: 'Succession', icon: Shield, path: 'Succession' },
+        { name: 'Legal & Estate', icon: Shield, path: 'Legal', essential: true },
+        { name: 'Legacy Messages', icon: Heart, path: 'LegacyMessages', essential: true },
+        { name: 'Succession', icon: Shield, path: 'Succession', essential: false },
+        { name: 'Family Tree', icon: Users, path: 'FamilyTree', essential: false },
+        { name: 'Audit Log', icon: Shield, path: 'AuditLog', essential: false },
 
         // Planning & Calendar
-        { name: 'Calendar', icon: Calendar, path: 'Calendar' },
-        { name: 'Travel', icon: Plane, path: 'Travel' },
+        { name: 'Calendar', icon: Calendar, path: 'Calendar', essential: true },
+        { name: 'Travel', icon: Plane, path: 'Travel', essential: false },
 
         // Contacts & Communication
-        { name: 'Contacts', icon: Users, path: 'Contacts' },
+        { name: 'Contacts', icon: Users, path: 'Contacts', essential: true },
         { name: 'Email Assistant', icon: Plug, path: 'EmailAssistant' },
 
         // Emergency
@@ -220,13 +230,15 @@ export default function Layout({ children, currentPageName }) {
                         <span>Search...</span>
                         <kbd className="ml-auto text-xs bg-[#8A9A7B]/10 px-1.5 py-0.5 rounded">⌘K</kbd>
                     </button>
-                    <div className="mt-4">
+                    <div className="mt-4 space-y-2">
+                        <LargeTextToggle />
+                        <SimplifiedViewToggle />
                         <PushNotificationManager />
                     </div>
                 </div>
 
                 <nav className="flex-1 p-4 space-y-2 overflow-y-auto">
-                    {navItems.map((item) => {
+                    {navItems.filter(item => !simplifiedView || item.essential).map((item) => {
                         const Icon = item.icon;
                         const isActive = currentPageName === item.path;
                         return (
@@ -301,7 +313,11 @@ export default function Layout({ children, currentPageName }) {
                 {/* Mobile Menu */}
                 {mobileMenuOpen && (
                     <div className="absolute top-16 left-0 right-0 bg-gradient-to-b from-[#0F1729] to-[#1E3A5F] border-b border-[#2E5C8A] p-4 space-y-2 max-h-[calc(100vh-4rem)] overflow-y-auto shadow-2xl">
-                        {navItems.map((item) => {
+                        <div className="mb-4 space-y-2">
+                            <LargeTextToggle />
+                            <SimplifiedViewToggle />
+                        </div>
+                        {navItems.filter(item => !simplifiedView || item.essential).map((item) => {
                             const Icon = item.icon;
                             const isActive = currentPageName === item.path;
                             return (
