@@ -188,14 +188,17 @@ export function SandboxDataProvider({ children }) {
         }
     };
 
+    // Don't block rendering - default to sandbox mode
     if (isAuthenticated === null) {
         return (
-            <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#F8F9FA] via-white to-[#E8EEF5]">
-                <div className="text-center">
-                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#4A90E2] mx-auto mb-4"></div>
-                    <p className="text-[#0F1729]/60">Loading...</p>
-                </div>
-            </div>
+            <SandboxContext.Provider value={{
+                ...sandboxData,
+                isAuthenticated: false,
+                user: null,
+                isSandboxMode: true
+            }}>
+                {children}
+            </SandboxContext.Provider>
         );
     }
 
