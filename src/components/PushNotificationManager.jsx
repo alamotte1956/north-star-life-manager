@@ -49,6 +49,7 @@ export default function PushNotificationManager() {
             
             if (permission !== 'granted') {
                 toast.error('Notification permission denied');
+                setLoading(false);
                 return;
             }
 
