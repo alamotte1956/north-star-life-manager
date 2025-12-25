@@ -202,8 +202,16 @@ export default function Layout({ children, currentPageName }) {
                         <LogOut className="w-5 h-5" />
                         <span className="text-base">Logout</span>
                     </button>
-                </div>
-            </aside>
+                    <div className="flex justify-center gap-4 mt-4 text-xs text-[#F8F9FA]/60">
+                        <Link to={createPageUrl('Privacy')} className="hover:text-[#C5A059] transition-colors">
+                            Privacy
+                        </Link>
+                        <Link to={createPageUrl('Terms')} className="hover:text-[#C5A059] transition-colors">
+                            Terms
+                        </Link>
+                    </div>
+                    </div>
+                    </aside>
 
             {/* Mobile Header */}
             <div className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-black to-[#0a0a0a] border-b border-[#C5A059] safe-area-inset">
@@ -267,9 +275,25 @@ export default function Layout({ children, currentPageName }) {
                             <LogOut className="w-6 h-6" />
                             <span className="text-base">Logout</span>
                         </button>
-                    </div>
-                )}
-            </div>
+                        <div className="flex justify-center gap-6 mt-4 text-sm text-[#F8F9FA]/60 pb-4">
+                            <Link 
+                                to={createPageUrl('Privacy')} 
+                                onClick={() => setMobileMenuOpen(false)}
+                                className="hover:text-[#C5A059] transition-colors"
+                            >
+                                Privacy
+                            </Link>
+                            <Link 
+                                to={createPageUrl('Terms')} 
+                                onClick={() => setMobileMenuOpen(false)}
+                                className="hover:text-[#C5A059] transition-colors"
+                            >
+                                Terms
+                            </Link>
+                        </div>
+                        </div>
+                        )}
+                        </div>
 
             {/* Main Content */}
             <main className="flex-1 lg:ml-0 mt-16 lg:mt-0 pb-safe">
