@@ -39,6 +39,7 @@ import FinancialDashboard from './pages/FinancialDashboard';
 import FinancialForecasting from './pages/FinancialForecasting';
 import FinancialHealth from './pages/FinancialHealth';
 import FinancialLiteracy from './pages/FinancialLiteracy';
+import FinancialProfile from './pages/FinancialProfile';
 import Health from './pages/Health';
 import Home from './pages/Home';
 import HomeInventory from './pages/HomeInventory';
@@ -73,7 +74,7 @@ import Vehicles from './pages/Vehicles';
 import VideoCallScheduler from './pages/VideoCallScheduler';
 import VideoTutorials from './pages/VideoTutorials';
 import VoiceAssistant from './pages/VoiceAssistant';
-import FinancialProfile from './pages/FinancialProfile';
+import AccountSettings from './pages/AccountSettings';
 import __Layout from './Layout.jsx';
 
 
@@ -119,6 +120,7 @@ export const PAGES = {
     "FinancialForecasting": FinancialForecasting,
     "FinancialHealth": FinancialHealth,
     "FinancialLiteracy": FinancialLiteracy,
+    "FinancialProfile": FinancialProfile,
     "Health": Health,
     "Home": Home,
     "HomeInventory": HomeInventory,
@@ -153,7 +155,7 @@ export const PAGES = {
     "VideoCallScheduler": VideoCallScheduler,
     "VideoTutorials": VideoTutorials,
     "VoiceAssistant": VoiceAssistant,
-    "FinancialProfile": FinancialProfile,
+    "AccountSettings": AccountSettings,
 }
 
 export const pagesConfig = {
