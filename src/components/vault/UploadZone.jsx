@@ -66,10 +66,16 @@ export default function UploadZone({ onUploadComplete }) {
                 analysis_status: 'pending'
             });
 
-            // Trigger AI analysis
+            // Trigger AI analysis - detect financial documents
+            const isFinancial = ['invoice', 'receipt', 'bill', 'statement', 'tax'].some(term =>
+                metadata.title.toLowerCase().includes(term) || 
+                metadata.category === 'financial'
+            );
+            
             base44.functions.invoke('analyzeDocument', {
                 document_id: document.id,
-                file_url
+                file_url,
+                is_financial: isFinancial
             }).catch(err => {
                 console.error('Analysis error:', err);
                 toast.error('Analysis failed, but document was saved');
