@@ -57,6 +57,7 @@ import Valuables from './pages/Valuables';
 import Vault from './pages/Vault';
 import Vehicles from './pages/Vehicles';
 import VoiceAssistant from './pages/VoiceAssistant';
+import Home from './pages/Home';
 import __Layout from './Layout.jsx';
 
 
@@ -120,6 +121,7 @@ export const PAGES = {
     "Vault": Vault,
     "Vehicles": Vehicles,
     "VoiceAssistant": VoiceAssistant,
+    "Home": Home,
 }
 
 export const pagesConfig = {

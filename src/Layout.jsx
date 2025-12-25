@@ -201,7 +201,7 @@ export default function Layout({ children, currentPageName }) {
             {/* Sidebar - Desktop */}
             <aside className="hidden lg:flex flex-col w-64 bg-gradient-to-b from-[#0F1729] to-[#1E3A5F] border-r border-[#2E5C8A]">
                 <div className="p-6 border-b border-[#2E5C8A]/20">
-                    <Link to={createPageUrl('Dashboard')} className="flex items-center gap-3 mb-4 hover:opacity-80 transition-opacity">
+                    <Link to={createPageUrl('Home')} className="flex items-center gap-3 mb-4 hover:opacity-80 transition-opacity">
                         <img 
                             src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6947dc1f392f53989af97bda/b516d228e_Gemini_Generated_Image_tp0qgztp0qgztp0q.png" 
                             alt="North Star Logo" 
@@ -268,7 +268,7 @@ export default function Layout({ children, currentPageName }) {
             {/* Mobile Header */}
             <div className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-[#0F1729] to-[#1E3A5F] border-b border-[#2E5C8A] safe-area-inset">
                 <div className="flex items-center justify-between px-4 h-16">
-                    <Link to={createPageUrl('Dashboard')} className="flex items-center gap-3 hover:opacity-80 transition-opacity">
+                    <Link to={createPageUrl('Home')} className="flex items-center gap-3 hover:opacity-80 transition-opacity">
                         <img 
                             src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6947dc1f392f53989af97bda/b516d228e_Gemini_Generated_Image_tp0qgztp0qgztp0q.png" 
                             alt="North Star Logo" 
