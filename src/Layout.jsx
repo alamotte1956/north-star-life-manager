@@ -239,7 +239,12 @@ export default function Layout({ children, currentPageName }) {
                             <p className="text-[#B8D4ED] text-xs font-light">Life Manager</p>
                         </div>
                     </Link>
-
+                    <Link
+                        to={createPageUrl('Pricing')}
+                        className="w-full flex items-center justify-center px-3 py-3 mb-3 bg-gradient-to-r from-[#4A90E2] to-[#2E5C8A] hover:shadow-lg rounded-lg transition-all min-h-[50px]"
+                    >
+                        <span className="text-white text-xl font-bold">Sign Up / Upgrade</span>
+                    </Link>
                     <button
                         onClick={() => setSearchOpen(true)}
                         className="w-full flex items-center gap-2 px-3 py-3 bg-white/10 hover:bg-white/15 rounded-lg transition-colors text-[#B8D4ED] text-sm min-h-[50px]"
