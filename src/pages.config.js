@@ -61,6 +61,7 @@ import CharitableGiving from './pages/CharitableGiving';
 import EducationFunds from './pages/EducationFunds';
 import DigitalMemorial from './pages/DigitalMemorial';
 import VideoTutorials from './pages/VideoTutorials';
+import TrustManagement from './pages/TrustManagement';
 import InternationalAssets from './pages/InternationalAssets';
 import MedicareNavigator from './pages/MedicareNavigator';
 import DoctorAppointments from './pages/DoctorAppointments';
@@ -71,7 +72,6 @@ import Home from './pages/Home';
 import Pricing from './pages/Pricing';
 import Dashboard from './pages/Dashboard';
 import VideoCallScheduler from './pages/VideoCallScheduler';
-import TrustManagement from './pages/TrustManagement';
 import __Layout from './Layout.jsx';
 
 
@@ -139,6 +139,7 @@ export const PAGES = {
     "EducationFunds": EducationFunds,
     "DigitalMemorial": DigitalMemorial,
     "VideoTutorials": VideoTutorials,
+    "TrustManagement": TrustManagement,
     "InternationalAssets": InternationalAssets,
     "MedicareNavigator": MedicareNavigator,
     "DoctorAppointments": DoctorAppointments,
@@ -149,7 +150,6 @@ export const PAGES = {
     "Pricing": Pricing,
     "Dashboard": Dashboard,
     "VideoCallScheduler": VideoCallScheduler,
-    "TrustManagement": TrustManagement,
 }
 
 export const pagesConfig = {

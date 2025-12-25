@@ -214,16 +214,27 @@ export default function BusinessProjects() {
                                     onValueChange={(value) => setFormData({ ...formData, client_id: value })}
                                 >
                                     <SelectTrigger>
-                                        <SelectValue placeholder="Select client" />
+                                        <SelectValue placeholder="Select client..." />
                                     </SelectTrigger>
                                     <SelectContent>
-                                        {clients.map(client => (
-                                            <SelectItem key={client.id} value={client.id}>
-                                                {client.company_name}
-                                            </SelectItem>
-                                        ))}
+                                        {clients.length === 0 ? (
+                                            <div className="p-2 text-sm text-gray-500">
+                                                No clients yet. Go to Business Clients to add one.
+                                            </div>
+                                        ) : (
+                                            clients.map(client => (
+                                                <SelectItem key={client.id} value={client.id}>
+                                                    {client.company_name}
+                                                </SelectItem>
+                                            ))
+                                        )}
                                     </SelectContent>
                                 </Select>
+                                {clients.length === 0 && (
+                                    <p className="text-xs text-orange-600 mt-1">
+                                        Add a client first in Business Clients page
+                                    </p>
+                                )}
                             </div>
 
                             <div>
