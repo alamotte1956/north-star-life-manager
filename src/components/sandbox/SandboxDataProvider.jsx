@@ -12,8 +12,9 @@ export function useSandboxData() {
 }
 
 export function SandboxDataProvider({ children }) {
-    const [isAuthenticated, setIsAuthenticated] = useState(null);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         checkAuth();
@@ -31,6 +32,8 @@ export function SandboxDataProvider({ children }) {
             }
         } catch {
             setIsAuthenticated(false);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -187,20 +190,6 @@ export function SandboxDataProvider({ children }) {
             sandboxData.clearSandboxData();
         }
     };
-
-    // Don't block rendering - default to sandbox mode
-    if (isAuthenticated === null) {
-        return (
-            <SandboxContext.Provider value={{
-                ...sandboxData,
-                isAuthenticated: false,
-                user: null,
-                isSandboxMode: true
-            }}>
-                {children}
-            </SandboxContext.Provider>
-        );
-    }
 
     return (
         <SandboxContext.Provider value={sandboxData}>
