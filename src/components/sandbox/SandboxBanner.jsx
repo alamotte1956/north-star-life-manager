@@ -28,10 +28,13 @@ export default function SandboxBanner() {
                 <div className="flex items-center justify-between">
                     <div>
                         <p className="font-medium text-blue-900 mb-1">
-                            🎮 Demo Mode - Your data is temporary
+                            🎮 Demo Mode - Very Limited Access
                         </p>
-                        <p className="text-sm text-blue-800">
-                            You're exploring with sample data. Sign up to save your real information permanently.
+                        <p className="text-sm text-blue-800 mb-1">
+                            <strong>Demo Limits:</strong> 2 documents, 0 properties, 2 bills, 3 investments, 1 vehicle, 5 contacts, 10 transactions
+                        </p>
+                        <p className="text-xs text-blue-700">
+                            ⚠️ Data is temporary and will be lost when you close the browser. Sign up for unlimited access!
                         </p>
                     </div>
                     <div className="flex gap-2 ml-4">
