@@ -15,11 +15,13 @@ Deno.serve(async (req) => {
             return Response.json({ error: 'Unauthorized' }, { status: 401 });
         }
 
-        // Fetch health and financial data
-        const [healthRecords, wearableData, transactions] = await Promise.all([
+        // Fetch health, financial, and insurance data
+        const [healthRecords, wearableData, transactions, medications, insuranceQuotes] = await Promise.all([
             base44.entities.HealthRecord.list('-date', 90),
             base44.entities.WearableData.list('-date', 90),
-            base44.entities.Transaction.list('-date', 90)
+            base44.entities.Transaction.list('-date', 90),
+            base44.entities.Medication.list(),
+            base44.entities.InsuranceQuote.filter({ insurance_type: 'health' })
         ]);
 
         // Group data by date for correlation analysis
@@ -92,16 +94,56 @@ Deno.serve(async (req) => {
             }
         }
 
+        // Extract chronic conditions and active medications
+        const chronicConditions = healthRecords
+            .filter(r => r.diagnosis || r.chronic_condition)
+            .map(r => ({
+                condition: r.diagnosis || r.chronic_condition,
+                severity: r.severity,
+                date: r.date
+            }));
+
+        const activeMedications = medications.filter(m => m.status === 'active').map(m => ({
+            name: m.name,
+            dosage: m.dosage,
+            frequency: m.frequency,
+            cost: m.cost_per_refill
+        }));
+
+        // Calculate healthcare spending trends
+        const healthcareSpending = transactions
+            .filter(t => ['medical', 'pharmacy', 'health', 'healthcare', 'insurance'].includes(t.category?.toLowerCase()))
+            .reduce((sum, t) => sum + Math.abs(t.amount || 0), 0);
+
         // Sanitize for AI analysis
         const sanitizedData = sanitizePII(correlationData);
+        const sanitizedConditions = sanitizePII(chronicConditions);
+        const sanitizedMedications = sanitizePII(activeMedications);
 
-        // AI Correlation Analysis
-        const analysisPrompt = `You are a behavioral health and financial analyst. Analyze the correlation between health metrics and financial behavior.
+        // AI Correlation Analysis with Predictive Healthcare Costs
+        const analysisPrompt = `You are a behavioral health and financial analyst specializing in healthcare cost prediction. Analyze the correlation between health metrics and financial behavior, with focus on predicting healthcare costs.
 
 DATA SUMMARY:
 - Days analyzed: ${correlationData.length}
 - Health metrics: mood, sleep hours, steps, exercise minutes
 - Financial metrics: daily spending, transaction count, spending categories
+- Healthcare spending (90 days): $${healthcareSpending.toFixed(2)}
+- Chronic conditions: ${chronicConditions.length}
+- Active medications: ${activeMedications.length}
+
+CHRONIC CONDITIONS:
+${JSON.stringify(sanitizedConditions, null, 2)}
+
+ACTIVE MEDICATIONS:
+${JSON.stringify(sanitizedMedications, null, 2)}
+
+CURRENT INSURANCE QUOTES:
+${JSON.stringify(insuranceQuotes.slice(0, 3).map(q => ({
+    provider: q.provider,
+    annual_premium: q.annual_premium,
+    deductible: q.deductible,
+    coverage_amount: q.coverage_amount
+})), null, 2)}
 
 DAILY DATA (last 30 days sample):
 ${JSON.stringify(sanitizedData.slice(-30), null, 2)}
@@ -115,7 +157,10 @@ ANALYSIS INSTRUCTIONS:
    - Good mood/exercise → better financial decisions
 3. Calculate correlation strength (strong, moderate, weak)
 4. Identify trigger categories (which spending categories correlate with health states)
-5. Provide actionable interventions
+5. **PREDICT FUTURE HEALTHCARE COSTS** based on chronic conditions, medications, and trends
+6. **ASSESS INSURANCE ADEQUACY** - compare current coverage to predicted needs
+7. **FINANCIAL PLANNING ADJUSTMENTS** for managing chronic conditions
+8. Provide actionable interventions
 
 Return JSON with:
 {
