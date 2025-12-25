@@ -11,6 +11,8 @@ import { BarChart, Bar, LineChart, Line, PieChart, Pie, Cell, XAxis, YAxis, Cart
 import { format, subDays, isWithinInterval, parseISO } from 'date-fns';
 import CustomReportBuilder from '../components/reports/CustomReportBuilder';
 import ActivityLogViewer from '../components/reports/ActivityLogViewer';
+import AIReportGenerator from '../components/reports/AIReportGenerator';
+import ScheduledReports from '../components/reports/ScheduledReports';
 
 export default function Reports() {
     const [dateRange, setDateRange] = useState({
@@ -223,27 +225,28 @@ export default function Reports() {
             <div className="max-w-7xl mx-auto px-6 py-12">
                 <div className="flex items-center justify-between mb-8">
                     <div className="flex items-center gap-4">
-                        <div className="relative">
-                            <div className="absolute inset-0 bg-[#4A90E2]/30 rounded-2xl blur-xl" />
-                            <div className="relative bg-gradient-to-br from-[#2E5C8A] to-[#4A90E2] p-4 rounded-2xl">
-                                <TrendingUp className="w-8 h-8 text-white" />
-                            </div>
-                        </div>
+                        <img 
+                            src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6947dc1f392f53989af97bda/b516d228e_Gemini_Generated_Image_tp0qgztp0qgztp0q.png" 
+                            alt="North Star Logo" 
+                            className="w-16 h-16 object-contain"
+                        />
                         <div>
                             <h1 className="text-4xl font-light text-[#0F172A]" style={{ fontFamily: 'Playfair Display, serif' }}>
                                 Reports & Analytics
                             </h1>
-                            <p className="text-[#64748B] font-light">Family document management insights</p>
+                            <p className="text-[#64748B] font-light">Comprehensive insights & AI-powered reports</p>
                         </div>
                     </div>
 
-                    <Popover>
-                        <PopoverTrigger asChild>
-                            <Button variant="outline" className="border-[#0F172A]/20">
-                                <Calendar className="w-4 h-4 mr-2" />
-                                {format(dateRange.from, 'MMM dd')} - {format(dateRange.to, 'MMM dd, yyyy')}
-                            </Button>
-                        </PopoverTrigger>
+                    <div className="flex gap-2">
+                        <AIReportGenerator />
+                        <Popover>
+                            <PopoverTrigger asChild>
+                                <Button variant="outline" className="border-[#0F172A]/20">
+                                    <Calendar className="w-4 h-4 mr-2" />
+                                    {format(dateRange.from, 'MMM dd')} - {format(dateRange.to, 'MMM dd, yyyy')}
+                                </Button>
+                            </PopoverTrigger>
                         <PopoverContent className="w-auto p-0" align="end">
                             <div className="p-3 space-y-2">
                                 <Button
@@ -272,16 +275,22 @@ export default function Reports() {
                                 </Button>
                             </div>
                         </PopoverContent>
-                    </Popover>
+                        </Popover>
+                    </div>
                 </div>
 
-                <Tabs defaultValue="documents" className="w-full">
-                    <TabsList className="grid w-full grid-cols-4 mb-6 bg-white border border-[#0F172A]/10">
+                <Tabs defaultValue="scheduled" className="w-full">
+                    <TabsList className="grid w-full grid-cols-5 mb-6 bg-white border border-[#0F172A]/10">
+                        <TabsTrigger value="scheduled">Scheduled Reports</TabsTrigger>
                         <TabsTrigger value="documents">Documents</TabsTrigger>
                         <TabsTrigger value="activity">Activity</TabsTrigger>
                         <TabsTrigger value="tasks">Tasks</TabsTrigger>
                         <TabsTrigger value="workflows">Workflows</TabsTrigger>
                     </TabsList>
+
+                    <TabsContent value="scheduled">
+                        <ScheduledReports />
+                    </TabsContent>
 
                     <TabsContent value="documents" className="space-y-6">
                         <div className="flex justify-end mb-4">
