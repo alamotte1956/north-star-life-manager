@@ -12,7 +12,8 @@ export default function AuthGuard({ children }) {
                 const isAuth = await base44.auth.isAuthenticated();
                 
                 if (!isAuth) {
-                    base44.auth.redirectToLogin(window.location.pathname);
+                    // Use full URL for proper redirect with custom domains
+                    base44.auth.redirectToLogin(window.location.href);
                     return;
                 }
 
