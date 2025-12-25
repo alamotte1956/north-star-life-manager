@@ -27,6 +27,11 @@ export default function NotificationSettings() {
         policy_renewal_days_before: 30,
         medication_refill_enabled: true,
         medication_refill_days_before: 5,
+        financial_goal_enabled: true,
+        vehicle_registration_enabled: true,
+        vehicle_registration_days_before: 30,
+        vehicle_service_enabled: true,
+        vehicle_service_days_before: 7,
         in_app_enabled: true,
         email_enabled: true,
         push_enabled: false,
@@ -140,6 +145,24 @@ export default function NotificationSettings() {
             label: 'Medication Refills',
             description: 'Reminders to refill your medications',
             hasDaysSetting: true
+        },
+        {
+            key: 'financial_goal',
+            label: 'Financial Goal Check-ins',
+            description: 'Monthly progress updates on your financial goals',
+            hasDaysSetting: false
+        },
+        {
+            key: 'vehicle_registration',
+            label: 'Vehicle Registration',
+            description: 'Reminders for vehicle registration renewals',
+            hasDaysSetting: true
+        },
+        {
+            key: 'vehicle_service',
+            label: 'Vehicle Service',
+            description: 'Reminders for scheduled vehicle maintenance',
+            hasDaysSetting: true
         }
     ];
 
@@ -187,20 +210,20 @@ export default function NotificationSettings() {
                                         />
                                     </div>
                                     {type.hasDaysSetting && preferences[`${type.key}_enabled`] && (
-                                        <div className="ml-4 flex items-center gap-4">
-                                            <Label className="text-sm">Remind me</Label>
-                                            <Input
-                                                type="number"
-                                                min="1"
-                                                max="365"
-                                                value={preferences[`${type.key}_days_before`]}
-                                                onChange={(e) => 
-                                                    setPreferences({ ...preferences, [`${type.key}_days_before`]: parseInt(e.target.value) })
-                                                }
-                                                className="w-20"
-                                            />
-                                            <Label className="text-sm">days before expiry</Label>
-                                        </div>
+                                       <div className="ml-4 flex items-center gap-4">
+                                           <Label className="text-sm">Remind me</Label>
+                                           <Input
+                                               type="number"
+                                               min="1"
+                                               max="365"
+                                               value={preferences[`${type.key}_days_before`] || 7}
+                                               onChange={(e) => 
+                                                   setPreferences({ ...preferences, [`${type.key}_days_before`]: parseInt(e.target.value) })
+                                               }
+                                               className="w-20"
+                                           />
+                                           <Label className="text-sm">days before {type.key.includes('goal') ? 'check-in' : 'due'}</Label>
+                                       </div>
                                     )}
                                 </div>
                             ))}
