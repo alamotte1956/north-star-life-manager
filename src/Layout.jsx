@@ -282,11 +282,11 @@ export default function Layout({ children, currentPageName }) {
                         <div className="p-4 border-t border-[#2E5C8A]/20">
                         <button
                         onClick={handleLogout}
-                        className="flex items-center gap-3 px-4 py-4 rounded-lg text-[#B8D4ED] hover:text-white hover:bg-white/10 transition-all font-light w-full touch-manipulation active:bg-white/20 min-h-[50px]"
+                        className="flex items-center gap-3 px-4 py-4 rounded-lg text-white hover:bg-white/10 transition-all font-light w-full touch-manipulation active:bg-white/20 min-h-[50px]"
                         >
                         <LogOut className="w-5 h-5" />
                         <span className="text-base">Logout</span>
-                    </button>
+                        </button>
                     <div className="mt-4 p-3 bg-[#1E3A5F]/50 rounded-lg border border-[#2E5C8A]/30">
                         <p className="text-[10px] text-[#B8D4ED]/80 leading-relaxed mb-2">
                             <strong className="text-[#B8D4ED]">Data Security:</strong> This platform implements encryption and security measures to protect your data. For questions about compliance certifications, contact support@aihelppros.com
@@ -369,7 +369,7 @@ export default function Layout({ children, currentPageName }) {
                         })}
                         <button
                             onClick={handleLogout}
-                            className="flex items-center gap-3 px-4 py-4 rounded-lg text-[#B8D4ED] hover:text-white hover:bg-white/10 transition-all font-light w-full min-h-[50px]"
+                            className="flex items-center gap-3 px-4 py-4 rounded-lg text-white hover:bg-white/10 transition-all font-light w-full min-h-[50px]"
                         >
                             <LogOut className="w-6 h-6" />
                             <span className="text-base">Logout</span>
