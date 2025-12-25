@@ -44,7 +44,7 @@ Deno.serve(async (req) => {
             });
         }
 
-        // Create checkout session
+        // Create checkout session with 14-day free trial
         const session = await stripe.checkout.sessions.create({
             customer: customer.id,
             payment_method_types: ['card'],
@@ -55,6 +55,14 @@ Deno.serve(async (req) => {
                 }
             ],
             mode: 'subscription',
+            subscription_data: {
+                trial_period_days: 14,
+                trial_settings: {
+                    end_behavior: {
+                        missing_payment_method: 'cancel'
+                    }
+                }
+            },
             success_url: `${req.headers.get('origin')}/Dashboard?session_id={CHECKOUT_SESSION_ID}`,
             cancel_url: `${req.headers.get('origin')}/Pricing`,
             metadata: {

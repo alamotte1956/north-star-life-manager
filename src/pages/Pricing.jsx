@@ -108,6 +108,9 @@ export default function Pricing() {
                     <p className="text-xl text-black/70 font-light">
                         Unlock the full power of North Star Life Manager
                     </p>
+                    <Badge className="mt-4 bg-green-600 text-white px-6 py-2 text-base">
+                        🎉 14-Day Free Trial - No Credit Card Required
+                    </Badge>
                 </div>
 
                 {/* Current Subscription Banner */}
@@ -211,6 +214,14 @@ export default function Pricing() {
                                 <h3 className="font-medium mb-2">What payment methods do you accept?</h3>
                                 <p className="text-sm text-black/70">
                                     We accept all major credit cards through Stripe's secure payment processing.
+                                </p>
+                            </CardContent>
+                        </Card>
+                        <Card>
+                            <CardContent className="pt-6">
+                                <h3 className="font-medium mb-2">How does the 14-day free trial work?</h3>
+                                <p className="text-sm text-black/70">
+                                    Start with a full 14-day free trial of any plan. No credit card required to start. You'll only be charged after the trial period ends.
                                 </p>
                             </CardContent>
                         </Card>
