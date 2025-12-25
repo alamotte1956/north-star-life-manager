@@ -1,15 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSandboxData } from './SandboxDataProvider';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
-import { Info, User } from 'lucide-react';
+import { Info, User, Trash2 } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 
 export default function SandboxBanner() {
-    const { isSandboxMode } = useSandboxData();
+    const { isSandboxMode, clearSandboxData } = useSandboxData();
     const navigate = useNavigate();
+    const [showConfirm, setShowConfirm] = useState(false);
 
     if (!isSandboxMode) return null;
 
@@ -19,6 +21,12 @@ export default function SandboxBanner() {
 
     const handleLogin = () => {
         base44.auth.redirectToLogin();
+    };
+
+    const handleClearData = () => {
+        clearSandboxData();
+        setShowConfirm(false);
+        window.location.reload();
     };
 
     return (
@@ -54,9 +62,42 @@ export default function SandboxBanner() {
                         >
                             Sign Up Free
                         </Button>
+                        <Button
+                            size="sm"
+                            variant="outline"
+                            onClick={() => setShowConfirm(true)}
+                            className="border-red-300 text-red-700 hover:bg-red-50 gap-2"
+                        >
+                            <Trash2 className="w-4 h-4" />
+                            Clear Demo Data
+                        </Button>
                     </div>
                 </div>
             </AlertDescription>
+
+            <Dialog open={showConfirm} onOpenChange={setShowConfirm}>
+                <DialogContent>
+                    <DialogHeader>
+                        <DialogTitle>Clear All Demo Data?</DialogTitle>
+                        <DialogDescription>
+                            This will permanently delete all demo data from your browser. You can always add more demo data to explore the features.
+                        </DialogDescription>
+                    </DialogHeader>
+                    <div className="flex gap-3 justify-end mt-4">
+                        <Button variant="outline" onClick={() => setShowConfirm(false)}>
+                            Cancel
+                        </Button>
+                        <Button 
+                            onClick={handleClearData}
+                            variant="destructive"
+                            className="gap-2"
+                        >
+                            <Trash2 className="w-4 h-4" />
+                            Clear All Data
+                        </Button>
+                    </div>
+                </DialogContent>
+            </Dialog>
         </Alert>
     );
 }
