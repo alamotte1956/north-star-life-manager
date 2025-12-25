@@ -76,6 +76,7 @@ import Vehicles from './pages/Vehicles';
 import VideoCallScheduler from './pages/VideoCallScheduler';
 import VideoTutorials from './pages/VideoTutorials';
 import VoiceAssistant from './pages/VoiceAssistant';
+import WealthLegacyPlanning from './pages/WealthLegacyPlanning';
 import __Layout from './Layout.jsx';
 
 
@@ -158,6 +159,7 @@ export const PAGES = {
     "VideoCallScheduler": VideoCallScheduler,
     "VideoTutorials": VideoTutorials,
     "VoiceAssistant": VoiceAssistant,
+    "WealthLegacyPlanning": WealthLegacyPlanning,
 }
 
 export const pagesConfig = {

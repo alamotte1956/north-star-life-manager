@@ -96,6 +96,7 @@ export default function Layout({ children, currentPageName }) {
 
         // Legal & Estate
         { name: 'Legal & Estate', icon: Shield, path: 'Legal', essential: true },
+        { name: 'Wealth & Legacy Planning', icon: TrendingUp, path: 'WealthLegacyPlanning', essential: true },
         { name: 'Estate Planning', icon: FileText, path: 'EstatePlanning', essential: false },
         { name: 'Trust Management', icon: Shield, path: 'TrustManagement', essential: false },
         { name: 'Legacy Messages', icon: Heart, path: 'LegacyMessages', essential: true },
