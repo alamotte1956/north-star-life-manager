@@ -74,7 +74,12 @@ export default function Terms() {
                     </section>
 
                     <section>
-                        <h2 className="text-2xl font-light text-[#C5A059] mb-4">10. Contact</h2>
+                        <h2 className="text-2xl font-light text-[#C5A059] mb-4">10. Governing Law and Jurisdiction</h2>
+                        <p>These Terms of Service shall be governed by and construed in accordance with the laws of the State of Minnesota, without regard to its conflict of law provisions. Any disputes arising from these terms or use of the service shall be subject to the exclusive jurisdiction of the state and federal courts located in Minnesota.</p>
+                    </section>
+
+                    <section>
+                        <h2 className="text-2xl font-light text-[#C5A059] mb-4">11. Contact</h2>
                         <p>For questions about these Terms of Service, contact us at legal@northstar.app</p>
                     </section>
                 </div>
