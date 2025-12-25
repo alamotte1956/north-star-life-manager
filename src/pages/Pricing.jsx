@@ -40,7 +40,7 @@ const plans = [
     {
         id: 'enterprise',
         name: 'Premium',
-        price: 99,
+        price: 199,
         icon: Building2,
         features: [
             'Everything in Plus',
