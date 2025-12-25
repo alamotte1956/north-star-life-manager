@@ -70,11 +70,11 @@ export default function RoleManagement() {
     });
 
     const updateUserRoleMutation = useMutation({
-        mutationFn: ({ userId, roleId, roleName }) => 
-            base44.entities.User.update(userId, { custom_role_id: roleId, custom_role_name: roleName }),
+        mutationFn: ({ userId, userData }) => 
+            base44.entities.User.update(userId, userData),
         onSuccess: () => {
             queryClient.invalidateQueries(['users']);
-            toast.success('User role updated!');
+            toast.success('User updated!');
         }
     });
 
@@ -361,43 +361,78 @@ export default function RoleManagement() {
 
                     {/* User Management Dialog */}
                     <Dialog open={userDialogOpen} onOpenChange={setUserDialogOpen}>
-                        <DialogContent className="max-w-2xl">
+                        <DialogContent className="max-w-3xl">
                             <DialogHeader>
-                                <DialogTitle>Manage User Roles</DialogTitle>
+                                <DialogTitle>Manage User Types & Roles</DialogTitle>
                             </DialogHeader>
                             <div className="space-y-3">
                                 {users.map(user => (
                                     <Card key={user.id}>
                                         <CardContent className="pt-6">
-                                            <div className="flex items-center justify-between">
-                                                <div>
+                                            <div className="flex items-center justify-between gap-4">
+                                                <div className="flex-1">
                                                     <div className="font-medium">{user.full_name}</div>
                                                     <div className="text-sm text-[#64748B]">{user.email}</div>
-                                                    {user.custom_role_name && (
-                                                        <Badge className="mt-2 bg-[#4A90E2]/10 text-[#4A90E2]">
-                                                            {user.custom_role_name}
+                                                    <div className="flex gap-2 mt-2">
+                                                        <Badge className={
+                                                            user.user_type === 'master_admin' ? 'bg-purple-100 text-purple-700' :
+                                                            user.user_type === 'staff' ? 'bg-blue-100 text-blue-700' :
+                                                            'bg-gray-100 text-gray-700'
+                                                        }>
+                                                            {user.user_type === 'master_admin' ? 'Master Admin' :
+                                                             user.user_type === 'staff' ? 'Staff (No Billing)' :
+                                                             'Client'}
                                                         </Badge>
-                                                    )}
+                                                        {user.custom_role_name && (
+                                                            <Badge className="bg-[#4A90E2]/10 text-[#4A90E2]">
+                                                                {user.custom_role_name}
+                                                            </Badge>
+                                                        )}
+                                                    </div>
                                                 </div>
-                                                <select
-                                                    className="px-3 py-2 border rounded-lg"
-                                                    value={user.custom_role_id || ''}
-                                                    onChange={(e) => {
-                                                        const selectedRole = roles.find(r => r.id === e.target.value);
-                                                        updateUserRoleMutation.mutate({
-                                                            userId: user.id,
-                                                            roleId: e.target.value,
-                                                            roleName: selectedRole?.role_name
-                                                        });
-                                                    }}
-                                                >
-                                                    <option value="">No Custom Role</option>
-                                                    {roles.map(role => (
-                                                        <option key={role.id} value={role.id}>
-                                                            {role.role_name}
-                                                        </option>
-                                                    ))}
-                                                </select>
+                                                <div className="flex gap-3">
+                                                    <div>
+                                                        <Label className="text-xs text-[#64748B] mb-1 block">User Type</Label>
+                                                        <select
+                                                            className="px-3 py-2 border rounded-lg text-sm"
+                                                            value={user.user_type || 'client'}
+                                                            onChange={(e) => {
+                                                                updateUserRoleMutation.mutate({
+                                                                    userId: user.id,
+                                                                    userData: { user_type: e.target.value }
+                                                                });
+                                                            }}
+                                                        >
+                                                            <option value="master_admin">Master Admin</option>
+                                                            <option value="staff">Staff</option>
+                                                            <option value="client">Client</option>
+                                                        </select>
+                                                    </div>
+                                                    <div>
+                                                        <Label className="text-xs text-[#64748B] mb-1 block">Custom Role</Label>
+                                                        <select
+                                                            className="px-3 py-2 border rounded-lg text-sm"
+                                                            value={user.custom_role_id || ''}
+                                                            onChange={(e) => {
+                                                                const selectedRole = roles.find(r => r.id === e.target.value);
+                                                                updateUserRoleMutation.mutate({
+                                                                    userId: user.id,
+                                                                    userData: {
+                                                                        custom_role_id: e.target.value,
+                                                                        custom_role_name: selectedRole?.role_name
+                                                                    }
+                                                                });
+                                                            }}
+                                                        >
+                                                            <option value="">None</option>
+                                                            {roles.map(role => (
+                                                                <option key={role.id} value={role.id}>
+                                                                    {role.role_name}
+                                                                </option>
+                                                            ))}
+                                                        </select>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </CardContent>
                                     </Card>

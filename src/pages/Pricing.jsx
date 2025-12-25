@@ -66,7 +66,8 @@ export default function Pricing() {
         queryFn: () => base44.auth.me()
     });
 
-    const isAdmin = user?.role === 'admin';
+    const isFreeUser = user?.user_type === 'master_admin' || user?.user_type === 'staff';
+    const isAdmin = user?.role === 'admin' || user?.user_type === 'master_admin';
 
     const { data: currentSubscription } = useQuery({
         queryKey: ['subscription'],
@@ -80,17 +81,22 @@ export default function Pricing() {
     });
 
     const handleSubscribe = async (planId) => {
+        if (isFreeUser) {
+            alert(user.user_type === 'master_admin' ? 'Master Admin users have free access to all features.' : 'Staff users have free access to all features.');
+            return;
+        }
+
         if (!acceptedTerms[planId]) {
             alert('Please accept the Terms of Service and Privacy Policy to continue.');
             return;
         }
-        
+
         setLoading(planId);
         try {
             const result = await base44.functions.invoke('createCheckoutSession', {
                 plan_id: planId
             });
-            
+
             // Redirect to Stripe Checkout
             window.location.href = result.data.checkout_url;
         } catch (error) {
@@ -124,14 +130,16 @@ export default function Pricing() {
                     </Badge>
                 </div>
 
-                {/* Admin Banner */}
-                {isAdmin && (
-                    <div className="mb-8 bg-gradient-to-r from-green-500 to-green-600 rounded-2xl p-6 text-center">
+                {/* Free Access Banner */}
+                {isFreeUser && (
+                    <div className="mb-8 bg-gradient-to-r from-purple-500 to-purple-600 rounded-2xl p-6 text-center">
                         <p className="text-white font-light text-xl mb-2">
-                            🎉 Admin Access - All Features Unlocked
+                            {user?.user_type === 'master_admin' ? '👑 Master Admin Access' : '⭐ Staff Access'} - All Features Unlocked
                         </p>
                         <p className="text-white/90 text-sm">
-                            As an admin, you have free access to all premium features
+                            {user?.user_type === 'master_admin' 
+                                ? 'As Master Admin, you have full access to all premium features and can manage user roles.' 
+                                : 'As a Staff member, you have free access to all premium features without billing.'}
                         </p>
                     </div>
                 )}
@@ -219,15 +227,15 @@ export default function Pricing() {
 
                                         <Button
                                         onClick={() => handleSubscribe(plan.id)}
-                                        disabled={loading === plan.id || isCurrentPlan || isAdmin || (!acceptedTerms[plan.id] && !isAdmin && !isCurrentPlan)}
+                                        disabled={loading === plan.id || isCurrentPlan || isFreeUser || (!acceptedTerms[plan.id] && !isFreeUser && !isCurrentPlan)}
                                         className={`w-full h-12 ${
                                             plan.popular 
                                                 ? 'bg-gradient-to-r from-[#D4AF37] to-[#F4D03F] hover:shadow-lg' 
                                                 : 'bg-gradient-to-r from-black to-[#1a1a1a]'
                                         }`}
                                         >
-                                        {isAdmin ? (
-                                            'Admin - Free Access'
+                                        {isFreeUser ? (
+                                            user?.user_type === 'master_admin' ? 'Master Admin - Free Access' : 'Staff - Free Access'
                                         ) : loading === plan.id ? (
                                             <>
                                                 <Loader2 className="w-4 h-4 mr-2 animate-spin" />

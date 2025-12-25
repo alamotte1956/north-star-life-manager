@@ -20,6 +20,14 @@ Deno.serve(async (req) => {
             return Response.json({ error: 'Unauthorized' }, { status: 401 });
         }
 
+        // Staff and Master Admin users don't need to pay
+        if (user.user_type === 'staff' || user.user_type === 'master_admin') {
+            return Response.json({ 
+                error: 'Staff and Master Admin users have free access',
+                user_type: user.user_type
+            }, { status: 400 });
+        }
+
         const { plan_id } = await req.json();
 
         if (!plan_id || !PRICE_IDS[plan_id]) {
