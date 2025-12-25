@@ -81,6 +81,12 @@ export default function Pricing() {
     });
 
     const handleSubscribe = async (planId) => {
+        // If not authenticated, redirect to login
+        if (!user) {
+            base44.auth.redirectToLogin(window.location.href);
+            return;
+        }
+
         if (isFreeUser) {
             alert(user.user_type === 'master_admin' ? 'Master Admin users have free access to all features.' : 'Staff users have free access to all features.');
             return;
@@ -227,7 +233,7 @@ export default function Pricing() {
 
                                         <Button
                                         onClick={() => handleSubscribe(plan.id)}
-                                        disabled={loading === plan.id || isCurrentPlan || isFreeUser || (!acceptedTerms[plan.id] && !isFreeUser && !isCurrentPlan)}
+                                        disabled={loading === plan.id || isCurrentPlan || isFreeUser || (!user && false) || (user && !acceptedTerms[plan.id] && !isFreeUser && !isCurrentPlan)}
                                         className={`w-full h-12 ${
                                             plan.popular 
                                                 ? 'bg-gradient-to-r from-[#D4AF37] to-[#F4D03F] hover:shadow-lg' 
@@ -243,6 +249,8 @@ export default function Pricing() {
                                             </>
                                         ) : isCurrentPlan ? (
                                             'Current Plan'
+                                        ) : !user ? (
+                                            'Sign Up to Get Started'
                                         ) : (
                                             'Get Started'
                                         )}
