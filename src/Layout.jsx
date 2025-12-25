@@ -149,7 +149,7 @@ export default function Layout({ children, currentPageName }) {
             {/* Sidebar - Desktop */}
             <aside className="hidden lg:flex flex-col w-64 bg-gradient-to-b from-black to-[#0a0a0a] border-r border-[#C5A059]">
                 <div className="p-6 border-b border-[#C5A059]/20">
-                    <div className="flex items-center gap-3 mb-4">
+                    <Link to={createPageUrl('Dashboard')} className="flex items-center gap-3 mb-4 hover:opacity-80 transition-opacity">
                         <img 
                             src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6947dc1f392f53989af97bda/b516d228e_Gemini_Generated_Image_tp0qgztp0qgztp0q.png" 
                             alt="North Star Logo" 
@@ -159,7 +159,7 @@ export default function Layout({ children, currentPageName }) {
                             <h1 className="text-lg font-light text-[#C5A059] tracking-wide" style={{ fontFamily: 'Playfair Display, serif' }}>North Star</h1>
                             <p className="text-[#64748B] text-xs font-light">Life Manager</p>
                         </div>
-                    </div>
+                    </Link>
                     <button
                         onClick={() => setSearchOpen(true)}
                         className="w-full flex items-center gap-2 px-3 py-3 bg-white/10 hover:bg-white/15 rounded-lg transition-colors text-[#B8935E] text-sm min-h-[50px]"
@@ -216,7 +216,7 @@ export default function Layout({ children, currentPageName }) {
             {/* Mobile Header */}
             <div className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-black to-[#0a0a0a] border-b border-[#C5A059] safe-area-inset">
                 <div className="flex items-center justify-between px-4 h-16">
-                    <div className="flex items-center gap-3">
+                    <Link to={createPageUrl('Dashboard')} className="flex items-center gap-3 hover:opacity-80 transition-opacity">
                         <img 
                             src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6947dc1f392f53989af97bda/b516d228e_Gemini_Generated_Image_tp0qgztp0qgztp0q.png" 
                             alt="North Star Logo" 
@@ -225,7 +225,7 @@ export default function Layout({ children, currentPageName }) {
                         <div>
                             <h1 className="text-sm font-light text-[#C5A059]" style={{ fontFamily: 'Playfair Display, serif' }}>North Star</h1>
                         </div>
-                    </div>
+                    </Link>
                     <div className="flex items-center gap-2">
                         <button
                             onClick={() => setSearchOpen(true)}
