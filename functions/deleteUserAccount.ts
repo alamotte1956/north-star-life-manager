@@ -95,17 +95,18 @@ Deno.serve(async (req) => {
             'TransactionCorrection'
         ];
 
-        // Delete each entity type - with maximum error handling
+        // Delete each entity type using service role to bypass security restrictions
         for (const entityName of entitiesToDelete) {
             try {
-                // Simple list and filter approach
-                const allRecords = await base44.entities[entityName].list();
+                // Use service role to list all records
+                const allRecords = await base44.asServiceRole.entities[entityName].list();
                 const userRecords = allRecords.filter(r => r.created_by === userEmail);
                 
                 let deletedCount = 0;
                 for (const record of userRecords) {
                     try {
-                        await base44.entities[entityName].delete(record.id);
+                        // Use service role to delete (bypasses RLS)
+                        await base44.asServiceRole.entities[entityName].delete(record.id);
                         deletedCount++;
                     } catch (deleteError) {
                         // Skip records we can't delete
