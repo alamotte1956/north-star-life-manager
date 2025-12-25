@@ -75,6 +75,7 @@ export default function Layout({ children, currentPageName }) {
         { name: 'International Assets', icon: Globe, path: 'InternationalAssets', essential: false },
         { name: 'Charitable Giving', icon: Heart, path: 'CharitableGiving', essential: false },
         { name: 'Education Funds', icon: Users, path: 'EducationFunds', essential: false },
+        { name: 'Art & Collectibles', icon: Gem, path: 'ArtCollectibles', essential: false },
 
         // Business Management
         { name: 'Business Hub', icon: Briefcase, path: 'BusinessHub' },
@@ -95,11 +96,14 @@ export default function Layout({ children, currentPageName }) {
         // Professional Services
         { name: 'Professional Network', icon: Users, path: 'ProfessionalMarketplace' },
         { name: 'Concierge', icon: Users, path: 'ConciergeService' },
+        { name: 'Home Services', icon: Home, path: 'HomeServices', essential: false },
 
         // Health & Medical
         { name: 'Health', icon: Heart, path: 'Health', essential: true },
         { name: 'Medical Profile', icon: Heart, path: 'MedicalProfile', essential: false },
         { name: 'Medicare Navigator', icon: Shield, path: 'MedicareNavigator', essential: false },
+        { name: 'Doctor Appointments', icon: Calendar, path: 'DoctorAppointments', essential: false },
+        { name: 'Caregiver Coordination', icon: Users, path: 'CaregiverCoordination', essential: false },
 
         // Legal & Estate
         { name: 'Legal & Estate', icon: Shield, path: 'Legal', essential: true },
@@ -108,6 +112,7 @@ export default function Layout({ children, currentPageName }) {
         { name: 'Family Tree', icon: Users, path: 'FamilyTree', essential: false },
         { name: 'Audit Log', icon: Shield, path: 'AuditLog', essential: false },
         { name: 'Estate Planning', icon: FileText, path: 'EstatePlanning', essential: false },
+        { name: 'Digital Memorial', icon: Heart, path: 'DigitalMemorial', essential: false },
 
         // Planning & Calendar
         { name: 'Calendar', icon: Calendar, path: 'Calendar', essential: true },

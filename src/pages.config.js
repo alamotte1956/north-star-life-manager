@@ -68,6 +68,9 @@ import Pricing from './pages/Pricing';
 import Dashboard from './pages/Dashboard';
 import VideoCallScheduler from './pages/VideoCallScheduler';
 import VideoTutorials from './pages/VideoTutorials';
+import DoctorAppointments from './pages/DoctorAppointments';
+import HomeServices from './pages/HomeServices';
+import CaregiverCoordination from './pages/CaregiverCoordination';
 import __Layout from './Layout.jsx';
 
 
@@ -142,6 +145,9 @@ export const PAGES = {
     "Dashboard": Dashboard,
     "VideoCallScheduler": VideoCallScheduler,
     "VideoTutorials": VideoTutorials,
+    "DoctorAppointments": DoctorAppointments,
+    "HomeServices": HomeServices,
+    "CaregiverCoordination": CaregiverCoordination,
 }
 
 export const pagesConfig = {

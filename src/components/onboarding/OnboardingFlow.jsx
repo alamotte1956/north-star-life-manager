@@ -6,14 +6,16 @@ import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { 
     CheckCircle, ChevronRight, Sparkles, DollarSign, 
-    Home, TrendingUp, X, Link as LinkIcon, Target, Calendar
+    Home, TrendingUp, X, Link as LinkIcon, Target, Calendar, Video, PlayCircle
 } from 'lucide-react';
 import { toast } from 'sonner';
+import WhiteGloveOnboarding from './WhiteGloveOnboarding';
 import AccountingSetup from './steps/AccountingSetup';
 import GoalsSetup from './steps/GoalsSetup';
 import PropertySetup from './steps/PropertySetup';
 
 export default function OnboardingFlow({ onComplete, onSkip }) {
+    const [showWhiteGlove, setShowWhiteGlove] = useState(true);
     const [currentStep, setCurrentStep] = useState(0);
     const [completedSteps, setCompletedSteps] = useState(new Set());
     const [user, setUser] = useState(null);
@@ -21,6 +23,21 @@ export default function OnboardingFlow({ onComplete, onSkip }) {
     useEffect(() => {
         base44.auth.me().then(setUser);
     }, []);
+
+    // Show white-glove onboarding first
+    if (showWhiteGlove) {
+        return (
+            <WhiteGloveOnboarding 
+                onComplete={() => {
+                    setShowWhiteGlove(false);
+                    // Mark as complete
+                    base44.auth.updateMe({ onboarding_completed: true }).then(() => {
+                        if (onComplete) onComplete();
+                    });
+                }}
+            />
+        );
+    }
 
     const steps = [
         {
