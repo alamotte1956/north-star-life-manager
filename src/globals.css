@@ -41,13 +41,16 @@ body.cabin-mode {
 }
 
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   color: var(--dark-blue);
   background-color: var(--off-white);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overscroll-behavior-y: contain;
   -webkit-overflow-scrolling: touch;
+  /* Better text rendering across browsers */
+  text-rendering: optimizeLegibility;
+  -webkit-tap-highlight-color: transparent;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -82,11 +85,18 @@ p, span, div, label, input, textarea, select {
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(46, 92, 138, 0.1);
   border: 1px solid var(--pale-blue);
+  -webkit-transition: box-shadow 0.3s ease, transform 0.2s ease;
+  -moz-transition: box-shadow 0.3s ease, transform 0.2s ease;
+  -o-transition: box-shadow 0.3s ease, transform 0.2s ease;
   transition: box-shadow 0.3s ease, transform 0.2s ease;
 }
 
 .card:hover, [class*="Card"]:hover {
   box-shadow: 0 8px 24px rgba(46, 92, 138, 0.2);
+  -webkit-transform: translateY(-2px);
+  -moz-transform: translateY(-2px);
+  -ms-transform: translateY(-2px);
+  -o-transform: translateY(-2px);
   transform: translateY(-2px);
   border-color: var(--light-blue);
 }
@@ -94,6 +104,10 @@ p, span, div, label, input, textarea, select {
 /* Primary Buttons - Blue Theme */
 button[class*="bg-gradient"], button.primary {
   background: linear-gradient(135deg, var(--medium-blue) 0%, var(--light-blue) 100%);
+  /* Fallback for older browsers */
+  background: -webkit-linear-gradient(135deg, var(--medium-blue) 0%, var(--light-blue) 100%);
+  background: -moz-linear-gradient(135deg, var(--medium-blue) 0%, var(--light-blue) 100%);
+  background: -o-linear-gradient(135deg, var(--medium-blue) 0%, var(--light-blue) 100%);
   color: var(--pure-white);
   font-weight: 600;
   border-radius: 8px;
@@ -102,6 +116,9 @@ button[class*="bg-gradient"], button.primary {
   font-size: 16px;
   border: 2px solid var(--medium-blue);
   cursor: pointer;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
   transition: all 0.3s ease;
 }
 
@@ -113,6 +130,10 @@ button[class*="bg-gradient"]:hover, button.primary:hover {
 
 /* Haptic Feedback Simulation */
 button:active {
+  -webkit-transform: scale(0.98);
+  -moz-transform: scale(0.98);
+  -ms-transform: scale(0.98);
+  -o-transform: scale(0.98);
   transform: scale(0.98);
 }
 
@@ -233,12 +254,18 @@ button[class*="outline"]:hover {
   }
 }
 
-/* Smooth Scrolling */
+/* Smooth Scrolling - with fallback */
 html {
   scroll-behavior: smooth;
 }
 
-/* Custom Scrollbar */
+@media screen and (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* Custom Scrollbar - Chrome, Safari, Edge */
 ::-webkit-scrollbar {
   width: 10px;
   height: 10px;
@@ -255,4 +282,25 @@ html {
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--light-blue);
+}
+
+/* Firefox scrollbar styling */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--medium-blue) var(--pale-blue);
+}
+
+/* Better box-sizing for all browsers */
+*, *::before, *::after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+/* Better user select behavior */
+input, textarea, select {
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
 }
