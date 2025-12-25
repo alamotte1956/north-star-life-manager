@@ -20,6 +20,7 @@ import Maintenance from './pages/Maintenance';
 import MedicalProfile from './pages/MedicalProfile';
 import NotificationSettings from './pages/NotificationSettings';
 import Pricing from './pages/Pricing';
+import Privacy from './pages/Privacy';
 import Properties from './pages/Properties';
 import PropertyManagement from './pages/PropertyManagement';
 import Reports from './pages/Reports';
@@ -27,12 +28,11 @@ import RoleManagement from './pages/RoleManagement';
 import Subscriptions from './pages/Subscriptions';
 import Succession from './pages/Succession';
 import TenantPortal from './pages/TenantPortal';
+import Terms from './pages/Terms';
 import Travel from './pages/Travel';
 import Valuables from './pages/Valuables';
 import Vault from './pages/Vault';
 import Vehicles from './pages/Vehicles';
-import Privacy from './pages/Privacy';
-import Terms from './pages/Terms';
 import __Layout from './Layout.jsx';
 
 
@@ -59,6 +59,7 @@ export const PAGES = {
     "MedicalProfile": MedicalProfile,
     "NotificationSettings": NotificationSettings,
     "Pricing": Pricing,
+    "Privacy": Privacy,
     "Properties": Properties,
     "PropertyManagement": PropertyManagement,
     "Reports": Reports,
@@ -66,12 +67,11 @@ export const PAGES = {
     "Subscriptions": Subscriptions,
     "Succession": Succession,
     "TenantPortal": TenantPortal,
+    "Terms": Terms,
     "Travel": Travel,
     "Valuables": Valuables,
     "Vault": Vault,
     "Vehicles": Vehicles,
-    "Privacy": Privacy,
-    "Terms": Terms,
 }
 
 export const pagesConfig = {

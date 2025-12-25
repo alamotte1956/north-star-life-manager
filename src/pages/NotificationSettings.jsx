@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
-import { Bell, Mail, Smartphone, Save } from 'lucide-react';
+import { Bell, Mail, Smartphone, Save, Clock } from 'lucide-react';
 import { toast } from 'sonner';
 
 export default function NotificationSettings() {
@@ -15,10 +15,21 @@ export default function NotificationSettings() {
         document_expiry_enabled: true,
         document_expiry_days_before: 30,
         maintenance_due_enabled: true,
+        maintenance_due_days_before: 7,
         bill_due_enabled: true,
+        bill_due_days_before: 3,
         subscription_renewal_enabled: true,
+        subscription_renewal_days_before: 7,
+        lease_expiring_enabled: true,
+        lease_expiring_days_before: 60,
+        policy_renewal_enabled: true,
+        policy_renewal_days_before: 30,
+        medication_refill_enabled: true,
+        medication_refill_days_before: 5,
         in_app_enabled: true,
-        email_enabled: true
+        email_enabled: true,
+        push_enabled: false,
+        reminder_time: '09:00'
     });
 
     const { data: user } = useQuery({
@@ -65,17 +76,38 @@ export default function NotificationSettings() {
         {
             key: 'maintenance_due',
             label: 'Maintenance Due',
-            description: 'Reminders for upcoming maintenance tasks'
+            description: 'Reminders for upcoming maintenance tasks',
+            hasDaysSetting: true
         },
         {
             key: 'bill_due',
             label: 'Bills Due',
-            description: 'Reminders for bill payments'
+            description: 'Reminders for bill payments',
+            hasDaysSetting: true
         },
         {
             key: 'subscription_renewal',
             label: 'Subscription Renewals',
-            description: 'Notifications for subscription renewals'
+            description: 'Notifications for subscription renewals',
+            hasDaysSetting: true
+        },
+        {
+            key: 'lease_expiring',
+            label: 'Lease Expirations',
+            description: 'Get notified before property leases expire',
+            hasDaysSetting: true
+        },
+        {
+            key: 'policy_renewal',
+            label: 'Policy Renewals',
+            description: 'Insurance and policy renewal reminders',
+            hasDaysSetting: true
+        },
+        {
+            key: 'medication_refill',
+            label: 'Medication Refills',
+            description: 'Reminders to refill your medications',
+            hasDaysSetting: true
         }
     ];
 
@@ -178,6 +210,45 @@ export default function NotificationSettings() {
                                         setPreferences({ ...preferences, email_enabled: checked })
                                     }
                                 />
+                            </div>
+                            <div className="flex items-center justify-between">
+                                <div className="flex items-center gap-3">
+                                    <Bell className="w-5 h-5 text-[#C5A059]" />
+                                    <div>
+                                        <Label className="text-base">Push Notifications</Label>
+                                        <p className="text-sm text-gray-500">Send push notifications to your device</p>
+                                    </div>
+                                </div>
+                                <Switch
+                                    checked={preferences.push_enabled}
+                                    onCheckedChange={(checked) => 
+                                        setPreferences({ ...preferences, push_enabled: checked })
+                                    }
+                                />
+                            </div>
+                        </CardContent>
+                    </Card>
+
+                    {/* Reminder Timing */}
+                    <Card>
+                        <CardHeader>
+                            <CardTitle className="text-xl font-light">Reminder Timing</CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                            <div className="flex items-center gap-4">
+                                <Clock className="w-5 h-5 text-[#C5A059]" />
+                                <div className="flex-1">
+                                    <Label className="text-base">Preferred Reminder Time</Label>
+                                    <p className="text-sm text-gray-500 mb-2">Choose when you'd like to receive daily reminders</p>
+                                    <Input
+                                        type="time"
+                                        value={preferences.reminder_time}
+                                        onChange={(e) => 
+                                            setPreferences({ ...preferences, reminder_time: e.target.value })
+                                        }
+                                        className="w-40"
+                                    />
+                                </div>
                             </div>
                         </CardContent>
                     </Card>
