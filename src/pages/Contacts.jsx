@@ -12,6 +12,8 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { useSandboxData } from '@/components/sandbox/SandboxDataProvider';
+import ContactImporter from '@/components/contacts/ContactImporter';
 
 const categoryLabels = {
     attorney: 'Attorney',
@@ -31,6 +33,7 @@ const categoryLabels = {
 export default function Contacts() {
     const [open, setOpen] = useState(false);
     const [filter, setFilter] = useState('all');
+    const { isSandboxMode } = useSandboxData();
     const [formData, setFormData] = useState({
         name: '',
         category: 'other',
@@ -96,6 +99,7 @@ export default function Contacts() {
 
                         <div className="flex gap-2 print:hidden">
                         <PrintButton />
+                        {!isSandboxMode && <ContactImporter onImportComplete={refetch} />}
                         <Dialog open={open} onOpenChange={setOpen}>
                         <DialogTrigger asChild>
                             <Button className="bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] hover:shadow-lg text-white">
