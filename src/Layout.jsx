@@ -44,12 +44,25 @@ export default function Layout({ children, currentPageName }) {
     }, []);
 
     const navItems = [
-        // Main
+        // Dashboard
         { name: 'Dashboard', icon: LayoutDashboard, path: 'Dashboard', essential: true },
 
         // Documents & Vault
         { name: 'Vault', icon: FileText, path: 'Vault', essential: true },
         { name: 'Reports', icon: FileText, path: 'Reports', essential: false },
+
+        // Financial Management
+        { name: 'Financial Dashboard', icon: TrendingUp, path: 'FinancialDashboard', essential: true },
+        { name: 'Investments', icon: TrendingUp, path: 'Investments', essential: true },
+        { name: 'Budget & Goals', icon: TrendingUp, path: 'Budget', essential: false },
+        { name: 'Financial Health', icon: Activity, path: 'FinancialHealth', essential: false },
+        { name: 'Banking Hub', icon: DollarSign, path: 'BankingHub', essential: false },
+        { name: 'Bill Payments', icon: DollarSign, path: 'BillPayments', essential: false },
+        { name: 'Auto Payments', icon: Zap, path: 'AutomatedPayments', essential: false },
+        { name: 'Subscriptions', icon: DollarSign, path: 'Subscriptions', essential: false },
+        { name: 'Credit Score', icon: Shield, path: 'CreditScore', essential: false },
+        { name: 'Bill Negotiation', icon: TrendingUp, path: 'BillNegotiation', essential: false },
+        { name: 'Tax Export', icon: FileText, path: 'TaxExport', essential: false },
 
         // Properties & Assets
         { name: 'Properties', icon: Home, path: 'Properties', essential: true },
@@ -58,24 +71,9 @@ export default function Layout({ children, currentPageName }) {
         { name: 'Vehicles', icon: Car, path: 'Vehicles', essential: true },
         { name: 'Valuables', icon: Gem, path: 'Valuables', essential: false },
         { name: 'Home Inventory', icon: Home, path: 'HomeInventory', essential: false },
-
-        // Financial Management
-        { name: 'Financial Dashboard', icon: TrendingUp, path: 'FinancialDashboard', essential: true },
-        { name: 'Budget & Goals', icon: TrendingUp, path: 'Budget', essential: false },
-        { name: 'Financial Health', icon: Activity, path: 'FinancialHealth', essential: false },
-        { name: 'Banking Hub', icon: DollarSign, path: 'BankingHub', essential: false },
-        { name: 'Investments', icon: TrendingUp, path: 'Investments', essential: true },
-        { name: 'Bill Payments', icon: DollarSign, path: 'BillPayments', essential: false },
-        { name: 'Auto Payments', icon: Zap, path: 'AutomatedPayments', essential: false },
-        { name: 'Subscriptions', icon: DollarSign, path: 'Subscriptions', essential: false },
-        { name: 'Credit Score', icon: Shield, path: 'CreditScore', essential: false },
-        { name: 'Bill Negotiation', icon: TrendingUp, path: 'BillNegotiation', essential: false },
         { name: 'Insurance Shopping', icon: Shield, path: 'InsuranceShopping', essential: false },
-        { name: 'Tax Export', icon: FileText, path: 'TaxExport', essential: false },
-        { name: 'International Assets', icon: Globe, path: 'InternationalAssets', essential: false },
-        { name: 'Charitable Giving', icon: Heart, path: 'CharitableGiving', essential: false },
-        { name: 'Education Funds', icon: Users, path: 'EducationFunds', essential: false },
         { name: 'Art & Collectibles', icon: Gem, path: 'ArtCollectibles', essential: false },
+        { name: 'International Assets', icon: Globe, path: 'InternationalAssets', essential: false },
 
         // Business Management
         { name: 'Business Hub', icon: Briefcase, path: 'BusinessHub' },
@@ -86,9 +84,35 @@ export default function Layout({ children, currentPageName }) {
         { name: 'Business Contracts', icon: FileText, path: 'BusinessContracts' },
         { name: 'Business Reports', icon: TrendingUp, path: 'BusinessReports' },
 
+        // Health & Medical (HIPAA Protected)
+        { name: 'Health', icon: Heart, path: 'Health', essential: true },
+        { name: 'Medical Profile', icon: Heart, path: 'MedicalProfile', essential: false },
+        { name: 'Doctor Appointments', icon: Calendar, path: 'DoctorAppointments', essential: false },
+        { name: 'Medicare Navigator', icon: Shield, path: 'MedicareNavigator', essential: false },
+        { name: 'Caregiver Coordination', icon: Users, path: 'CaregiverCoordination', essential: false },
+
+        // Legal & Estate
+        { name: 'Legal & Estate', icon: Shield, path: 'Legal', essential: true },
+        { name: 'Estate Planning', icon: FileText, path: 'EstatePlanning', essential: false },
+        { name: 'Trust Management', icon: Shield, path: 'TrustManagement', essential: false },
+        { name: 'Legacy Messages', icon: Heart, path: 'LegacyMessages', essential: true },
+        { name: 'Succession', icon: Shield, path: 'Succession', essential: false },
+        { name: 'Digital Memorial', icon: Heart, path: 'DigitalMemorial', essential: false },
+        { name: 'Charitable Giving', icon: Heart, path: 'CharitableGiving', essential: false },
+        { name: 'Education Funds', icon: Users, path: 'EducationFunds', essential: false },
+
+        // Calendar & Travel
+        { name: 'Calendar', icon: Calendar, path: 'Calendar', essential: true },
+        { name: 'Travel', icon: Plane, path: 'Travel', essential: false },
+
+        // Contacts & Communication
+        { name: 'Contacts', icon: Users, path: 'Contacts', essential: true },
+        { name: 'Email Assistant', icon: Plug, path: 'EmailAssistant' },
+
         // Family & Collaboration
         { name: 'Collaboration', icon: Users, path: 'Collaboration' },
         { name: 'Family Roles', icon: Shield, path: 'FamilyRoleManagement' },
+        { name: 'Family Tree', icon: Users, path: 'FamilyTree', essential: false },
         { name: 'Workflows', icon: Zap, path: 'FamilyWorkflows' },
         { name: 'My To-Do', icon: CheckCircle, path: 'FamilyToDo' },
         { name: 'Family Notifications', icon: LayoutDashboard, path: 'FamilyNotifications' },
@@ -97,42 +121,18 @@ export default function Layout({ children, currentPageName }) {
         { name: 'Professional Network', icon: Users, path: 'ProfessionalMarketplace' },
         { name: 'Concierge', icon: Users, path: 'ConciergeService' },
         { name: 'Home Services', icon: Home, path: 'HomeServices', essential: false },
-
-        // Health & Medical
-        { name: 'Health', icon: Heart, path: 'Health', essential: true },
-        { name: 'Medical Profile', icon: Heart, path: 'MedicalProfile', essential: false },
-        { name: 'Medicare Navigator', icon: Shield, path: 'MedicareNavigator', essential: false },
-        { name: 'Doctor Appointments', icon: Calendar, path: 'DoctorAppointments', essential: false },
-        { name: 'Caregiver Coordination', icon: Users, path: 'CaregiverCoordination', essential: false },
-
-        // Legal & Estate
-        { name: 'Legal & Estate', icon: Shield, path: 'Legal', essential: true },
-        { name: 'Legacy Messages', icon: Heart, path: 'LegacyMessages', essential: true },
-        { name: 'Succession', icon: Shield, path: 'Succession', essential: false },
-        { name: 'Family Tree', icon: Users, path: 'FamilyTree', essential: false },
-        { name: 'Audit Log', icon: Shield, path: 'AuditLog', essential: false },
-        { name: 'Estate Planning', icon: FileText, path: 'EstatePlanning', essential: false },
-        { name: 'Trust Management', icon: Shield, path: 'TrustManagement', essential: false },
-        { name: 'Digital Memorial', icon: Heart, path: 'DigitalMemorial', essential: false },
-
-        // Planning & Calendar
-        { name: 'Calendar', icon: Calendar, path: 'Calendar', essential: true },
-        { name: 'Travel', icon: Plane, path: 'Travel', essential: false },
-
-        // Contacts & Communication
-        { name: 'Contacts', icon: Users, path: 'Contacts', essential: true },
-        { name: 'Email Assistant', icon: Plug, path: 'EmailAssistant' },
-
-        // Emergency
-        { name: 'Emergency Response', icon: AlertCircle, path: 'EmergencyResponse' },
-
-        // Settings & System
-        { name: 'Video Tutorials', icon: LayoutDashboard, path: 'VideoTutorials' },
         { name: 'Schedule Video Call', icon: Video, path: 'VideoCallScheduler' },
+
+        // Emergency & Security
+        { name: 'Emergency Response', icon: AlertCircle, path: 'EmergencyResponse' },
+        { name: 'Audit Log', icon: Shield, path: 'AuditLog', essential: false },
+
+        // Settings & Support
         { name: 'Notifications', icon: LayoutDashboard, path: 'NotificationSettings' },
         { name: 'Integrations', icon: Plug, path: 'Integrations' },
         { name: 'Role Management', icon: Shield, path: 'RoleManagement' },
-        { name: 'Voice Assistant', icon: Users, path: 'VoiceAssistant' }
+        { name: 'Voice Assistant', icon: Users, path: 'VoiceAssistant' },
+        { name: 'Video Tutorials', icon: LayoutDashboard, path: 'VideoTutorials' }
         ];
 
     return (
@@ -284,12 +284,23 @@ export default function Layout({ children, currentPageName }) {
                         <LogOut className="w-5 h-5" />
                         <span className="text-base">Logout</span>
                     </button>
-                    <div className="flex justify-center gap-4 mt-4 text-xs text-[#7BB3E0]">
+                    <div className="mt-4 p-3 bg-[#1E3A5F]/50 rounded-lg border border-[#2E5C8A]/30">
+                        <p className="text-[10px] text-[#B8D4ED]/80 leading-relaxed mb-2">
+                            <strong className="text-[#B8D4ED]">HIPAA Compliance:</strong> This platform implements administrative, physical, and technical safeguards to protect your Protected Health Information (PHI) in accordance with HIPAA regulations. All health data is encrypted at rest and in transit.
+                        </p>
+                        <p className="text-[10px] text-[#B8D4ED]/80 leading-relaxed mb-2">
+                            <strong className="text-[#B8D4ED]">Disclaimer:</strong> This platform is for informational and organizational purposes only and does not constitute legal, financial, medical, or tax advice. Always consult qualified professionals for specific guidance.
+                        </p>
+                        <p className="text-[10px] text-[#B8D4ED]/80 leading-relaxed">
+                            <strong className="text-[#B8D4ED]">Security:</strong> We use bank-level encryption and comply with SOC 2 Type II standards. Data breaches are reported within 72 hours as required by law.
+                        </p>
+                    </div>
+                    <div className="flex justify-center gap-4 mt-3 text-xs text-[#7BB3E0]">
                         <Link to={createPageUrl('Privacy')} className="hover:text-white transition-colors">
-                            Privacy
+                            Privacy Policy
                         </Link>
                         <Link to={createPageUrl('Terms')} className="hover:text-white transition-colors">
-                            Terms
+                            Terms of Service
                         </Link>
                     </div>
                     </div>
@@ -368,20 +379,28 @@ export default function Layout({ children, currentPageName }) {
                             <LogOut className="w-6 h-6" />
                             <span className="text-base">Logout</span>
                         </button>
-                        <div className="flex justify-center gap-6 mt-4 text-sm text-[#7BB3E0] pb-4">
+                        <div className="mt-4 p-3 bg-[#1E3A5F]/50 rounded-lg border border-[#2E5C8A]/30">
+                            <p className="text-[10px] text-[#B8D4ED]/80 leading-relaxed mb-2">
+                                <strong className="text-[#B8D4ED]">HIPAA Compliance:</strong> This platform implements administrative, physical, and technical safeguards to protect your Protected Health Information (PHI).
+                            </p>
+                            <p className="text-[10px] text-[#B8D4ED]/80 leading-relaxed">
+                                <strong className="text-[#B8D4ED]">Disclaimer:</strong> For informational purposes only. Not legal, financial, or medical advice. Consult professionals for guidance.
+                            </p>
+                        </div>
+                        <div className="flex justify-center gap-6 mt-3 text-sm text-[#7BB3E0] pb-4">
                             <Link 
                                 to={createPageUrl('Privacy')} 
                                 onClick={() => setMobileMenuOpen(false)}
                                 className="hover:text-white transition-colors"
                             >
-                                Privacy
+                                Privacy Policy
                             </Link>
                             <Link 
                                 to={createPageUrl('Terms')} 
                                 onClick={() => setMobileMenuOpen(false)}
                                 className="hover:text-white transition-colors"
                             >
-                                Terms
+                                Terms of Service
                             </Link>
                         </div>
                         </div>
