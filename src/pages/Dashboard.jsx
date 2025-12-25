@@ -52,6 +52,225 @@ export default function Dashboard() {
     const [showOnboarding, setShowOnboarding] = useState(false);
     const navigate = useNavigate();
 
+    const downloadExecutiveSummary = () => {
+        const doc = new jsPDF();
+        let y = 20;
+
+        // Title Page
+        doc.setFontSize(24);
+        doc.text('North Star', 105, y, { align: 'center' });
+        y += 10;
+        doc.setFontSize(16);
+        doc.text('Executive Summary', 105, y, { align: 'center' });
+        y += 8;
+        doc.setFontSize(10);
+        doc.text('Complete Life Management Platform', 105, y, { align: 'center' });
+        y += 20;
+
+        // Overview
+        doc.setFontSize(14);
+        doc.text('Platform Overview', 20, y);
+        y += 8;
+        doc.setFontSize(10);
+        const overview = doc.splitTextToSize('North Star is a comprehensive life management platform that centralizes all aspects of personal and property management. From document storage to investment tracking, the platform provides AI-powered insights and automation to simplify complex life administration tasks.', 170);
+        doc.text(overview, 20, y);
+        y += overview.length * 5 + 10;
+
+        // Core Modules
+        doc.setFontSize(14);
+        doc.text('Core Modules', 20, y);
+        y += 8;
+
+        const modules = [
+            { title: 'Document Vault & AI Analysis', features: 'Secure document storage with AI-powered OCR, automatic categorization, expiry tracking, version control, and intelligent search. Supports mobile capture and family sharing.' },
+            { title: 'Property Management Suite', features: 'Complete rental property management with automated rent collection via Stripe, AI-powered tenant communications, lease management, renewal tracking, and rental listing generation.' },
+            { title: 'Maintenance & Vendor Management', features: 'Smart maintenance scheduling, AI vendor assignment based on specialty and location, work tracking, tenant feedback collection, and automated reminders.' },
+            { title: 'Financial Management', features: 'Budget tracking with AI insights, financial goal setting and monitoring, investment portfolio analysis, bill payment automation, credit score tracking, and comprehensive financial health dashboard.' },
+            { title: 'Investment Portfolio', features: 'Real-time portfolio tracking, AI-powered risk analysis, diversification recommendations, market trend monitoring, rebalancing suggestions, and personalized investment strategies.' },
+            { title: 'Bill Payments & Automation', features: 'Automated bill payment scheduling, recurring payment detection, payment method management, approval workflows, and smart reminders.' },
+            { title: 'Health & Medical Profile', features: 'Health records storage, medication tracking, wearable data integration, emergency medical information, printable medical cards, and health trend analysis.' },
+            { title: 'Assets & Valuables', features: 'Vehicle management with maintenance tracking, valuable items inventory with insurance documentation, and comprehensive asset valuation.' },
+            { title: 'Travel & Planning', features: 'Trip planning, itinerary management, document organization for travel, and important date tracking.' },
+            { title: 'Legal & Estate Planning', features: 'Beneficiary management, advance directives, power of attorney documents, succession planning, and secure emergency access system.' },
+            { title: 'Contacts & Communications', features: 'Centralized contact management, AI email assistant, relationship tracking, and communication history.' },
+            { title: 'Calendar Integration', features: 'Smart calendar with auto-scheduling, maintenance reminders, bill due dates, and integration with Google Calendar.' },
+            { title: 'Family Collaboration', features: 'Multi-user access, role-based permissions, task assignment, shared documents, activity logging, and family notifications.' }
+        ];
+
+        doc.setFontSize(10);
+        modules.forEach(module => {
+            if (y > 250) {
+                doc.addPage();
+                y = 20;
+            }
+            doc.setFont(undefined, 'bold');
+            doc.text('• ' + module.title, 20, y);
+            y += 6;
+            doc.setFont(undefined, 'normal');
+            const text = doc.splitTextToSize(module.features, 165);
+            doc.text(text, 25, y);
+            y += text.length * 5 + 6;
+        });
+
+        // AI Features
+        if (y > 220) {
+            doc.addPage();
+            y = 20;
+        }
+        doc.setFontSize(14);
+        doc.text('AI-Powered Features', 20, y);
+        y += 8;
+
+        const aiFeatures = [
+            'Document analysis and data extraction',
+            'Financial health monitoring with proactive alerts',
+            'Investment portfolio risk analysis and recommendations',
+            'Budget optimization and spending insights',
+            'Tenant communication drafting and sentiment analysis',
+            'Vendor matching and assignment',
+            'Market trend analysis',
+            'Personalized investment strategies',
+            'Automated categorization and tagging',
+            'Predictive maintenance scheduling',
+            'Rent pricing suggestions',
+            'Property listing generation'
+        ];
+
+        doc.setFontSize(10);
+        aiFeatures.forEach(feature => {
+            if (y > 270) {
+                doc.addPage();
+                y = 20;
+            }
+            doc.text('• ' + feature, 20, y);
+            y += 6;
+        });
+
+        // Integrations
+        if (y > 220) {
+            doc.addPage();
+            y = 20;
+        }
+        y += 5;
+        doc.setFontSize(14);
+        doc.text('Platform Integrations', 20, y);
+        y += 8;
+        doc.setFontSize(10);
+        const integrations = doc.splitTextToSize('Stripe (payments), Google Calendar, Google Drive, Slack, Dropbox, QuickBooks, Twilio (SMS), and more. OAuth-based secure connections.', 170);
+        doc.text(integrations, 20, y);
+        y += integrations.length * 5 + 10;
+
+        // Security & Access
+        doc.setFontSize(14);
+        doc.text('Security & Access Control', 20, y);
+        y += 8;
+        doc.setFontSize(10);
+        const security = [
+            'Enterprise-grade encryption for all data',
+            'Role-based access control with custom permissions',
+            'Secure document storage with Supabase',
+            'Multi-factor authentication support',
+            'Audit logging for all actions',
+            'Emergency access system with time-locked access',
+            'HIPAA-compliant medical data handling'
+        ];
+        security.forEach(item => {
+            if (y > 270) {
+                doc.addPage();
+                y = 20;
+            }
+            doc.text('• ' + item, 20, y);
+            y += 6;
+        });
+
+        // Use Cases
+        if (y > 200) {
+            doc.addPage();
+            y = 20;
+        }
+        y += 5;
+        doc.setFontSize(14);
+        doc.text('Primary Use Cases', 20, y);
+        y += 8;
+        doc.setFontSize(10);
+        const useCases = [
+            'Landlords & Property Managers: Comprehensive rental management, automated collection, tenant portals',
+            'High-Net-Worth Individuals: Asset tracking, estate planning, wealth management',
+            'Families: Shared document vault, emergency preparedness, collaborative planning',
+            'Estate Executors: Succession planning, secure information access',
+            'Professionals: Document organization, financial tracking, investment management'
+        ];
+        useCases.forEach(useCase => {
+            if (y > 265) {
+                doc.addPage();
+                y = 20;
+            }
+            const text = doc.splitTextToSize('• ' + useCase, 170);
+            doc.text(text, 20, y);
+            y += text.length * 5 + 5;
+        });
+
+        // Automation Capabilities
+        if (y > 200) {
+            doc.addPage();
+            y = 20;
+        }
+        y += 5;
+        doc.setFontSize(14);
+        doc.text('Automation Capabilities', 20, y);
+        y += 8;
+        doc.setFontSize(10);
+        const automation = [
+            'Automated rent collection and reminders',
+            'Smart bill payment scheduling and execution',
+            'Document expiry notifications',
+            'Maintenance task reminders',
+            'Subscription renewal alerts',
+            'Investment rebalancing suggestions',
+            'Budget overspending alerts',
+            'Workflow rules for document handling'
+        ];
+        automation.forEach(item => {
+            if (y > 270) {
+                doc.addPage();
+                y = 20;
+            }
+            doc.text('• ' + item, 20, y);
+            y += 6;
+        });
+
+        // Key Benefits
+        if (y > 200) {
+            doc.addPage();
+            y = 20;
+        }
+        y += 5;
+        doc.setFontSize(14);
+        doc.text('Key Benefits', 20, y);
+        y += 8;
+        doc.setFontSize(10);
+        const benefits = [
+            'Centralized Information: All life data in one secure platform',
+            'Time Savings: Automation reduces manual tasks by 70%+',
+            'Risk Reduction: Proactive alerts prevent missed deadlines and payments',
+            'Financial Optimization: AI-driven insights improve investment returns',
+            'Peace of Mind: Emergency access system ensures family preparedness',
+            'Compliance: Automated tracking ensures regulatory compliance',
+            'Scalability: Manages unlimited properties, documents, and assets'
+        ];
+        benefits.forEach(benefit => {
+            if (y > 265) {
+                doc.addPage();
+                y = 20;
+            }
+            const text = doc.splitTextToSize('• ' + benefit, 170);
+            doc.text(text, 20, y);
+            y += text.length * 5 + 5;
+        });
+
+        doc.save('North-Star-Executive-Summary.pdf');
+    };
+
     const downloadGuideAsPDF = () => {
         const doc = new jsPDF();
         let y = 20;
@@ -272,11 +491,18 @@ export default function Dashboard() {
                                 </div>
                                 <div className="flex items-center gap-2">
                                     <button
+                                        onClick={downloadExecutiveSummary}
+                                        className="flex items-center gap-2 px-4 py-2 bg-[#C5A059] hover:bg-[#D4AF37] rounded-lg transition-colors min-h-[50px]"
+                                    >
+                                        <FileText className="w-5 h-5 text-white" />
+                                        <span className="text-white text-sm">Executive Summary</span>
+                                    </button>
+                                    <button
                                         onClick={downloadGuideAsPDF}
                                         className="flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors min-h-[50px]"
                                     >
                                         <Download className="w-5 h-5 text-white" />
-                                        <span className="text-white">Download PDF</span>
+                                        <span className="text-white text-sm">Getting Started</span>
                                     </button>
                                     <button
                                         onClick={() => setShowGuide(false)}
