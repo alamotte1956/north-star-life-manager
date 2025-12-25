@@ -8,50 +8,48 @@ import { Badge } from '@/components/ui/badge';
 
 const plans = [
     {
-        id: 'essential',
-        name: 'Essential',
+        id: 'basic',
+        name: 'Basic',
         price: 29,
         icon: Zap,
         features: [
-            'Core document management',
-            'Up to 5 properties',
-            'Basic financial tracking',
+            'Up to 50 documents',
+            'Basic automation',
+            '5 properties & vehicles',
             'Email support',
-            'Mobile app access',
-            'Vault & Calendar'
+            'Mobile app access'
         ]
     },
     {
         id: 'premium',
         name: 'Premium',
-        price: 99,
+        price: 79,
         icon: Crown,
         popular: true,
         features: [
-            'Everything in Essential',
-            'Bill negotiation service',
-            'AI financial advisor',
-            'Dedicated concierge support',
-            'Priority customer service',
-            'Advanced security features',
-            'White-glove onboarding',
-            'Annual family report'
+            'Unlimited documents',
+            'Advanced AI automation',
+            'Unlimited properties & vehicles',
+            'Priority support',
+            'Google Calendar sync',
+            'Slack integration',
+            'AI assistant',
+            'Custom reports'
         ]
     },
     {
-        id: 'family_office',
-        name: 'Family Office',
-        price: 299,
+        id: 'enterprise',
+        name: 'Enterprise',
+        price: 199,
         icon: Building2,
         features: [
             'Everything in Premium',
-            'Dedicated family office manager',
-            'Unlimited properties & assets',
-            'Live video consultation',
-            'Professional network access',
-            'Estate planning assistance',
-            'Tax optimization guidance',
-            '24/7 VIP support'
+            'Team collaboration (up to 10 users)',
+            'Advanced security',
+            'Dedicated account manager',
+            'Custom integrations',
+            'SLA guarantee',
+            'White-label options'
         ]
     }
 ];
@@ -106,14 +104,9 @@ export default function Pricing() {
             <div className="max-w-7xl mx-auto px-6 py-12">
                 {/* Header */}
                 <div className="text-center mb-12">
-                    <img 
-                        src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6947dc1f392f53989af97bda/b516d228e_Gemini_Generated_Image_tp0qgztp0qgztp0q.png" 
-                        alt="North Star Logo" 
-                        className="w-24 h-24 mx-auto mb-6 object-contain"
-                    />
-                    <h1 className="text-5xl font-light text-black mb-4" style={{ fontFamily: 'Playfair Display, serif' }}>Choose Your Plan</h1>
+                    <h1 className="text-5xl font-light text-black mb-4">Choose Your Plan</h1>
                     <p className="text-xl text-black/70 font-light">
-                        Premium life management for discerning families
+                        Unlock the full power of North Star Life Manager
                     </p>
                 </div>
 
@@ -143,22 +136,22 @@ export default function Pricing() {
                             <Card 
                                 key={plan.id} 
                                 className={`relative hover:shadow-2xl transition-all ${
-                                    plan.popular ? 'border-[#4A90E2] border-2 scale-105' : 'border-[#4A90E2]/20'
+                                    plan.popular ? 'border-[#D4AF37] border-2 scale-105' : ''
                                 }`}
                             >
                                 {plan.popular && (
                                     <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-                                        <Badge className="bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] text-white px-4 py-1">
+                                        <Badge className="bg-gradient-to-r from-[#D4AF37] to-[#F4D03F] text-black px-4 py-1">
                                             Most Popular
                                         </Badge>
                                     </div>
                                 )}
                                 
                                 <CardHeader className="text-center pb-8 pt-8">
-                                    <div className="mx-auto mb-4 w-16 h-16 bg-gradient-to-br from-[#2E5C8A] to-[#4A90E2] rounded-2xl flex items-center justify-center">
-                                        <Icon className="w-8 h-8 text-white" />
+                                    <div className="mx-auto mb-4 w-16 h-16 bg-gradient-to-br from-black to-[#1a1a1a] rounded-2xl flex items-center justify-center">
+                                        <Icon className="w-8 h-8 text-[#D4AF37]" />
                                     </div>
-                                    <CardTitle className="text-2xl font-light mb-2" style={{ fontFamily: 'Playfair Display, serif' }}>{plan.name}</CardTitle>
+                                    <CardTitle className="text-2xl font-light mb-2">{plan.name}</CardTitle>
                                     <div className="text-4xl font-light text-black">
                                         ${plan.price}
                                         <span className="text-lg text-black/60">/month</span>
@@ -168,10 +161,10 @@ export default function Pricing() {
                                 <CardContent className="space-y-6">
                                     <ul className="space-y-3">
                                         {plan.features.map((feature, idx) => (
-                                           <li key={idx} className="flex items-start gap-3">
-                                               <Check className="w-5 h-5 text-[#4A90E2] flex-shrink-0 mt-0.5" />
-                                               <span className="text-black/80 font-light">{feature}</span>
-                                           </li>
+                                            <li key={idx} className="flex items-start gap-3">
+                                                <Check className="w-5 h-5 text-[#D4AF37] flex-shrink-0 mt-0.5" />
+                                                <span className="text-black/80 font-light">{feature}</span>
+                                            </li>
                                         ))}
                                     </ul>
                                     
@@ -180,8 +173,8 @@ export default function Pricing() {
                                         disabled={loading === plan.id || isCurrentPlan}
                                         className={`w-full h-12 ${
                                             plan.popular 
-                                                ? 'bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] text-white hover:shadow-lg' 
-                                                : 'bg-gradient-to-r from-[#0F1729] to-[#1E3A5F] text-white'
+                                                ? 'bg-gradient-to-r from-[#D4AF37] to-[#F4D03F] hover:shadow-lg' 
+                                                : 'bg-gradient-to-r from-black to-[#1a1a1a]'
                                         }`}
                                     >
                                         {loading === plan.id ? (
@@ -203,7 +196,7 @@ export default function Pricing() {
 
                 {/* FAQ */}
                 <div className="max-w-3xl mx-auto">
-                    <h2 className="text-3xl font-light text-black text-center mb-8" style={{ fontFamily: 'Playfair Display, serif' }}>Frequently Asked Questions</h2>
+                    <h2 className="text-3xl font-light text-black text-center mb-8">Frequently Asked Questions</h2>
                     <div className="space-y-4">
                         <Card>
                             <CardContent className="pt-6">

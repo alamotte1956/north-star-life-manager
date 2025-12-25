@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { createPageUrl } from './utils';
 import {
     LayoutDashboard, FileText, Shield, Home, Wrench, Users, Car,
-    DollarSign, Gem, Plane, Heart, Calendar, LogOut, Menu, X, Search, Plug, TrendingUp, Zap, CheckCircle, Activity, AlertCircle, Globe, Briefcase, Play
+    DollarSign, Gem, Plane, Heart, Calendar, LogOut, Menu, X, Search, Plug, TrendingUp, Zap, CheckCircle, Activity, AlertCircle, Globe, Briefcase
 } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import GlobalSearch from '@/components/GlobalSearch';
@@ -17,13 +17,11 @@ import OfflineDataManager from '@/components/pwa/OfflineDataManager';
 import PWAManager from '@/components/pwa/PWAManager';
 import LargeTextToggle from '@/components/accessibility/LargeTextToggle';
 import SimplifiedViewToggle from '@/components/accessibility/SimplifiedViewToggle';
-import VideoTutorials from '@/components/VideoTutorials';
 
 export default function Layout({ children, currentPageName }) {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [searchOpen, setSearchOpen] = useState(false);
     const [simplifiedView, setSimplifiedView] = useState(false);
-    const [tutorialsOpen, setTutorialsOpen] = useState(false);
 
     useEffect(() => {
         const saved = localStorage.getItem('simplifiedView') === 'true';
@@ -106,16 +104,6 @@ export default function Layout({ children, currentPageName }) {
         { name: 'Succession', icon: Shield, path: 'Succession', essential: false },
         { name: 'Family Tree', icon: Users, path: 'FamilyTree', essential: false },
         { name: 'Audit Log', icon: Shield, path: 'AuditLog', essential: false },
-        { name: 'Estate Planning', icon: FileText, path: 'EstatePlanningWizard', essential: false },
-        { name: 'Charitable Giving', icon: Heart, path: 'CharitableGiving', essential: false },
-        { name: 'Education Funds', icon: TrendingUp, path: 'EducationFunds', essential: false },
-        { name: 'Medicare Navigator', icon: Heart, path: 'MedicareNavigator', essential: false },
-        { name: 'Digital Memorial', icon: Heart, path: 'DigitalMemorial', essential: false },
-        { name: 'Art & Collectibles', icon: Gem, path: 'ArtCollectibles', essential: false },
-        { name: 'Doctor Appointments', icon: Heart, path: 'DoctorAppointments', essential: false },
-        { name: 'Home Services', icon: Home, path: 'HomeServices', essential: false },
-        { name: 'Caregiver Coordination', icon: Users, path: 'CaregiverCoordination', essential: false },
-        { name: 'White-Glove Setup', icon: Users, path: 'WhiteGloveOnboarding', essential: false },
 
         // Planning & Calendar
         { name: 'Calendar', icon: Calendar, path: 'Calendar', essential: true },
@@ -245,15 +233,6 @@ export default function Layout({ children, currentPageName }) {
                     <div className="mt-4 space-y-2">
                         <LargeTextToggle />
                         <SimplifiedViewToggle />
-                        <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => setTutorialsOpen(true)}
-                            className="w-full gap-2"
-                        >
-                            <Play className="w-4 h-4" />
-                            Video Tutorials
-                        </Button>
                         <PushNotificationManager />
                     </div>
                 </div>
@@ -400,9 +379,6 @@ export default function Layout({ children, currentPageName }) {
 
             {/* PWA Install Prompt */}
             <PWAInstaller />
-
-            {/* Video Tutorials */}
-            <VideoTutorials open={tutorialsOpen} onOpenChange={setTutorialsOpen} />
             </div>
             </AuthGuard>
             );

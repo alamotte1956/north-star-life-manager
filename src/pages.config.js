@@ -1,5 +1,3 @@
-import ArtCollectibles from './pages/ArtCollectibles';
-import AuditLog from './pages/AuditLog';
 import AutomatedPayments from './pages/AutomatedPayments';
 import Automations from './pages/Automations';
 import BankingHub from './pages/BankingHub';
@@ -14,34 +12,25 @@ import BusinessInvoices from './pages/BusinessInvoices';
 import BusinessProjects from './pages/BusinessProjects';
 import BusinessReports from './pages/BusinessReports';
 import Calendar from './pages/Calendar';
-import CaregiverCoordination from './pages/CaregiverCoordination';
-import CharitableGiving from './pages/CharitableGiving';
 import Collaboration from './pages/Collaboration';
 import CommunicationsHub from './pages/CommunicationsHub';
 import ConciergeService from './pages/ConciergeService';
 import Contacts from './pages/Contacts';
 import CreditScore from './pages/CreditScore';
 import Dashboard from './pages/Dashboard';
-import DigitalMemorial from './pages/DigitalMemorial';
-import DoctorAppointments from './pages/DoctorAppointments';
-import EducationFunds from './pages/EducationFunds';
 import EmailAssistant from './pages/EmailAssistant';
 import EmergencyResponse from './pages/EmergencyResponse';
-import EstatePlanningWizard from './pages/EstatePlanningWizard';
 import FamilyManagement from './pages/FamilyManagement';
 import FamilyNotifications from './pages/FamilyNotifications';
 import FamilyRoleManagement from './pages/FamilyRoleManagement';
 import FamilyToDo from './pages/FamilyToDo';
-import FamilyTree from './pages/FamilyTree';
 import FamilyWorkflows from './pages/FamilyWorkflows';
 import FinancialDashboard from './pages/FinancialDashboard';
 import FinancialForecasting from './pages/FinancialForecasting';
 import FinancialHealth from './pages/FinancialHealth';
 import FinancialLiteracy from './pages/FinancialLiteracy';
 import Health from './pages/Health';
-import Home from './pages/Home';
 import HomeInventory from './pages/HomeInventory';
-import HomeServices from './pages/HomeServices';
 import InsuranceShopping from './pages/InsuranceShopping';
 import Integrations from './pages/Integrations';
 import InternationalAssets from './pages/InternationalAssets';
@@ -50,7 +39,6 @@ import LegacyMessages from './pages/LegacyMessages';
 import Legal from './pages/Legal';
 import Maintenance from './pages/Maintenance';
 import MedicalProfile from './pages/MedicalProfile';
-import MedicareNavigator from './pages/MedicareNavigator';
 import NotificationSettings from './pages/NotificationSettings';
 import Pricing from './pages/Pricing';
 import Privacy from './pages/Privacy';
@@ -69,13 +57,13 @@ import Valuables from './pages/Valuables';
 import Vault from './pages/Vault';
 import Vehicles from './pages/Vehicles';
 import VoiceAssistant from './pages/VoiceAssistant';
-import WhiteGloveOnboarding from './pages/WhiteGloveOnboarding';
+import Home from './pages/Home';
+import FamilyTree from './pages/FamilyTree';
+import AuditLog from './pages/AuditLog';
 import __Layout from './Layout.jsx';
 
 
 export const PAGES = {
-    "ArtCollectibles": ArtCollectibles,
-    "AuditLog": AuditLog,
     "AutomatedPayments": AutomatedPayments,
     "Automations": Automations,
     "BankingHub": BankingHub,
@@ -90,34 +78,25 @@ export const PAGES = {
     "BusinessProjects": BusinessProjects,
     "BusinessReports": BusinessReports,
     "Calendar": Calendar,
-    "CaregiverCoordination": CaregiverCoordination,
-    "CharitableGiving": CharitableGiving,
     "Collaboration": Collaboration,
     "CommunicationsHub": CommunicationsHub,
     "ConciergeService": ConciergeService,
     "Contacts": Contacts,
     "CreditScore": CreditScore,
     "Dashboard": Dashboard,
-    "DigitalMemorial": DigitalMemorial,
-    "DoctorAppointments": DoctorAppointments,
-    "EducationFunds": EducationFunds,
     "EmailAssistant": EmailAssistant,
     "EmergencyResponse": EmergencyResponse,
-    "EstatePlanningWizard": EstatePlanningWizard,
     "FamilyManagement": FamilyManagement,
     "FamilyNotifications": FamilyNotifications,
     "FamilyRoleManagement": FamilyRoleManagement,
     "FamilyToDo": FamilyToDo,
-    "FamilyTree": FamilyTree,
     "FamilyWorkflows": FamilyWorkflows,
     "FinancialDashboard": FinancialDashboard,
     "FinancialForecasting": FinancialForecasting,
     "FinancialHealth": FinancialHealth,
     "FinancialLiteracy": FinancialLiteracy,
     "Health": Health,
-    "Home": Home,
     "HomeInventory": HomeInventory,
-    "HomeServices": HomeServices,
     "InsuranceShopping": InsuranceShopping,
     "Integrations": Integrations,
     "InternationalAssets": InternationalAssets,
@@ -126,7 +105,6 @@ export const PAGES = {
     "Legal": Legal,
     "Maintenance": Maintenance,
     "MedicalProfile": MedicalProfile,
-    "MedicareNavigator": MedicareNavigator,
     "NotificationSettings": NotificationSettings,
     "Pricing": Pricing,
     "Privacy": Privacy,
@@ -145,7 +123,9 @@ export const PAGES = {
     "Vault": Vault,
     "Vehicles": Vehicles,
     "VoiceAssistant": VoiceAssistant,
-    "WhiteGloveOnboarding": WhiteGloveOnboarding,
+    "Home": Home,
+    "FamilyTree": FamilyTree,
+    "AuditLog": AuditLog,
 }
 
 export const pagesConfig = {
