@@ -11,6 +11,27 @@ export default function ContactImporter({ onImportComplete }) {
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
 
+    const parseCSVLine = (line) => {
+        const result = [];
+        let current = '';
+        let inQuotes = false;
+        
+        for (let i = 0; i < line.length; i++) {
+            const char = line[i];
+            
+            if (char === '"') {
+                inQuotes = !inQuotes;
+            } else if (char === ',' && !inQuotes) {
+                result.push(current.trim());
+                current = '';
+            } else {
+                current += char;
+            }
+        }
+        result.push(current.trim());
+        return result;
+    };
+
     const handleFileUpload = async (e) => {
         const file = e.target.files?.[0];
         if (!file) return;
@@ -23,33 +44,72 @@ export default function ContactImporter({ onImportComplete }) {
             const text = await file.text();
             const rows = text.split('\n').filter(row => row.trim());
             
-            // Parse CSV (simple parsing, assumes comma-separated)
-            const headers = rows[0].toLowerCase().split(',').map(h => h.trim());
+            // Parse CSV with proper quote handling
+            const headers = parseCSVLine(rows[0]).map(h => h.toLowerCase().trim());
             const contacts = [];
 
             for (let i = 1; i < rows.length; i++) {
-                const values = rows[i].split(',').map(v => v.trim());
+                const values = parseCSVLine(rows[i]);
                 const contact = {};
                 
                 headers.forEach((header, idx) => {
                     if (values[idx]) {
-                        contact[header] = values[idx];
+                        contact[header] = values[idx].replace(/^"|"$/g, '').trim();
                     }
                 });
 
-                // Map common CSV headers to our schema
+                // Comprehensive mapping for Google Contacts, Apple Contacts, and custom formats
                 const mappedContact = {
-                    name: contact.name || contact.full_name || contact.fullname || '',
-                    email: contact.email || '',
-                    phone: contact.phone || contact.phone_number || '',
-                    company: contact.company || contact.organization || '',
-                    address: contact.address || '',
+                    name: contact.name || 
+                          contact['full name'] || 
+                          contact.fullname ||
+                          `${contact['first name'] || contact['given name'] || ''} ${contact['last name'] || contact['family name'] || ''}`.trim() ||
+                          contact['display name'] ||
+                          '',
+                    
+                    email: contact.email || 
+                           contact['e-mail address'] || 
+                           contact['e-mail 1 - value'] ||
+                           contact['email 1 - value'] ||
+                           contact['primary email'] ||
+                           '',
+                    
+                    phone: contact.phone || 
+                           contact['phone number'] ||
+                           contact['phone 1 - value'] ||
+                           contact['mobile phone'] ||
+                           contact['primary phone'] ||
+                           '',
+                    
+                    company: contact.company || 
+                             contact.organization || 
+                             contact['organization 1 - name'] ||
+                             contact['company name'] ||
+                             '',
+                    
+                    address: contact.address || 
+                             contact['home address'] ||
+                             contact['address 1 - formatted'] ||
+                             contact['street address'] ||
+                             '',
+                    
                     category: contact.category || 'other',
-                    specialty: contact.specialty || contact.title || '',
+                    
+                    specialty: contact.specialty || 
+                              contact.title || 
+                              contact['job title'] ||
+                              contact['organization 1 - title'] ||
+                              '',
+                    
                     priority: contact.priority || 'medium',
-                    notes: contact.notes || ''
+                    
+                    notes: contact.notes || 
+                           contact.note || 
+                           contact.comments ||
+                           ''
                 };
 
+                // Only add if we have at least a name
                 if (mappedContact.name) {
                     contacts.push(mappedContact);
                 }
@@ -101,7 +161,7 @@ export default function ContactImporter({ onImportComplete }) {
                     <Alert>
                         <AlertCircle className="h-4 w-4" />
                         <AlertDescription className="text-sm">
-                            Upload a CSV file with columns: name, email, phone, company, category, specialty, priority, address, notes
+                            Automatically imports from Google Contacts, Apple Contacts, or any CSV with name, email, phone, company fields
                         </AlertDescription>
                     </Alert>
 
