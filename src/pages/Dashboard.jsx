@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { createPageUrl } from '../utils';
 import {
     FileText, Shield, Home, Wrench, Users, Car, DollarSign,
-    Gem, Plane, Heart, Calendar, TrendingUp, AlertCircle, CheckCircle, BookOpen, X
+    Gem, Plane, Heart, Calendar, TrendingUp, AlertCircle, CheckCircle, BookOpen, X, Download
 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
