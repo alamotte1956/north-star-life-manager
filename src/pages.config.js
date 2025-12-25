@@ -48,6 +48,8 @@ import HomeInventory from './pages/HomeInventory';
 import ConciergeService from './pages/ConciergeService';
 import EmergencyResponse from './pages/EmergencyResponse';
 import InternationalAssets from './pages/InternationalAssets';
+import TaxExport from './pages/TaxExport';
+import VoiceAssistant from './pages/VoiceAssistant';
 import __Layout from './Layout.jsx';
 
 
@@ -102,6 +104,8 @@ export const PAGES = {
     "ConciergeService": ConciergeService,
     "EmergencyResponse": EmergencyResponse,
     "InternationalAssets": InternationalAssets,
+    "TaxExport": TaxExport,
+    "VoiceAssistant": VoiceAssistant,
 }
 
 export const pagesConfig = {

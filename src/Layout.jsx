@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { createPageUrl } from './utils';
 import {
     LayoutDashboard, FileText, Shield, Home, Wrench, Users, Car,
-    DollarSign, Gem, Plane, Heart, Calendar, LogOut, Menu, X, Search, Plug, TrendingUp, Zap, CheckCircle, Activity
+    DollarSign, Gem, Plane, Heart, Calendar, LogOut, Menu, X, Search, Plug, TrendingUp, Zap, CheckCircle, Activity, AlertCircle, Globe
 } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import GlobalSearch from '@/components/GlobalSearch';
@@ -65,7 +65,18 @@ export default function Layout({ children, currentPageName }) {
         { name: 'Role Management', icon: Shield, path: 'RoleManagement' },
         { name: 'Family Roles', icon: Shield, path: 'FamilyRoleManagement' },
         { name: 'Workflows', icon: Zap, path: 'FamilyWorkflows' },
-        { name: 'My To-Do', icon: CheckCircle, path: 'FamilyToDo' }
+        { name: 'My To-Do', icon: CheckCircle, path: 'FamilyToDo' },
+        { name: 'Banking Hub', icon: DollarSign, path: 'BankingHub' },
+        { name: 'Bill Negotiation', icon: TrendingUp, path: 'BillNegotiation' },
+        { name: 'Professional Network', icon: Users, path: 'ProfessionalMarketplace' },
+        { name: 'Tax Export', icon: FileText, path: 'TaxExport' },
+        { name: 'Insurance Shopping', icon: Shield, path: 'InsuranceShopping' },
+        { name: 'Legacy Messages', icon: Heart, path: 'LegacyMessages' },
+        { name: 'Home Inventory', icon: Home, path: 'HomeInventory' },
+        { name: 'Concierge', icon: Users, path: 'ConciergeService' },
+        { name: 'Emergency Response', icon: AlertCircle, path: 'EmergencyResponse' },
+        { name: 'International Assets', icon: Globe, path: 'InternationalAssets' },
+        { name: 'Voice Assistant', icon: Users, path: 'VoiceAssistant' }
         ];
 
     return (
