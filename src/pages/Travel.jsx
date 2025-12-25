@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
-import { Plane, Plus, Calendar, MapPin } from 'lucide-react';
+import { Plane, Plus, Calendar, MapPin, Sparkles } from 'lucide-react';
 import PrintButton from '@/components/PrintButton';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -12,9 +12,11 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { format, isPast, isFuture } from 'date-fns';
+import TripPlannerWizard from '@/components/travel/TripPlannerWizard';
 
 export default function Travel() {
     const [open, setOpen] = useState(false);
+    const [showPlanner, setShowPlanner] = useState(false);
     const [formData, setFormData] = useState({
         trip_name: '',
         destination: '',
@@ -88,11 +90,18 @@ export default function Travel() {
 
                     <div className="flex gap-2 print:hidden w-full sm:w-auto">
                         <PrintButton className="flex-1 sm:flex-none" />
+                        <Button 
+                            onClick={() => setShowPlanner(true)}
+                            className="bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] hover:shadow-lg text-white flex-1 sm:flex-none h-11 sm:h-10 touch-manipulation active:scale-98 transition-transform"
+                        >
+                            <Sparkles className="w-5 h-5 sm:w-4 sm:h-4 mr-2" />
+                            AI Planner
+                        </Button>
                         <Dialog open={open} onOpenChange={setOpen}>
                         <DialogTrigger asChild>
-                            <Button className="bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] hover:shadow-lg text-white flex-1 sm:flex-none h-11 sm:h-10 touch-manipulation active:scale-98 transition-transform">
+                            <Button variant="outline" className="border-[#4A90E2] text-[#4A90E2] flex-1 sm:flex-none h-11 sm:h-10 touch-manipulation active:scale-98 transition-transform">
                                 <Plus className="w-5 h-5 sm:w-4 sm:h-4 mr-2" />
-                                Add Trip
+                                Quick Add
                             </Button>
                         </DialogTrigger>
                         <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto mx-4">
@@ -215,6 +224,12 @@ export default function Travel() {
                         </Dialog>
                     </div>
                 </div>
+
+                <TripPlannerWizard 
+                    open={showPlanner} 
+                    onOpenChange={setShowPlanner}
+                    onComplete={() => refetch()}
+                />
 
                 {/* Upcoming Trips */}
                 {upcomingTrips.length > 0 && (
