@@ -14,6 +14,7 @@ import FinancialAdvisor from '../components/financial/FinancialAdvisor';
 import OnboardingFlow from '../components/onboarding/OnboardingFlow';
 import FinancialHealthAlerts from '../components/alerts/FinancialHealthAlerts';
 import { useNavigate } from 'react-router-dom';
+import jsPDF from 'jspdf';
 
 const QuickStatCard = ({ icon: Icon, title, value, subtitle, trend, color, link }) => {
     const content = (
