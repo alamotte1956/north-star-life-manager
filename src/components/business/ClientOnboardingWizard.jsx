@@ -6,7 +6,9 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
 import { Card } from '@/components/ui/card';
-import { Sparkles, ArrowRight, ArrowLeft, Mail, CheckCircle, Building2, User, DollarSign } from 'lucide-react';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Sparkles, ArrowRight, ArrowLeft, Mail, CheckCircle, Building2, User, DollarSign, MessageSquare, Bell } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { toast } from 'sonner';
 
@@ -24,10 +26,18 @@ export default function ClientOnboardingWizard({ open, onOpenChange, onComplete 
         company_description: '',
         billing_rate: '',
         payment_terms: 'Net 30',
-        notes: ''
+        notes: '',
+        communication_preferences: {
+            preferred_method: 'email',
+            frequency: 'weekly',
+            send_updates: true,
+            send_invoices: true,
+            send_reminders: true
+        },
+        selected_services: []
     });
 
-    const totalSteps = 4;
+    const totalSteps = 5;
 
     const handleNext = async () => {
         if (step === 2 && !aiSuggestions) {
@@ -59,10 +69,17 @@ export default function ClientOnboardingWizard({ open, onOpenChange, onComplete 
     const handleSubmit = async () => {
         setLoading(true);
         try {
-            // Create client
+            // Create client with communication preferences
             const client = await base44.entities.BusinessClient.create({
-                ...formData,
+                company_name: formData.company_name,
+                contact_name: formData.contact_name,
+                email: formData.email,
+                phone: formData.phone,
+                address: formData.address,
+                industry: formData.industry,
                 billing_rate: parseFloat(formData.billing_rate) || 0,
+                payment_terms: formData.payment_terms,
+                notes: `${formData.notes}\n\nCommunication Preferences:\n- Method: ${formData.communication_preferences.preferred_method}\n- Frequency: ${formData.communication_preferences.frequency}\n- Updates: ${formData.communication_preferences.send_updates ? 'Yes' : 'No'}\n- Invoices: ${formData.communication_preferences.send_invoices ? 'Yes' : 'No'}\n- Reminders: ${formData.communication_preferences.send_reminders ? 'Yes' : 'No'}\n\nSelected Services: ${formData.selected_services.join(', ') || 'None yet'}`,
                 tags: aiSuggestions?.tags || []
             });
 
@@ -92,7 +109,15 @@ export default function ClientOnboardingWizard({ open, onOpenChange, onComplete 
                 company_description: '',
                 billing_rate: '',
                 payment_terms: 'Net 30',
-                notes: ''
+                notes: '',
+                communication_preferences: {
+                    preferred_method: 'email',
+                    frequency: 'weekly',
+                    send_updates: true,
+                    send_invoices: true,
+                    send_reminders: true
+                },
+                selected_services: []
             });
         } catch (error) {
             toast.error('Failed to create client');
@@ -273,11 +298,181 @@ export default function ClientOnboardingWizard({ open, onOpenChange, onComplete 
                     <div className="space-y-4">
                         <div className="text-center mb-6">
                             <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-[#4A90E2] to-[#2E5C8A] rounded-full mb-4">
+                                <MessageSquare className="w-8 h-8 text-white" />
+                            </div>
+                            <h3 className="text-xl font-light text-black mb-2">Communication Preferences</h3>
+                            <p className="text-sm text-gray-600">How would you like to stay in touch?</p>
+                        </div>
+
+                        <Card className="p-4 border-[#4A90E2]/20 bg-blue-50">
+                            <p className="text-sm text-gray-700">
+                                Set up communication preferences to ensure you and your client stay aligned on project updates, 
+                                invoices, and important milestones.
+                            </p>
+                        </Card>
+
+                        <div>
+                            <Label>Preferred Contact Method</Label>
+                            <Select
+                                value={formData.communication_preferences.preferred_method}
+                                onValueChange={(value) => setFormData({
+                                    ...formData,
+                                    communication_preferences: {
+                                        ...formData.communication_preferences,
+                                        preferred_method: value
+                                    }
+                                })}
+                            >
+                                <SelectTrigger>
+                                    <SelectValue />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="email">Email</SelectItem>
+                                    <SelectItem value="phone">Phone</SelectItem>
+                                    <SelectItem value="video">Video Call</SelectItem>
+                                    <SelectItem value="in_person">In Person</SelectItem>
+                                </SelectContent>
+                            </Select>
+                        </div>
+
+                        <div>
+                            <Label>Update Frequency</Label>
+                            <Select
+                                value={formData.communication_preferences.frequency}
+                                onValueChange={(value) => setFormData({
+                                    ...formData,
+                                    communication_preferences: {
+                                        ...formData.communication_preferences,
+                                        frequency: value
+                                    }
+                                })}
+                            >
+                                <SelectTrigger>
+                                    <SelectValue />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="daily">Daily</SelectItem>
+                                    <SelectItem value="weekly">Weekly</SelectItem>
+                                    <SelectItem value="biweekly">Bi-weekly</SelectItem>
+                                    <SelectItem value="monthly">Monthly</SelectItem>
+                                    <SelectItem value="as_needed">As Needed</SelectItem>
+                                </SelectContent>
+                            </Select>
+                        </div>
+
+                        <div className="space-y-3 pt-2">
+                            <Label className="flex items-center gap-2">
+                                <Bell className="w-4 h-4 text-[#4A90E2]" />
+                                Notification Settings
+                            </Label>
+                            
+                            <div className="space-y-2">
+                                <div className="flex items-center space-x-2">
+                                    <Checkbox
+                                        id="send_updates"
+                                        checked={formData.communication_preferences.send_updates}
+                                        onCheckedChange={(checked) => setFormData({
+                                            ...formData,
+                                            communication_preferences: {
+                                                ...formData.communication_preferences,
+                                                send_updates: checked
+                                            }
+                                        })}
+                                    />
+                                    <Label htmlFor="send_updates" className="text-sm font-normal cursor-pointer">
+                                        Send project updates and progress reports
+                                    </Label>
+                                </div>
+
+                                <div className="flex items-center space-x-2">
+                                    <Checkbox
+                                        id="send_invoices"
+                                        checked={formData.communication_preferences.send_invoices}
+                                        onCheckedChange={(checked) => setFormData({
+                                            ...formData,
+                                            communication_preferences: {
+                                                ...formData.communication_preferences,
+                                                send_invoices: checked
+                                            }
+                                        })}
+                                    />
+                                    <Label htmlFor="send_invoices" className="text-sm font-normal cursor-pointer">
+                                        Send invoice notifications
+                                    </Label>
+                                </div>
+
+                                <div className="flex items-center space-x-2">
+                                    <Checkbox
+                                        id="send_reminders"
+                                        checked={formData.communication_preferences.send_reminders}
+                                        onCheckedChange={(checked) => setFormData({
+                                            ...formData,
+                                            communication_preferences: {
+                                                ...formData.communication_preferences,
+                                                send_reminders: checked
+                                            }
+                                        })}
+                                    />
+                                    <Label htmlFor="send_reminders" className="text-sm font-normal cursor-pointer">
+                                        Send payment reminders
+                                    </Label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                );
+
+            case 5:
+                return (
+                    <div className="space-y-4">
+                        <div className="text-center mb-6">
+                            <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-[#4A90E2] to-[#2E5C8A] rounded-full mb-4">
                                 <DollarSign className="w-8 h-8 text-white" />
                             </div>
-                            <h3 className="text-xl font-light text-black mb-2">Financial Terms</h3>
-                            <p className="text-sm text-gray-600">Set billing rates and payment terms</p>
+                            <h3 className="text-xl font-light text-black mb-2">Services & Financial Terms</h3>
+                            <p className="text-sm text-gray-600">Select services and set billing</p>
                         </div>
+
+                        {aiSuggestions?.suggested_services && (
+                            <div className="mb-4">
+                                <Label className="mb-3 block">Recommended Services (select to include)</Label>
+                                <div className="space-y-2">
+                                    {aiSuggestions.suggested_services.map((service, idx) => (
+                                        <Card
+                                            key={idx}
+                                            className={`p-3 cursor-pointer transition-all ${
+                                                formData.selected_services.includes(service.name)
+                                                    ? 'border-[#4A90E2] border-2 bg-blue-50'
+                                                    : 'border-gray-200 hover:border-[#4A90E2]'
+                                            }`}
+                                            onClick={() => {
+                                                const services = formData.selected_services.includes(service.name)
+                                                    ? formData.selected_services.filter(s => s !== service.name)
+                                                    : [...formData.selected_services, service.name];
+                                                setFormData({ ...formData, selected_services: services });
+                                            }}
+                                        >
+                                            <div className="flex items-start justify-between">
+                                                <div className="flex-1">
+                                                    <div className="font-medium text-black flex items-center gap-2">
+                                                        {formData.selected_services.includes(service.name) && (
+                                                            <CheckCircle className="w-4 h-4 text-[#4A90E2]" />
+                                                        )}
+                                                        {service.name}
+                                                    </div>
+                                                    <div className="text-sm text-gray-600 mt-1">{service.description}</div>
+                                                </div>
+                                                {service.estimated_value && (
+                                                    <Badge variant="outline" className="ml-2">
+                                                        ${service.estimated_value}
+                                                    </Badge>
+                                                )}
+                                            </div>
+                                        </Card>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
 
                         <div>
                             <Label>Default Billing Rate (per hour)</Label>
@@ -340,6 +535,8 @@ export default function ClientOnboardingWizard({ open, onOpenChange, onComplete 
             case 3:
                 return true;
             case 4:
+                return true;
+            case 5:
                 return true;
             default:
                 return false;
