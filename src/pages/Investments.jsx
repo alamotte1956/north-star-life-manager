@@ -14,6 +14,7 @@ import PortfolioChart from '../components/investments/PortfolioChart';
 import AssetAllocation from '../components/investments/AssetAllocation';
 import InvestmentCard from '../components/investments/InvestmentCard';
 import InvestmentInsights from '../components/investments/InvestmentInsights';
+import InvestmentAdvisorChat from '../components/investments/InvestmentAdvisorChat';
 import { toast } from 'sonner';
 
 const accountTypeLabels = {
