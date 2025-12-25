@@ -3,11 +3,13 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
-import { TrendingUp, TrendingDown, Target, RefreshCw, Link as LinkIcon } from 'lucide-react';
+import { TrendingUp, TrendingDown, Target, RefreshCw, Link as LinkIcon, BarChart3 } from 'lucide-react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { base44 } from '@/api/base44Client';
 import { toast } from 'sonner';
 import { format } from 'date-fns';
+import HistoricalChart from './HistoricalChart';
 
 const assetTypeLabels = {
     stocks: 'Stocks',
@@ -25,6 +27,7 @@ export default function InvestmentCard({ investment, goals, onUpdate }) {
     const [updating, setUpdating] = useState(false);
     const [newPrice, setNewPrice] = useState('');
     const [linking, setLinking] = useState(false);
+    const [chartOpen, setChartOpen] = useState(false);
     const [selectedGoal, setSelectedGoal] = useState(investment.linked_goal_id || '');
 
     const isPositive = investment.unrealized_gain_loss >= 0;
@@ -179,6 +182,19 @@ export default function InvestmentCard({ investment, goals, onUpdate }) {
                             </Button>
                         </div>
 
+                        {/* View Performance Chart */}
+                        {investment.ticker_symbol && (
+                            <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => setChartOpen(true)}
+                                className="w-full border-[#4A90E2]/20"
+                            >
+                                <BarChart3 className="w-4 h-4 mr-2" />
+                                View Performance
+                            </Button>
+                        )}
+
                         {/* Link to Goal */}
                         {goals.length > 0 && (
                             <div>
@@ -217,6 +233,19 @@ export default function InvestmentCard({ investment, goals, onUpdate }) {
                     </div>
                 </div>
             </CardContent>
+
+            {/* Historical Chart Dialog */}
+            <Dialog open={chartOpen} onOpenChange={setChartOpen}>
+                <DialogContent className="max-w-4xl">
+                    <DialogHeader>
+                        <DialogTitle>Performance History</DialogTitle>
+                    </DialogHeader>
+                    <HistoricalChart 
+                        ticker={investment.ticker_symbol} 
+                        assetName={investment.account_name}
+                    />
+                </DialogContent>
+            </Dialog>
         </Card>
     );
 }
