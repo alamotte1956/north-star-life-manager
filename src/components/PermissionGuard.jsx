@@ -12,6 +12,15 @@ export default function PermissionGuard({ section, action = 'view', children, fa
     useEffect(() => {
         const checkPermission = async () => {
             try {
+                const isAuth = await base44.auth.isAuthenticated();
+                
+                // Allow sandbox users (not authenticated) to view everything
+                if (!isAuth) {
+                    setHasPermission(true);
+                    setLoading(false);
+                    return;
+                }
+
                 const userData = await base44.auth.me();
                 setUser(userData);
 
@@ -32,11 +41,16 @@ export default function PermissionGuard({ section, action = 'view', children, fa
                         const sectionPerms = userRole.permissions[section];
                         setHasPermission(sectionPerms[action] === true);
                     }
+                } else {
+                    // Regular users with no custom role get full access
+                    setHasPermission(true);
                 }
 
                 setLoading(false);
             } catch (error) {
                 console.error('Permission check failed:', error);
+                // On error, allow access (sandbox mode)
+                setHasPermission(true);
                 setLoading(false);
             }
         };
