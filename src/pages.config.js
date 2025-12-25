@@ -34,6 +34,7 @@ import Valuables from './pages/Valuables';
 import Vault from './pages/Vault';
 import Vehicles from './pages/Vehicles';
 import FinancialHealth from './pages/FinancialHealth';
+import AutomatedPayments from './pages/AutomatedPayments';
 import __Layout from './Layout.jsx';
 
 
@@ -74,6 +75,7 @@ export const PAGES = {
     "Vault": Vault,
     "Vehicles": Vehicles,
     "FinancialHealth": FinancialHealth,
+    "AutomatedPayments": AutomatedPayments,
 }
 
 export const pagesConfig = {

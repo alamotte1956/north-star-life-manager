@@ -47,6 +47,7 @@ export default function Layout({ children, currentPageName }) {
         { name: 'Financial Health', icon: Activity, path: 'FinancialHealth' },
         { name: 'Financial Dashboard', icon: TrendingUp, path: 'FinancialDashboard' },
         { name: 'Bill Payments', icon: DollarSign, path: 'BillPayments' },
+        { name: 'Auto Payments', icon: Zap, path: 'AutomatedPayments' },
         { name: 'Investments', icon: TrendingUp, path: 'Investments' },
         { name: 'Valuables', icon: Gem, path: 'Valuables' },
         { name: 'Travel', icon: Plane, path: 'Travel' },
