@@ -53,6 +53,54 @@ export default function AccountSettings() {
         }
     };
 
+    const handleDeleteAllData = async () => {
+        if (!window.confirm('⚠️ This will permanently delete ALL your data including documents, properties, vehicles, financial records, health data, and more. This CANNOT be undone. Are you absolutely sure?')) {
+            return;
+        }
+
+        if (!window.confirm('Final confirmation: Delete EVERYTHING?')) {
+            return;
+        }
+
+        setDeleting(true);
+        try {
+            // Get all entity names and delete all records
+            const entities = [
+                'Document', 'Property', 'Vehicle', 'Contact', 'HealthRecord', 
+                'Medication', 'Investment', 'BillPayment', 'Subscription',
+                'MaintenanceTask', 'Transaction', 'Budget', 'FinancialGoal',
+                'ValuableItem', 'TravelPlan', 'EmergencyInfo', 'Beneficiary',
+                'AdvanceDirective', 'Contract', 'ImportantDate', 'CalendarEvent',
+                'BusinessClient', 'Project', 'Invoice', 'BusinessExpense',
+                'BankAccount', 'HomeInventoryItem', 'VideoMessage', 'InternationalAsset',
+                'InsuranceQuote', 'ConciergeRequest', 'ProfessionalBooking', 'BillNegotiation'
+            ];
+
+            for (const entityName of entities) {
+                try {
+                    const records = await base44.entities[entityName].list();
+                    for (const record of records) {
+                        await base44.entities[entityName].delete(record.id);
+                    }
+                } catch (err) {
+                    console.log(`Skipping ${entityName}:`, err.message);
+                }
+            }
+
+            // Clear sandbox data too
+            clearSandboxData();
+
+            toast.success('All data deleted successfully');
+            setTimeout(() => {
+                window.location.reload();
+            }, 1000);
+        } catch (error) {
+            console.error('Deletion error:', error);
+            toast.error('Failed to delete all data');
+        }
+        setDeleting(false);
+    };
+
     const handleDeleteAccount = async () => {
         if (confirmText !== 'DELETE MY ACCOUNT') {
             toast.error('Please type the exact phrase to confirm deletion');
@@ -204,8 +252,25 @@ export default function AccountSettings() {
                             Danger Zone
                         </CardTitle>
                     </CardHeader>
-                    <CardContent>
-                        <div className="mb-4">
+                    <CardContent className="space-y-6">
+                        {/* Delete All Data */}
+                        <div>
+                            <h3 className="font-medium text-black mb-2">Delete All My Data</h3>
+                            <p className="text-sm text-[#0F1729]/70 mb-4">
+                                Permanently delete all your documents, properties, financial records, and other data. Your account will remain active.
+                            </p>
+                            <Button
+                                onClick={handleDeleteAllData}
+                                variant="destructive"
+                                className="w-full"
+                                disabled={deleting}
+                            >
+                                <Trash2 className="w-4 h-4 mr-2" />
+                                {deleting ? 'Deleting...' : 'Delete All My Data'}
+                            </Button>
+                        </div>
+
+                        <div className="border-t border-red-200 pt-6">
                             <h3 className="font-medium text-black mb-2">Delete Account</h3>
                             <p className="text-sm text-[#0F1729]/70 mb-4">
                                 Permanently delete your account and all associated data. This action cannot be undone.
