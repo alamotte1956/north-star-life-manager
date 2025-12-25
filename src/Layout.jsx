@@ -104,6 +104,10 @@ export default function Layout({ children, currentPageName }) {
         { name: 'Succession', icon: Shield, path: 'Succession', essential: false },
         { name: 'Family Tree', icon: Users, path: 'FamilyTree', essential: false },
         { name: 'Audit Log', icon: Shield, path: 'AuditLog', essential: false },
+        { name: 'Estate Planning', icon: FileText, path: 'EstatePlanningWizard', essential: false },
+        { name: 'Charitable Giving', icon: Heart, path: 'CharitableGiving', essential: false },
+        { name: 'Education Funds', icon: TrendingUp, path: 'EducationFunds', essential: false },
+        { name: 'Medicare Navigator', icon: Heart, path: 'MedicareNavigator', essential: false },
 
         // Planning & Calendar
         { name: 'Calendar', icon: Calendar, path: 'Calendar', essential: true },

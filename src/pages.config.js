@@ -60,6 +60,10 @@ import VoiceAssistant from './pages/VoiceAssistant';
 import Home from './pages/Home';
 import FamilyTree from './pages/FamilyTree';
 import AuditLog from './pages/AuditLog';
+import EstatePlanningWizard from './pages/EstatePlanningWizard';
+import CharitableGiving from './pages/CharitableGiving';
+import EducationFunds from './pages/EducationFunds';
+import MedicareNavigator from './pages/MedicareNavigator';
 import __Layout from './Layout.jsx';
 
 
@@ -126,6 +130,10 @@ export const PAGES = {
     "Home": Home,
     "FamilyTree": FamilyTree,
     "AuditLog": AuditLog,
+    "EstatePlanningWizard": EstatePlanningWizard,
+    "CharitableGiving": CharitableGiving,
+    "EducationFunds": EducationFunds,
+    "MedicareNavigator": MedicareNavigator,
 }
 
 export const pagesConfig = {
