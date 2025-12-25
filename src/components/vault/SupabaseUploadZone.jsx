@@ -5,15 +5,17 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Upload, FileText, Loader2, Calendar } from 'lucide-react';
+import { Upload, FileText, Loader2, Calendar, Camera } from 'lucide-react';
 import { toast } from 'sonner';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Calendar as CalendarComponent } from '@/components/ui/calendar';
 import { format } from 'date-fns';
+import MobileCameraCapture from './MobileCameraCapture';
 
 export default function SupabaseUploadZone({ onUploadComplete, linkedEntity }) {
     const [uploading, setUploading] = useState(false);
     const [file, setFile] = useState(null);
+    const [cameraOpen, setCameraOpen] = useState(false);
     const [metadata, setMetadata] = useState({
         title: '',
         category: 'other',
@@ -31,6 +33,14 @@ export default function SupabaseUploadZone({ onUploadComplete, linkedEntity }) {
                 setMetadata({ ...metadata, title: selectedFile.name });
             }
         }
+    };
+
+    const handleCameraCapture = (capturedFile) => {
+        setFile(capturedFile);
+        if (!metadata.title) {
+            setMetadata({ ...metadata, title: capturedFile.name });
+        }
+        setCameraOpen(false);
     };
 
     const handleUpload = async () => {
@@ -60,10 +70,36 @@ export default function SupabaseUploadZone({ onUploadComplete, linkedEntity }) {
     };
 
     return (
-        <Card className="border-2 border-dashed border-[#0F172A]/20 bg-white shadow-sm hover:border-[#C5A059]/50 transition-all">
-            <CardContent className="pt-6">
-                <div className="space-y-4">
-                    <div className="flex items-center justify-center w-full">
+        <>
+            <MobileCameraCapture
+                open={cameraOpen}
+                onOpenChange={setCameraOpen}
+                onCapture={handleCameraCapture}
+            />
+            
+            <Card className="border-2 border-dashed border-[#0F172A]/20 bg-white shadow-sm hover:border-[#C5A059]/50 transition-all">
+                <CardContent className="pt-6">
+                    <div className="space-y-4">
+                        {/* Camera Button */}
+                        <Button
+                            onClick={() => setCameraOpen(true)}
+                            variant="outline"
+                            className="w-full h-14 border-2 border-[#4A90E2] hover:bg-[#4A90E2]/10 text-[#4A90E2]"
+                        >
+                            <Camera className="w-5 h-5 mr-2" />
+                            Take Photo with Camera
+                        </Button>
+                        
+                        <div className="relative">
+                            <div className="absolute inset-0 flex items-center">
+                                <div className="w-full border-t border-[#0F172A]/10" />
+                            </div>
+                            <div className="relative flex justify-center text-xs uppercase">
+                                <span className="bg-white px-2 text-[#64748B]">Or</span>
+                            </div>
+                        </div>
+
+                        <div className="flex items-center justify-center w-full">
                         <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-[#0F172A]/10 border-dashed rounded-lg cursor-pointer bg-[#F8F9FA] hover:bg-[#C5A059]/5 transition-colors">
                             <div className="flex flex-col items-center justify-center pt-5 pb-6">
                                 {file ? (
@@ -181,5 +217,6 @@ export default function SupabaseUploadZone({ onUploadComplete, linkedEntity }) {
                 </div>
             </CardContent>
         </Card>
+        </>
     );
 }
