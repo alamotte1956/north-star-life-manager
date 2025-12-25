@@ -27,34 +27,34 @@ export default function Vault() {
 
     return (
         <PermissionGuard section="documents" action="view">
-        <div className="min-h-screen bg-gradient-to-br from-black via-[#0a0a0a] to-black">
+        <div className="min-h-screen bg-gradient-to-br from-[#F8F9FA] via-white to-[#E8EEF5]">
             <div className="max-w-7xl mx-auto px-6 py-12">
                 {/* Header */}
                 <div className="mb-12">
                     <div className="flex items-center gap-4 mb-4">
                         <div className="relative">
-                            <div className="absolute inset-0 bg-[#C5A059]/50 rounded-2xl blur-xl" />
-                            <div className="relative bg-gradient-to-br from-[#C5A059] to-[#D4AF37] p-4 rounded-2xl">
-                                <FileText className="w-8 h-8 text-black" />
+                            <div className="absolute inset-0 bg-[#4A90E2]/30 rounded-2xl blur-xl" />
+                            <div className="relative bg-gradient-to-br from-[#2E5C8A] to-[#4A90E2] p-4 rounded-2xl">
+                                <FileText className="w-8 h-8 text-white" />
                             </div>
                         </div>
                         <div>
-                            <h1 className="text-4xl font-light text-[#C5A059] mb-1">
+                            <h1 className="text-4xl font-light text-black mb-1">
                                 Secure Vault
                             </h1>
-                            <p className="text-[#F4E4C1] font-light flex items-center gap-2">
-                                <Sparkles className="w-4 h-4 text-[#D4AF37]" />
+                            <p className="text-[#0F1729]/60 font-light flex items-center gap-2">
+                                <Sparkles className="w-4 h-4 text-[#4A90E2]" />
                                 AI OCR & Auto-categorization
                             </p>
                         </div>
                     </div>
 
                     <div className="flex justify-between items-center mt-8">
-                        <div className="bg-[#1a1a1a] border border-[#C5A059] rounded-xl px-6 py-4 shadow-lg">
-                            <div className="text-3xl font-light text-[#C5A059] mb-1">
+                        <div className="bg-white border border-[#4A90E2] rounded-xl px-6 py-4 shadow-lg">
+                            <div className="text-3xl font-light text-black mb-1">
                                 {filteredDocuments.length}
                             </div>
-                            <div className="text-sm text-[#F4E4C1] font-light">
+                            <div className="text-sm text-[#0F1729]/60 font-light">
                                 Secure {filteredDocuments.length === 1 ? 'File' : 'Files'}
                             </div>
                         </div>
@@ -92,13 +92,13 @@ export default function Vault() {
                     </div>
                 ) : (
                     <div className="text-center py-16">
-                        <div className="inline-flex items-center justify-center w-24 h-24 bg-[#C5A059]/10 rounded-full mb-6">
-                            <FileText className="w-12 h-12 text-[#C5A059]/50" />
+                        <div className="inline-flex items-center justify-center w-24 h-24 bg-[#4A90E2]/10 rounded-full mb-6">
+                            <FileText className="w-12 h-12 text-[#4A90E2]/50" />
                         </div>
-                        <h3 className="text-xl font-light text-[#C5A059] mb-2">
+                        <h3 className="text-xl font-light text-black mb-2">
                             {cabinMode ? 'No cabin documents' : 'Your vault is empty'}
                         </h3>
-                        <p className="text-[#F4E4C1] font-light">
+                        <p className="text-[#0F1729]/60 font-light">
                             {cabinMode ? 'Upload cabin-related documents to get started' : 'Take a photo or upload a document to begin'}
                         </p>
                     </div>

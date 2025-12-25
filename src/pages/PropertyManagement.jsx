@@ -75,20 +75,20 @@ export default function PropertyManagement() {
     const overdueMaintenance = maintenanceTasks.filter(t => t.status === 'overdue').length;
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-[#F8F7F4] via-white to-[#F8F7F4]">
+        <div className="min-h-screen bg-gradient-to-br from-[#F8F9FA] via-white to-[#E8EEF5]">
             <div className="max-w-7xl mx-auto px-6 py-12">
                 {/* Header */}
                 <div className="flex items-center justify-between mb-8">
                     <div className="flex items-center gap-4">
                         <div className="relative">
-                            <div className="absolute inset-0 bg-[#D4AF37]/30 rounded-2xl blur-xl" />
-                            <div className="relative bg-gradient-to-br from-[#1A2B44] to-[#0F1B2E] p-4 rounded-2xl">
-                                <Home className="w-8 h-8 text-[#D4AF37]" />
+                            <div className="absolute inset-0 bg-[#4A90E2]/30 rounded-2xl blur-xl" />
+                            <div className="relative bg-gradient-to-br from-[#2E5C8A] to-[#4A90E2] p-4 rounded-2xl">
+                                <Home className="w-8 h-8 text-white" />
                             </div>
                         </div>
                         <div>
-                            <h1 className="text-4xl font-light text-[#1A2B44]">Property Management</h1>
-                            <p className="text-[#1A2B44]/60 font-light">AI-powered insights & analytics</p>
+                            <h1 className="text-4xl font-light text-black">Property Management</h1>
+                            <p className="text-[#0F1729]/60 font-light">AI-powered insights & analytics</p>
                         </div>
                     </div>
                     <div className="flex gap-2 print:hidden">
@@ -96,7 +96,7 @@ export default function PropertyManagement() {
                         <Button
                             onClick={() => getPropertyInsights()}
                             disabled={loadingInsights}
-                            className="bg-gradient-to-r from-[#D4AF37] to-[#F4D03F] hover:shadow-lg"
+                            className="bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] hover:shadow-lg text-white"
                         >
                             <Sparkles className={`w-4 h-4 mr-2 ${loadingInsights ? 'animate-spin' : ''}`} />
                             Generate Insights
@@ -112,7 +112,7 @@ export default function PropertyManagement() {
                                 <Home className="w-5 h-5 text-blue-600" />
                                 <span className="text-sm text-gray-600">Total Properties</span>
                             </div>
-                            <div className="text-3xl font-light text-[#1A2B44]">{properties.length}</div>
+                            <div className="text-3xl font-light text-black">{properties.length}</div>
                         </CardContent>
                     </Card>
 
@@ -122,7 +122,7 @@ export default function PropertyManagement() {
                                 <DollarSign className="w-5 h-5 text-green-600" />
                                 <span className="text-sm text-gray-600">Portfolio Value</span>
                             </div>
-                            <div className="text-3xl font-light text-[#1A2B44]">
+                            <div className="text-3xl font-light text-black">
                                 ${(portfolioValue / 1000000).toFixed(1)}M
                             </div>
                         </CardContent>
@@ -134,7 +134,7 @@ export default function PropertyManagement() {
                                 <TrendingUp className="w-5 h-5 text-purple-600" />
                                 <span className="text-sm text-gray-600">Monthly Rent</span>
                             </div>
-                            <div className="text-3xl font-light text-[#1A2B44]">
+                            <div className="text-3xl font-light text-black">
                                 ${totalRent.toLocaleString()}
                             </div>
                         </CardContent>
@@ -146,7 +146,7 @@ export default function PropertyManagement() {
                                 <AlertTriangle className="w-5 h-5 text-orange-600" />
                                 <span className="text-sm text-gray-600">Overdue Tasks</span>
                             </div>
-                            <div className="text-3xl font-light text-[#1A2B44]">{overdueMaintenance}</div>
+                            <div className="text-3xl font-light text-black">{overdueMaintenance}</div>
                         </CardContent>
                     </Card>
                 </div>
@@ -357,7 +357,7 @@ export default function PropertyManagement() {
                                     <CardContent className="pt-6">
                                         <div className="flex items-start justify-between">
                                             <div className="flex-1">
-                                                <h3 className="font-medium text-[#1A2B44]">{task.title}</h3>
+                                                <h3 className="font-medium text-black">{task.title}</h3>
                                                 <p className="text-sm text-gray-600 mt-1">{task.property_name}</p>
                                                 <div className="flex items-center gap-4 mt-3">
                                                     <Badge className={
@@ -374,7 +374,7 @@ export default function PropertyManagement() {
                                                     )}
                                                 </div>
                                             </div>
-                                            <Wrench className="w-5 h-5 text-[#D4AF37]" />
+                                            <Wrench className="w-5 h-5 text-[#4A90E2]" />
                                         </div>
                                     </CardContent>
                                 </Card>
@@ -388,9 +388,9 @@ export default function PropertyManagement() {
                                 <Card key={doc.id}>
                                     <CardContent className="pt-6">
                                         <div className="flex items-start gap-3">
-                                            <FileText className="w-5 h-5 text-[#D4AF37]" />
+                                            <FileText className="w-5 h-5 text-[#4A90E2]" />
                                             <div className="flex-1">
-                                                <h3 className="font-medium text-[#1A2B44]">{doc.title}</h3>
+                                                <h3 className="font-medium text-black">{doc.title}</h3>
                                                 <p className="text-sm text-gray-600 mt-1">{doc.document_type}</p>
                                                 {doc.ai_summary && (
                                                     <p className="text-sm text-gray-600 mt-2 line-clamp-2">{doc.ai_summary}</p>
@@ -465,7 +465,7 @@ function PropertyInsightCard({ insight }) {
         <Card className="shadow-xl">
             <CardHeader>
                 <CardTitle className="text-2xl font-light flex items-center gap-2">
-                    <Sparkles className="w-6 h-6 text-[#D4AF37]" />
+                    <Sparkles className="w-6 h-6 text-[#4A90E2]" />
                     {insight.property_name} - AI Insights
                 </CardTitle>
             </CardHeader>

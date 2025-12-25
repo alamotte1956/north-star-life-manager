@@ -70,19 +70,19 @@ export default function Properties() {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-[#F8F7F4] via-white to-[#F8F7F4]">
+        <div className="min-h-screen bg-gradient-to-br from-[#F8F9FA] via-white to-[#E8EEF5]">
             <div className="max-w-7xl mx-auto px-6 py-12">
                 <div className="flex items-center justify-between mb-8">
                     <div className="flex items-center gap-4">
                         <div className="relative">
-                            <div className="absolute inset-0 bg-[#C9A95C]/30 rounded-2xl blur-xl" />
-                            <div className="relative bg-gradient-to-br from-[#1A2B44] to-[#0F1B2E] p-4 rounded-2xl">
-                                <Home className="w-8 h-8 text-[#C9A95C]" />
+                            <div className="absolute inset-0 bg-[#4A90E2]/30 rounded-2xl blur-xl" />
+                            <div className="relative bg-gradient-to-br from-[#2E5C8A] to-[#4A90E2] p-4 rounded-2xl">
+                                <Home className="w-8 h-8 text-white" />
                             </div>
                         </div>
                         <div>
-                            <h1 className="text-4xl font-light text-[#1A2B44]">Properties</h1>
-                            <p className="text-[#1A2B44]/60 font-light">Manage your real estate portfolio</p>
+                            <h1 className="text-4xl font-light text-black">Properties</h1>
+                            <p className="text-[#0F1729]/60 font-light">Manage your real estate portfolio</p>
                         </div>
                         </div>
 
@@ -90,7 +90,7 @@ export default function Properties() {
                         <PrintButton />
                         <Dialog open={open} onOpenChange={setOpen}>
                         <DialogTrigger asChild>
-                            <Button className="bg-gradient-to-r from-[#1A2B44] to-[#0F1B2E] hover:shadow-lg text-white">
+                            <Button className="bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] hover:shadow-lg text-white">
                                 <Plus className="w-4 h-4 mr-2" />
                                 Add Property
                             </Button>
@@ -224,10 +224,10 @@ export default function Properties() {
                                 <CardHeader className="border-b border-[#1A2B44]/10">
                                     <div className="flex items-start justify-between">
                                         <div>
-                                            <CardTitle className="text-xl font-light text-[#1A2B44]">
+                                            <CardTitle className="text-xl font-light text-black">
                                                 {property.name}
                                             </CardTitle>
-                                            <Badge className="mt-2 bg-[#C9A95C]/10 text-[#C9A95C] border-[#C9A95C]/20">
+                                            <Badge className="mt-2 bg-[#4A90E2]/10 text-[#4A90E2] border-[#4A90E2]/20">
                                                 {propertyTypeLabels[property.property_type]}
                                             </Badge>
                                         </div>
@@ -242,15 +242,15 @@ export default function Properties() {
                                 <CardContent className="pt-6 space-y-3">
                                     {property.address && (
                                         <div className="flex items-start gap-2 text-sm">
-                                            <MapPin className="w-4 h-4 text-[#C9A95C] mt-0.5" />
-                                            <span className="text-[#1A2B44]/70 font-light">{property.address}</span>
+                                            <MapPin className="w-4 h-4 text-[#4A90E2] mt-0.5" />
+                                            <span className="text-[#0F1729]/70 font-light">{property.address}</span>
                                         </div>
                                     )}
                                     
                                     {property.current_value && (
                                         <div className="flex items-center gap-2 text-sm">
-                                            <DollarSign className="w-4 h-4 text-[#C9A95C]" />
-                                            <span className="text-[#1A2B44]/70 font-light">
+                                            <DollarSign className="w-4 h-4 text-[#4A90E2]" />
+                                            <span className="text-[#0F1729]/70 font-light">
                                                 Current Value: ${property.current_value.toLocaleString()}
                                             </span>
                                         </div>
@@ -258,8 +258,8 @@ export default function Properties() {
 
                                     {property.seasonal && property.season_open && property.season_close && (
                                         <div className="flex items-center gap-2 text-sm">
-                                            <Calendar className="w-4 h-4 text-[#C9A95C]" />
-                                            <span className="text-[#1A2B44]/70 font-light">
+                                            <Calendar className="w-4 h-4 text-[#4A90E2]" />
+                                            <span className="text-[#0F1729]/70 font-light">
                                                 Open {property.season_open} - {property.season_close}
                                             </span>
                                         </div>
@@ -282,8 +282,8 @@ export default function Properties() {
                     </div>
                 ) : (
                     <div className="text-center py-16">
-                        <Home className="w-16 h-16 text-[#1A2B44]/20 mx-auto mb-4" />
-                        <p className="text-[#1A2B44]/40 font-light">No properties added yet</p>
+                        <Home className="w-16 h-16 text-[#0F1729]/20 mx-auto mb-4" />
+                        <p className="text-[#0F1729]/40 font-light">No properties added yet</p>
                     </div>
                 )}
             </div>

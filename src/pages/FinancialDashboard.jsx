@@ -15,7 +15,7 @@ import PrintButton from '@/components/PrintButton';
 import ExpenseTracker from '@/components/financial/ExpenseTracker';
 import { LineChart, Line, BarChart, Bar, PieChart as RechartsPie, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
-const COLORS = ['#D4AF37', '#1A2B44', '#8B2635', '#4A90E2', '#50C878', '#FF6B6B', '#9B59B6', '#F39C12'];
+const COLORS = ['#4A90E2', '#2E5C8A', '#7BB3E0', '#1E3A5F', '#50C878', '#FF6B6B', '#9B59B6', '#F39C12'];
 
 export default function FinancialDashboard() {
     const [insights, setInsights] = useState(null);
@@ -79,20 +79,20 @@ export default function FinancialDashboard() {
     ] : [];
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-[#F8F7F4] via-white to-[#F8F7F4]">
+        <div className="min-h-screen bg-gradient-to-br from-[#F8F9FA] via-white to-[#E8EEF5]">
             <div className="max-w-7xl mx-auto px-6 py-12">
                 {/* Header */}
                 <div className="flex items-center justify-between mb-8">
                     <div className="flex items-center gap-4">
                         <div className="relative">
-                            <div className="absolute inset-0 bg-[#D4AF37]/30 rounded-2xl blur-xl" />
-                            <div className="relative bg-gradient-to-br from-[#1A2B44] to-[#0F1B2E] p-4 rounded-2xl">
-                                <TrendingUp className="w-8 h-8 text-[#D4AF37]" />
+                            <div className="absolute inset-0 bg-[#4A90E2]/30 rounded-2xl blur-xl" />
+                            <div className="relative bg-gradient-to-br from-[#2E5C8A] to-[#4A90E2] p-4 rounded-2xl">
+                                <TrendingUp className="w-8 h-8 text-white" />
                             </div>
                         </div>
                         <div>
-                            <h1 className="text-4xl font-light text-[#1A2B44]">Financial Dashboard</h1>
-                            <p className="text-[#1A2B44]/60 font-light">AI-powered insights & forecasting</p>
+                            <h1 className="text-4xl font-light text-black">Financial Dashboard</h1>
+                            <p className="text-[#0F1729]/60 font-light">AI-powered insights & forecasting</p>
                         </div>
                     </div>
                     <div className="flex gap-2 print:hidden">
@@ -101,7 +101,7 @@ export default function FinancialDashboard() {
                             onClick={categorizeTransactions}
                             disabled={categorizingTransactions}
                             variant="outline"
-                            className="border-[#D4AF37]/20"
+                            className="border-[#4A90E2]/20"
                         >
                             <Zap className={`w-4 h-4 mr-2 ${categorizingTransactions ? 'animate-spin' : ''}`} />
                             Categorize
@@ -109,7 +109,7 @@ export default function FinancialDashboard() {
                         <Button
                             onClick={getInsights}
                             disabled={loadingInsights}
-                            className="bg-gradient-to-r from-[#D4AF37] to-[#F4D03F] hover:shadow-lg"
+                            className="bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] hover:shadow-lg text-white"
                         >
                             <Sparkles className={`w-4 h-4 mr-2 ${loadingInsights ? 'animate-spin' : ''}`} />
                             Generate Insights
@@ -127,7 +127,7 @@ export default function FinancialDashboard() {
                         {/* Financial Health Score */}
                         <div className={`mb-8 p-6 rounded-2xl border shadow-lg ${getScoreBg(insights.financial_health_score)}`}>
                             <div className="flex items-center justify-between mb-4">
-                                <h2 className="text-2xl font-light text-[#1A2B44]">Financial Health Score</h2>
+                                <h2 className="text-2xl font-light text-black">Financial Health Score</h2>
                                 <span className={`text-5xl font-light ${getScoreColor(insights.financial_health_score)}`}>
                                     {insights.financial_health_score}
                                 </span>
@@ -143,7 +143,7 @@ export default function FinancialDashboard() {
                                         <ArrowUpRight className="w-5 h-5 text-green-600" />
                                         <span className="text-sm text-gray-600">Income (YTD)</span>
                                     </div>
-                                    <div className="text-3xl font-light text-[#1A2B44]">
+                                    <div className="text-3xl font-light text-black">
                                         ${insights.current_metrics.income_ytd.toLocaleString()}
                                     </div>
                                     {insights.trends.income_change && (
@@ -164,7 +164,7 @@ export default function FinancialDashboard() {
                                         <ArrowDownRight className="w-5 h-5 text-red-600" />
                                         <span className="text-sm text-gray-600">Expenses (YTD)</span>
                                     </div>
-                                    <div className="text-3xl font-light text-[#1A2B44]">
+                                    <div className="text-3xl font-light text-black">
                                         ${insights.current_metrics.expenses_ytd.toLocaleString()}
                                     </div>
                                     {insights.trends.expense_change && (
@@ -199,7 +199,7 @@ export default function FinancialDashboard() {
                                         <Target className="w-5 h-5 text-purple-600" />
                                         <span className="text-sm text-gray-600">Savings Rate</span>
                                     </div>
-                                    <div className="text-3xl font-light text-[#1A2B44]">
+                                    <div className="text-3xl font-light text-black">
                                         {insights.savings_rate}%
                                     </div>
                                 </CardContent>
@@ -325,7 +325,7 @@ export default function FinancialDashboard() {
                                 <Card>
                                     <CardHeader>
                                         <CardTitle className="flex items-center gap-2">
-                                            <Sparkles className="w-5 h-5 text-[#D4AF37]" />
+                                            <Sparkles className="w-5 h-5 text-[#4A90E2]" />
                                             Recommendations
                                         </CardTitle>
                                     </CardHeader>
@@ -333,7 +333,7 @@ export default function FinancialDashboard() {
                                         <ul className="space-y-2">
                                             {insights.recommendations.map((rec, i) => (
                                                 <li key={i} className="text-sm text-gray-700 flex items-start gap-2">
-                                                    <span className="font-bold text-[#D4AF37]">{i + 1}.</span>
+                                                    <span className="font-bold text-[#4A90E2]">{i + 1}.</span>
                                                     {rec}
                                                 </li>
                                             ))}
@@ -411,14 +411,14 @@ export default function FinancialDashboard() {
                     </>
                 ) : (
                     <div className="text-center py-16">
-                        <TrendingUp className="w-16 h-16 text-[#1A2B44]/20 mx-auto mb-4" />
-                        <p className="text-[#1A2B44]/40 font-light mb-4">
+                        <TrendingUp className="w-16 h-16 text-[#0F1729]/20 mx-auto mb-4" />
+                        <p className="text-[#0F1729]/40 font-light mb-4">
                             Generate AI insights to see your financial dashboard
                         </p>
                         <Button
                             onClick={getInsights}
                             disabled={loadingInsights}
-                            className="bg-gradient-to-r from-[#D4AF37] to-[#F4D03F]"
+                            className="bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] text-white"
                         >
                             <Sparkles className={`w-4 h-4 mr-2 ${loadingInsights ? 'animate-spin' : ''}`} />
                             Generate Insights
