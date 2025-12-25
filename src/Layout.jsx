@@ -288,13 +288,13 @@ export default function Layout({ children, currentPageName }) {
                     </button>
                     <div className="mt-4 p-3 bg-[#1E3A5F]/50 rounded-lg border border-[#2E5C8A]/30">
                         <p className="text-[10px] text-[#B8D4ED]/80 leading-relaxed mb-2">
-                            <strong className="text-[#B8D4ED]">HIPAA Compliance:</strong> This platform implements administrative, physical, and technical safeguards to protect your Protected Health Information (PHI) in accordance with HIPAA regulations. All health data is encrypted at rest and in transit.
+                            <strong className="text-[#B8D4ED]">Data Security:</strong> This platform implements encryption and security measures to protect your data. For questions about compliance certifications, contact support@aihelppros.com
                         </p>
                         <p className="text-[10px] text-[#B8D4ED]/80 leading-relaxed mb-2">
                             <strong className="text-[#B8D4ED]">Disclaimer:</strong> This platform is for informational and organizational purposes only and does not constitute legal, financial, medical, or tax advice. Always consult qualified professionals for specific guidance.
                         </p>
                         <p className="text-[10px] text-[#B8D4ED]/80 leading-relaxed">
-                            <strong className="text-[#B8D4ED]">Security:</strong> We use bank-level encryption and comply with SOC 2 Type II standards. Data breaches are reported within 72 hours as required by law.
+                            <strong className="text-[#B8D4ED]">Security:</strong> We use encryption and secure data storage. For security inquiries, contact support@aihelppros.com
                         </p>
                     </div>
                     <div className="flex justify-center gap-4 mt-3 text-xs text-[#7BB3E0]">
@@ -374,7 +374,7 @@ export default function Layout({ children, currentPageName }) {
                         </button>
                         <div className="mt-4 p-3 bg-[#1E3A5F]/50 rounded-lg border border-[#2E5C8A]/30">
                             <p className="text-[10px] text-[#B8D4ED]/80 leading-relaxed mb-2">
-                                <strong className="text-[#B8D4ED]">HIPAA Compliance:</strong> This platform implements administrative, physical, and technical safeguards to protect your Protected Health Information (PHI).
+                                <strong className="text-[#B8D4ED]">Data Security:</strong> This platform uses encryption to protect your data. For compliance questions, contact support@aihelppros.com
                             </p>
                             <p className="text-[10px] text-[#B8D4ED]/80 leading-relaxed">
                                 <strong className="text-[#B8D4ED]">Disclaimer:</strong> For informational purposes only. Not legal, financial, or medical advice. Consult professionals for guidance.
