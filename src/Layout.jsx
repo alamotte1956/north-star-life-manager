@@ -36,57 +36,82 @@ export default function Layout({ children, currentPageName }) {
     }, []);
 
     const navItems = [
+        // Main
         { name: 'Dashboard', icon: LayoutDashboard, path: 'Dashboard' },
-        { name: 'Collaboration', icon: Users, path: 'Collaboration' },
+
+        // Documents & Vault
         { name: 'Vault', icon: FileText, path: 'Vault' },
         { name: 'Reports', icon: FileText, path: 'Reports' },
+
+        // Properties & Assets
         { name: 'Properties', icon: Home, path: 'Properties' },
         { name: 'Property Management', icon: TrendingUp, path: 'PropertyManagement' },
         { name: 'Maintenance', icon: Wrench, path: 'Maintenance' },
-        { name: 'Contacts', icon: Users, path: 'Contacts' },
         { name: 'Vehicles', icon: Car, path: 'Vehicles' },
-        { name: 'Subscriptions', icon: DollarSign, path: 'Subscriptions' },
+        { name: 'Valuables', icon: Gem, path: 'Valuables' },
+        { name: 'Home Inventory', icon: Home, path: 'HomeInventory' },
+
+        // Financial Management
+        { name: 'Financial Dashboard', icon: TrendingUp, path: 'FinancialDashboard' },
         { name: 'Budget & Goals', icon: TrendingUp, path: 'Budget' },
         { name: 'Financial Health', icon: Activity, path: 'FinancialHealth' },
-        { name: 'Credit Score', icon: Shield, path: 'CreditScore' },
-        { name: 'Financial Dashboard', icon: TrendingUp, path: 'FinancialDashboard' },
+        { name: 'Banking Hub', icon: DollarSign, path: 'BankingHub' },
+        { name: 'Investments', icon: TrendingUp, path: 'Investments' },
         { name: 'Bill Payments', icon: DollarSign, path: 'BillPayments' },
         { name: 'Auto Payments', icon: Zap, path: 'AutomatedPayments' },
-        { name: 'Investments', icon: TrendingUp, path: 'Investments' },
-        { name: 'Valuables', icon: Gem, path: 'Valuables' },
-        { name: 'Travel', icon: Plane, path: 'Travel' },
-        { name: 'Health', icon: Heart, path: 'Health' },
-        { name: 'Medical Profile', icon: Heart, path: 'MedicalProfile' },
-        { name: 'Legal & Estate', icon: Shield, path: 'Legal' },
-        { name: 'Calendar', icon: Calendar, path: 'Calendar' },
-        { name: 'Pricing', icon: DollarSign, path: 'Pricing' },
-        { name: 'Notifications', icon: LayoutDashboard, path: 'NotificationSettings' },
-        { name: 'Family Notifications', icon: LayoutDashboard, path: 'FamilyNotifications' },
-        { name: 'Succession', icon: Shield, path: 'Succession' },
-        { name: 'Integrations', icon: Plug, path: 'Integrations' },
-        { name: 'Email Assistant', icon: Plug, path: 'EmailAssistant' },
-        { name: 'Role Management', icon: Shield, path: 'RoleManagement' },
-        { name: 'Family Roles', icon: Shield, path: 'FamilyRoleManagement' },
-        { name: 'Workflows', icon: Zap, path: 'FamilyWorkflows' },
-        { name: 'My To-Do', icon: CheckCircle, path: 'FamilyToDo' },
-        { name: 'Banking Hub', icon: DollarSign, path: 'BankingHub' },
+        { name: 'Subscriptions', icon: DollarSign, path: 'Subscriptions' },
+        { name: 'Credit Score', icon: Shield, path: 'CreditScore' },
         { name: 'Bill Negotiation', icon: TrendingUp, path: 'BillNegotiation' },
-        { name: 'Professional Network', icon: Users, path: 'ProfessionalMarketplace' },
-        { name: 'Tax Export', icon: FileText, path: 'TaxExport' },
         { name: 'Insurance Shopping', icon: Shield, path: 'InsuranceShopping' },
-        { name: 'Legacy Messages', icon: Heart, path: 'LegacyMessages' },
-        { name: 'Home Inventory', icon: Home, path: 'HomeInventory' },
-        { name: 'Concierge', icon: Users, path: 'ConciergeService' },
-        { name: 'Emergency Response', icon: AlertCircle, path: 'EmergencyResponse' },
+        { name: 'Tax Export', icon: FileText, path: 'TaxExport' },
         { name: 'International Assets', icon: Globe, path: 'InternationalAssets' },
-        { name: 'Voice Assistant', icon: Users, path: 'VoiceAssistant' },
+
+        // Business Management
         { name: 'Business Hub', icon: Briefcase, path: 'BusinessHub' },
         { name: 'Business Clients', icon: Users, path: 'BusinessClients' },
         { name: 'Business Projects', icon: Briefcase, path: 'BusinessProjects' },
         { name: 'Business Invoices', icon: FileText, path: 'BusinessInvoices' },
         { name: 'Business Expenses', icon: DollarSign, path: 'BusinessExpenses' },
         { name: 'Business Contracts', icon: FileText, path: 'BusinessContracts' },
-        { name: 'Business Reports', icon: TrendingUp, path: 'BusinessReports' }
+        { name: 'Business Reports', icon: TrendingUp, path: 'BusinessReports' },
+
+        // Family & Collaboration
+        { name: 'Collaboration', icon: Users, path: 'Collaboration' },
+        { name: 'Family Roles', icon: Shield, path: 'FamilyRoleManagement' },
+        { name: 'Workflows', icon: Zap, path: 'FamilyWorkflows' },
+        { name: 'My To-Do', icon: CheckCircle, path: 'FamilyToDo' },
+        { name: 'Family Notifications', icon: LayoutDashboard, path: 'FamilyNotifications' },
+
+        // Professional Services
+        { name: 'Professional Network', icon: Users, path: 'ProfessionalMarketplace' },
+        { name: 'Concierge', icon: Users, path: 'ConciergeService' },
+
+        // Health & Medical
+        { name: 'Health', icon: Heart, path: 'Health' },
+        { name: 'Medical Profile', icon: Heart, path: 'MedicalProfile' },
+
+        // Legal & Estate
+        { name: 'Legal & Estate', icon: Shield, path: 'Legal' },
+        { name: 'Legacy Messages', icon: Heart, path: 'LegacyMessages' },
+        { name: 'Succession', icon: Shield, path: 'Succession' },
+
+        // Planning & Calendar
+        { name: 'Calendar', icon: Calendar, path: 'Calendar' },
+        { name: 'Travel', icon: Plane, path: 'Travel' },
+
+        // Contacts & Communication
+        { name: 'Contacts', icon: Users, path: 'Contacts' },
+        { name: 'Email Assistant', icon: Plug, path: 'EmailAssistant' },
+
+        // Emergency
+        { name: 'Emergency Response', icon: AlertCircle, path: 'EmergencyResponse' },
+
+        // Settings & System
+        { name: 'Notifications', icon: LayoutDashboard, path: 'NotificationSettings' },
+        { name: 'Integrations', icon: Plug, path: 'Integrations' },
+        { name: 'Role Management', icon: Shield, path: 'RoleManagement' },
+        { name: 'Voice Assistant', icon: Users, path: 'VoiceAssistant' },
+        { name: 'Pricing', icon: DollarSign, path: 'Pricing' }
         ];
 
     return (
