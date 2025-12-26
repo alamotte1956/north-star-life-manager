@@ -1,4 +1,4 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.4';
+import { createClientFromRequest } from 'npm:@base44/sdk@0.8.6';
 
 Deno.serve(async (req) => {
     try {
@@ -12,8 +12,9 @@ Deno.serve(async (req) => {
         const { action, email_id, params } = await req.json();
 
         if (action === 'analyze_email') {
-            const email = await base44.entities.Email.filter({ id: email_id });
-            if (!email || email.length === 0) {
+            const emails = await base44.entities.Email.list();
+            const email = emails.find(e => e.id === email_id);
+            if (!email) {
                 return Response.json({ error: 'Email not found' }, { status: 404 });
             }
 
@@ -152,12 +153,13 @@ Provide a JSON response with:
         }
 
         if (action === 'suggest_reply') {
-            const email = await base44.entities.Email.filter({ id: email_id });
-            if (!email || email.length === 0) {
+            const emails = await base44.entities.Email.list();
+            const email = emails.find(e => e.id === email_id);
+            if (!email) {
                 return Response.json({ error: 'Email not found' }, { status: 404 });
             }
 
-            const emailData = email[0];
+            const emailData = email;
             const { context = '', tone = 'professional' } = params;
 
             const replyPrompt = `Generate a ${tone} reply to this email:
