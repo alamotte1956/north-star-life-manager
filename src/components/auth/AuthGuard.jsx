@@ -20,7 +20,7 @@ export default function AuthGuard({ children }) {
         const checkAuth = async () => {
             try {
                 const isAuth = await base44.auth.isAuthenticated();
-                
+
                 if (!isAuth) {
                     // Use full URL for proper redirect with custom domains
                     base44.auth.redirectToLogin(window.location.href);
@@ -30,8 +30,9 @@ export default function AuthGuard({ children }) {
                 // Check if user has family setup
                 const user = await base44.auth.me();
                 const userRecords = await base44.entities.User.filter({ email: user.email });
-                
-                if (userRecords.length === 0 || !userRecords[0].family_id) {
+
+                // Security hardening: Ensure we have a valid user and email before auto-provisioning
+                if (user && user.email && (userRecords.length === 0 || !userRecords[0].family_id)) {
                     // Auto-create family for first-time user with cryptographically secure code
                     const familyCode = generateSecureFamilyCode();
                     const family = await base44.entities.Family.create({

@@ -13,7 +13,7 @@ export default function PermissionGuard({ section, action = 'view', children, fa
         const checkPermission = async () => {
             try {
                 const isAuth = await base44.auth.isAuthenticated();
-                
+
                 // Allow sandbox users (not authenticated) to view everything
                 if (!isAuth) {
                     setHasPermission(true);
@@ -49,8 +49,8 @@ export default function PermissionGuard({ section, action = 'view', children, fa
                 setLoading(false);
             } catch (error) {
                 console.error('Permission check failed:', error);
-                // On error, allow access (sandbox mode)
-                setHasPermission(true);
+                // On error, DENY access (fail-closed)
+                setHasPermission(false);
                 setLoading(false);
             }
         };
@@ -68,7 +68,7 @@ export default function PermissionGuard({ section, action = 'view', children, fa
 
     if (!hasPermission) {
         if (fallback) return fallback;
-        
+
         return (
             <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#F8F9FA] via-white to-[#F8F9FA] px-6">
                 <Card className="max-w-md w-full border-red-200">
@@ -105,7 +105,7 @@ export function usePermission(section, action = 'view') {
         const check = async () => {
             try {
                 const user = await base44.auth.me();
-                
+
                 if (user.role === 'admin') {
                     setHasPermission(true);
                     setLoading(false);
