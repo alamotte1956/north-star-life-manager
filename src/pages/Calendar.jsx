@@ -455,6 +455,10 @@ export default function CalendarPage() {
                 event={selectedEvent}
                 open={detailsOpen}
                 onOpenChange={setDetailsOpen}
+                onUpdate={() => {
+                    refetchDates();
+                    refetchEvents();
+                }}
             />
         </div>
     );
