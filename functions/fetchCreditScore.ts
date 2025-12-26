@@ -14,15 +14,15 @@ Deno.serve(async (req) => {
         
         const existingScores = await base44.entities.CreditScore.filter({ 
             user_email: user.email 
-        });
+        }, '-report_date', 1);
         
         const previousScore = existingScores.length > 0 ? 
-            existingScores[existingScores.length - 1].score : null;
+            existingScores[0].score : null;
 
         // Generate realistic credit score data
         const baseScore = previousScore || (650 + Math.floor(Math.random() * 150));
         const scoreChange = previousScore ? 
-            Math.floor(Math.random() * 20) - 10 : 0;
+            Math.floor(Math.random() * 21) - 10 : 0;
         const newScore = Math.min(850, Math.max(300, baseScore + scoreChange));
 
         const getScoreRange = (score) => {
