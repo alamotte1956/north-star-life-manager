@@ -18,7 +18,7 @@ Deno.serve(async (req) => {
                 return Response.json({ error: 'Email not found' }, { status: 404 });
             }
 
-            const emailData = email[0];
+            const emailData = email;
 
             const analysisPrompt = `Analyze this email and provide comprehensive insights:
 
