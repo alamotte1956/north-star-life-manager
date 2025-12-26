@@ -1,7 +1,20 @@
 const isNode = typeof window === 'undefined';
 const windowObj = isNode ? { localStorage: new Map() } : window;
 const storage = windowObj.localStorage;
-const isTopLevelWindow = !isNode && window.self === window.top;
+
+const getIsTopLevelWindow = () => {
+	if (isNode) {
+		return false;
+	}
+	try {
+		return window.self === window.top;
+	} catch (_err) {
+		// Cross-origin access throws; treat as not top-level
+		return false;
+	}
+}
+
+const isTopLevelWindow = getIsTopLevelWindow();
 const isSecureEnvironment = !isNode && (window.isSecureContext || window.location.hostname === 'localhost');
 
 const toSnakeCase = (str) => {
@@ -63,6 +76,24 @@ const isLikelyJwt = (value) => {
 	return value;
 }
 
+const isSameOriginUrl = (value) => {
+	if (!value || typeof value !== 'string') {
+		return null;
+	}
+
+	try {
+		const candidateUrl = new URL(value, window.location.href);
+
+		if (candidateUrl.origin !== window.location.origin) {
+			return null;
+		}
+
+		return candidateUrl.toString();
+	} catch (_error) {
+		return null;
+	}
+}
+
 const getAppParams = () => {
 	const allowSensitiveUrlParams = isTopLevelWindow && isSecureEnvironment;
 
@@ -78,7 +109,10 @@ const getAppParams = () => {
 			allowStored: allowSensitiveUrlParams,
 			validate: isLikelyJwt
 		}),
-		fromUrl: getAppParamValue("from_url", { defaultValue: window.location.href }),
+		fromUrl: getAppParamValue("from_url", {
+			defaultValue: window.location.href,
+			validate: isSameOriginUrl
+		}),
 		functionsVersion: getAppParamValue("functions_version", { defaultValue: import.meta.env.VITE_BASE44_FUNCTIONS_VERSION }),
 	}
 }
