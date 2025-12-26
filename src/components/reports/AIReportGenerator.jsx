@@ -60,11 +60,12 @@ export default function AIReportGenerator({ onReportGenerated }) {
     const handlePrint = () => {
         if (!generatedReport) return;
         
+        const reportTitle = reportTypes.find(t => t.value === selectedType)?.label || 'Report';
         const printWindow = window.open('', '_blank');
         printWindow.document.write(`
             <html>
                 <head>
-                    <title>${reportTypes.find(t => t.value === selectedType)?.label} Report</title>
+                    <title>${reportTitle}</title>
                     <style>
                         body { font-family: Arial, sans-serif; margin: 40px; }
                         h1 { color: #0F1729; }
@@ -74,12 +75,14 @@ export default function AIReportGenerator({ onReportGenerated }) {
                     </style>
                 </head>
                 <body>
-                    <pre>${generatedReport}</pre>
+                    <pre id="content"></pre>
                     <script>window.print();</script>
                 </body>
             </html>
         `);
         printWindow.document.close();
+        // Set textContent to prevent XSS
+        printWindow.document.getElementById('content').textContent = generatedReport;
     };
 
     const handleClose = () => {

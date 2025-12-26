@@ -31,22 +31,29 @@ export default function ShareDialog({ open, onOpenChange, entityType, entityId, 
         enabled: open
     });
 
-    const { data: users = [] } = useQuery({
-        queryKey: ['users'],
-        queryFn: () => base44.entities.User.list(),
+    const { data: familyMembers = [] } = useQuery({
+        queryKey: ['familyMembers'],
+        queryFn: async () => {
+            const user = await base44.auth.me();
+            // Get family members only - not all users in the system
+            const members = await base44.entities.FamilyMemberRole.filter({ 
+                family_id: user.family_id 
+            });
+            return members;
+        },
         enabled: open
     });
 
     const handleShare = async (e) => {
         e.preventDefault();
         try {
-            const selectedUser = users.find(u => u.email === email);
+            const selectedMember = familyMembers.find(m => m.user_email === email);
             await base44.entities.SharedAccess.create({
                 entity_type: entityType,
                 entity_id: entityId,
                 entity_name: entityName,
                 shared_with_email: email,
-                shared_with_name: selectedUser?.full_name || email,
+                shared_with_name: selectedMember?.full_name || email,
                 permission_level: permission,
                 can_reshare: canReshare,
                 expiry_date: expiryDate || undefined,
@@ -83,11 +90,7 @@ export default function ShareDialog({ open, onOpenChange, entityType, entityId, 
         refetch();
     };
 
-    const getSelectedUserRole = (userEmail) => {
-        const user = users.find(u => u.email === userEmail);
-        if (!user?.custom_role_id) return null;
-        return roles.find(r => r.id === user.custom_role_id);
-    };
+
 
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
@@ -101,15 +104,15 @@ export default function ShareDialog({ open, onOpenChange, entityType, entityId, 
                         <Label>Share With</Label>
                         <Select value={email} onValueChange={(val) => setEmail(val)}>
                             <SelectTrigger>
-                                <SelectValue placeholder="Select a user..." />
+                                <SelectValue placeholder="Select a family member..." />
                             </SelectTrigger>
                             <SelectContent>
-                                {users.map(user => {
-                                    const userRole = getSelectedUserRole(user.email);
+                                {familyMembers.map(member => {
+                                    const userRole = roles.find(r => r.id === member.role_id);
                                     return (
-                                        <SelectItem key={user.id} value={user.email}>
+                                        <SelectItem key={member.id} value={member.user_email}>
                                             <div className="flex items-center gap-2">
-                                                <span>{user.full_name || user.email}</span>
+                                                <span>{member.full_name || member.user_email}</span>
                                                 {userRole && (
                                                     <Badge variant="outline" className="text-xs">
                                                         <Shield className="w-3 h-3 mr-1" />

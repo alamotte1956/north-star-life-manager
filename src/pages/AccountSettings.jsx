@@ -64,36 +64,20 @@ export default function AccountSettings() {
 
         setDeleting(true);
         try {
-            // Get all entity names and delete all records
-            const entities = [
-                'Document', 'Property', 'Vehicle', 'Contact', 'HealthRecord', 
-                'Medication', 'Investment', 'BillPayment', 'Subscription',
-                'MaintenanceTask', 'Transaction', 'Budget', 'FinancialGoal',
-                'ValuableItem', 'TravelPlan', 'EmergencyInfo', 'Beneficiary',
-                'AdvanceDirective', 'Contract', 'ImportantDate', 'CalendarEvent',
-                'BusinessClient', 'Project', 'Invoice', 'BusinessExpense',
-                'BankAccount', 'HomeInventoryItem', 'VideoMessage', 'InternationalAsset',
-                'InsuranceQuote', 'ConciergeRequest', 'ProfessionalBooking', 'BillNegotiation'
-            ];
-
-            for (const entityName of entities) {
-                try {
-                    const records = await base44.entities[entityName].list();
-                    for (const record of records) {
-                        await base44.entities[entityName].delete(record.id);
-                    }
-                } catch (err) {
-                    console.log(`Skipping ${entityName}:`, err.message);
-                }
+            // Call secure server-side function to delete only user's data
+            const result = await base44.functions.invoke('deleteAllUserData');
+            
+            if (result.data.success) {
+                // Clear sandbox data too
+                clearSandboxData();
+                
+                toast.success(`All your data deleted successfully (${result.data.deleted_count} records)`);
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1000);
+            } else {
+                toast.error('Failed to delete all data');
             }
-
-            // Clear sandbox data too
-            clearSandboxData();
-
-            toast.success('All data deleted successfully');
-            setTimeout(() => {
-                window.location.reload();
-            }, 1000);
         } catch (error) {
             console.error('Deletion error:', error);
             toast.error('Failed to delete all data');

@@ -112,12 +112,14 @@ export default function CustomReportBuilder({ open, onOpenChange, documents }) {
                 </head>
                 <body>
                     <h1>Document Report</h1>
-                    <pre>${generatedReport}</pre>
+                    <pre id="content"></pre>
                     <script>window.print();</script>
                 </body>
             </html>
         `);
         printWindow.document.close();
+        // Set textContent to prevent XSS
+        printWindow.document.getElementById('content').textContent = generatedReport;
     };
 
     const handleClose = () => {
