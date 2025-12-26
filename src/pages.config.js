@@ -22,7 +22,6 @@ import Collaboration from './pages/Collaboration';
 import CommunicationsHub from './pages/CommunicationsHub';
 import ConciergeService from './pages/ConciergeService';
 import Contacts from './pages/Contacts';
-import CreditScore from './pages/CreditScore';
 import Dashboard from './pages/Dashboard';
 import DigitalMemorial from './pages/DigitalMemorial';
 import DoctorAppointments from './pages/DoctorAppointments';
@@ -106,7 +105,6 @@ export const PAGES = {
     "CommunicationsHub": CommunicationsHub,
     "ConciergeService": ConciergeService,
     "Contacts": Contacts,
-    "CreditScore": CreditScore,
     "Dashboard": Dashboard,
     "DigitalMemorial": DigitalMemorial,
     "DoctorAppointments": DoctorAppointments,

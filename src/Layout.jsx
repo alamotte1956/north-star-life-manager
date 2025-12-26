@@ -69,7 +69,6 @@ export default function Layout({ children, currentPageName }) {
         { name: 'Bill Payments', icon: DollarSign, path: 'BillPayments', essential: false },
         { name: 'Auto Payments', icon: Zap, path: 'AutomatedPayments', essential: false },
         { name: 'Subscriptions', icon: DollarSign, path: 'Subscriptions', essential: false },
-        { name: 'Credit Score', icon: Shield, path: 'CreditScore', essential: false },
         { name: 'Bill Negotiation', icon: TrendingUp, path: 'BillNegotiation', essential: false },
         { name: 'Tax Export', icon: FileText, path: 'TaxExport', essential: false },
 
