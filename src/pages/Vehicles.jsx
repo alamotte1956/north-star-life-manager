@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
+import { listMine } from '@/components/utils/safeQuery';
 import { Car, Plus, Calendar, AlertCircle } from 'lucide-react';
 import PrintButton from '@/components/PrintButton';
 import ShareDialog from '@/components/collaboration/ShareDialog';
@@ -37,7 +38,7 @@ export default function Vehicles() {
 
     const { data: vehicles = [], refetch } = useQuery({
         queryKey: ['vehicles'],
-        queryFn: () => base44.entities.Vehicle.list('-created_date')
+        queryFn: () => listMine(base44.entities.Vehicle, { order: '-created_date' })
     });
 
     const handleSubmit = async (e) => {

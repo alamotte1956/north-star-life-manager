@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
+import { listMine } from '@/components/utils/safeQuery';
 import { Gem, Plus, Shield, TrendingUp, Image as ImageIcon } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -46,7 +47,7 @@ export default function Valuables() {
 
     const { data: valuables = [], refetch } = useQuery({
         queryKey: ['valuables'],
-        queryFn: () => base44.entities.ValuableItem.list('-current_value')
+        queryFn: () => listMine(base44.entities.ValuableItem, { order: '-current_value' })
     });
 
     const handleSubmit = async (e) => {

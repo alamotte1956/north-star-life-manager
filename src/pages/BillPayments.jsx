@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
+import { listMine } from '@/components/utils/safeQuery';
 import { CreditCard, Plus, Calendar, DollarSign, Zap, CheckCircle, AlertCircle, Clock, Sparkles } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -47,7 +48,7 @@ export default function BillPayments() {
 
     const { data: bills = [] } = useQuery({
         queryKey: ['bills'],
-        queryFn: () => base44.entities.BillPayment.list('-next_payment_date')
+        queryFn: () => listMine(base44.entities.BillPayment, { order: '-next_payment_date' })
     });
 
     const createBillMutation = useMutation({

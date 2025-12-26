@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
+import { listMine } from '@/components/utils/safeQuery';
 import { Users, Plus, Phone, Mail, MapPin, Star, Search, Filter, Save, Trash2, Tag, X, Check } from 'lucide-react';
 import PrintButton from '../components/PrintButton';
 import { Card, CardContent } from '@/components/ui/card';
@@ -74,7 +75,7 @@ export default function Contacts() {
 
     const { data: contacts = [], refetch } = useQuery({
         queryKey: ['contacts'],
-        queryFn: () => base44.entities.Contact.list('-priority')
+        queryFn: () => listMine(base44.entities.Contact, { order: '-priority' })
     });
 
     const handleSubmit = async (e) => {

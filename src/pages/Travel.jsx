@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
+import { listMine } from '@/components/utils/safeQuery';
 import { Plane, Plus, Calendar, MapPin, Sparkles } from 'lucide-react';
 import PrintButton from '@/components/PrintButton';
 import { Card, CardContent } from '@/components/ui/card';
@@ -36,7 +37,7 @@ export default function Travel() {
 
     const { data: trips = [] } = useQuery({
         queryKey: ['trips'],
-        queryFn: () => base44.entities.TravelPlan.list('-start_date')
+        queryFn: () => listMine(base44.entities.TravelPlan, { order: '-start_date' })
     });
 
     const createTripMutation = useMutation({

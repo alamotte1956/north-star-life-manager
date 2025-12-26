@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
+import { listMine } from '@/components/utils/safeQuery';
 import { DollarSign, Plus, Calendar, TrendingUp } from 'lucide-react';
 import PrintButton from '../components/PrintButton';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -47,7 +48,7 @@ export default function Subscriptions() {
 
     const { data: subscriptions = [], refetch } = useQuery({
         queryKey: ['subscriptions'],
-        queryFn: () => base44.entities.Subscription.list('-billing_amount')
+        queryFn: () => listMine(base44.entities.Subscription, { order: '-billing_amount' })
     });
 
     const handleSubmit = async (e) => {
