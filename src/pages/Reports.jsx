@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
+import { listMine } from '@/components/utils/safeQuery';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -37,7 +38,7 @@ export default function Reports() {
 
     const { data: documents = [] } = useQuery({
         queryKey: ['documents'],
-        queryFn: () => base44.entities.Document.list('-created_date', 500),
+        queryFn: () => listMine(base44.entities.Document, { order: '-created_date', limit: 500 }),
         enabled: !!family_id
     });
 
@@ -55,7 +56,7 @@ export default function Reports() {
 
     const { data: documentVersions = [] } = useQuery({
         queryKey: ['documentVersions'],
-        queryFn: () => base44.entities.DocumentVersion.list('-created_date', 500),
+        queryFn: () => listMine(base44.entities.DocumentVersion, { order: '-created_date', limit: 500 }),
         enabled: !!family_id
     });
 

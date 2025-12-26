@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
+import { listMine } from '@/components/utils/safeQuery';
 import { DollarSign, Plus, TrendingUp, AlertTriangle, Target, Sparkles, Users, RefreshCw, Loader2, TrendingDown, Brain } from 'lucide-react';
 import { toast } from 'sonner';
 import AICollaborationInsights from '../components/collaboration/AICollaborationInsights';
@@ -85,32 +86,32 @@ export default function BudgetPage() {
 
     const { data: budgets = [], refetch: refetchBudgets } = useQuery({
         queryKey: ['budgets'],
-        queryFn: () => base44.entities.Budget.list()
+        queryFn: () => listMine(base44.entities.Budget)
     });
 
     const { data: goals = [], refetch: refetchGoals } = useQuery({
         queryKey: ['goals'],
-        queryFn: () => base44.entities.FinancialGoal.list('-priority')
+        queryFn: () => listMine(base44.entities.FinancialGoal, { order: '-priority' })
     });
 
     const { data: transactions = [] } = useQuery({
         queryKey: ['transactions'],
-        queryFn: () => base44.entities.Transaction.list('-date')
+        queryFn: () => listMine(base44.entities.Transaction, { order: '-date' })
     });
 
     const { data: budgetTransactions = [] } = useQuery({
         queryKey: ['budgetTransactions'],
-        queryFn: () => base44.entities.BudgetTransaction.list('-transaction_date')
+        queryFn: () => listMine(base44.entities.BudgetTransaction, { order: '-transaction_date' })
     });
 
     const { data: bills = [] } = useQuery({
         queryKey: ['bills'],
-        queryFn: () => base44.entities.BillPayment.list()
+        queryFn: () => listMine(base44.entities.BillPayment)
     });
 
     const { data: subscriptions = [] } = useQuery({
         queryKey: ['subscriptions'],
-        queryFn: () => base44.entities.Subscription.list()
+        queryFn: () => listMine(base44.entities.Subscription)
     });
 
     const handleBudgetSubmit = async (e) => {

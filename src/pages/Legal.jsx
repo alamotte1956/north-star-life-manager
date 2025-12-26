@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
+import { listMine } from '@/components/utils/safeQuery';
 import { Scale, Plus, FileText, Shield, Users } from 'lucide-react';
 import PrintButton from '../components/PrintButton';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -71,12 +72,12 @@ export default function Legal() {
 
     const { data: directives = [], refetch: refetchDirectives } = useQuery({
         queryKey: ['advanceDirectives'],
-        queryFn: () => base44.entities.AdvanceDirective.list('-execution_date')
+        queryFn: () => listMine(base44.entities.AdvanceDirective, { order: '-execution_date' })
     });
 
     const { data: beneficiaries = [], refetch: refetchBeneficiaries } = useQuery({
         queryKey: ['beneficiaries'],
-        queryFn: () => base44.entities.Beneficiary.list('account_type')
+        queryFn: () => listMine(base44.entities.Beneficiary, { order: 'account_type' })
     });
 
     const handleDirectiveSubmit = async (e) => {

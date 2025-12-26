@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
+import { listMine } from '@/components/utils/safeQuery';
 import { Home, TrendingUp, Wrench, DollarSign, AlertTriangle, Sparkles, Users, Calendar, FileText, MessageSquare } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -30,17 +31,23 @@ export default function PropertyManagement() {
 
     const { data: properties = [], refetch } = useQuery({
         queryKey: ['properties'],
-        queryFn: () => base44.entities.Property.list('-created_date')
+        queryFn: () => listMine(base44.entities.Property, { order: '-created_date' })
     });
 
     const { data: maintenanceTasks = [] } = useQuery({
         queryKey: ['maintenanceTasks'],
-        queryFn: () => base44.entities.MaintenanceTask.list('-next_due_date')
+        queryFn: () => listMine(base44.entities.MaintenanceTask, { order: '-next_due_date' })
     });
 
     const { data: documents = [] } = useQuery({
         queryKey: ['propertyDocuments'],
-        queryFn: () => base44.entities.Document.filter({ category: 'property' })
+        queryFn: async () => {
+            const user = await base44.auth.me();
+            return await base44.entities.Document.filter({ 
+                category: 'property',
+                created_by: user?.email 
+            });
+        }
     });
 
     const getPropertyInsights = async (propertyId = null) => {

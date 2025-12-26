@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
+import { listMine } from '@/components/utils/safeQuery';
 import { FileText, Sparkles } from 'lucide-react';
 import SupabaseUploadZone from '../components/vault/SupabaseUploadZone';
 import DocumentCard from '../components/vault/DocumentCard';
@@ -18,7 +19,7 @@ export default function Vault() {
 
     const { data: documents = [], refetch } = useQuery({
         queryKey: ['documents'],
-        queryFn: () => base44.entities.Document.list('-created_date', 100),
+        queryFn: () => listMine(base44.entities.Document, { order: '-created_date', limit: 100 }),
         refetchInterval: 3000 // Poll for analysis updates
     });
 
