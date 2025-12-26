@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
+import { listMine } from '@/components/utils/safeQuery';
 import { TrendingUp, Plus, DollarSign, PieChart, Target, RefreshCw, Sparkles, AlertTriangle, Shield, ChevronRight, BarChart3 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -75,7 +76,7 @@ export default function Investments() {
 
     const { data: investments = [] } = useQuery({
         queryKey: ['investments'],
-        queryFn: () => base44.entities.Investment.list('-created_date')
+        queryFn: () => listMine(base44.entities.Investment, { order: '-created_date' })
     });
 
     // Auto-refresh prices every 5 minutes
@@ -89,7 +90,7 @@ export default function Investments() {
 
     const { data: goals = [] } = useQuery({
         queryKey: ['goals'],
-        queryFn: () => base44.entities.FinancialGoal.list()
+        queryFn: () => listMine(base44.entities.FinancialGoal)
     });
 
     const createInvestmentMutation = useMutation({

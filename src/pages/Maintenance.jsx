@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
+import { listMine } from '@/components/utils/safeQuery';
 import { Wrench, Plus, Calendar, AlertCircle, CheckCircle } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -50,12 +51,12 @@ export default function Maintenance() {
 
     const { data: tasks = [], refetch } = useQuery({
         queryKey: ['maintenanceTasks'],
-        queryFn: () => base44.entities.MaintenanceTask.list('-next_due_date')
+        queryFn: () => listMine(base44.entities.MaintenanceTask, { order: '-next_due_date' })
     });
 
     const { data: properties = [] } = useQuery({
         queryKey: ['properties'],
-        queryFn: () => base44.entities.Property.list()
+        queryFn: () => listMine(base44.entities.Property)
     });
 
     const handleSubmit = async (e) => {

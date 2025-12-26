@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
+import { listMine } from '@/components/utils/safeQuery';
 import { Heart, Plus, Pill, Shield, FileText, Sparkles, FileUser, Activity, Share2, MessageSquare, Users } from 'lucide-react';
 import PrintButton from '../components/PrintButton';
 import HealthInsights from '../components/health/HealthInsights';
@@ -66,17 +67,17 @@ export default function Health() {
 
     const { data: records = [], refetch } = useQuery({
         queryKey: ['healthRecords'],
-        queryFn: () => base44.entities.HealthRecord.list('-date')
+        queryFn: () => listMine(base44.entities.HealthRecord, { order: '-date' })
     });
 
     const { data: medications = [], refetch: refetchMeds } = useQuery({
         queryKey: ['medications'],
-        queryFn: () => base44.entities.Medication.list()
+        queryFn: () => listMine(base44.entities.Medication)
     });
 
     const { data: wearableData = [] } = useQuery({
         queryKey: ['wearableData'],
-        queryFn: () => base44.entities.WearableData.list('-date', 30)
+        queryFn: () => listMine(base44.entities.WearableData, { order: '-date', limit: 30 })
     });
 
     const handleSubmit = async (e) => {

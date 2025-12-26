@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
+import { listMine } from '@/components/utils/safeQuery';
 import { Home, Plus, MapPin, Calendar, DollarSign, Snowflake, Sun } from 'lucide-react';
 import PrintButton from '@/components/PrintButton';
 import ShareDialog from '@/components/collaboration/ShareDialog';
@@ -44,7 +45,7 @@ export default function Properties() {
 
     const { data: properties = [], refetch } = useQuery({
         queryKey: ['properties'],
-        queryFn: () => base44.entities.Property.list('-created_date')
+        queryFn: () => listMine(base44.entities.Property, { order: '-created_date' })
     });
 
     const handleSubmit = async (e) => {
