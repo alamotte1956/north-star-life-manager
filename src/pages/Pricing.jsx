@@ -17,9 +17,10 @@ const plans = [
         price: 49,
         icon: Zap,
         features: [
-            'Up to 50 documents',
-            'Basic automation',
-            '5 properties & vehicles',
+            'Up to 100 documents',
+            'Basic AI analysis',
+            'Up to 5 properties & vehicles',
+            'Expiration tracking',
             'Email support',
             'Mobile app access'
         ]
@@ -32,13 +33,14 @@ const plans = [
         popular: true,
         features: [
             'Unlimited documents',
-            'Advanced AI automation',
+            'Advanced AI analysis & automation',
             'Unlimited properties & vehicles',
+            'Home inventory scanner',
             'Priority support',
             'Google Calendar sync',
-            'Slack integration',
-            'AI assistant',
-            'Custom reports'
+            'AI life assistant chat',
+            'Custom reports & exports',
+            'Document version history'
         ]
     },
     {
@@ -48,12 +50,13 @@ const plans = [
         icon: Building2,
         features: [
             'Everything in Plus',
-            'Team collaboration (up to 10 users)',
-            'Advanced security',
-            'Dedicated account manager',
-            'Custom integrations',
-            'SLA guarantee',
-            'White-label options'
+            'Family collaboration (up to 10 members)',
+            'Advanced role-based permissions',
+            'Business client & project management',
+            'Professional network access',
+            'Priority AI analysis',
+            'Dedicated support',
+            'Custom workflows & automations'
         ]
     }
 ];

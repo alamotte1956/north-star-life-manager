@@ -21,9 +21,9 @@ export default function Home() {
     return (
         <>
             <SEO 
-                title="North Star Life Manager - Your Complete Life Organization Platform"
-                description="AI-powered life management platform helping families organize documents, finances, properties, health records, and more. Secure, encrypted, and easy to use."
-                keywords="life management software, document organization, financial planning, property management, health records, estate planning, family collaboration, AI assistant, secure document storage"
+                title="North Star Life Manager - Organize Your Life's Important Information"
+                description="Comprehensive life organization platform for managing documents, properties, vehicles, finances, and family information. AI-powered insights, secure storage, expiration tracking, and family collaboration tools."
+                keywords="life management software, document organization, property management, vehicle tracking, financial planning, estate planning, family collaboration, AI assistant, secure document vault, expiration alerts"
                 structuredData={{
                     "@context": "https://schema.org",
                     "@type": "SoftwareApplication",

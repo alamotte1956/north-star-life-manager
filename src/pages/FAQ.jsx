@@ -67,15 +67,15 @@ export default function FAQ() {
             questions: [
                 {
                     question: 'What is North Star Life Manager?',
-                    answer: 'North Star Life Manager is a holistic life management platform that combines your financial health and your physical well-being into one dashboard. We use advanced AI to help you see how your spending habits impact your health, and how your wellness affects your wealth.'
+                    answer: 'North Star Life Manager is a comprehensive life organization platform that helps you manage all aspects of your life in one secure place. From important documents and property records to financial tracking and health information, we use AI to help you stay organized and make informed decisions about your life.'
                 },
                 {
                     question: 'Who is this app for?',
-                    answer: 'It is for anyone who wants to take control of their life\'s direction. Whether you are managing a chronic condition, saving for a big goal, or just want to understand why you feel (and spend) the way you do, North Star provides the insights you need.'
+                    answer: 'North Star is designed for families and individuals who want to organize their important life information, track multiple properties and vehicles, manage documents with expiration tracking, coordinate family responsibilities, and have AI assistance for tasks like document analysis and planning. It\'s particularly valuable for people managing complex estates, rental properties, or planning for succession.'
                 },
                 {
                     question: 'Is this a medical or financial advisory service?',
-                    answer: 'No. North Star Life Manager is an informational self-help tool. While we provide powerful data and AI-driven insights, we are not licensed medical doctors or financial advisors. We help you organize your data so you can make better decisions, but we do not provide diagnosis or fiduciary investment advice.'
+                    answer: 'No. North Star Life Manager is an organizational and information management tool. While we provide powerful data organization and AI-driven insights to help you stay on top of your life, we are not licensed medical professionals or financial advisors. We help you organize and analyze your information, but do not provide diagnosis, treatment, or investment advice. Always consult qualified professionals for specific guidance.'
                 }
             ]
         },
@@ -101,30 +101,30 @@ export default function FAQ() {
         {
             icon: DollarSign,
             iconColor: 'bg-[#50C878]',
-            title: 'Connecting Your Finances',
+            title: 'Financial & Document Management',
             questions: [
                 {
-                    question: 'Do you store my bank login credentials?',
-                    answer: 'Never. We use secure third-party integration partners (similar to those used by major payment apps) to connect to your bank. We only receive a "read-only" token that allows us to see balances and transactions. We cannot move money or change settings in your bank account.'
+                    question: 'What financial tracking features do you offer?',
+                    answer: 'North Star helps you track investments, budgets, expenses, bill payments, subscriptions, and financial goals. You can manually enter transactions or upload documents for AI analysis. We also provide financial health insights and automated payment scheduling to help you stay on top of your finances.'
                 },
                 {
-                    question: 'What if I don\'t want to link my bank account?',
-                    answer: 'That is completely fine! You can use the Manual Entry feature to input your spending and balances yourself. You will still get the benefit of our AI analysis without linking a live feed.'
+                    question: 'How does document management work?',
+                    answer: 'You can upload any type of document (PDFs, images, receipts, contracts, etc.) to your secure vault. Our AI automatically extracts key information like dates, amounts, parties involved, and expiration dates. You can organize documents into folders, link them to properties or vehicles, and receive alerts before important documents expire.'
                 }
             ]
         },
         {
             icon: Heart,
             iconColor: 'bg-red-500',
-            title: 'Health & Wellness Features',
+            title: 'Property & Asset Management',
             questions: [
                 {
-                    question: 'What kind of health data can I track?',
-                    answer: 'You can track a wide variety of metrics, including sleep, mood, diet, exercise, and specific symptoms. You can also integrate with popular wearables (like Apple Health or Google Fit) to import data automatically.'
+                    question: 'What can I track with properties and vehicles?',
+                    answer: 'You can manage unlimited properties (homes, rental properties, vacation homes) and vehicles with detailed records including purchase info, maintenance schedules, insurance policies, and documents. Our AI helps track maintenance tasks, sends reminders for renewals, and organizes all related documentation in one place.'
                 },
                 {
-                    question: 'How does the "Correlation Engine" work?',
-                    answer: 'This is our unique feature. Our AI analyzes the timestamps of your financial transactions and your health logs. For example, it might notice that your spending on "Eating Out" increases 40% on days when you report "High Stress" or "Poor Sleep." This helps you identify triggers and break bad habits.'
+                    question: 'Can I use this for rental property management?',
+                    answer: 'Yes! North Star includes features specifically for landlords including tenant management, lease tracking, rent collection records, maintenance coordination, and automatic renewal notifications. You can also use our home inventory scanner to catalog valuable items for insurance purposes.'
                 }
             ]
         },
