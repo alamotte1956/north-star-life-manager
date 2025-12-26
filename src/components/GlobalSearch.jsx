@@ -39,49 +39,73 @@ export default function GlobalSearch({ open, onOpenChange }) {
 
     const { data: properties = [] } = useQuery({
         queryKey: ['search-properties'],
-        queryFn: () => base44.entities.Property.list(),
+        queryFn: async () => {
+            const user = await base44.auth.me();
+            return base44.entities.Property.filter({ created_by: user.email });
+        },
         enabled: open
     });
 
     const { data: vehicles = [] } = useQuery({
         queryKey: ['search-vehicles'],
-        queryFn: () => base44.entities.Vehicle.list(),
+        queryFn: async () => {
+            const user = await base44.auth.me();
+            return base44.entities.Vehicle.filter({ created_by: user.email });
+        },
         enabled: open
     });
 
     const { data: tasks = [] } = useQuery({
         queryKey: ['search-tasks'],
-        queryFn: () => base44.entities.MaintenanceTask.list(),
+        queryFn: async () => {
+            const user = await base44.auth.me();
+            return base44.entities.MaintenanceTask.filter({ created_by: user.email });
+        },
         enabled: open
     });
 
     const { data: valuables = [] } = useQuery({
         queryKey: ['search-valuables'],
-        queryFn: () => base44.entities.ValuableItem.list(),
+        queryFn: async () => {
+            const user = await base44.auth.me();
+            return base44.entities.ValuableItem.filter({ created_by: user.email });
+        },
         enabled: open
     });
 
     const { data: subscriptions = [] } = useQuery({
         queryKey: ['search-subscriptions'],
-        queryFn: () => base44.entities.Subscription.list(),
+        queryFn: async () => {
+            const user = await base44.auth.me();
+            return base44.entities.Subscription.filter({ created_by: user.email });
+        },
         enabled: open
     });
 
     const { data: trips = [] } = useQuery({
         queryKey: ['search-trips'],
-        queryFn: () => base44.entities.TravelPlan.list(),
+        queryFn: async () => {
+            const user = await base44.auth.me();
+            return base44.entities.TravelPlan.filter({ created_by: user.email });
+        },
         enabled: open
     });
 
     const { data: healthRecords = [] } = useQuery({
         queryKey: ['search-health'],
-        queryFn: () => base44.entities.HealthRecord.list(),
+        queryFn: async () => {
+            const user = await base44.auth.me();
+            return base44.entities.HealthRecord.filter({ created_by: user.email });
+        },
         enabled: open
     });
 
     const { data: documents = [] } = useQuery({
         queryKey: ['search-documents'],
-        queryFn: () => base44.entities.Document.list(),
+        queryFn: async () => {
+            const user = await base44.auth.me();
+            return base44.entities.Document.filter({ created_by: user.email });
+        },
         enabled: open
     });
 

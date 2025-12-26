@@ -19,12 +19,18 @@ export default function Automations() {
 
     const { data: automations = [], refetch } = useQuery({
         queryKey: ['automations'],
-        queryFn: () => base44.entities.Automation.list('-created_date')
+        queryFn: async () => {
+            const user = await base44.auth.me();
+            return base44.entities.Automation.filter({ created_by: user.email }, '-created_date');
+        }
     });
 
     const { data: transactions = [] } = useQuery({
         queryKey: ['transactions'],
-        queryFn: () => base44.entities.Transaction.list('-date', 20)
+        queryFn: async () => {
+            const user = await base44.auth.me();
+            return base44.entities.Transaction.filter({ created_by: user.email }, '-date', 20);
+        }
     });
 
     const triggerIcons = {
