@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
+import { filterMine } from '@/components/utils/safeQuery';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -30,8 +31,8 @@ export default function TenantPortal() {
     const { data: properties = [] } = useQuery({
         queryKey: ['tenantProperties'],
         queryFn: async () => {
-            const props = await base44.entities.Property.list();
-            return props.filter(p => p.tenant_email === user?.email);
+            // Server-side filter by tenant_email
+            return await base44.entities.Property.filter({ tenant_email: user?.email });
         },
         enabled: !!user
     });

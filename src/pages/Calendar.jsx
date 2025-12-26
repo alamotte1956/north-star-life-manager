@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
+import { listMine } from '@/components/utils/safeQuery';
 import { Calendar as CalendarIcon, Plus, ChevronLeft, ChevronRight, RefreshCw } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -46,37 +47,37 @@ export default function CalendarPage() {
 
     const { data: importantDates = [], refetch: refetchDates } = useQuery({
         queryKey: ['importantDates'],
-        queryFn: () => base44.entities.ImportantDate.list('-date')
+        queryFn: () => listMine(base44.entities.ImportantDate, { order: '-date' })
     });
 
     const { data: maintenanceTasks = [] } = useQuery({
         queryKey: ['maintenanceForCalendar'],
-        queryFn: () => base44.entities.MaintenanceTask.list()
+        queryFn: () => listMine(base44.entities.MaintenanceTask)
     });
 
     const { data: travelPlans = [] } = useQuery({
         queryKey: ['travelForCalendar'],
-        queryFn: () => base44.entities.TravelPlan.list()
+        queryFn: () => listMine(base44.entities.TravelPlan)
     });
 
     const { data: subscriptions = [] } = useQuery({
         queryKey: ['subscriptionsForCalendar'],
-        queryFn: () => base44.entities.Subscription.list()
+        queryFn: () => listMine(base44.entities.Subscription)
     });
 
     const { data: calendarEvents = [], refetch: refetchEvents } = useQuery({
         queryKey: ['calendarEvents'],
-        queryFn: () => base44.entities.CalendarEvent.list('-due_date')
+        queryFn: () => listMine(base44.entities.CalendarEvent, { order: '-due_date' })
     });
 
     const { data: properties = [] } = useQuery({
         queryKey: ['propertiesForCalendar'],
-        queryFn: () => base44.entities.Property.list()
+        queryFn: () => listMine(base44.entities.Property)
     });
 
     const { data: billPayments = [] } = useQuery({
         queryKey: ['billsForCalendar'],
-        queryFn: () => base44.entities.BillPayment.list()
+        queryFn: () => listMine(base44.entities.BillPayment)
     });
 
     const allEvents = useMemo(() => {

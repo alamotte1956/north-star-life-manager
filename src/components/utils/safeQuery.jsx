@@ -24,7 +24,7 @@ export async function listMine(entity, opts = {}) {
     const email = me?.email;
 
     if (!email) {
-        throw new Error('User not authenticated');
+        return [];
     }
 
     // Server-side filtering

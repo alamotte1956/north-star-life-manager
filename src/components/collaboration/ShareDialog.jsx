@@ -27,7 +27,10 @@ export default function ShareDialog({ open, onOpenChange, entityType, entityId, 
 
     const { data: roles = [] } = useQuery({
         queryKey: ['customRoles'],
-        queryFn: () => base44.entities.CustomRole.list(),
+        queryFn: async () => {
+            const user = await base44.auth.me();
+            return await base44.entities.CustomRole.filter({ created_by: user?.email });
+        },
         enabled: open
     });
 

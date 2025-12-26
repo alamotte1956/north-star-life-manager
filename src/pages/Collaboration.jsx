@@ -1,6 +1,7 @@
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
+import { listMine } from '@/components/utils/safeQuery';
 import { Users, Share2, MessageSquare, CheckSquare, Home, Car, Gem, Wrench, DollarSign, FileText, Receipt, Zap, Calendar, TrendingUp, Heart } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -30,7 +31,7 @@ export default function Collaboration() {
 
     const { data: sharedByMe = [] } = useQuery({
         queryKey: ['sharedByMe'],
-        queryFn: () => base44.entities.SharedAccess.list('-created_date'),
+        queryFn: () => listMine(base44.entities.SharedAccess, { order: '-created_date' }),
         enabled: !!user
     });
 
@@ -48,7 +49,7 @@ export default function Collaboration() {
 
     const { data: recentComments = [] } = useQuery({
         queryKey: ['myComments'],
-        queryFn: () => base44.entities.Comment.list('-created_date', 10),
+        queryFn: () => listMine(base44.entities.Comment, { order: '-created_date', limit: 10 }),
         enabled: !!user
     });
 

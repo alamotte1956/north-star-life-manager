@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
+import { listMine } from '@/components/utils/safeQuery';
 import { 
     TrendingUp, DollarSign, AlertTriangle, Sparkles, ArrowUpRight, 
     ArrowDownRight, PieChart, Calendar, Target, Zap 
@@ -25,7 +26,7 @@ export default function FinancialDashboard() {
 
     const { data: transactions = [] } = useQuery({
         queryKey: ['transactions'],
-        queryFn: () => base44.entities.Transaction.list('-date')
+        queryFn: () => listMine(base44.entities.Transaction, { order: '-date' })
     });
 
     const getInsights = async () => {
