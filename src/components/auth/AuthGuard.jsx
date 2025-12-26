@@ -2,6 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { Loader2 } from 'lucide-react';
 
+// Generate cryptographically secure family code
+function generateSecureFamilyCode() {
+    const array = new Uint8Array(12);
+    crypto.getRandomValues(array);
+    return Array.from(array, byte => byte.toString(36).padStart(2, '0'))
+        .join('')
+        .substring(0, 12)
+        .toUpperCase();
+}
+
 export default function AuthGuard({ children }) {
     const [checking, setChecking] = useState(true);
     const [setupError, setSetupError] = useState(null);
@@ -22,8 +32,8 @@ export default function AuthGuard({ children }) {
                 const userRecords = await base44.entities.User.filter({ email: user.email });
                 
                 if (userRecords.length === 0 || !userRecords[0].family_id) {
-                    // Auto-create family for first-time user
-                    const familyCode = Math.random().toString(36).substring(2, 8).toUpperCase();
+                    // Auto-create family for first-time user with cryptographically secure code
+                    const familyCode = generateSecureFamilyCode();
                     const family = await base44.entities.Family.create({
                         family_name: `${user.full_name || user.email}'s Family`,
                         family_code: familyCode,

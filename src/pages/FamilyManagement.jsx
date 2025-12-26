@@ -40,7 +40,13 @@ export default function FamilyManagement() {
 
     const createFamilyMutation = useMutation({
         mutationFn: async () => {
-            const code = Math.random().toString(36).substring(2, 10).toUpperCase();
+            // Generate cryptographically secure 12-character code
+            const array = new Uint8Array(12);
+            crypto.getRandomValues(array);
+            const code = Array.from(array, byte => byte.toString(36).padStart(2, '0'))
+                .join('')
+                .substring(0, 12)
+                .toUpperCase();
             const newFamily = await base44.entities.Family.create({
                 family_name: familyName,
                 family_code: code,
