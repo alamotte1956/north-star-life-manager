@@ -303,7 +303,7 @@ export default function MedicalProfile() {
                                 <CardTitle className="text-2xl font-light">Medical Emergency Card</CardTitle>
                             </CardHeader>
                             <CardContent className="pt-6">
-                                <div className="grid grid-cols-2 gap-6">
+                                <div className="grid grid-cols-2 gap-6 mb-6">
                                     <div>
                                         <div className="text-sm text-[#0F1729]/50 mb-1">Blood Type</div>
                                         <div className="text-3xl font-light text-red-600">{profile.blood_type}</div>
@@ -326,30 +326,88 @@ export default function MedicalProfile() {
                                 </div>
 
                                 {profile.allergies && (
-                                    <div className="mt-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+                                    <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg">
                                         <div className="text-sm font-medium text-red-800 mb-2">⚠️ ALLERGIES</div>
                                         <div className="text-red-700">{profile.allergies}</div>
                                     </div>
                                 )}
 
                                 {profile.current_medications && (
-                                    <div className="mt-4">
+                                    <div className="mb-4">
                                         <div className="text-sm text-[#0F1729]/50 mb-2">Current Medications</div>
                                         <div className="text-black whitespace-pre-line">{profile.current_medications}</div>
                                     </div>
                                 )}
 
                                 {profile.chronic_conditions && (
-                                    <div className="mt-4">
+                                    <div className="mb-4">
                                         <div className="text-sm text-[#0F1729]/50 mb-2">Chronic Conditions</div>
                                         <div className="text-black">{profile.chronic_conditions}</div>
                                     </div>
                                 )}
 
                                 {profile.special_instructions && (
-                                    <div className="mt-4 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+                                    <div className="mb-4 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
                                         <div className="text-sm font-medium text-yellow-800 mb-2">Special Instructions</div>
                                         <div className="text-yellow-700">{profile.special_instructions}</div>
+                                    </div>
+                                )}
+
+                                {/* Emergency Contact - Now Included in Print */}
+                                <div className="mb-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                                    <div className="text-sm font-medium text-blue-800 mb-3 flex items-center gap-2">
+                                        <Phone className="w-4 h-4" />
+                                        Emergency Contact
+                                    </div>
+                                    {profile.emergency_contact_name ? (
+                                        <div className="space-y-1 text-blue-900">
+                                            <div className="font-medium">{profile.emergency_contact_name}</div>
+                                            {profile.emergency_contact_relationship && (
+                                                <div className="text-sm">{profile.emergency_contact_relationship}</div>
+                                            )}
+                                            {profile.emergency_contact_phone && (
+                                                <div className="font-medium">{profile.emergency_contact_phone}</div>
+                                            )}
+                                        </div>
+                                    ) : (
+                                        <div className="text-sm text-blue-700">Not set</div>
+                                    )}
+                                </div>
+
+                                {/* Primary Physician - Now Included in Print */}
+                                {profile.primary_physician && (
+                                    <div className="mb-4 p-4 bg-purple-50 border border-purple-200 rounded-lg">
+                                        <div className="text-sm font-medium text-purple-800 mb-2">Primary Physician</div>
+                                        <div className="space-y-1 text-purple-900">
+                                            <div className="font-medium">{profile.primary_physician}</div>
+                                            {profile.primary_physician_phone && (
+                                                <div>{profile.primary_physician_phone}</div>
+                                            )}
+                                        </div>
+                                    </div>
+                                )}
+
+                                {/* Preferred Hospital - Now Included in Print */}
+                                {profile.preferred_hospital && (
+                                    <div className="mb-4">
+                                        <div className="text-sm text-[#0F1729]/50 mb-1">Preferred Hospital</div>
+                                        <div className="text-black font-medium">{profile.preferred_hospital}</div>
+                                    </div>
+                                )}
+
+                                {/* Insurance - Now Included in Print */}
+                                {profile.insurance_provider && (
+                                    <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
+                                        <div className="text-sm font-medium text-green-800 mb-2">Insurance Information</div>
+                                        <div className="space-y-1 text-green-900">
+                                            <div className="font-medium">{profile.insurance_provider}</div>
+                                            {profile.insurance_policy_number && (
+                                                <div className="text-sm">Policy: {profile.insurance_policy_number}</div>
+                                            )}
+                                            {profile.insurance_group_number && (
+                                                <div className="text-sm">Group: {profile.insurance_group_number}</div>
+                                            )}
+                                        </div>
                                     </div>
                                 )}
                             </CardContent>
