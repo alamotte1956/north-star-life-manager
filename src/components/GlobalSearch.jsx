@@ -12,7 +12,7 @@ import { Calendar as CalendarComponent } from '@/components/ui/calendar';
 import { useNavigate } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import { format } from 'date-fns';
-import { listMine } from '@/utils/safeQuery';
+import { listMine } from '@/components/utils/safeQuery';
 
 const entityConfig = {
     Property: { icon: Home, color: 'text-blue-600', page: 'Properties' },
