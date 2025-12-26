@@ -1,159 +1,84 @@
-import AccountSettings from './pages/AccountSettings';
-import ArtCollectibles from './pages/ArtCollectibles';
-import AuditLog from './pages/AuditLog';
-import AutomatedPayments from './pages/AutomatedPayments';
-import Automations from './pages/Automations';
-import BillPayments from './pages/BillPayments';
-import Budget from './pages/Budget';
-import BusinessClients from './pages/BusinessClients';
-import BusinessContracts from './pages/BusinessContracts';
-import BusinessExpenses from './pages/BusinessExpenses';
-import BusinessHub from './pages/BusinessHub';
-import BusinessInvoices from './pages/BusinessInvoices';
-import BusinessProjects from './pages/BusinessProjects';
-import BusinessReports from './pages/BusinessReports';
-import CaregiverCoordination from './pages/CaregiverCoordination';
-import CharitableGiving from './pages/CharitableGiving';
-import ClientDashboard from './pages/ClientDashboard';
-import Collaboration from './pages/Collaboration';
-import CommunicationsHub from './pages/CommunicationsHub';
-import ConciergeService from './pages/ConciergeService';
-import Contacts from './pages/Contacts';
-import Dashboard from './pages/Dashboard';
-import DigitalMemorial from './pages/DigitalMemorial';
-import DoctorAppointments from './pages/DoctorAppointments';
-import EducationFunds from './pages/EducationFunds';
-import EmailAssistant from './pages/EmailAssistant';
-import EmergencyResponse from './pages/EmergencyResponse';
-import EstatePlanning from './pages/EstatePlanning';
-import FAQ from './pages/FAQ';
-import FamilyManagement from './pages/FamilyManagement';
-import FamilyNotifications from './pages/FamilyNotifications';
-import FamilyRoleManagement from './pages/FamilyRoleManagement';
-import FamilyToDo from './pages/FamilyToDo';
-import FamilyTree from './pages/FamilyTree';
-import FamilyWorkflows from './pages/FamilyWorkflows';
-import FinancialDashboard from './pages/FinancialDashboard';
-import FinancialForecasting from './pages/FinancialForecasting';
-import FinancialHealth from './pages/FinancialHealth';
-import FinancialLiteracy from './pages/FinancialLiteracy';
-import FinancialProfile from './pages/FinancialProfile';
-import Health from './pages/Health';
-import Home from './pages/Home';
-import HomeInventory from './pages/HomeInventory';
-import HomeServices from './pages/HomeServices';
-import Integrations from './pages/Integrations';
-import InternationalAssets from './pages/InternationalAssets';
-import Investments from './pages/Investments';
-import LegacyMessages from './pages/LegacyMessages';
-import Legal from './pages/Legal';
-import Maintenance from './pages/Maintenance';
-import MedicalProfile from './pages/MedicalProfile';
-import MedicareNavigator from './pages/MedicareNavigator';
-import NotificationSettings from './pages/NotificationSettings';
-import Pricing from './pages/Pricing';
-import Privacy from './pages/Privacy';
-import ProfessionalMarketplace from './pages/ProfessionalMarketplace';
-import Properties from './pages/Properties';
-import PropertyManagement from './pages/PropertyManagement';
-import Reports from './pages/Reports';
-import RoleManagement from './pages/RoleManagement';
-import SecurityAudit from './pages/SecurityAudit';
-import Subscriptions from './pages/Subscriptions';
-import Succession from './pages/Succession';
-import TaxExport from './pages/TaxExport';
-import TenantPortal from './pages/TenantPortal';
-import Terms from './pages/Terms';
-import Travel from './pages/Travel';
-import TrustManagement from './pages/TrustManagement';
-import Valuables from './pages/Valuables';
-import Vault from './pages/Vault';
-import Vehicles from './pages/Vehicles';
-import VideoCallScheduler from './pages/VideoCallScheduler';
-import VideoTutorials from './pages/VideoTutorials';
-import VoiceAssistant from './pages/VoiceAssistant';
-import WealthLegacyPlanning from './pages/WealthLegacyPlanning';
-import Calendar from './pages/Calendar';
+import { lazy } from 'react';
 import __Layout from './Layout.jsx';
 
 
 export const PAGES = {
-    "AccountSettings": AccountSettings,
-    "ArtCollectibles": ArtCollectibles,
-    "AuditLog": AuditLog,
-    "AutomatedPayments": AutomatedPayments,
-    "Automations": Automations,
-    "BillPayments": BillPayments,
-    "Budget": Budget,
-    "BusinessClients": BusinessClients,
-    "BusinessContracts": BusinessContracts,
-    "BusinessExpenses": BusinessExpenses,
-    "BusinessHub": BusinessHub,
-    "BusinessInvoices": BusinessInvoices,
-    "BusinessProjects": BusinessProjects,
-    "BusinessReports": BusinessReports,
-    "CaregiverCoordination": CaregiverCoordination,
-    "CharitableGiving": CharitableGiving,
-    "ClientDashboard": ClientDashboard,
-    "Collaboration": Collaboration,
-    "CommunicationsHub": CommunicationsHub,
-    "ConciergeService": ConciergeService,
-    "Contacts": Contacts,
-    "Dashboard": Dashboard,
-    "DigitalMemorial": DigitalMemorial,
-    "DoctorAppointments": DoctorAppointments,
-    "EducationFunds": EducationFunds,
-    "EmailAssistant": EmailAssistant,
-    "EmergencyResponse": EmergencyResponse,
-    "EstatePlanning": EstatePlanning,
-    "FAQ": FAQ,
-    "FamilyManagement": FamilyManagement,
-    "FamilyNotifications": FamilyNotifications,
-    "FamilyRoleManagement": FamilyRoleManagement,
-    "FamilyToDo": FamilyToDo,
-    "FamilyTree": FamilyTree,
-    "FamilyWorkflows": FamilyWorkflows,
-    "FinancialDashboard": FinancialDashboard,
-    "FinancialForecasting": FinancialForecasting,
-    "FinancialHealth": FinancialHealth,
-    "FinancialLiteracy": FinancialLiteracy,
-    "FinancialProfile": FinancialProfile,
-    "Health": Health,
-    "Home": Home,
-    "HomeInventory": HomeInventory,
-    "HomeServices": HomeServices,
-    "Integrations": Integrations,
-    "InternationalAssets": InternationalAssets,
-    "Investments": Investments,
-    "LegacyMessages": LegacyMessages,
-    "Legal": Legal,
-    "Maintenance": Maintenance,
-    "MedicalProfile": MedicalProfile,
-    "MedicareNavigator": MedicareNavigator,
-    "NotificationSettings": NotificationSettings,
-    "Pricing": Pricing,
-    "Privacy": Privacy,
-    "ProfessionalMarketplace": ProfessionalMarketplace,
-    "Properties": Properties,
-    "PropertyManagement": PropertyManagement,
-    "Reports": Reports,
-    "RoleManagement": RoleManagement,
-    "SecurityAudit": SecurityAudit,
-    "Subscriptions": Subscriptions,
-    "Succession": Succession,
-    "TaxExport": TaxExport,
-    "TenantPortal": TenantPortal,
-    "Terms": Terms,
-    "Travel": Travel,
-    "TrustManagement": TrustManagement,
-    "Valuables": Valuables,
-    "Vault": Vault,
-    "Vehicles": Vehicles,
-    "VideoCallScheduler": VideoCallScheduler,
-    "VideoTutorials": VideoTutorials,
-    "VoiceAssistant": VoiceAssistant,
-    "WealthLegacyPlanning": WealthLegacyPlanning,
-    "Calendar": Calendar,
+    "AccountSettings": lazy(() => import('./pages/AccountSettings')),
+    "ArtCollectibles": lazy(() => import('./pages/ArtCollectibles')),
+    "AuditLog": lazy(() => import('./pages/AuditLog')),
+    "AutomatedPayments": lazy(() => import('./pages/AutomatedPayments')),
+    "Automations": lazy(() => import('./pages/Automations')),
+    "BillPayments": lazy(() => import('./pages/BillPayments')),
+    "Budget": lazy(() => import('./pages/Budget')),
+    "BusinessClients": lazy(() => import('./pages/BusinessClients')),
+    "BusinessContracts": lazy(() => import('./pages/BusinessContracts')),
+    "BusinessExpenses": lazy(() => import('./pages/BusinessExpenses')),
+    "BusinessHub": lazy(() => import('./pages/BusinessHub')),
+    "BusinessInvoices": lazy(() => import('./pages/BusinessInvoices')),
+    "BusinessProjects": lazy(() => import('./pages/BusinessProjects')),
+    "BusinessReports": lazy(() => import('./pages/BusinessReports')),
+    "CaregiverCoordination": lazy(() => import('./pages/CaregiverCoordination')),
+    "CharitableGiving": lazy(() => import('./pages/CharitableGiving')),
+    "ClientDashboard": lazy(() => import('./pages/ClientDashboard')),
+    "Collaboration": lazy(() => import('./pages/Collaboration')),
+    "CommunicationsHub": lazy(() => import('./pages/CommunicationsHub')),
+    "ConciergeService": lazy(() => import('./pages/ConciergeService')),
+    "Contacts": lazy(() => import('./pages/Contacts')),
+    "Dashboard": lazy(() => import('./pages/Dashboard')),
+    "DigitalMemorial": lazy(() => import('./pages/DigitalMemorial')),
+    "DoctorAppointments": lazy(() => import('./pages/DoctorAppointments')),
+    "EducationFunds": lazy(() => import('./pages/EducationFunds')),
+    "EmailAssistant": lazy(() => import('./pages/EmailAssistant')),
+    "EmergencyResponse": lazy(() => import('./pages/EmergencyResponse')),
+    "EstatePlanning": lazy(() => import('./pages/EstatePlanning')),
+    "FAQ": lazy(() => import('./pages/FAQ')),
+    "FamilyManagement": lazy(() => import('./pages/FamilyManagement')),
+    "FamilyNotifications": lazy(() => import('./pages/FamilyNotifications')),
+    "FamilyRoleManagement": lazy(() => import('./pages/FamilyRoleManagement')),
+    "FamilyToDo": lazy(() => import('./pages/FamilyToDo')),
+    "FamilyTree": lazy(() => import('./pages/FamilyTree')),
+    "FamilyWorkflows": lazy(() => import('./pages/FamilyWorkflows')),
+    "FinancialDashboard": lazy(() => import('./pages/FinancialDashboard')),
+    "FinancialForecasting": lazy(() => import('./pages/FinancialForecasting')),
+    "FinancialHealth": lazy(() => import('./pages/FinancialHealth')),
+    "FinancialLiteracy": lazy(() => import('./pages/FinancialLiteracy')),
+    "FinancialProfile": lazy(() => import('./pages/FinancialProfile')),
+    "Health": lazy(() => import('./pages/Health')),
+    "Home": lazy(() => import('./pages/Home')),
+    "HomeInventory": lazy(() => import('./pages/HomeInventory')),
+    "HomeServices": lazy(() => import('./pages/HomeServices')),
+    "Integrations": lazy(() => import('./pages/Integrations')),
+    "InternationalAssets": lazy(() => import('./pages/InternationalAssets')),
+    "Investments": lazy(() => import('./pages/Investments')),
+    "LegacyMessages": lazy(() => import('./pages/LegacyMessages')),
+    "Legal": lazy(() => import('./pages/Legal')),
+    "Maintenance": lazy(() => import('./pages/Maintenance')),
+    "MedicalProfile": lazy(() => import('./pages/MedicalProfile')),
+    "MedicareNavigator": lazy(() => import('./pages/MedicareNavigator')),
+    "NotificationSettings": lazy(() => import('./pages/NotificationSettings')),
+    "Pricing": lazy(() => import('./pages/Pricing')),
+    "Privacy": lazy(() => import('./pages/Privacy')),
+    "ProfessionalMarketplace": lazy(() => import('./pages/ProfessionalMarketplace')),
+    "Properties": lazy(() => import('./pages/Properties')),
+    "PropertyManagement": lazy(() => import('./pages/PropertyManagement')),
+    "Reports": lazy(() => import('./pages/Reports')),
+    "RoleManagement": lazy(() => import('./pages/RoleManagement')),
+    "SecurityAudit": lazy(() => import('./pages/SecurityAudit')),
+    "Subscriptions": lazy(() => import('./pages/Subscriptions')),
+    "Succession": lazy(() => import('./pages/Succession')),
+    "TaxExport": lazy(() => import('./pages/TaxExport')),
+    "TenantPortal": lazy(() => import('./pages/TenantPortal')),
+    "Terms": lazy(() => import('./pages/Terms')),
+    "Travel": lazy(() => import('./pages/Travel')),
+    "TrustManagement": lazy(() => import('./pages/TrustManagement')),
+    "Valuables": lazy(() => import('./pages/Valuables')),
+    "Vault": lazy(() => import('./pages/Vault')),
+    "Vehicles": lazy(() => import('./pages/Vehicles')),
+    "VideoCallScheduler": lazy(() => import('./pages/VideoCallScheduler')),
+    "VideoTutorials": lazy(() => import('./pages/VideoTutorials')),
+    "VoiceAssistant": lazy(() => import('./pages/VoiceAssistant')),
+    "WealthLegacyPlanning": lazy(() => import('./pages/WealthLegacyPlanning')),
+    "Calendar": lazy(() => import('./pages/Calendar')),
 }
 
 export const pagesConfig = {
