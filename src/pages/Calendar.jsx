@@ -14,6 +14,8 @@ import CalendarEvent from '@/components/calendar/CalendarEvent';
 import EventDetailsDialog from '@/components/calendar/EventDetailsDialog';
 import TaskSuggestions from '@/components/calendar/TaskSuggestions';
 import QuickAddButtons from '@/components/calendar/QuickAddButtons';
+import ReminderManager from '@/components/calendar/ReminderManager';
+import UpcomingReminders from '@/components/calendar/UpcomingReminders';
 
 const categoryLabels = {
     birthday: 'Birthday',
@@ -37,7 +39,7 @@ export default function CalendarPage() {
         date: '',
         category: 'event',
         recurring: false,
-        reminder_days_before: 7,
+        reminders: [{ time_value: 1, time_unit: 'days', triggered: false }],
         person_name: '',
         notes: ''
     });
@@ -158,7 +160,7 @@ export default function CalendarPage() {
             date: '',
             category: 'event',
             recurring: false,
-            reminder_days_before: 7,
+            reminders: [{ time_value: 1, time_unit: 'days', triggered: false }],
             person_name: '',
             notes: ''
         });
@@ -297,6 +299,11 @@ export default function CalendarPage() {
                                         <Label>Recurring annually</Label>
                                     </div>
 
+                                    <ReminderManager
+                                        reminders={formData.reminders}
+                                        onChange={(reminders) => setFormData({ ...formData, reminders })}
+                                    />
+
                                     <Button type="submit" className="w-full bg-gradient-to-r from-[#2E5C8A] to-[#4A90E2] text-white">
                                         Add Event
                                     </Button>
@@ -304,6 +311,11 @@ export default function CalendarPage() {
                             </DialogContent>
                         </Dialog>
                     </div>
+                </div>
+
+                {/* Active Reminders */}
+                <div className="mb-6">
+                    <UpcomingReminders />
                 </div>
 
                 {/* AI Task Suggestions */}

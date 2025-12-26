@@ -12,7 +12,6 @@ import BusinessHub from './pages/BusinessHub';
 import BusinessInvoices from './pages/BusinessInvoices';
 import BusinessProjects from './pages/BusinessProjects';
 import BusinessReports from './pages/BusinessReports';
-import Calendar from './pages/Calendar';
 import CaregiverCoordination from './pages/CaregiverCoordination';
 import CharitableGiving from './pages/CharitableGiving';
 import ClientDashboard from './pages/ClientDashboard';
@@ -74,6 +73,7 @@ import VideoCallScheduler from './pages/VideoCallScheduler';
 import VideoTutorials from './pages/VideoTutorials';
 import VoiceAssistant from './pages/VoiceAssistant';
 import WealthLegacyPlanning from './pages/WealthLegacyPlanning';
+import Calendar from './pages/Calendar';
 import __Layout from './Layout.jsx';
 
 
@@ -92,7 +92,6 @@ export const PAGES = {
     "BusinessInvoices": BusinessInvoices,
     "BusinessProjects": BusinessProjects,
     "BusinessReports": BusinessReports,
-    "Calendar": Calendar,
     "CaregiverCoordination": CaregiverCoordination,
     "CharitableGiving": CharitableGiving,
     "ClientDashboard": ClientDashboard,
@@ -154,6 +153,7 @@ export const PAGES = {
     "VideoTutorials": VideoTutorials,
     "VoiceAssistant": VoiceAssistant,
     "WealthLegacyPlanning": WealthLegacyPlanning,
+    "Calendar": Calendar,
 }
 
 export const pagesConfig = {
