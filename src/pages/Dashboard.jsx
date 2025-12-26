@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '../utils';
-import { listMine } from '@/components/utils/safeQuery';
+import { listMine } from '../components/utils/safeQuery';
 import {
     FileText, Shield, Home, Wrench, Users, Car, DollarSign,
     Gem, Plane, Heart, Calendar, TrendingUp, AlertCircle, CheckCircle, BookOpen, X, Download
