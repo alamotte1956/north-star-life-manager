@@ -32,6 +32,12 @@ export default function Layout({ children, currentPageName }) {
     }, []);
 
     const handleLogout = () => {
+        // Clear offline data before logout for security
+        if (typeof window !== 'undefined') {
+            localStorage.removeItem('offline-documents');
+            localStorage.removeItem('offline-properties');
+            localStorage.removeItem('offline-bills');
+        }
         base44.auth.logout();
     };
 

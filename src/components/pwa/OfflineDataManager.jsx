@@ -2,78 +2,92 @@ import { useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 
-// Cache critical data for offline access
+// SECURITY: Only store minimal metadata for offline access - NO sensitive data
 export default function OfflineDataManager() {
-    // Cache documents for offline viewing
+    // Cache ONLY non-sensitive metadata for offline access
     const { data: documents } = useQuery({
         queryKey: ['offline-documents'],
         queryFn: () => base44.entities.Document.list('-created_date', 50),
-        staleTime: 1000 * 60 * 30, // 30 minutes
-        cacheTime: 1000 * 60 * 60 * 24 // 24 hours
+        staleTime: 1000 * 60 * 5
     });
 
-    // Cache financial summary
-    const { data: investments } = useQuery({
-        queryKey: ['offline-investments'],
-        queryFn: () => base44.entities.Investment.list(),
-        staleTime: 1000 * 60 * 30,
-        cacheTime: 1000 * 60 * 60 * 24
-    });
-
-    // Cache properties
     const { data: properties } = useQuery({
         queryKey: ['offline-properties'],
         queryFn: () => base44.entities.Property.list(),
-        staleTime: 1000 * 60 * 30,
-        cacheTime: 1000 * 60 * 60 * 24
+        staleTime: 1000 * 60 * 5
     });
 
-    // Cache emergency info
-    const { data: emergencyContacts } = useQuery({
-        queryKey: ['offline-emergency'],
-        queryFn: () => base44.entities.EmergencyInfo.list(),
-        staleTime: 1000 * 60 * 60, // 1 hour
-        cacheTime: 1000 * 60 * 60 * 24 * 7 // 7 days
-    });
-
-    // Cache bills
     const { data: bills } = useQuery({
         queryKey: ['offline-bills'],
-        queryFn: () => base44.entities.BillPayment.filter({ status: 'active' }),
-        staleTime: 1000 * 60 * 30,
-        cacheTime: 1000 * 60 * 60 * 24
+        queryFn: () => base44.entities.BillPayment.list('-due_date', 20),
+        staleTime: 1000 * 60 * 5
     });
 
+    // Store ONLY minimal metadata (IDs, titles, dates) - strip sensitive data
     useEffect(() => {
-        // Store critical data in localStorage for offline access
         if (documents) {
-            localStorage.setItem('offline-documents', JSON.stringify(documents.slice(0, 20)));
+            const metadata = documents.map(d => ({
+                id: d.id,
+                title: d.title,
+                document_type: d.document_type,
+                expiry_date: d.expiry_date,
+                created_date: d.created_date
+                // NO: file_url, extracted_text, extracted_data, ai_summary
+            }));
+            localStorage.setItem('offline-documents', JSON.stringify(metadata));
         }
-        if (investments) {
-            localStorage.setItem('offline-investments', JSON.stringify(investments));
-        }
-        if (properties) {
-            localStorage.setItem('offline-properties', JSON.stringify(properties));
-        }
-        if (emergencyContacts) {
-            localStorage.setItem('offline-emergency', JSON.stringify(emergencyContacts));
-        }
-        if (bills) {
-            localStorage.setItem('offline-bills', JSON.stringify(bills));
-        }
-    }, [documents, investments, properties, emergencyContacts, bills]);
+    }, [documents]);
 
-    return null; // This component doesn't render anything
+    useEffect(() => {
+        if (properties) {
+            const metadata = properties.map(p => ({
+                id: p.id,
+                name: p.name,
+                address: p.address,
+                property_type: p.property_type
+                // NO: financial data, tenant info, detailed records
+            }));
+            localStorage.setItem('offline-properties', JSON.stringify(metadata));
+        }
+    }, [properties]);
+
+    useEffect(() => {
+        if (bills) {
+            const metadata = bills.map(b => ({
+                id: b.id,
+                bill_name: b.bill_name,
+                due_date: b.due_date,
+                status: b.status
+                // NO: amounts, account numbers, payment methods
+            }));
+            localStorage.setItem('offline-bills', JSON.stringify(metadata));
+        }
+    }, [bills]);
+
+    // Clear offline data on logout/unmount
+    useEffect(() => {
+        return () => {
+            clearOfflineData();
+        };
+    }, []);
+
+    return null;
 }
 
-// Helper functions to retrieve offline data
-export const getOfflineData = (key) => {
-    try {
-        const data = localStorage.getItem(`offline-${key}`);
-        return data ? JSON.parse(data) : null;
-    } catch {
-        return null;
-    }
-};
+// Helper to retrieve offline data
+export function getOfflineData(key) {
+    const data = localStorage.getItem(`offline-${key}`);
+    return data ? JSON.parse(data) : null;
+}
 
-export const isOffline = () => !navigator.onLine;
+// Clear all offline data (call on logout)
+export function clearOfflineData() {
+    localStorage.removeItem('offline-documents');
+    localStorage.removeItem('offline-properties');
+    localStorage.removeItem('offline-bills');
+}
+
+// Check if offline
+export function isOffline() {
+    return !navigator.onLine;
+}
