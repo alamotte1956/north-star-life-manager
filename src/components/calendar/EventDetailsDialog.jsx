@@ -9,11 +9,12 @@ import { base44 } from '@/api/base44Client';
 export default function EventDetailsDialog({ event, open, onOpenChange, onDelete }) {
     if (!event) return null;
 
+    const isDeletable = event.id && ['event', 'date', 'task', 'trip'].includes(event.id.split('-')[0]);
+
     const handleDelete = async () => {
         if (!confirm('Are you sure you want to delete this event?')) return;
         
         try {
-            // Parse event ID to determine which entity to delete from
             const [type, id] = event.id.split('-');
             
             if (type === 'event') {
@@ -75,7 +76,7 @@ export default function EventDetailsDialog({ event, open, onOpenChange, onDelete
                     )}
 
                     {/* Delete Button - Only for deletable event types */}
-                    {['event', 'date', 'task', 'trip'].includes(event.id.split('-')[0]) && (
+                    {isDeletable && (
                         <div className="pt-4 border-t">
                             <Button
                                 variant="destructive"
