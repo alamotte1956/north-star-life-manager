@@ -9,12 +9,15 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Badge } from '@/components/ui/badge';
 import { useQuery } from '@tanstack/react-query';
 import { toast } from 'sonner';
+import { format } from 'date-fns';
 
 export default function ShareDialog({ open, onOpenChange, entityType, entityId, entityName }) {
     const [email, setEmail] = useState('');
     const [permission, setPermission] = useState('view');
     const [notes, setNotes] = useState('');
     const [roleId, setRoleId] = useState('');
+    const [canReshare, setCanReshare] = useState(false);
+    const [expiryDate, setExpiryDate] = useState('');
 
     const { data: shares = [], refetch } = useQuery({
         queryKey: ['shares', entityType, entityId],
@@ -37,18 +40,37 @@ export default function ShareDialog({ open, onOpenChange, entityType, entityId, 
     const handleShare = async (e) => {
         e.preventDefault();
         try {
+            const selectedUser = users.find(u => u.email === email);
             await base44.entities.SharedAccess.create({
                 entity_type: entityType,
                 entity_id: entityId,
                 entity_name: entityName,
                 shared_with_email: email,
+                shared_with_name: selectedUser?.full_name || email,
                 permission_level: permission,
+                can_reshare: canReshare,
+                expiry_date: expiryDate || undefined,
                 notes
             });
+
+            // Send notification
+            await base44.entities.FamilyNotification.create({
+                user_email: email,
+                title: `${entityName} Shared With You`,
+                message: `${entityName} (${entityType}) has been shared with you with ${permission} access.`,
+                type: 'share',
+                priority: 'normal',
+                read: false,
+                linked_entity_type: entityType,
+                linked_entity_id: entityId
+            });
+
             setEmail('');
             setPermission('view');
             setNotes('');
             setRoleId('');
+            setCanReshare(false);
+            setExpiryDate('');
             toast.success('Access shared successfully!');
             refetch();
         } catch (error) {
@@ -110,9 +132,32 @@ export default function ShareDialog({ open, onOpenChange, entityType, entityId, 
                             </SelectTrigger>
                             <SelectContent>
                                 <SelectItem value="view">View Only</SelectItem>
+                                <SelectItem value="comment">View & Comment</SelectItem>
                                 <SelectItem value="edit">Can Edit</SelectItem>
                             </SelectContent>
                         </Select>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-4">
+                        <div>
+                            <Label>Expires On (optional)</Label>
+                            <Input
+                                type="date"
+                                value={expiryDate}
+                                onChange={(e) => setExpiryDate(e.target.value)}
+                            />
+                        </div>
+                        <div className="flex items-end">
+                            <label className="flex items-center gap-2 cursor-pointer">
+                                <input
+                                    type="checkbox"
+                                    checked={canReshare}
+                                    onChange={(e) => setCanReshare(e.target.checked)}
+                                    className="rounded"
+                                />
+                                <span className="text-sm">Can reshare</span>
+                            </label>
+                        </div>
                     </div>
 
                     <div>
@@ -137,10 +182,22 @@ export default function ShareDialog({ open, onOpenChange, entityType, entityId, 
                             {shares.map(share => (
                                 <div key={share.id} className="flex items-center justify-between p-2 bg-gray-50 rounded">
                                     <div className="flex-1">
-                                        <div className="text-sm">{share.shared_with_email}</div>
-                                        <Badge variant="outline" className="text-xs mt-1">
-                                            {share.permission_level}
-                                        </Badge>
+                                        <div className="text-sm font-medium">{share.shared_with_name || share.shared_with_email}</div>
+                                        <div className="flex items-center gap-2 mt-1">
+                                            <Badge variant="outline" className="text-xs">
+                                                {share.permission_level}
+                                            </Badge>
+                                            {share.expiry_date && (
+                                                <Badge variant="outline" className="text-xs bg-yellow-50">
+                                                    Expires {format(new Date(share.expiry_date), 'MMM d')}
+                                                </Badge>
+                                            )}
+                                            {share.can_reshare && (
+                                                <Badge variant="outline" className="text-xs bg-blue-50">
+                                                    Can reshare
+                                                </Badge>
+                                            )}
+                                        </div>
                                     </div>
                                     <Button
                                         variant="ghost"

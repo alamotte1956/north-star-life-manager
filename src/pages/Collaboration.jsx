@@ -1,7 +1,7 @@
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
-import { Users, Share2, MessageSquare, CheckSquare, Home, Car, Gem, Wrench, DollarSign, FileText, Receipt, Zap } from 'lucide-react';
+import { Users, Share2, MessageSquare, CheckSquare, Home, Car, Gem, Wrench, DollarSign, FileText, Receipt, Zap, Calendar, TrendingUp, Heart } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { format } from 'date-fns';
@@ -15,7 +15,12 @@ export default function Collaboration() {
         Subscription: DollarSign,
         Document: FileText,
         Transaction: Receipt,
-        Automation: Zap
+        Automation: Zap,
+        CalendarEvent: Calendar,
+        BillPayment: DollarSign,
+        Investment: TrendingUp,
+        Contact: Users,
+        HealthRecord: Heart
     };
 
     const { data: user } = useQuery({
@@ -130,13 +135,23 @@ export default function Collaboration() {
                                                             <Icon className="w-4 h-4 text-[#4A90E2]" />
                                                         </div>
                                                         <div>
-                                                            <h3 className="font-medium text-black">{share.entity_name}</h3>
-                                                            <p className="text-sm text-[#0F1729]/60">
-                                                                {share.entity_type} • Shared by {share.created_by}
-                                                            </p>
+                                                           <h3 className="font-medium text-black">{share.entity_name}</h3>
+                                                           <p className="text-sm text-[#0F1729]/60">
+                                                               {share.entity_type} • Shared by {share.created_by}
+                                                           </p>
+                                                           {share.expiry_date && (
+                                                               <p className="text-xs text-amber-600 mt-1">
+                                                                   Expires: {format(new Date(share.expiry_date), 'MMM d, yyyy')}
+                                                               </p>
+                                                           )}
                                                         </div>
-                                                    </div>
-                                                    <Badge>{share.permission_level}</Badge>
+                                                        </div>
+                                                        <div className="flex flex-col items-end gap-1">
+                                                        <Badge>{share.permission_level}</Badge>
+                                                        {share.can_reshare && (
+                                                           <Badge variant="outline" className="text-xs">Can reshare</Badge>
+                                                        )}
+                                                        </div>
                                                 </div>
                                             </CardContent>
                                         </Card>
