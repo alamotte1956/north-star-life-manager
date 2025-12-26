@@ -71,12 +71,18 @@ export default function RentCollectionManager({ properties }) {
 
     const { data: payments = [], refetch: refetchPayments } = useQuery({
         queryKey: ['rentPayments'],
-        queryFn: () => base44.entities.RentPayment.list('-due_date')
+        queryFn: async () => {
+            const user = await base44.auth.me();
+            return base44.entities.RentPayment.filter({ created_by: user.email }, '-due_date');
+        }
     });
 
     const { data: schedules = [], refetch: refetchSchedules } = useQuery({
         queryKey: ['paymentSchedules'],
-        queryFn: () => base44.entities.PaymentSchedule.list()
+        queryFn: async () => {
+            const user = await base44.auth.me();
+            return base44.entities.PaymentSchedule.filter({ created_by: user.email });
+        }
     });
 
     const [scheduleForm, setScheduleForm] = useState({

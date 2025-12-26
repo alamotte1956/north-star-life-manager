@@ -390,37 +390,58 @@ export default function Dashboard() {
 
     const { data: documents = [] } = useQuery({
         queryKey: ['documents'],
-        queryFn: () => base44.entities.Document.list('-created_date', 100)
+        queryFn: async () => {
+            const user = await base44.auth.me();
+            return base44.entities.Document.filter({ created_by: user.email }, '-created_date', 100);
+        }
     });
 
     const { data: properties = [] } = useQuery({
         queryKey: ['properties'],
-        queryFn: () => base44.entities.Property.list()
+        queryFn: async () => {
+            const user = await base44.auth.me();
+            return base44.entities.Property.filter({ created_by: user.email });
+        }
     });
 
     const { data: maintenanceTasks = [] } = useQuery({
         queryKey: ['maintenanceTasks'],
-        queryFn: () => base44.entities.MaintenanceTask.list()
+        queryFn: async () => {
+            const user = await base44.auth.me();
+            return base44.entities.MaintenanceTask.filter({ created_by: user.email });
+        }
     });
 
     const { data: vehicles = [] } = useQuery({
         queryKey: ['vehicles'],
-        queryFn: () => base44.entities.Vehicle.list()
+        queryFn: async () => {
+            const user = await base44.auth.me();
+            return base44.entities.Vehicle.filter({ created_by: user.email });
+        }
     });
 
     const { data: subscriptions = [] } = useQuery({
         queryKey: ['subscriptions'],
-        queryFn: () => base44.entities.Subscription.list()
+        queryFn: async () => {
+            const user = await base44.auth.me();
+            return base44.entities.Subscription.filter({ created_by: user.email });
+        }
     });
 
     const { data: valuables = [] } = useQuery({
         queryKey: ['valuables'],
-        queryFn: () => base44.entities.ValuableItem.list()
+        queryFn: async () => {
+            const user = await base44.auth.me();
+            return base44.entities.ValuableItem.filter({ created_by: user.email });
+        }
     });
 
     const { data: upcomingDates = [] } = useQuery({
         queryKey: ['importantDates'],
-        queryFn: () => base44.entities.ImportantDate.list()
+        queryFn: async () => {
+            const user = await base44.auth.me();
+            return base44.entities.ImportantDate.filter({ created_by: user.email });
+        }
     });
 
     // Calculate insights

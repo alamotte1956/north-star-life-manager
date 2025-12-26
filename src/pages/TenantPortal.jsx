@@ -38,7 +38,12 @@ export default function TenantPortal() {
 
     const { data: maintenanceTasks = [] } = useQuery({
         queryKey: ['tenantMaintenance'],
-        queryFn: () => base44.entities.MaintenanceTask.list(),
+        queryFn: async () => {
+            if (!tenantProperty) return [];
+            return base44.entities.MaintenanceTask.filter({ 
+                property_id: tenantProperty.id 
+            });
+        },
         enabled: !!tenantProperty
     });
 
