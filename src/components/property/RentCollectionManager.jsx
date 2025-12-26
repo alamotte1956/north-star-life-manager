@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { listMine } from '@/utils/safeQuery';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -71,18 +72,12 @@ export default function RentCollectionManager({ properties }) {
 
     const { data: payments = [], refetch: refetchPayments } = useQuery({
         queryKey: ['rentPayments'],
-        queryFn: async () => {
-            const user = await base44.auth.me();
-            return base44.entities.RentPayment.filter({ created_by: user.email }, '-due_date');
-        }
+        queryFn: () => listMine(base44.entities.RentPayment, { order: '-due_date' })
     });
 
     const { data: schedules = [], refetch: refetchSchedules } = useQuery({
         queryKey: ['paymentSchedules'],
-        queryFn: async () => {
-            const user = await base44.auth.me();
-            return base44.entities.PaymentSchedule.filter({ created_by: user.email });
-        }
+        queryFn: () => listMine(base44.entities.PaymentSchedule)
     });
 
     const [scheduleForm, setScheduleForm] = useState({

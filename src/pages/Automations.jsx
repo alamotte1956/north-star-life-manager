@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { Zap, Plus, Calendar, Mail, Webhook, Clock, Bell, Share2, MessageSquare } from 'lucide-react';
+import { listMine } from '@/utils/safeQuery';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -19,18 +20,12 @@ export default function Automations() {
 
     const { data: automations = [], refetch } = useQuery({
         queryKey: ['automations'],
-        queryFn: async () => {
-            const user = await base44.auth.me();
-            return base44.entities.Automation.filter({ created_by: user.email }, '-created_date');
-        }
+        queryFn: () => listMine(base44.entities.Automation)
     });
 
     const { data: transactions = [] } = useQuery({
         queryKey: ['transactions'],
-        queryFn: async () => {
-            const user = await base44.auth.me();
-            return base44.entities.Transaction.filter({ created_by: user.email }, '-date', 20);
-        }
+        queryFn: () => listMine(base44.entities.Transaction, { order: '-date', limit: 20 })
     });
 
     const triggerIcons = {
