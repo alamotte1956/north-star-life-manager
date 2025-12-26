@@ -11,6 +11,8 @@ import { toast } from 'sonner';
 export default function HomeInventory() {
     const [showScanner, setShowScanner] = useState(false);
     const [scanning, setScanning] = useState(false);
+    const [previewImage, setPreviewImage] = useState(null);
+    const [detectionResults, setDetectionResults] = useState(null);
     const queryClient = useQueryClient();
 
     const { data: items = [] } = useQuery({
@@ -37,9 +39,9 @@ export default function HomeInventory() {
         },
         onSuccess: (result) => {
             queryClient.invalidateQueries({ queryKey: ['inventory-items'] });
+            setDetectionResults(result.data);
             toast.success(`Detected ${result.data.detected_items} items worth $${result.data.total_value.toLocaleString()}`);
             setScanning(false);
-            setShowScanner(false);
         },
         onError: (error) => {
             console.error('Scan error:', error);
@@ -51,6 +53,14 @@ export default function HomeInventory() {
     const handleImageUpload = (e) => {
         const file = e.target.files[0];
         if (!file) return;
+        
+        // Show preview
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            setPreviewImage(reader.result);
+        };
+        reader.readAsDataURL(file);
+        
         setScanning(true);
         scanMutation.mutate(file);
     };
@@ -217,45 +227,93 @@ export default function HomeInventory() {
                 </div>
 
                 {/* Scanner Dialog */}
-                <Dialog open={showScanner} onOpenChange={setShowScanner}>
-                    <DialogContent>
+                <Dialog open={showScanner} onOpenChange={(open) => {
+                    setShowScanner(open);
+                    if (!open) {
+                        setPreviewImage(null);
+                        setDetectionResults(null);
+                    }
+                }}>
+                    <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
                         <DialogHeader>
                             <DialogTitle>Scan Room with AI</DialogTitle>
                         </DialogHeader>
                         <div className="space-y-4">
-                            <div className="border-2 border-dashed border-[#D4AF37]/30 rounded-lg p-12 text-center">
-                                {scanning ? (
-                                    <div>
-                                        <Sparkles className="w-16 h-16 mx-auto mb-4 text-[#D4AF37] animate-pulse" />
-                                        <p className="text-[#1A2B44]">Analyzing room...</p>
-                                    </div>
-                                ) : (
-                                    <div>
-                                        <Camera className="w-16 h-16 mx-auto mb-4 text-[#D4AF37]" />
-                                        <h3 className="text-lg font-medium text-[#1A2B44] mb-2">
-                                            Take a Photo of Your Room
-                                        </h3>
-                                        <p className="text-sm text-[#1A2B44]/60 mb-6">
-                                            Our AI will detect and catalog all valuable items
-                                        </p>
-                                        <input
-                                            type="file"
-                                            accept="image/*"
-                                            onChange={handleImageUpload}
-                                            className="hidden"
-                                            id="room-photo"
-                                        />
-                                        <label htmlFor="room-photo">
-                                            <Button asChild className="bg-gradient-to-r from-[#D4AF37] to-[#F4D03F] text-black">
-                                                <span>
-                                                    <Image className="w-4 h-4 mr-2" />
-                                                    Choose Photo
-                                                </span>
-                                            </Button>
-                                        </label>
-                                    </div>
-                                )}
-                            </div>
+                            {/* Preview Image */}
+                            {previewImage && (
+                                <div className="relative">
+                                    <img 
+                                        src={previewImage} 
+                                        alt="Room preview" 
+                                        className="w-full rounded-lg border-2 border-[#D4AF37]/30"
+                                    />
+                                    {scanning && (
+                                        <div className="absolute inset-0 bg-black/50 rounded-lg flex items-center justify-center">
+                                            <div className="text-center">
+                                                <Sparkles className="w-16 h-16 mx-auto mb-4 text-[#D4AF37] animate-pulse" />
+                                                <p className="text-white text-lg">Analyzing room...</p>
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+                            )}
+
+                            {/* Detection Results */}
+                            {detectionResults && !scanning && (
+                                <Card className="border-green-200 bg-green-50">
+                                    <CardHeader>
+                                        <CardTitle className="text-green-900 flex items-center gap-2">
+                                            <Sparkles className="w-5 h-5" />
+                                            Detection Complete!
+                                        </CardTitle>
+                                    </CardHeader>
+                                    <CardContent>
+                                        <div className="space-y-2 text-green-800">
+                                            <p>✓ Detected {detectionResults.detected_items} items</p>
+                                            <p>✓ Total estimated value: ${detectionResults.total_value?.toLocaleString()}</p>
+                                            <p className="text-sm text-green-700 mt-4">Items have been added to your inventory below.</p>
+                                        </div>
+                                        <Button 
+                                            onClick={() => {
+                                                setShowScanner(false);
+                                                setPreviewImage(null);
+                                                setDetectionResults(null);
+                                            }}
+                                            className="mt-4 w-full"
+                                        >
+                                            View Inventory
+                                        </Button>
+                                    </CardContent>
+                                </Card>
+                            )}
+
+                            {/* Upload Area */}
+                            {!previewImage && (
+                                <div className="border-2 border-dashed border-[#D4AF37]/30 rounded-lg p-12 text-center">
+                                    <Camera className="w-16 h-16 mx-auto mb-4 text-[#D4AF37]" />
+                                    <h3 className="text-lg font-medium text-[#1A2B44] mb-2">
+                                        Take a Photo of Your Room
+                                    </h3>
+                                    <p className="text-sm text-[#1A2B44]/60 mb-6">
+                                        Our AI will detect and catalog all valuable items
+                                    </p>
+                                    <input
+                                        type="file"
+                                        accept="image/*"
+                                        onChange={handleImageUpload}
+                                        className="hidden"
+                                        id="room-photo"
+                                    />
+                                    <label htmlFor="room-photo">
+                                        <Button asChild className="bg-gradient-to-r from-[#D4AF37] to-[#F4D03F] text-black">
+                                            <span>
+                                                <Image className="w-4 h-4 mr-2" />
+                                                Choose Photo
+                                            </span>
+                                        </Button>
+                                    </label>
+                                </div>
+                            )}
                         </div>
                     </DialogContent>
                 </Dialog>
