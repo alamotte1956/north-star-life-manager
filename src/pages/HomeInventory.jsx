@@ -25,7 +25,10 @@ export default function HomeInventory() {
 
     const scanMutation = useMutation({
         mutationFn: async (file) => {
-            const { data: uploadResult } = await base44.integrations.Core.UploadFile({ file });
+            // Upload image first
+            const uploadResult = await base44.integrations.Core.UploadFile({ file });
+            
+            // Analyze with AI
             return base44.functions.invoke('analyzeHomeInventory', {
                 image_url: uploadResult.file_url,
                 room: 'Living Room',
@@ -38,8 +41,9 @@ export default function HomeInventory() {
             setScanning(false);
             setShowScanner(false);
         },
-        onError: () => {
-            toast.error('Scan failed');
+        onError: (error) => {
+            console.error('Scan error:', error);
+            toast.error(error?.response?.data?.error || 'Scan failed - please try again');
             setScanning(false);
         }
     });

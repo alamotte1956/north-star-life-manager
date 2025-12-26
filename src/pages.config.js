@@ -63,6 +63,7 @@ import Properties from './pages/Properties';
 import PropertyManagement from './pages/PropertyManagement';
 import Reports from './pages/Reports';
 import RoleManagement from './pages/RoleManagement';
+import SecurityAudit from './pages/SecurityAudit';
 import Subscriptions from './pages/Subscriptions';
 import Succession from './pages/Succession';
 import TaxExport from './pages/TaxExport';
@@ -77,7 +78,6 @@ import VideoCallScheduler from './pages/VideoCallScheduler';
 import VideoTutorials from './pages/VideoTutorials';
 import VoiceAssistant from './pages/VoiceAssistant';
 import WealthLegacyPlanning from './pages/WealthLegacyPlanning';
-import SecurityAudit from './pages/SecurityAudit';
 import __Layout from './Layout.jsx';
 
 
@@ -147,6 +147,7 @@ export const PAGES = {
     "PropertyManagement": PropertyManagement,
     "Reports": Reports,
     "RoleManagement": RoleManagement,
+    "SecurityAudit": SecurityAudit,
     "Subscriptions": Subscriptions,
     "Succession": Succession,
     "TaxExport": TaxExport,
@@ -161,7 +162,6 @@ export const PAGES = {
     "VideoTutorials": VideoTutorials,
     "VoiceAssistant": VoiceAssistant,
     "WealthLegacyPlanning": WealthLegacyPlanning,
-    "SecurityAudit": SecurityAudit,
 }
 
 export const pagesConfig = {
