@@ -1,7 +1,7 @@
 import React from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Badge } from '@/components/ui/badge';
-import { Calendar, MapPin, DollarSign } from 'lucide-react';
+import { Calendar, MapPin, DollarSign, Bell, Clock } from 'lucide-react';
 import { format } from 'date-fns';
 
 export default function EventDetailsDialog({ event, open, onOpenChange }) {
@@ -37,6 +37,28 @@ export default function EventDetailsDialog({ event, open, onOpenChange }) {
                         <div className="flex items-center gap-2 text-sm text-gray-600">
                             <DollarSign className="w-4 h-4" />
                             ${event.amount}
+                        </div>
+                    )}
+
+                    {event.reminders && event.reminders.length > 0 && (
+                        <div className="pt-3 border-t">
+                            <div className="text-xs font-medium text-gray-500 mb-2 flex items-center gap-1">
+                                <Bell className="w-3 h-3" />
+                                Reminders
+                            </div>
+                            <div className="space-y-1">
+                                {event.reminders.map((reminder, index) => (
+                                    <div key={index} className="flex items-center gap-2 text-sm text-gray-600">
+                                        <Clock className="w-3 h-3" />
+                                        <span>
+                                            {reminder.time_value} {reminder.time_value === 1 ? reminder.time_unit.slice(0, -1) : reminder.time_unit} before
+                                        </span>
+                                        {reminder.triggered && (
+                                            <Badge variant="outline" className="text-xs">Sent</Badge>
+                                        )}
+                                    </div>
+                                ))}
+                            </div>
                         </div>
                     )}
 
