@@ -9,13 +9,21 @@ import { base44 } from '@/api/base44Client';
 export default function EventDetailsDialog({ event, open, onOpenChange, onDelete }) {
     if (!event) return null;
 
-    const isDeletable = event.id && ['event', 'date', 'task', 'trip'].includes(event.id.split('-')[0]);
+    const getEventTypeAndId = () => {
+        if (!event.id || typeof event.id !== 'string') return [null, null];
+        const parts = event.id.split('-');
+        return [parts[0], parts[1]];
+    };
+
+    const [eventType] = getEventTypeAndId();
+    const isDeletable = eventType && ['event', 'date', 'task', 'trip'].includes(eventType);
 
     const handleDelete = async () => {
         if (!confirm('Are you sure you want to delete this event?')) return;
         
         try {
-            const [type, id] = event.id.split('-');
+            const [type, id] = getEventTypeAndId();
+            if (!type || !id) return;
             
             if (type === 'event') {
                 await base44.entities.CalendarEvent.delete(id);
@@ -44,9 +52,9 @@ export default function EventDetailsDialog({ event, open, onOpenChange, onDelete
                 
                 <div className="space-y-4">
                     <div className="flex items-center gap-2">
-                        <Badge>{event.type.replace('_', ' ')}</Badge>
+                        <Badge>{event.type ? event.type.replace('_', ' ') : 'Event'}</Badge>
                         <div className="text-sm text-gray-500">
-                            {format(new Date(event.date), 'MMMM d, yyyy')}
+                            {event.date ? format(new Date(event.date), 'MMMM d, yyyy') : 'No date'}
                         </div>
                     </div>
 
