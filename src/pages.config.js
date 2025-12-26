@@ -3,8 +3,6 @@ import ArtCollectibles from './pages/ArtCollectibles';
 import AuditLog from './pages/AuditLog';
 import AutomatedPayments from './pages/AutomatedPayments';
 import Automations from './pages/Automations';
-import BankingHub from './pages/BankingHub';
-import BillNegotiation from './pages/BillNegotiation';
 import BillPayments from './pages/BillPayments';
 import Budget from './pages/Budget';
 import BusinessClients from './pages/BusinessClients';
@@ -45,7 +43,6 @@ import Health from './pages/Health';
 import Home from './pages/Home';
 import HomeInventory from './pages/HomeInventory';
 import HomeServices from './pages/HomeServices';
-import InsuranceShopping from './pages/InsuranceShopping';
 import Integrations from './pages/Integrations';
 import InternationalAssets from './pages/InternationalAssets';
 import Investments from './pages/Investments';
@@ -86,8 +83,6 @@ export const PAGES = {
     "AuditLog": AuditLog,
     "AutomatedPayments": AutomatedPayments,
     "Automations": Automations,
-    "BankingHub": BankingHub,
-    "BillNegotiation": BillNegotiation,
     "BillPayments": BillPayments,
     "Budget": Budget,
     "BusinessClients": BusinessClients,
@@ -128,7 +123,6 @@ export const PAGES = {
     "Home": Home,
     "HomeInventory": HomeInventory,
     "HomeServices": HomeServices,
-    "InsuranceShopping": InsuranceShopping,
     "Integrations": Integrations,
     "InternationalAssets": InternationalAssets,
     "Investments": Investments,

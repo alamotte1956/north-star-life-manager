@@ -65,11 +65,9 @@ export default function Layout({ children, currentPageName }) {
         { name: 'Investments', icon: TrendingUp, path: 'Investments', essential: true },
         { name: 'Budget & Goals', icon: TrendingUp, path: 'Budget', essential: false },
         { name: 'Financial Health', icon: Activity, path: 'FinancialHealth', essential: false },
-        { name: 'Banking Hub', icon: DollarSign, path: 'BankingHub', essential: false },
         { name: 'Bill Payments', icon: DollarSign, path: 'BillPayments', essential: false },
         { name: 'Auto Payments', icon: Zap, path: 'AutomatedPayments', essential: false },
         { name: 'Subscriptions', icon: DollarSign, path: 'Subscriptions', essential: false },
-        { name: 'Bill Negotiation', icon: TrendingUp, path: 'BillNegotiation', essential: false },
         { name: 'Tax Export', icon: FileText, path: 'TaxExport', essential: false },
 
         // Properties & Assets
@@ -79,7 +77,6 @@ export default function Layout({ children, currentPageName }) {
         { name: 'Vehicles', icon: Car, path: 'Vehicles', essential: true },
         { name: 'Valuables', icon: Gem, path: 'Valuables', essential: false },
         { name: 'Home Inventory', icon: Home, path: 'HomeInventory', essential: false },
-        { name: 'Insurance Shopping', icon: Shield, path: 'InsuranceShopping', essential: false },
         { name: 'Art & Collectibles', icon: Gem, path: 'ArtCollectibles', essential: false },
         { name: 'International Assets', icon: Globe, path: 'InternationalAssets', essential: false },
 
