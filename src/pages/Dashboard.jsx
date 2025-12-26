@@ -539,7 +539,7 @@ export default function Dashboard() {
                                         <div className="flex gap-4 p-4 bg-[#E8EEF5] rounded-xl">
                                             <div className="flex-shrink-0 w-8 h-8 bg-[#4A90E2] text-white rounded-full flex items-center justify-center font-light">1</div>
                                             <div className="flex-1">
-                                                <h4 className="font-light text-black mb-1">Upload & Organize Documents</h4>
+                                                <h4 className="font-medium text-[#0F1729] mb-1">Upload & Organize Documents</h4>
                                                 <p className="text-sm text-[#0F1729]/70 font-light">
                                                     Start with the <strong>Vault</strong> - upload documents via mobile camera or desktop. 
                                                     AI automatically extracts dates, amounts, and categories. Create folders for better organization.
@@ -550,7 +550,7 @@ export default function Dashboard() {
                                         <div className="flex gap-4 p-4 bg-[#F8F7F4] rounded-xl">
                                             <div className="flex-shrink-0 w-8 h-8 bg-[#4A90E2] text-white rounded-full flex items-center justify-center font-light">2</div>
                                             <div className="flex-1">
-                                                <h4 className="font-light text-black mb-1">Connect Your Financial Life</h4>
+                                                <h4 className="font-medium text-[#0F1729] mb-1">Connect Your Financial Life</h4>
                                                 <p className="text-sm text-[#0F1729]/70 font-light">
                                                     Visit <strong>Banking Hub</strong> to connect bank accounts. Set up <strong>Bill Payments</strong> and 
                                                     <strong> Automated Payments</strong>. Track <strong>Investments</strong> and analyze your 
@@ -562,7 +562,7 @@ export default function Dashboard() {
                                         <div className="flex gap-4 p-4 bg-[#E8EEF5] rounded-xl">
                                             <div className="flex-shrink-0 w-8 h-8 bg-[#4A90E2] text-white rounded-full flex items-center justify-center font-light">3</div>
                                             <div className="flex-1">
-                                                <h4 className="font-light text-black mb-1">Track Health & Wellness</h4>
+                                                <h4 className="font-medium text-[#0F1729] mb-1">Track Health & Wellness</h4>
                                                 <p className="text-sm text-[#0F1729]/70 font-light">
                                                     Set up your <strong>Medical Profile</strong> with medications and conditions. 
                                                     Log health data to enable our <strong>Wellness Insights</strong> correlation engine, 
@@ -574,7 +574,7 @@ export default function Dashboard() {
                                         <div className="flex gap-4 p-4 bg-[#F8F7F4] rounded-xl">
                                             <div className="flex-shrink-0 w-8 h-8 bg-[#4A90E2] text-white rounded-full flex items-center justify-center font-light">4</div>
                                             <div className="flex-1">
-                                                <h4 className="font-light text-black mb-1">Manage Properties & Assets</h4>
+                                                <h4 className="font-medium text-[#0F1729] mb-1">Manage Properties & Assets</h4>
                                                 <p className="text-sm text-[#0F1729]/70 font-light">
                                                     Add <strong>Properties</strong> (including rental properties with automated rent collection), 
                                                     <strong> Vehicles</strong>, <strong>Valuables</strong>, and <strong>Home Inventory</strong>. 
@@ -586,7 +586,7 @@ export default function Dashboard() {
                                         <div className="flex gap-4 p-4 bg-[#E8EEF5] rounded-xl">
                                             <div className="flex-shrink-0 w-8 h-8 bg-[#4A90E2] text-white rounded-full flex items-center justify-center font-light">5</div>
                                             <div className="flex-1">
-                                                <h4 className="font-light text-black mb-1">Business Management (Optional)</h4>
+                                                <h4 className="font-medium text-[#0F1729] mb-1">Business Management (Optional)</h4>
                                                 <p className="text-sm text-[#0F1729]/70 font-light">
                                                     If you run a business, explore <strong>Business Hub</strong> for client management, 
                                                     project tracking, invoicing, contracts, and expense management with QuickBooks/Xero integration.
@@ -597,7 +597,7 @@ export default function Dashboard() {
                                         <div className="flex gap-4 p-4 bg-[#F8F7F4] rounded-xl">
                                             <div className="flex-shrink-0 w-8 h-8 bg-[#4A90E2] text-white rounded-full flex items-center justify-center font-light">6</div>
                                             <div className="flex-1">
-                                                <h4 className="font-light text-black mb-1">Estate Planning & Security</h4>
+                                                <h4 className="font-medium text-[#0F1729] mb-1">Estate Planning & Security</h4>
                                                 <p className="text-sm text-[#0F1729]/70 font-light">
                                                     Complete <strong>Legal & Estate</strong> with beneficiaries, advance directives, and 
                                                     <strong> Legacy Messages</strong>. Set up <strong>Succession</strong> for emergency access 
@@ -609,7 +609,7 @@ export default function Dashboard() {
                                         <div className="flex gap-4 p-4 bg-[#E8EEF5] rounded-xl">
                                             <div className="flex-shrink-0 w-8 h-8 bg-[#4A90E2] text-white rounded-full flex items-center justify-center font-light">7</div>
                                             <div className="flex-1">
-                                                <h4 className="font-light text-black mb-1">Optimize & Automate</h4>
+                                                <h4 className="font-medium text-[#0F1729] mb-1">Optimize & Automate</h4>
                                                 <p className="text-sm text-[#0F1729]/70 font-light">
                                                     Use <strong>Bill Negotiation</strong> to reduce recurring costs, 
                                                     <strong> Insurance Shopping</strong> for better coverage, and 
@@ -622,7 +622,7 @@ export default function Dashboard() {
                                         <div className="flex gap-4 p-4 bg-[#F8F7F4] rounded-xl">
                                             <div className="flex-shrink-0 w-8 h-8 bg-[#4A90E2] text-white rounded-full flex items-center justify-center font-light">8</div>
                                             <div className="flex-1">
-                                                <h4 className="font-light text-black mb-1">Collaborate & Delegate</h4>
+                                                <h4 className="font-medium text-[#0F1729] mb-1">Collaborate & Delegate</h4>
                                                 <p className="text-sm text-[#0F1729]/70 font-light">
                                                     Invite family members via <strong>Collaboration</strong>, assign roles in 
                                                     <strong> Family Roles</strong>, create <strong>Workflows</strong> for document handling, 
@@ -640,7 +640,7 @@ export default function Dashboard() {
                                         <div className="p-4 border border-[#1B4B7F]/20 rounded-xl">
                                             <div className="flex items-center gap-2 mb-2">
                                                 <FileText className="w-5 h-5 text-[#8B2635]" />
-                                                <h4 className="font-light text-black">Smart Document Vault</h4>
+                                                <h4 className="font-medium text-[#0F1729]">Smart Document Vault</h4>
                                                 </div>
                                                 <p className="text-sm text-[#0F1729]/70 font-light">
                                                 Upload documents and photos. AI automatically extracts key information like expiry dates and document types.
@@ -650,9 +650,9 @@ export default function Dashboard() {
                                         <div className="p-4 border border-[#1B4B7F]/20 rounded-xl">
                                             <div className="flex items-center gap-2 mb-2">
                                                 <DollarSign className="w-5 h-5 text-[#8B2635]" />
-                                                <h4 className="font-light text-[#1A2B44]">Automated Rent Collection</h4>
+                                                <h4 className="font-medium text-[#0F1729]">Automated Rent Collection</h4>
                                             </div>
-                                            <p className="text-sm text-[#1A2B44]/70 font-light">
+                                            <p className="text-sm text-[#0F1729]/70 font-light">
                                                 Set up payment schedules, send AI-personalized reminders, and collect rent online with secure Stripe integration.
                                             </p>
                                         </div>
@@ -660,9 +660,9 @@ export default function Dashboard() {
                                         <div className="p-4 border border-[#1B4B7F]/20 rounded-xl">
                                             <div className="flex items-center gap-2 mb-2">
                                                 <AlertCircle className="w-5 h-5 text-[#8B2635]" />
-                                                <h4 className="font-light text-[#1A2B44]">Smart Alerts</h4>
+                                                <h4 className="font-medium text-[#0F1729]">Smart Alerts</h4>
                                             </div>
-                                            <p className="text-sm text-[#1A2B44]/70 font-light">
+                                            <p className="text-sm text-[#0F1729]/70 font-light">
                                                 Receive notifications for upcoming maintenance, expiring documents, and vehicle registration renewals.
                                             </p>
                                         </div>
@@ -670,9 +670,9 @@ export default function Dashboard() {
                                         <div className="p-4 border border-[#1B4B7F]/20 rounded-xl">
                                             <div className="flex items-center gap-2 mb-2">
                                                 <Shield className="w-5 h-5 text-[#8B2635]" />
-                                                <h4 className="font-light text-[#1A2B44]">Print Anywhere</h4>
+                                                <h4 className="font-medium text-[#0F1729]">Print Anywhere</h4>
                                             </div>
-                                            <p className="text-sm text-[#1A2B44]/70 font-light">
+                                            <p className="text-sm text-[#0F1729]/70 font-light">
                                                 Every section includes a print button. Print lists, records, or your emergency medical card anytime.
                                             </p>
                                         </div>

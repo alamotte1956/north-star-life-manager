@@ -108,8 +108,8 @@ export default function ChatAssistant() {
                                 <MessageCircle className="w-5 h-5 text-black" />
                             </div>
                             <div>
-                                <h3 className="font-light text-black">Life Assistant</h3>
-                                <p className="text-xs text-black/70">Ask me anything</p>
+                                <h3 className="font-light text-white">Life Assistant</h3>
+                                <p className="text-xs text-white/70">Ask me anything</p>
                             </div>
                         </div>
                         <button
