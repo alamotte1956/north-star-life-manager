@@ -1,0 +1,360 @@
+import React, { useState, useEffect } from 'react';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { base44 } from '@/api/base44Client';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Switch } from '@/components/ui/switch';
+import { Bell, Mail, Smartphone, Save, Clock, Home } from 'lucide-react';
+import { toast } from 'sonner';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+
+export default function NotificationSettings() {
+    const queryClient = useQueryClient();
+    const [preferences, setPreferences] = useState({
+        document_expiry_enabled: true,
+        document_expiry_days_before: 30,
+        maintenance_due_enabled: true,
+        maintenance_due_days_before: 7,
+        bill_due_enabled: true,
+        bill_due_days_before: 3,
+        subscription_renewal_enabled: true,
+        subscription_renewal_days_before: 7,
+        lease_expiring_enabled: true,
+        lease_expiring_days_before: 60,
+        policy_renewal_enabled: true,
+        policy_renewal_days_before: 30,
+        medication_refill_enabled: true,
+        medication_refill_days_before: 5,
+        financial_goal_enabled: true,
+        vehicle_registration_enabled: true,
+        vehicle_registration_days_before: 30,
+        vehicle_service_enabled: true,
+        vehicle_service_days_before: 7,
+        in_app_enabled: true,
+        email_enabled: true,
+        push_enabled: false,
+        reminder_time: '09:00'
+    });
+
+    const { data: user } = useQuery({
+        queryKey: ['user'],
+        queryFn: () => base44.auth.me()
+    });
+
+    const { data: subscription } = useQuery({
+        queryKey: ['subscription'],
+        queryFn: async () => {
+            const subs = await base44.entities.Subscription_Plan.filter({ 
+                created_by: user?.email 
+            });
+            return subs[0];
+        },
+        enabled: !!user
+    });
+
+    const isPaidUser = user?.role === 'admin' || subscription?.status === 'active';
+    const [defaultPage, setDefaultPage] = useState(user?.default_page || 'Dashboard');
+
+    const { data: existingPrefs } = useQuery({
+        queryKey: ['notificationPreferences'],
+        queryFn: () => base44.entities.NotificationPreference.filter({ user_email: user?.email }),
+        enabled: !!user
+    });
+
+    useEffect(() => {
+        if (existingPrefs && existingPrefs[0]) {
+            setPreferences(prev => ({ ...prev, ...existingPrefs[0] }));
+        }
+    }, [existingPrefs]);
+
+    useEffect(() => {
+        if (user?.default_page) {
+            setDefaultPage(user.default_page);
+        }
+    }, [user]);
+
+    const saveMutation = useMutation({
+        mutationFn: async () => {
+            const updates = [];
+            
+            // Save notification preferences
+            if (existingPrefs && existingPrefs[0]) {
+                updates.push(base44.entities.NotificationPreference.update(existingPrefs[0].id, preferences));
+            } else {
+                updates.push(base44.entities.NotificationPreference.create({
+                    user_email: user.email,
+                    ...preferences
+                }));
+            }
+
+            // Save default page if user is paid
+            if (isPaidUser && defaultPage !== user.default_page) {
+                updates.push(base44.auth.updateMe({ default_page: defaultPage }));
+            }
+
+            return Promise.all(updates);
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['notificationPreferences'] });
+            queryClient.invalidateQueries({ queryKey: ['user'] });
+            toast.success('Settings saved!');
+        }
+    });
+
+    const notificationTypes = [
+        {
+            key: 'document_expiry',
+            label: 'Document Expiry',
+            description: 'Get notified before documents expire',
+            hasDaysSetting: true
+        },
+        {
+            key: 'maintenance_due',
+            label: 'Maintenance Due',
+            description: 'Reminders for upcoming maintenance tasks',
+            hasDaysSetting: true
+        },
+        {
+            key: 'bill_due',
+            label: 'Bills Due',
+            description: 'Reminders for bill payments',
+            hasDaysSetting: true
+        },
+        {
+            key: 'subscription_renewal',
+            label: 'Subscription Renewals',
+            description: 'Notifications for subscription renewals',
+            hasDaysSetting: true
+        },
+        {
+            key: 'lease_expiring',
+            label: 'Lease Expirations',
+            description: 'Get notified before property leases expire',
+            hasDaysSetting: true
+        },
+        {
+            key: 'policy_renewal',
+            label: 'Policy Renewals',
+            description: 'Insurance and policy renewal reminders',
+            hasDaysSetting: true
+        },
+        {
+            key: 'medication_refill',
+            label: 'Medication Refills',
+            description: 'Reminders to refill your medications',
+            hasDaysSetting: true
+        },
+        {
+            key: 'financial_goal',
+            label: 'Financial Goal Check-ins',
+            description: 'Monthly progress updates on your financial goals',
+            hasDaysSetting: false
+        },
+        {
+            key: 'vehicle_registration',
+            label: 'Vehicle Registration',
+            description: 'Reminders for vehicle registration renewals',
+            hasDaysSetting: true
+        },
+        {
+            key: 'vehicle_service',
+            label: 'Vehicle Service',
+            description: 'Reminders for scheduled vehicle maintenance',
+            hasDaysSetting: true
+        }
+    ];
+
+    return (
+        <div className="min-h-screen bg-gradient-to-br from-[#F8F7F4] via-white to-[#F8F7F4]">
+            <div className="max-w-4xl mx-auto px-6 py-12">
+                <div className="mb-12">
+                    <div className="flex items-center gap-4 mb-4">
+                        <div className="relative">
+                            <div className="absolute inset-0 bg-[#C5A059]/30 rounded-2xl blur-xl" />
+                            <div className="relative bg-gradient-to-br from-[#0F172A] to-[#1e293b] p-4 rounded-2xl">
+                                <Bell className="w-8 h-8 text-[#C5A059]" />
+                            </div>
+                        </div>
+                        <div>
+                            <h1 className="text-4xl font-light text-[#0F172A] mb-1">
+                                Notification Settings
+                            </h1>
+                            <p className="text-[#64748B] font-light">
+                                Manage your alerts and reminders
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="space-y-6">
+                    {/* Notification Types */}
+                    <Card>
+                        <CardHeader>
+                            <CardTitle className="text-xl font-light">Notification Types</CardTitle>
+                        </CardHeader>
+                        <CardContent className="space-y-6">
+                            {notificationTypes.map(type => (
+                                <div key={type.key} className="space-y-3">
+                                    <div className="flex items-center justify-between">
+                                        <div className="flex-1">
+                                            <Label className="text-base">{type.label}</Label>
+                                            <p className="text-sm text-gray-500">{type.description}</p>
+                                        </div>
+                                        <Switch
+                                            checked={preferences[`${type.key}_enabled`]}
+                                            onCheckedChange={(checked) => 
+                                                setPreferences({ ...preferences, [`${type.key}_enabled`]: checked })
+                                            }
+                                        />
+                                    </div>
+                                    {type.hasDaysSetting && preferences[`${type.key}_enabled`] && (
+                                       <div className="ml-4 flex items-center gap-4">
+                                           <Label className="text-sm">Remind me</Label>
+                                           <Input
+                                               type="number"
+                                               min="1"
+                                               max="365"
+                                               value={preferences[`${type.key}_days_before`] || 7}
+                                               onChange={(e) => 
+                                                   setPreferences({ ...preferences, [`${type.key}_days_before`]: parseInt(e.target.value) })
+                                               }
+                                               className="w-20"
+                                           />
+                                           <Label className="text-sm">days before {type.key.includes('goal') ? 'check-in' : 'due'}</Label>
+                                       </div>
+                                    )}
+                                </div>
+                            ))}
+                        </CardContent>
+                    </Card>
+
+                    {/* Delivery Channels */}
+                    <Card>
+                        <CardHeader>
+                            <CardTitle className="text-xl font-light">Delivery Channels</CardTitle>
+                        </CardHeader>
+                        <CardContent className="space-y-4">
+                            <div className="flex items-center justify-between">
+                                <div className="flex items-center gap-3">
+                                    <Smartphone className="w-5 h-5 text-[#C5A059]" />
+                                    <div>
+                                        <Label className="text-base">In-App Notifications</Label>
+                                        <p className="text-sm text-gray-500">Show notifications in the app</p>
+                                    </div>
+                                </div>
+                                <Switch
+                                    checked={preferences.in_app_enabled}
+                                    onCheckedChange={(checked) => 
+                                        setPreferences({ ...preferences, in_app_enabled: checked })
+                                    }
+                                />
+                            </div>
+                            <div className="flex items-center justify-between">
+                                <div className="flex items-center gap-3">
+                                    <Mail className="w-5 h-5 text-[#C5A059]" />
+                                    <div>
+                                        <Label className="text-base">Email Notifications</Label>
+                                        <p className="text-sm text-gray-500">Send notifications to {user?.email}</p>
+                                    </div>
+                                </div>
+                                <Switch
+                                    checked={preferences.email_enabled}
+                                    onCheckedChange={(checked) => 
+                                        setPreferences({ ...preferences, email_enabled: checked })
+                                    }
+                                />
+                            </div>
+                            <div className="flex items-center justify-between">
+                                <div className="flex items-center gap-3">
+                                    <Bell className="w-5 h-5 text-[#C5A059]" />
+                                    <div>
+                                        <Label className="text-base">Push Notifications</Label>
+                                        <p className="text-sm text-gray-500">Send push notifications to your device</p>
+                                    </div>
+                                </div>
+                                <Switch
+                                    checked={preferences.push_enabled}
+                                    onCheckedChange={(checked) => 
+                                        setPreferences({ ...preferences, push_enabled: checked })
+                                    }
+                                />
+                            </div>
+                        </CardContent>
+                    </Card>
+
+                    {/* Reminder Timing */}
+                    <Card>
+                        <CardHeader>
+                            <CardTitle className="text-xl font-light">Reminder Timing</CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                            <div className="flex items-center gap-4">
+                                <Clock className="w-5 h-5 text-[#C5A059]" />
+                                <div className="flex-1">
+                                    <Label className="text-base">Preferred Reminder Time</Label>
+                                    <p className="text-sm text-gray-500 mb-2">Choose when you'd like to receive daily reminders</p>
+                                    <Input
+                                        type="time"
+                                        value={preferences.reminder_time}
+                                        onChange={(e) => 
+                                            setPreferences({ ...preferences, reminder_time: e.target.value })
+                                        }
+                                        className="w-40"
+                                    />
+                                </div>
+                            </div>
+                        </CardContent>
+                    </Card>
+
+                    {/* Default Landing Page - Only for Paid Users */}
+                    {isPaidUser && (
+                        <Card>
+                            <CardHeader>
+                                <CardTitle className="text-xl font-light">Default Landing Page</CardTitle>
+                            </CardHeader>
+                            <CardContent>
+                                <div className="flex items-center gap-4">
+                                    <Home className="w-5 h-5 text-[#C5A059]" />
+                                    <div className="flex-1">
+                                        <Label className="text-base">Choose your default page after login</Label>
+                                        <p className="text-sm text-gray-500 mb-3">Free users always start at Dashboard</p>
+                                        <Select value={defaultPage} onValueChange={setDefaultPage}>
+                                            <SelectTrigger className="w-64">
+                                                <SelectValue />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                <SelectItem value="Dashboard">Dashboard</SelectItem>
+                                                <SelectItem value="Vault">Vault</SelectItem>
+                                                <SelectItem value="Properties">Properties</SelectItem>
+                                                <SelectItem value="FinancialDashboard">Financial Dashboard</SelectItem>
+                                                <SelectItem value="Investments">Investments</SelectItem>
+                                                <SelectItem value="BillPayments">Bill Payments</SelectItem>
+                                                <SelectItem value="Calendar">Calendar</SelectItem>
+                                                <SelectItem value="Health">Health</SelectItem>
+                                                <SelectItem value="Contacts">Contacts</SelectItem>
+                                                <SelectItem value="PropertyManagement">Property Management</SelectItem>
+                                                <SelectItem value="BusinessHub">Business Hub</SelectItem>
+                                            </SelectContent>
+                                        </Select>
+                                    </div>
+                                </div>
+                            </CardContent>
+                        </Card>
+                    )}
+
+                    {/* Save Button */}
+                    <Button
+                        onClick={() => saveMutation.mutate()}
+                        disabled={saveMutation.isPending}
+                        className="w-full bg-gradient-to-r from-[#C5A059] to-[#D4AF37] h-12"
+                    >
+                        <Save className="w-4 h-4 mr-2" />
+                        {saveMutation.isPending ? 'Saving...' : 'Save Preferences'}
+                    </Button>
+                </div>
+            </div>
+        </div>
+    );
+}
