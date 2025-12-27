@@ -106,7 +106,7 @@ const getAppParams = () => {
 		token: getAppParamValue("access_token", {
 			removeFromUrl: true,
 			allowUrl: allowSensitiveUrlParams,
-			allowStored: allowSensitiveUrlParams,
+			allowStored: false,
 			validate: isLikelyJwt
 		}),
 		fromUrl: getAppParamValue("from_url", {

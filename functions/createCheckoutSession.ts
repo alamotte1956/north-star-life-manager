@@ -5,10 +5,11 @@ const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY'), {
     apiVersion: '2023-10-16'
 });
 
+// Get price IDs from environment variables with fallback to hardcoded values
 const PRICE_IDS = {
-    basic: 'price_1SiIxfLV02BUsIMDilboDMGv',
-    premium: 'price_1SiJ3qLV02BUsIMD0kfW9BqX',
-    enterprise: 'price_1SiJ4oLV02BUsIMDrmKLoPkY'
+    basic: Deno.env.get('STRIPE_BASIC_PRICE_ID') || 'price_1SiIxfLV02BUsIMDilboDMGv',
+    premium: Deno.env.get('STRIPE_PREMIUM_PRICE_ID') || 'price_1SiJ3qLV02BUsIMD0kfW9BqX',
+    enterprise: Deno.env.get('STRIPE_ENTERPRISE_PRICE_ID') || 'price_1SiJ4oLV02BUsIMDrmKLoPkY'
 };
 
 Deno.serve(async (req) => {
