@@ -216,7 +216,11 @@ const Sidebar = React.forwardRef((
 })
 Sidebar.displayName = "Sidebar"
 
+<<<<<<< HEAD
 const SidebarTrigger = React.forwardRef(({ className, onClick, ...props }, ref) => {
+=======
+const SidebarTrigger = React.forwardRef(({ className, onClick, asChild = false, ...props }, ref) => {
+>>>>>>> 9de21d4d2f6ac33c914ab8fc7c4a8a81454b6d63
   const { toggleSidebar } = useSidebar()
 
   return (
@@ -230,9 +234,22 @@ const SidebarTrigger = React.forwardRef(({ className, onClick, ...props }, ref) 
         onClick?.(event)
         toggleSidebar()
       }}
+<<<<<<< HEAD
       {...props}>
       <PanelLeft />
       <span className="sr-only">Toggle Sidebar</span>
+=======
+      asChild={asChild}
+      {...props}>
+      {asChild ? (
+        <PanelLeft />
+      ) : (
+        <>
+          <PanelLeft />
+          <span className="sr-only">Toggle Sidebar</span>
+        </>
+      )}
+>>>>>>> 9de21d4d2f6ac33c914ab8fc7c4a8a81454b6d63
     </Button>)
   );
 })
@@ -498,7 +515,11 @@ const SidebarMenuAction = React.forwardRef(({ className, asChild = false, showOn
         "peer-data-[size=lg]/menu-button:top-2.5",
         "group-data-[collapsible=icon]:hidden",
         showOnHover &&
+<<<<<<< HEAD
           "group-focus-within/menu-item:opacity-100 group-hover/menu-item:opacity-100 data-[state=open]:opacity-100 peer-data-[active=true]/menu-button:text-sidebar-accent-foreground md:opacity-0",
+=======
+        "group-focus-within/menu-item:opacity-100 group-hover/menu-item:opacity-100 data-[state=open]:opacity-100 peer-data-[active=true]/menu-button:text-sidebar-accent-foreground md:opacity-0",
+>>>>>>> 9de21d4d2f6ac33c914ab8fc7c4a8a81454b6d63
         className
       )}
       {...props} />)

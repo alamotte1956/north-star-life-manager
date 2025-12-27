@@ -1,4 +1,5 @@
 # Base44 App
+<<<<<<< HEAD
 
 
 This app was created automatically by Base44.
@@ -18,3 +19,5 @@ npm run build
 ```
 
 For more information and support, please contact Base44 support at app@base44.com.
+=======
+>>>>>>> 9de21d4d2f6ac33c914ab8fc7c4a8a81454b6d63

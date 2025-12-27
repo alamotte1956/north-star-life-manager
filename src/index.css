@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+<<<<<<< HEAD
 
 /* :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -74,6 +75,8 @@ button:focus-visible {
 
 
 
+=======
+>>>>>>> 9de21d4d2f6ac33c914ab8fc7c4a8a81454b6d63
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -110,6 +113,10 @@ button:focus-visible {
     --sidebar-border: 220 13% 91%;
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9de21d4d2f6ac33c914ab8fc7c4a8a81454b6d63
   .dark {
     --background: 0 0% 3.9%;
     --foreground: 0 0% 98%;
@@ -152,7 +159,15 @@ button:focus-visible {
   * {
     @apply border-border outline-ring/50;
   }
+<<<<<<< HEAD
   body {
     @apply bg-background text-foreground;
   }
 }
+=======
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+>>>>>>> 9de21d4d2f6ac33c914ab8fc7c4a8a81454b6d63
