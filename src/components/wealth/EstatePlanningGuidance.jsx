@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState } from
+import logger from '@/utils/logger'; 'react';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -132,7 +133,7 @@ Return as JSON with structure:
 
             setGuidance(response);
         } catch (error) {
-            console.error('Guidance error:', error);
+            logger.error('Guidance error:', error);
         }
         setLoading(false);
     };

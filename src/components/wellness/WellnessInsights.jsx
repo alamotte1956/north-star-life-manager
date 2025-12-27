@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState } from
+import logger from '@/utils/logger'; 'react';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -27,7 +28,7 @@ export default function WellnessInsights() {
                 toast.error('Analysis failed');
             }
         } catch (error) {
-            console.error('Analysis error:', error);
+            logger.error('Analysis error:', error);
             toast.error('Failed to analyze correlations');
         }
         setLoading(false);

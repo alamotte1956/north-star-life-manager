@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import logger from '@/utils/logger';
 import { X, Download } from 'lucide-react';
+import logger from '@/utils/logger';
 import { Button } from '@/components/ui/button';
+import logger from '@/utils/logger';
 
 export default function PWAInstaller() {
     const [deferredPrompt, setDeferredPrompt] = useState(null);
@@ -12,10 +15,10 @@ export default function PWAInstaller() {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('/sw.js')
                     .then(registration => {
-                        console.log('SW registered:', registration);
+                        logger.debug('SW registered:', registration);
                     })
                     .catch(err => {
-                        console.log('SW registration failed:', err);
+                        logger.debug('SW registration failed:', err);
                     });
             });
         }
@@ -51,7 +54,7 @@ export default function PWAInstaller() {
         const { outcome } = await deferredPrompt.userChoice;
         
         if (outcome === 'accepted') {
-            console.log('PWA installed');
+            logger.debug('PWA installed');
         }
         
         setDeferredPrompt(null);

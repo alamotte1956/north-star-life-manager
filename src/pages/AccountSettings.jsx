@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState } from
+import logger from '@/utils/logger'; 'react';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -48,7 +49,7 @@ export default function AccountSettings() {
             const result = await base44.functions.invoke('createPortalSession');
             window.location.href = result.data.portal_url;
         } catch (error) {
-            console.error('Portal error:', error);
+            logger.error('Portal error:', error);
             toast.error('Error opening subscription management. Please try again.');
         }
     };
@@ -79,7 +80,7 @@ export default function AccountSettings() {
                 toast.error('Failed to delete all data');
             }
         } catch (error) {
-            console.error('Deletion error:', error);
+            logger.error('Deletion error:', error);
             toast.error('Failed to delete all data');
         }
         setDeleting(false);
@@ -105,7 +106,7 @@ export default function AccountSettings() {
                 toast.error('Failed to delete account');
             }
         } catch (error) {
-            console.error('Deletion error:', error);
+            logger.error('Deletion error:', error);
             toast.error('Failed to delete account');
         }
         setDeleting(false);

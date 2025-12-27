@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import logger from '@/utils/logger';
 import { base44 } from '@/api/base44Client';
+import logger from '@/utils/logger';
 import { Shield, Lock } from 'lucide-react';
+import logger from '@/utils/logger';
 import { Card, CardContent } from '@/components/ui/card';
+import logger from '@/utils/logger';
 
 export default function PermissionGuard({ section, action = 'view', children, fallback = null }) {
     const [user, setUser] = useState(null);
@@ -48,7 +52,7 @@ export default function PermissionGuard({ section, action = 'view', children, fa
 
                 setLoading(false);
             } catch (error) {
-                console.error('Permission check failed:', error);
+                logger.error('Permission check failed:', error);
                 // On error, DENY access (fail-closed)
                 setHasPermission(false);
                 setLoading(false);

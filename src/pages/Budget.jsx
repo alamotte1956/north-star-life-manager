@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState } from
+import logger from '@/utils/logger'; 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { listMine } from '@/components/utils/safeQuery';
@@ -168,7 +169,7 @@ export default function BudgetPage() {
             toast.success('Advanced AI analysis complete!');
         } catch (error) {
             toast.error('Failed to run advanced analysis');
-            console.error(error);
+            logger.error(error);
         }
         setLoadingAdvanced(false);
     };
@@ -199,7 +200,7 @@ export default function BudgetPage() {
             });
             refetchGoals();
         } catch (error) {
-            console.error('Error getting suggestions:', error);
+            logger.error('Error getting suggestions:', error);
         }
         setLoadingSuggestions(prev => ({ ...prev, [goal.id]: false }));
     };

@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState } from
+import logger from '@/utils/logger'; 'react';
 import { base44 } from '@/api/base44Client';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
@@ -97,7 +98,7 @@ export default function UploadNewVersion({ document, open, onOpenChange, onUploa
             base44.functions.invoke('analyzeDocument', {
                 document_id: document.id,
                 file_url
-            }).catch(err => console.error('Analysis error:', err));
+            }).catch(err => logger.error('Analysis error:', err));
 
             toast.success(`Version ${newVersionNumber} uploaded successfully`);
             onUploadComplete?.();
@@ -106,7 +107,7 @@ export default function UploadNewVersion({ document, open, onOpenChange, onUploa
             setChangeDescription('');
         } catch (error) {
             toast.error('Upload failed');
-            console.error(error);
+            logger.error(error);
         } finally {
             setUploading(false);
         }

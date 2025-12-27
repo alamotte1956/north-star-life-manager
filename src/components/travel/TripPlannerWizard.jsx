@@ -1,15 +1,27 @@
 import React, { useState } from 'react';
+import logger from '@/utils/logger';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import logger from '@/utils/logger';
 import { Button } from '@/components/ui/button';
+import logger from '@/utils/logger';
 import { Input } from '@/components/ui/input';
+import logger from '@/utils/logger';
 import { Label } from '@/components/ui/label';
+import logger from '@/utils/logger';
 import { Textarea } from '@/components/ui/textarea';
+import logger from '@/utils/logger';
 import { Card } from '@/components/ui/card';
+import logger from '@/utils/logger';
 import { Badge } from '@/components/ui/badge';
+import logger from '@/utils/logger';
 import { Sparkles, MapPin, Calendar, DollarSign, CheckCircle, Plane } from 'lucide-react';
+import logger from '@/utils/logger';
 import { base44 } from '@/api/base44Client';
+import logger from '@/utils/logger';
 import { toast } from 'sonner';
+import logger from '@/utils/logger';
 import { format } from 'date-fns';
+import logger from '@/utils/logger';
 
 export default function TripPlannerWizard({ open, onOpenChange, onComplete }) {
     const [step, setStep] = useState(1);
@@ -73,7 +85,7 @@ export default function TripPlannerWizard({ open, onOpenChange, onComplete }) {
                     all_day: true
                 });
             } catch (e) {
-                console.error('Calendar event creation failed:', e);
+                logger.error('Calendar event creation failed:', e);
             }
 
             toast.success('Trip plan saved!');

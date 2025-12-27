@@ -1,11 +1,19 @@
 import React, { useState } from 'react';
+import logger from '@/utils/logger';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import logger from '@/utils/logger';
 import { Button } from '@/components/ui/button';
+import logger from '@/utils/logger';
 import { Label } from '@/components/ui/label';
+import logger from '@/utils/logger';
 import { Checkbox } from '@/components/ui/checkbox';
+import logger from '@/utils/logger';
 import { Download, Loader2, Printer } from 'lucide-react';
+import logger from '@/utils/logger';
 import { toast } from 'sonner';
+import logger from '@/utils/logger';
 import { base44 } from '@/api/base44Client';
+import logger from '@/utils/logger';
 
 export default function CustomReportBuilder({ open, onOpenChange, documents }) {
     const [generating, setGenerating] = useState(false);
@@ -74,7 +82,7 @@ export default function CustomReportBuilder({ open, onOpenChange, documents }) {
             toast.success('Custom report generated');
         } catch (error) {
             toast.error('Failed to generate report');
-            console.error(error);
+            logger.error(error);
         } finally {
             setGenerating(false);
         }

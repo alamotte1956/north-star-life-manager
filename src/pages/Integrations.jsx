@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState } from
+import logger from '@/utils/logger'; 'react';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { Plug, Calendar, Mail, Cloud, MessageCircle, CheckCircle, XCircle, DollarSign, FileText, Phone, Loader2 } from 'lucide-react';
@@ -84,7 +85,7 @@ export default function Integrations() {
                 // OAuth-based integrations
                 window.location.href = `/auth/connect/${integration.id}`;
             } catch (error) {
-                console.error('Connection error:', error);
+                logger.error('Connection error:', error);
                 toast.error('Failed to connect');
             }
         } else {

@@ -1,4 +1,5 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo } from
+import logger from '@/utils/logger'; 'react';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { listMine } from '@/components/utils/safeQuery';
@@ -174,7 +175,7 @@ export default function CalendarPage() {
             await base44.functions.invoke('syncGoogleCalendar', {});
             refetchDates();
         } catch (error) {
-            console.error('Sync failed:', error);
+            logger.error('Sync failed:', error);
         } finally {
             setSyncingGoogle(false);
         }
