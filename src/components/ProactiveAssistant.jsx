@@ -1,14 +1,21 @@
 import React, { useState, useEffect } from 'react';
+import logger from '@/utils/logger';
 import { base44 } from '@/api/base44Client';
+import logger from '@/utils/logger';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import logger from '@/utils/logger';
 import { Button } from '@/components/ui/button';
+import logger from '@/utils/logger';
 import { Badge } from '@/components/ui/badge';
+import logger from '@/utils/logger';
 import { 
     Bell, X, AlertTriangle, Info, AlertCircle, 
     TrendingUp, Zap, ChevronRight, Sparkles 
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import logger from '@/utils/logger';
 import { createPageUrl } from '@/utils';
+import logger from '@/utils/logger';
 
 export default function ProactiveAssistant() {
     const [isOpen, setIsOpen] = useState(false);
@@ -22,7 +29,7 @@ export default function ProactiveAssistant() {
             const result = await base44.functions.invoke('getProactiveAlerts');
             setAlerts(result.data);
         } catch (error) {
-            console.error('Failed to fetch alerts:', error);
+            logger.error('Failed to fetch alerts:', error);
         }
         setLoading(false);
     };

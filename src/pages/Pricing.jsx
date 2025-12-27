@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState } from
+import logger from '@/utils/logger'; 'react';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { Link } from 'react-router-dom';
@@ -110,7 +111,7 @@ export default function Pricing() {
             // Redirect to Stripe Checkout
             window.location.href = result.data.checkout_url;
         } catch (error) {
-            console.error('Subscription error:', error);
+            logger.error('Subscription error:', error);
             alert('Error creating subscription. Please try again.');
             setLoading(null);
         }
@@ -121,7 +122,7 @@ export default function Pricing() {
             const result = await base44.functions.invoke('createPortalSession');
             window.location.href = result.data.portal_url;
         } catch (error) {
-            console.error('Portal error:', error);
+            logger.error('Portal error:', error);
             alert('Error opening customer portal. Please try again.');
         }
     };

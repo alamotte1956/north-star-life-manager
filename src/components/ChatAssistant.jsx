@@ -1,9 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
+import logger from '@/utils/logger';
 import { base44 } from '@/api/base44Client';
+import logger from '@/utils/logger';
 import { MessageCircle, X, Send, Loader2 } from 'lucide-react';
+import logger from '@/utils/logger';
 import { Button } from '@/components/ui/button';
+import logger from '@/utils/logger';
 import { Input } from '@/components/ui/input';
+import logger from '@/utils/logger';
 import ReactMarkdown from 'react-markdown';
+import logger from '@/utils/logger';
 
 export default function ChatAssistant() {
     const [isOpen, setIsOpen] = useState(false);
@@ -36,7 +42,7 @@ export default function ChatAssistant() {
                     setConversation(conv);
                     setMessages(conv.messages || []);
                 } catch (error) {
-                    console.error('Failed to create conversation:', error);
+                    logger.error('Failed to create conversation:', error);
                 }
             }
         };
@@ -73,7 +79,7 @@ export default function ChatAssistant() {
                 content: userMessage
             });
         } catch (error) {
-            console.error('Failed to send message:', error);
+            logger.error('Failed to send message:', error);
             setIsLoading(false);
         }
     };

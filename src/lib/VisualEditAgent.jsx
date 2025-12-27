@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from
+import logger from '@/utils/logger'; 'react';
 import { twMerge } from 'tailwind-merge'
 
 export default function VisualEditAgent() {
@@ -432,7 +433,7 @@ export default function VisualEditAgent() {
 							message.data.replace || false
 						);
 					} else {
-						console.warn('[Agent] Invalid update-classes message:', message);
+						logger.warn('[Agent] Invalid update-classes message:', message);
 					}
 					break;
 
@@ -451,7 +452,7 @@ export default function VisualEditAgent() {
 							message.data.content
 						);
 					} else {
-						console.warn('[Agent] Invalid update-content message:', message);
+						logger.warn('[Agent] Invalid update-content message:', message);
 					}
 					break;
 

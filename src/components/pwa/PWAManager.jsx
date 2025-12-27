@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import logger from '@/utils/logger';
 
 const PWAManager = () => {
     useEffect(() => {
@@ -7,7 +8,7 @@ const PWAManager = () => {
             navigator.serviceWorker
                 .register('/sw.js')
                 .then((registration) => {
-                    console.log('Service Worker registered:', registration);
+                    logger.debug('Service Worker registered:', registration);
                     
                     // Check for updates periodically
                     setInterval(() => {
@@ -15,7 +16,7 @@ const PWAManager = () => {
                     }, 60000); // Check every minute
                 })
                 .catch((error) => {
-                    console.error('Service Worker registration failed:', error);
+                    logger.error('Service Worker registration failed:', error);
                 });
         }
 
@@ -207,7 +208,7 @@ self.addEventListener('notificationclick', (event) => {
         navigator.serviceWorker
             .register(swURL)
             .then((registration) => {
-                console.log('Service Worker registered successfully');
+                logger.debug('Service Worker registered successfully');
                 
                 // Check for updates
                 setInterval(() => {
@@ -215,7 +216,7 @@ self.addEventListener('notificationclick', (event) => {
                 }, 60000);
             })
             .catch((error) => {
-                console.error('Service Worker registration failed:', error);
+                logger.error('Service Worker registration failed:', error);
             });
     }
 };

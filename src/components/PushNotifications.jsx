@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import logger from '@/utils/logger';
 import { base44 } from '@/api/base44Client';
+import logger from '@/utils/logger';
 import { Bell, BellOff } from 'lucide-react';
+import logger from '@/utils/logger';
 import { Button } from '@/components/ui/button';
+import logger from '@/utils/logger';
 import { toast } from 'sonner';
+import logger from '@/utils/logger';
 
 export default function PushNotifications() {
     const [isSupported, setIsSupported] = useState(false);
@@ -22,7 +27,7 @@ export default function PushNotifications() {
             const subscription = await registration.pushManager.getSubscription();
             setIsSubscribed(!!subscription);
         } catch (error) {
-            console.error('Error checking subscription:', error);
+            logger.error('Error checking subscription:', error);
         }
     };
 
@@ -72,7 +77,7 @@ export default function PushNotifications() {
             setIsSubscribed(true);
             toast.success('Push notifications enabled');
         } catch (error) {
-            console.error('Error subscribing to push:', error);
+            logger.error('Error subscribing to push:', error);
             toast.error('Failed to enable push notifications');
         }
         setIsLoading(false);
@@ -97,7 +102,7 @@ export default function PushNotifications() {
                 toast.success('Push notifications disabled');
             }
         } catch (error) {
-            console.error('Error unsubscribing from push:', error);
+            logger.error('Error unsubscribing from push:', error);
             toast.error('Failed to disable push notifications');
         }
         setIsLoading(false);

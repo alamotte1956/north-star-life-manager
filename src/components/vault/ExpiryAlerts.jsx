@@ -1,10 +1,17 @@
 import React, { useState, useEffect } from 'react';
+import logger from '@/utils/logger';
 import { base44 } from '@/api/base44Client';
+import logger from '@/utils/logger';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import logger from '@/utils/logger';
 import { Badge } from '@/components/ui/badge';
+import logger from '@/utils/logger';
 import { Button } from '@/components/ui/button';
+import logger from '@/utils/logger';
 import { AlertTriangle, AlertCircle, Info, XCircle, Calendar, FileText, RefreshCw } from 'lucide-react';
+import logger from '@/utils/logger';
 import { format } from 'date-fns';
+import logger from '@/utils/logger';
 
 export default function ExpiryAlerts() {
     const [alerts, setAlerts] = useState(null);
@@ -17,7 +24,7 @@ export default function ExpiryAlerts() {
             const result = await base44.functions.invoke('checkDocumentExpiry', {});
             setAlerts(result.data);
         } catch (error) {
-            console.error('Failed to fetch expiry alerts:', error);
+            logger.error('Failed to fetch expiry alerts:', error);
         } finally {
             setLoading(false);
             setRefreshing(false);

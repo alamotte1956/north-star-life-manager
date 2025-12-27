@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState } from
+import logger from '@/utils/logger'; 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -52,7 +53,7 @@ export default function ProfessionalMarketplace() {
                     duration_minutes: data.duration_minutes
                 });
             } catch (error) {
-                console.error('Error creating meeting:', error);
+                logger.error('Error creating meeting:', error);
             }
 
             return booking;

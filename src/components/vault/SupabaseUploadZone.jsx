@@ -1,16 +1,29 @@
 import React, { useState } from 'react';
+import logger from '@/utils/logger';
 import { base44 } from '@/api/base44Client';
+import logger from '@/utils/logger';
 import { Card, CardContent } from '@/components/ui/card';
+import logger from '@/utils/logger';
 import { Button } from '@/components/ui/button';
+import logger from '@/utils/logger';
 import { Input } from '@/components/ui/input';
+import logger from '@/utils/logger';
 import { Label } from '@/components/ui/label';
+import logger from '@/utils/logger';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import logger from '@/utils/logger';
 import { Upload, FileText, Loader2, Calendar, Camera } from 'lucide-react';
+import logger from '@/utils/logger';
 import { toast } from 'sonner';
+import logger from '@/utils/logger';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import logger from '@/utils/logger';
 import { Calendar as CalendarComponent } from '@/components/ui/calendar';
+import logger from '@/utils/logger';
 import { format } from 'date-fns';
+import logger from '@/utils/logger';
 import MobileCameraCapture from './MobileCameraCapture';
+import logger from '@/utils/logger';
 
 export default function SupabaseUploadZone({ onUploadComplete, linkedEntity }) {
     const [uploading, setUploading] = useState(false);
@@ -62,7 +75,7 @@ export default function SupabaseUploadZone({ onUploadComplete, linkedEntity }) {
             setMetadata({ ...metadata, title: '' });
             onUploadComplete?.();
         } catch (error) {
-            console.error('Upload error:', error);
+            logger.error('Upload error:', error);
             toast.error('Upload failed: ' + (error.message || 'Unknown error'));
         } finally {
             setUploading(false);

@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState } from
+import logger from '@/utils/logger'; 'react';
 import { Upload, FileText, Loader2, Camera, Calendar } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { toast } from 'sonner';
@@ -77,7 +78,7 @@ export default function UploadZone({ onUploadComplete }) {
                 file_url,
                 is_financial: isFinancial
             }).catch(err => {
-                console.error('Analysis error:', err);
+                logger.error('Analysis error:', err);
                 toast.error('Analysis failed, but document was saved');
             });
 
@@ -86,7 +87,7 @@ export default function UploadZone({ onUploadComplete }) {
             setPendingFile(null);
         } catch (error) {
             toast.error('Upload failed');
-            console.error(error);
+            logger.error(error);
         } finally {
             setUploading(false);
         }

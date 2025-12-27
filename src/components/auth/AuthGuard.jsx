@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { Loader2 } from 'lucide-react';
+import logger from '@/utils/logger';
 
 // Generate cryptographically secure family code
 function generateSecureFamilyCode() {
@@ -59,7 +60,7 @@ export default function AuthGuard({ children }) {
 
                 setChecking(false);
             } catch (error) {
-                console.error('Auth setup error:', error);
+                logger.error('Auth setup error:', error);
                 setSetupError(error.message);
                 setChecking(false);
             }

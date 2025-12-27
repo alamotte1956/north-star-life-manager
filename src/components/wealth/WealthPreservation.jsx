@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState } from
+import logger from '@/utils/logger'; 'react';
 import { base44 } from '@/api/base44Client';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -168,7 +169,7 @@ Return as JSON with structure:
 
             setStrategies(response);
         } catch (error) {
-            console.error('Analysis error:', error);
+            logger.error('Analysis error:', error);
         }
         setLoading(false);
     };
