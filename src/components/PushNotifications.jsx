@@ -1,13 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import logger from '@/utils/logger';
 import { base44 } from '@/api/base44Client';
-import logger from '@/utils/logger';
 import { Bell, BellOff } from 'lucide-react';
-import logger from '@/utils/logger';
 import { Button } from '@/components/ui/button';
-import logger from '@/utils/logger';
 import { toast } from 'sonner';
-import logger from '@/utils/logger';
 
 export default function PushNotifications() {
     const [isSupported, setIsSupported] = useState(false);

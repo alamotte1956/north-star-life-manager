@@ -1,15 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import logger from '@/utils/logger';
 import { base44 } from '@/api/base44Client';
-import logger from '@/utils/logger';
 import { MessageCircle, X, Send, Loader2 } from 'lucide-react';
-import logger from '@/utils/logger';
 import { Button } from '@/components/ui/button';
-import logger from '@/utils/logger';
 import { Input } from '@/components/ui/input';
-import logger from '@/utils/logger';
 import ReactMarkdown from 'react-markdown';
-import logger from '@/utils/logger';
 
 export default function ChatAssistant() {
     const [isOpen, setIsOpen] = useState(false);

@@ -1,23 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import logger from '@/utils/logger';
 import { base44 } from '@/api/base44Client';
-import logger from '@/utils/logger';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import logger from '@/utils/logger';
 import { Button } from '@/components/ui/button';
-import logger from '@/utils/logger';
 import { Badge } from '@/components/ui/badge';
-import logger from '@/utils/logger';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import logger from '@/utils/logger';
 import { Input } from '@/components/ui/input';
-import logger from '@/utils/logger';
 import { 
     Sparkles, TrendingUp, DollarSign, Target, AlertTriangle, 
     CheckCircle, Clock, Lightbulb, PiggyBank, Shield, MessageCircle, Send, BarChart3 
 } from 'lucide-react';
 import { toast } from 'sonner';
-import logger from '@/utils/logger';
 
 export default function FinancialAdvisor() {
     const [advice, setAdvice] = useState(null);
