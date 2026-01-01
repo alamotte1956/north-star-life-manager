@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from
-import logger from '@/utils/logger'; 'react';
+import { useEffect, useRef, useState } from 'react';
+import logger from '@/utils/logger';
 import { twMerge } from 'tailwind-merge'
 
 export default function VisualEditAgent() {

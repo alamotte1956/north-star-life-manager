@@ -1,5 +1,5 @@
-import React, { useState } from
-import logger from '@/utils/logger'; 'react';
+import React, { useState } from 'react';
+import logger from '@/utils/logger'
 import { base44 } from '@/api/base44Client';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
