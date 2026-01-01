@@ -1,5 +1,5 @@
-import React, { useState } from
-import logger from '@/utils/logger'; 'react';
+import React, { useState } from 'react';
+import logger from '@/utils/logger';
 import { Upload, FileText, Loader2, Camera, Calendar } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { toast } from 'sonner';
