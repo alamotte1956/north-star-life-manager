@@ -76,6 +76,7 @@ import VideoTutorials from './pages/VideoTutorials';
 import VoiceAssistant from './pages/VoiceAssistant';
 import WealthLegacyPlanning from './pages/WealthLegacyPlanning';
 import index from './pages/index';
+import utils from './pages/utils';
 import __Layout from './Layout.jsx';
 
 
@@ -158,6 +159,7 @@ export const PAGES = {
     "VoiceAssistant": VoiceAssistant,
     "WealthLegacyPlanning": WealthLegacyPlanning,
     "index": index,
+    "utils": utils,
 }
 
 export const pagesConfig = {
