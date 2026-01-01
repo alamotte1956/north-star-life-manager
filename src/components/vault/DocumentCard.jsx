@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FileText, Calendar, Tag, ExternalLink, Loader2, CheckCircle, AlertCircle, Home, DollarSign, Link2, Eye, Share2, MessageSquare, History, Upload } from 'lucide-react';
+import { FileText, Calendar, Tag, ExternalLink, Loader2, CheckCircle, AlertCircle, Home, DollarSign, Link2, Eye, Share2, MessageSquare, History, Upload, Sparkles } from 'lucide-react';
 import { format } from 'date-fns';
 import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
@@ -9,6 +9,9 @@ import CommentsSection from '@/components/collaboration/CommentsSection';
 import DocumentVersionHistory from './DocumentVersionHistory';
 import UploadNewVersion from './UploadNewVersion';
 import { useRolePermission } from '../family/RoleBasedGuard';
+import { base44 } from '@/api/base44Client';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { toast } from 'sonner';
 
 export default function DocumentCard({ document }) {
     const [showDetails, setShowDetails] = useState(false);
@@ -20,6 +23,23 @@ export default function DocumentCard({ document }) {
     
     const { hasPermission: canEdit } = useRolePermission('documents', 'edit');
     const { hasPermission: canDelete } = useRolePermission('documents', 'delete');
+    const queryClient = useQueryClient();
+
+    const generateSummaryMutation = useMutation({
+        mutationFn: async () => {
+            const response = await base44.functions.invoke('generateDocumentSummary', {
+                document_id: document.id
+            });
+            return response.data;
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['documents'] });
+            toast.success('AI summary generated successfully!');
+        },
+        onError: (error) => {
+            toast.error(error.response?.data?.error || 'Failed to generate summary');
+        }
+    });
 
     React.useEffect(() => {
         const checkMobile = () => setIsMobile(window.innerWidth < 768);
@@ -158,6 +178,31 @@ export default function DocumentCard({ document }) {
                             </Badge>
                         ))}
                     </div>
+                </div>
+            )}
+
+            {/* Generate Summary Button */}
+            {!document.ai_summary && document.extracted_text && document.analysis_status !== 'analyzing' && (
+                <div className="mt-4">
+                    <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => generateSummaryMutation.mutate()}
+                        disabled={generateSummaryMutation.isPending}
+                        className="w-full border-blue-200 hover:bg-blue-50 text-blue-700"
+                    >
+                        {generateSummaryMutation.isPending ? (
+                            <>
+                                <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                                Generating AI Summary...
+                            </>
+                        ) : (
+                            <>
+                                <Sparkles className="w-4 h-4 mr-2" />
+                                Generate AI Summary
+                            </>
+                        )}
+                    </Button>
                 </div>
             )}
 
