@@ -11,6 +11,40 @@ Deno.serve(async (req) => {
 
         const { booking_id, professional_email, user_email, service_type, appointment_date, duration_minutes = 60 } = await req.json();
 
+        // Input validation
+        if (!booking_id || typeof booking_id !== 'string') {
+            return Response.json({ error: 'Booking ID is required' }, { status: 400 });
+        }
+
+        if (!professional_email || typeof professional_email !== 'string' || !professional_email.includes('@')) {
+            return Response.json({ error: 'Valid professional email is required' }, { status: 400 });
+        }
+
+        if (!user_email || typeof user_email !== 'string' || !user_email.includes('@')) {
+            return Response.json({ error: 'Valid user email is required' }, { status: 400 });
+        }
+
+        if (!service_type || typeof service_type !== 'string') {
+            return Response.json({ error: 'Service type is required' }, { status: 400 });
+        }
+
+        if (service_type.length > 200) {
+            return Response.json({ error: 'Service type too long (max 200 characters)' }, { status: 400 });
+        }
+
+        if (!appointment_date || isNaN(Date.parse(appointment_date))) {
+            return Response.json({ error: 'Valid appointment date is required' }, { status: 400 });
+        }
+
+        // Validate appointment is in the future
+        if (new Date(appointment_date) < new Date()) {
+            return Response.json({ error: 'Appointment date must be in the future' }, { status: 400 });
+        }
+
+        if (typeof duration_minutes !== 'number' || duration_minutes < 15 || duration_minutes > 480) {
+            return Response.json({ error: 'Duration must be between 15 and 480 minutes' }, { status: 400 });
+        }
+
         // Get Google Calendar access token
         const accessToken = await base44.asServiceRole.connectors.getAccessToken("googlecalendar");
 
@@ -114,6 +148,6 @@ A calendar invite has been added to your Google Calendar with reminders.
 
     } catch (error) {
         console.error('Error creating video meeting:', error);
-        return Response.json({ error: error.message }, { status: 500 });
+        return Response.json({ error: 'Failed to create video meeting' }, { status: 500 });
     }
 });
