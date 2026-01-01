@@ -9,7 +9,7 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
-import { Home, Plus, Calendar, Wrench, CheckCircle, Clock } from 'lucide-react';
+import { Home, Plus, Calendar, Wrench } from 'lucide-react';
 import { toast } from 'sonner';
 import { format } from 'date-fns';
 

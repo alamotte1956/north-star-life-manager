@@ -492,7 +492,7 @@ export default function MedicalProfile() {
                     </Card>
                 )}
 
-                <style jsx>{`
+                <style>{`
                     @media print {
                         body * {
                             visibility: hidden;
