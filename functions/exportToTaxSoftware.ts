@@ -1,4 +1,5 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.4';
+import { encryptSensitiveFields, auditLog } from './lib/kmsService.ts';
 
 Deno.serve(async (req) => {
     try {
@@ -79,6 +80,17 @@ Return JSON format.`,
             }))
         };
 
+        // Encrypt sensitive fields in export data using KMS
+        const sensitiveFields = ['email', 'name'];
+        const encryptedExportData = await encryptSensitiveFields(exportData.taxpayer, sensitiveFields);
+        exportData.taxpayer = encryptedExportData;
+        
+        auditLog('TAX_DATA_EXPORTED', {
+            userId: user.id,
+            taxYear: tax_year,
+            software
+        });
+
         return Response.json({
             success: true,
             export_data: exportData,
@@ -88,6 +100,7 @@ Return JSON format.`,
 
     } catch (error) {
         console.error('Tax export error:', error);
+        auditLog('TAX_EXPORT_FAILED', {}, error as Error);
         return Response.json({ 
             error: error.message,
             success: false 
