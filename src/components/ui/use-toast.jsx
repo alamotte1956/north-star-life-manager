@@ -1,9 +1,5 @@
 // Inspired by react-hot-toast library
-<<<<<<< HEAD
-import { useState, useEffect, createContext, useContext } from "react";
-=======
 import { useState, useEffect } from "react";
->>>>>>> 9de21d4d2f6ac33c914ab8fc7c4a8a81454b6d63
 
 const TOAST_LIMIT = 20;
 const TOAST_REMOVE_DELAY = 1000000;
@@ -40,11 +36,7 @@ const addToRemoveQueue = (toastId) => {
   toastTimeouts.set(toastId, timeout);
 };
 
-<<<<<<< HEAD
-const clearFromRemoveQueue = (toastId) => {
-=======
 const _clearFromRemoveQueue = (toastId) => {
->>>>>>> 9de21d4d2f6ac33c914ab8fc7c4a8a81454b6d63
   const timeout = toastTimeouts.get(toastId);
   if (timeout) {
     clearTimeout(timeout);
