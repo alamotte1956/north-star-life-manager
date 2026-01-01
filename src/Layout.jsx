@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { createPageUrl } from '@/components/utils';
 import {
     LayoutDashboard, FileText, Shield, Home, Wrench, Users, Car,
     DollarSign, Gem, Plane, Heart, Calendar, LogOut, Menu, X, Search, Plug, 
@@ -21,6 +20,9 @@ import SimplifiedViewToggle from '@/components/accessibility/SimplifiedViewToggl
 import { SandboxDataProvider } from '@/components/sandbox/SandboxDataProvider';
 import SandboxBanner from '@/components/sandbox/SandboxBanner';
 import FinancialAdvisorChatbot from '@/components/financial/FinancialAdvisorChatbot';
+
+// Utility function for creating page URLs
+const createPageUrl = (pageName) => `/${pageName}`;
 
 export default function Layout({ children, currentPageName }) {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
