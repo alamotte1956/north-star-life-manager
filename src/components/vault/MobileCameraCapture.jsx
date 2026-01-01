@@ -1,13 +1,9 @@
 import React, { useRef, useState } from 'react';
 import logger from '@/utils/logger';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
-import logger from '@/utils/logger';
 import { Button } from '@/components/ui/button';
-import logger from '@/utils/logger';
 import { Camera, X, RotateCw, CheckCircle, Loader2 } from 'lucide-react';
-import logger from '@/utils/logger';
 import { toast } from 'sonner';
-import logger from '@/utils/logger';
 
 export default function MobileCameraCapture({ open, onOpenChange, onCapture }) {
     const videoRef = useRef(null);
