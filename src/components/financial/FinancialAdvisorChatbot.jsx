@@ -1,21 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import logger from '@/utils/logger';
 import { useQuery } from '@tanstack/react-query';
-import logger from '@/utils/logger';
 import { base44 } from '@/api/base44Client';
-import logger from '@/utils/logger';
 import { Button } from '@/components/ui/button';
-import logger from '@/utils/logger';
 import { Input } from '@/components/ui/input';
-import logger from '@/utils/logger';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import logger from '@/utils/logger';
 import { Badge } from '@/components/ui/badge';
-import logger from '@/utils/logger';
 import { MessageCircle, Send, X, Minimize2, Maximize2, Loader2, TrendingUp, DollarSign, Shield, PiggyBank } from 'lucide-react';
-import logger from '@/utils/logger';
 import ReactMarkdown from 'react-markdown';
-import logger from '@/utils/logger';
 
 export default function FinancialAdvisorChatbot() {
     const [isOpen, setIsOpen] = useState(false);

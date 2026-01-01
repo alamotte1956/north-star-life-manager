@@ -1,23 +1,14 @@
 import React, { useState } from 'react';
 import logger from '@/utils/logger';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import logger from '@/utils/logger';
 import { base44 } from '@/api/base44Client';
-import logger from '@/utils/logger';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import logger from '@/utils/logger';
 import { Button } from '@/components/ui/button';
-import logger from '@/utils/logger';
 import { Badge } from '@/components/ui/badge';
-import logger from '@/utils/logger';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import logger from '@/utils/logger';
 import { History, Clock, User, FileText, Download, RotateCcw, Loader2, ExternalLink } from 'lucide-react';
-import logger from '@/utils/logger';
 import { format } from 'date-fns';
-import logger from '@/utils/logger';
 import { toast } from 'sonner';
-import logger from '@/utils/logger';
 
 export default function DocumentVersionHistory({ document, open, onOpenChange }) {
     const [reverting, setReverting] = useState(null);

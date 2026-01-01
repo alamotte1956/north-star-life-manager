@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import logger from '@/utils/logger';
 import { Input } from '@/components/ui/input';
-import logger from '@/utils/logger';
 import { base44 } from '@/api/base44Client';
-import logger from '@/utils/logger';
 import { Sparkles } from 'lucide-react';
-import logger from '@/utils/logger';
 
 export default function SmartInput({ 
     entityType, 
