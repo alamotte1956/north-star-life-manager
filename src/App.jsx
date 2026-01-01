@@ -1,19 +1,3 @@
-<<<<<<< HEAD
-import './App.css'
-import Pages from "@/pages/index.jsx"
-import { Toaster } from "@/components/ui/toaster"
-
-function App() {
-  return (
-    <>
-      <Pages />
-      <Toaster />
-    </>
-  )
-}
-
-export default App 
-=======
 import React, { Suspense } from 'react';
 import { Toaster } from "@/components/ui/toaster"
 import { QueryClientProvider } from '@tanstack/react-query'
@@ -105,4 +89,3 @@ function App() {
 }
 
 export default App
->>>>>>> 9de21d4d2f6ac33c914ab8fc7c4a8a81454b6d63
