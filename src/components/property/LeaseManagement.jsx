@@ -8,8 +8,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { 
-    FileText, Upload, Sparkles, Download, CheckCircle, 
-    Calendar, DollarSign, AlertCircle 
+    FileText, Sparkles, CheckCircle, AlertCircle 
 } from 'lucide-react';
 import { toast } from 'sonner';
 
