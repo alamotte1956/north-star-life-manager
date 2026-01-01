@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { DollarSign, Calendar, CreditCard, CheckCircle, AlertCircle } from 'lucide-react';
+import { DollarSign, CreditCard, CheckCircle, AlertCircle } from 'lucide-react';
 import { format, differenceInDays } from 'date-fns';
 import { toast } from 'sonner';
 

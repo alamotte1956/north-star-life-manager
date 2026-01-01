@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import logger from '@/utils/logger';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import { Camera, X, RotateCw, CheckCircle, Loader2 } from 'lucide-react';
+import { X, RotateCw, CheckCircle, Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 
 export default function MobileCameraCapture({ open, onOpenChange, onCapture }) {
