@@ -5,11 +5,11 @@
  * Tests encryption/decryption functionality without requiring AWS credentials
  */
 
-// Mock environment for testing
-Deno.env.set('AWS_KMS_KEY_ID', 'alias/test-key');
+// Mock environment for testing (DO NOT USE IN PRODUCTION)
+Deno.env.set('AWS_KMS_KEY_ID', 'TEST_KEY_PLACEHOLDER_DO_NOT_USE');
 Deno.env.set('AWS_REGION', 'us-east-1');
-Deno.env.set('AWS_ACCESS_KEY_ID', 'test-key');
-Deno.env.set('AWS_SECRET_ACCESS_KEY', 'test-secret');
+Deno.env.set('AWS_ACCESS_KEY_ID', 'TEST_ACCESS_KEY_PLACEHOLDER');
+Deno.env.set('AWS_SECRET_ACCESS_KEY', 'TEST_SECRET_KEY_PLACEHOLDER');
 
 console.log('🔐 KMS Integration Validation\n');
 

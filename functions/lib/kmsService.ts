@@ -18,11 +18,20 @@ let kmsClient: KMSClient | null = null;
 
 function getKMSClient(): KMSClient {
     if (!kmsClient) {
+        const accessKeyId = Deno.env.get('AWS_ACCESS_KEY_ID');
+        const secretAccessKey = Deno.env.get('AWS_SECRET_ACCESS_KEY');
+        
+        if (!accessKeyId || !secretAccessKey) {
+            const error = new Error('Missing required AWS credentials: AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY must be set');
+            console.error('[KMS_CONFIG_ERROR]', error.message);
+            throw error;
+        }
+        
         kmsClient = new KMSClient({ 
             region: AWS_REGION,
             credentials: {
-                accessKeyId: Deno.env.get('AWS_ACCESS_KEY_ID') || '',
-                secretAccessKey: Deno.env.get('AWS_SECRET_ACCESS_KEY') || '',
+                accessKeyId,
+                secretAccessKey,
             }
         });
     }

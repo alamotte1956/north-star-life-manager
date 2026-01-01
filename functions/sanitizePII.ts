@@ -33,8 +33,10 @@ export async function sanitizePII(data: any): Promise<any> {
                         fieldType: 'PII'
                     });
                 } catch (error) {
-                    // Fallback to anonymization if encryption fails
-                    sanitized[key] = `ANON_${Math.random().toString(36).substring(7)}`;
+                    // Fallback to cryptographically secure anonymization if encryption fails
+                    const randomBytes = crypto.getRandomValues(new Uint8Array(8));
+                    const randomId = Array.from(randomBytes, byte => byte.toString(16).padStart(2, '0')).join('');
+                    sanitized[key] = `ANON_${randomId}`;
                     auditLog('PII_ENCRYPTION_FAILED_FALLBACK', { field: key }, error as Error);
                 }
             } else if (typeof value === 'object') {
