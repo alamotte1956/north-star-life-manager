@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { Shield, Plus } from 'lucide-react';
+import { listMine } from '@/components/utils/safeQuery';
 import { Button } from '@/components/ui/button';
 import KeycardAccess from '../components/succession/KeycardAccess';
 import EmergencyCard from '../components/succession/EmergencyCard';
@@ -16,7 +17,7 @@ export default function Succession() {
 
     const { data: emergencyInfos = [] } = useQuery({
         queryKey: ['emergencyInfo'],
-        queryFn: () => base44.entities.EmergencyInfo.list('-priority', 100),
+        queryFn: () => listMine(base44.entities.EmergencyInfo, { order: '-priority', limit: 100 }),
         enabled: hasAccess
     });
 

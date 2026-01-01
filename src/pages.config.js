@@ -46,6 +46,7 @@ import HomeServices from './pages/HomeServices';
 import Integrations from './pages/Integrations';
 import InternationalAssets from './pages/InternationalAssets';
 import Investments from './pages/Investments';
+import Layout from './pages/Layout';
 import LegacyMessages from './pages/LegacyMessages';
 import Legal from './pages/Legal';
 import Maintenance from './pages/Maintenance';
@@ -74,6 +75,7 @@ import VideoCallScheduler from './pages/VideoCallScheduler';
 import VideoTutorials from './pages/VideoTutorials';
 import VoiceAssistant from './pages/VoiceAssistant';
 import WealthLegacyPlanning from './pages/WealthLegacyPlanning';
+import index from './pages/index';
 import __Layout from './Layout.jsx';
 
 
@@ -126,6 +128,7 @@ export const PAGES = {
     "Integrations": Integrations,
     "InternationalAssets": InternationalAssets,
     "Investments": Investments,
+    "Layout": Layout,
     "LegacyMessages": LegacyMessages,
     "Legal": Legal,
     "Maintenance": Maintenance,
@@ -154,6 +157,7 @@ export const PAGES = {
     "VideoTutorials": VideoTutorials,
     "VoiceAssistant": VoiceAssistant,
     "WealthLegacyPlanning": WealthLegacyPlanning,
+    "index": index,
 }
 
 export const pagesConfig = {
