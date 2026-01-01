@@ -50,6 +50,8 @@ export async function onRequest(context) {
     
     return newResponse
   } catch (err) {
-    return new Response(`${err.message}\n${err.stack}`, { status: 500 })
+    // Log the error for debugging but don't expose details to client
+    console.error('Middleware error:', err)
+    return new Response('Internal Server Error', { status: 500 })
   }
 }

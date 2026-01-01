@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import logger from '@/utils/logger'
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { listMine } from '@/components/utils/safeQuery';
-import { DollarSign, Plus, TrendingUp, AlertTriangle, Target, Sparkles, Users, RefreshCw, Loader2, TrendingDown, Brain } from 'lucide-react';
+import { DollarSign, Plus, TrendingUp, AlertTriangle, Target, Sparkles, Users, RefreshCw, TrendingDown, Brain } from 'lucide-react';
 import { toast } from 'sonner';
 import AICollaborationInsights from '../components/collaboration/AICollaborationInsights';
 import ShareDialog from '../components/collaboration/ShareDialog';
@@ -17,7 +17,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Textarea } from '@/components/ui/textarea';
 import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
-import { format, startOfMonth, endOfMonth, startOfYear, endOfYear } from 'date-fns';
+import { format, startOfMonth, endOfMonth } from 'date-fns';
 import GoalProgressCard from '../components/budget/GoalProgressCard';
 import GoalDetailDialog from '../components/goals/GoalDetailDialog';
 import AdvancedAIInsights from '../components/budget/AdvancedAIInsights';

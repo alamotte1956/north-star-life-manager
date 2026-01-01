@@ -9,12 +9,25 @@ import { createClientFromRequest } from 'npm:@base44/sdk@0.8.6';
 
 Deno.serve(async (req) => {
     try {
+        // Only allow POST requests
+        if (req.method !== 'POST') {
+            return Response.json({ error: 'Method not allowed' }, { status: 405 });
+        }
+
         const base44 = createClientFromRequest(req);
         
         // Authenticate user
         const user = await base44.auth.me();
         if (!user) {
             return Response.json({ error: 'Unauthorized' }, { status: 401 });
+        }
+
+        // Require confirmation in request body
+        const body = await req.json();
+        if (!body.confirm || body.confirm !== 'DELETE_MY_ACCOUNT') {
+            return Response.json({ 
+                error: 'Confirmation required. Send { "confirm": "DELETE_MY_ACCOUNT" } to proceed.' 
+            }, { status: 400 });
         }
 
         const userEmail = user.email;
@@ -153,8 +166,7 @@ Deno.serve(async (req) => {
     } catch (error) {
         console.error('❌ Account deletion failed:', error);
         return Response.json({ 
-            error: 'Account deletion failed', 
-            details: error.message 
+            error: 'Account deletion failed'
         }, { status: 500 });
     }
 });

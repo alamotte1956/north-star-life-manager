@@ -89,6 +89,6 @@ Deno.serve(async (req) => {
 
     } catch (error) {
         console.error('Webhook processing error:', error);
-        return Response.json({ error: error.message }, { status: 500 });
+        return Response.json({ error: 'Webhook processing failed' }, { status: 500 });
     }
 });
