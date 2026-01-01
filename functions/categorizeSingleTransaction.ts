@@ -16,6 +16,27 @@ Deno.serve(async (req) => {
 
         const { merchant, description, amount } = await req.json();
 
+        // Input validation
+        if (!description || typeof description !== 'string') {
+            return Response.json({ error: 'Description is required and must be a string' }, { status: 400 });
+        }
+        
+        if (description.length > 500) {
+            return Response.json({ error: 'Description too long (max 500 characters)' }, { status: 400 });
+        }
+
+        if (typeof amount !== 'number' || isNaN(amount)) {
+            return Response.json({ error: 'Amount must be a valid number' }, { status: 400 });
+        }
+
+        if (!merchant || typeof merchant !== 'string') {
+            return Response.json({ error: 'Merchant is required and must be a string' }, { status: 400 });
+        }
+
+        if (merchant.length > 200) {
+            return Response.json({ error: 'Merchant name too long (max 200 characters)' }, { status: 400 });
+        }
+
         // Get user's historical corrections for learning
         const corrections = await base44.entities.TransactionCorrection.filter({ 
             created_by: user.email 

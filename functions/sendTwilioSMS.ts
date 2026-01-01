@@ -11,6 +11,25 @@ Deno.serve(async (req) => {
 
         const { to, message, message_type } = await req.json();
 
+        // Input validation
+        if (!to || typeof to !== 'string') {
+            return Response.json({ error: 'Phone number is required' }, { status: 400 });
+        }
+
+        if (!message || typeof message !== 'string') {
+            return Response.json({ error: 'Message is required' }, { status: 400 });
+        }
+
+        if (message.length > 1600) {
+            return Response.json({ error: 'Message too long (max 1600 characters for SMS)' }, { status: 400 });
+        }
+
+        // Sanitize phone number and validate format
+        const cleanedPhone = to.replace(/\D/g, '');
+        if (cleanedPhone.length < 10 || cleanedPhone.length > 15) {
+            return Response.json({ error: 'Invalid phone number format' }, { status: 400 });
+        }
+
         const twilioAccountSid = Deno.env.get('TWILIO_ACCOUNT_SID');
         const twilioAuthToken = Deno.env.get('TWILIO_AUTH_TOKEN');
         const twilioPhoneNumber = Deno.env.get('TWILIO_PHONE_NUMBER');

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { TrendingUp, TrendingDown, AlertTriangle, CheckCircle, Users, DollarSign } from 'lucide-react';
+import { TrendingUp, AlertTriangle, CheckCircle, Users, DollarSign } from 'lucide-react';
 
 export default function PropertyAnalyticsReport({ analytics }) {
     const { portfolio_metrics, property_data, ai_insights } = analytics;

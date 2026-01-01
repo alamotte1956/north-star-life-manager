@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { AlertTriangle, TrendingUp, ArrowRightLeft, CheckCircle } from 'lucide-react';
+import { AlertTriangle, ArrowRightLeft, CheckCircle } from 'lucide-react';
 import { toast } from 'sonner';
 
 export default function RebalancingAlerts({ investments }) {

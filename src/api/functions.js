@@ -251,7 +251,8 @@ export const listUsers = base44.functions.listUsers;
 
 export const updateUser = base44.functions.updateUser;
 
-export const sitemap.xml = base44.functions.sitemap.xml;
+// Note: sitemap.xml function cannot be exported with dot notation
+// export const sitemap_xml = base44.functions['sitemap.xml'];
 
 export const checkEventReminders = base44.functions.checkEventReminders;
 

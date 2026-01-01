@@ -6,9 +6,8 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { TrendingUp, TrendingDown, Minus, DollarSign, Home, AlertCircle, Sparkles, Edit } from 'lucide-react';
+import { TrendingUp, TrendingDown, Minus, DollarSign, AlertCircle, Sparkles, Edit } from 'lucide-react';
 import { toast } from 'sonner';
-import { format } from 'date-fns';
 
 export default function PropertyValuation({ property, onUpdate }) {
     const [loading, setLoading] = useState(false);
