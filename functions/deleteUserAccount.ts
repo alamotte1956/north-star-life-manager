@@ -22,11 +22,11 @@ Deno.serve(async (req) => {
             return Response.json({ error: 'Unauthorized' }, { status: 401 });
         }
 
-        // Require confirmation in request body
+        // Require user to confirm by providing their email address
         const body = await req.json();
-        if (!body.confirm || body.confirm !== 'DELETE_MY_ACCOUNT') {
+        if (!body.confirm_email || body.confirm_email !== user.email) {
             return Response.json({ 
-                error: 'Confirmation required. Send { "confirm": "DELETE_MY_ACCOUNT" } to proceed.' 
+                error: 'Email confirmation required. Send your email address in the "confirm_email" field to proceed.' 
             }, { status: 400 });
         }
 

@@ -18,6 +18,13 @@ export async function onRequest(context) {
     const newResponse = new Response(response.body, response)
     
     // Add security headers
+    // TODO: CSP Security Improvement Needed
+    // Current policy allows 'unsafe-inline' and 'unsafe-eval' which can enable XSS attacks
+    // Recommendations:
+    // 1. Implement nonce-based CSP for inline scripts/styles
+    // 2. Move inline event handlers to external scripts
+    // 3. Replace eval() with safer alternatives
+    // 4. Use build-time tools to generate CSP-compatible code
     newResponse.headers.set(
       'Content-Security-Policy',
       "default-src 'self'; " +

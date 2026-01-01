@@ -12,8 +12,25 @@ const PRICE_IDS = {
     enterprise: Deno.env.get('STRIPE_ENTERPRISE_PRICE_ID')
 };
 
+// Validate that all required price IDs are configured at startup
+const missingPriceIds = Object.entries(PRICE_IDS)
+    .filter(([, value]) => !value)
+    .map(([key]) => key);
+
+if (missingPriceIds.length > 0) {
+    console.error(`Missing required Stripe price IDs: ${missingPriceIds.join(', ')}`);
+}
+
 Deno.serve(async (req) => {
     try {
+        // Check if price IDs are configured before processing
+        if (missingPriceIds.length > 0) {
+            return Response.json({ 
+                error: 'Service configuration error',
+                success: false 
+            }, { status: 503 });
+        }
+
         const base44 = createClientFromRequest(req);
         const user = await base44.auth.me();
 
