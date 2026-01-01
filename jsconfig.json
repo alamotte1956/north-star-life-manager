@@ -4,11 +4,6 @@
     "paths": {
       "@/*": ["./src/*"]
     },
-<<<<<<< HEAD
-    "jsx": "react-jsx"
-  },
-  "include": ["src/**/*.js", "src/**/*.jsx"]
-=======
     "jsx": "react-jsx",
     "module": "esnext",
     "moduleResolution": "bundler",
@@ -23,5 +18,4 @@
   },
   "include": ["src/components/**/*.js", "src/pages/**/*.jsx", "src/Layout.jsx"],
   "exclude": ["node_modules", "dist", "src/vite-plugins", "src/components/ui", "src/api", "src/lib"]
->>>>>>> 9de21d4d2f6ac33c914ab8fc7c4a8a81454b6d63
 } 

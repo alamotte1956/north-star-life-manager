@@ -1,25 +1,15 @@
 import React, { useState } from 'react';
 import logger from '@/utils/logger';
 import { useQuery } from '@tanstack/react-query';
-import logger from '@/utils/logger';
 import { base44 } from '@/api/base44Client';
-import logger from '@/utils/logger';
 import { Input } from '@/components/ui/input';
-import logger from '@/utils/logger';
 import { Button } from '@/components/ui/button';
-import logger from '@/utils/logger';
 import { Card, CardContent } from '@/components/ui/card';
-import logger from '@/utils/logger';
 import { Badge } from '@/components/ui/badge';
-import logger from '@/utils/logger';
 import { Search, Sparkles, FileText, Loader2, Filter, X } from 'lucide-react';
-import logger from '@/utils/logger';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import logger from '@/utils/logger';
 import { Label } from '@/components/ui/label';
-import logger from '@/utils/logger';
 import { toast } from 'sonner';
-import logger from '@/utils/logger';
 
 export default function IntelligentSearch({ onDocumentSelect }) {
     const [query, setQuery] = useState('');
