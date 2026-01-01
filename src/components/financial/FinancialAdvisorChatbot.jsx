@@ -4,9 +4,8 @@ import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { MessageCircle, Send, X, Minimize2, Maximize2, Loader2, TrendingUp, DollarSign, Shield, PiggyBank } from 'lucide-react';
+import { MessageCircle, Send, X, Minimize2, Loader2, TrendingUp } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 
 export default function FinancialAdvisorChatbot() {

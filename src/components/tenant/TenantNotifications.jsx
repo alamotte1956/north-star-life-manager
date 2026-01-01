@@ -4,9 +4,8 @@ import { base44 } from '@/api/base44Client';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Bell, Check, AlertCircle, Info, DollarSign, Wrench, FileText, Calendar } from 'lucide-react';
+import { Bell, Check, Info, DollarSign, Wrench, FileText, Calendar } from 'lucide-react';
 import { format } from 'date-fns';
-import { toast } from 'sonner';
 
 export default function TenantNotifications({ tenantEmail }) {
     const queryClient = useQueryClient();

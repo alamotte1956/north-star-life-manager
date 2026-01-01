@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import { createPageUrl } from '../utils';
 import { 
     Briefcase, Users, FileText, DollarSign, TrendingUp, 
-    AlertCircle, CheckCircle, Clock, BarChart3
+    AlertCircle, BarChart3
 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 
