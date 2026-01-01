@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import logger from '@/utils/logger';
-import { twMerge } from 'tailwind-merge'
+import { twMerge } from 'tailwind-merge';
 
 export default function VisualEditAgent() {
 	// this functions job is to receive first a message from the parent window, to set or unset visual edits mode. 
