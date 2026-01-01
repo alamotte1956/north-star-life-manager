@@ -4,7 +4,7 @@ import { base44 } from '@/api/base44Client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Folder, Plus, FolderPlus, ChevronRight } from 'lucide-react';
+import { Folder, FolderPlus } from 'lucide-react';
 import { toast } from 'sonner';
 
 export default function FolderManager({ selectedFolder, onFolderSelect }) {

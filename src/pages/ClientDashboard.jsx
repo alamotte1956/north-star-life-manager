@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { 
     Briefcase, FileText, DollarSign, MessageSquare, 
-    Clock, CheckCircle, AlertCircle, Download, Eye, Target, Send
+    Clock, CheckCircle, AlertCircle, Download, Target, Send
 } from 'lucide-react';
 import { format } from 'date-fns';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
