@@ -1,0 +1,106 @@
+{
+  "name": "Investment",
+  "type": "object",
+  "properties": {
+    "account_name": {
+      "type": "string",
+      "description": "Investment account name (e.g., Fidelity Brokerage, 401k)"
+    },
+    "account_type": {
+      "type": "string",
+      "enum": [
+        "brokerage",
+        "401k",
+        "ira",
+        "roth_ira",
+        "taxable",
+        "hsa",
+        "529_plan",
+        "pension",
+        "crypto",
+        "other"
+      ],
+      "description": "Type of investment account"
+    },
+    "institution": {
+      "type": "string",
+      "description": "Financial institution name"
+    },
+    "asset_type": {
+      "type": "string",
+      "enum": [
+        "stocks",
+        "bonds",
+        "mutual_funds",
+        "etf",
+        "crypto",
+        "real_estate",
+        "commodities",
+        "cash",
+        "other"
+      ],
+      "description": "Type of asset"
+    },
+    "ticker_symbol": {
+      "type": "string",
+      "description": "Stock ticker or asset symbol"
+    },
+    "shares": {
+      "type": "number",
+      "description": "Number of shares or units"
+    },
+    "purchase_price": {
+      "type": "number",
+      "description": "Average purchase price per share"
+    },
+    "current_price": {
+      "type": "number",
+      "description": "Current market price per share"
+    },
+    "purchase_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Date of purchase"
+    },
+    "cost_basis": {
+      "type": "number",
+      "description": "Total amount invested (shares \u00d7 purchase_price)"
+    },
+    "current_value": {
+      "type": "number",
+      "description": "Current market value (shares \u00d7 current_price)"
+    },
+    "unrealized_gain_loss": {
+      "type": "number",
+      "description": "Current value - cost basis"
+    },
+    "unrealized_gain_loss_percent": {
+      "type": "number",
+      "description": "Percentage gain/loss"
+    },
+    "linked_goal_id": {
+      "type": "string",
+      "description": "ID of linked financial goal"
+    },
+    "linked_goal_name": {
+      "type": "string",
+      "description": "Name of linked financial goal"
+    },
+    "dividend_yield": {
+      "type": "number",
+      "description": "Annual dividend yield percentage"
+    },
+    "last_updated": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When prices were last updated"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "account_name",
+    "asset_type"
+  ]
+}

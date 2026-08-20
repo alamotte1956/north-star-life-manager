@@ -1,0 +1,79 @@
+{
+  "name": "Subscription",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Service or membership name"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "club_membership",
+        "streaming",
+        "software",
+        "gym",
+        "magazine",
+        "wine_club",
+        "concierge_service",
+        "travel",
+        "insurance",
+        "utilities",
+        "other"
+      ]
+    },
+    "provider": {
+      "type": "string"
+    },
+    "billing_amount": {
+      "type": "number"
+    },
+    "billing_frequency": {
+      "type": "string",
+      "enum": [
+        "monthly",
+        "quarterly",
+        "semi_annual",
+        "annual",
+        "one_time"
+      ]
+    },
+    "next_billing_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "renewal_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "payment_method": {
+      "type": "string"
+    },
+    "account_number": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "cancelled",
+        "expiring_soon"
+      ],
+      "default": "active"
+    },
+    "auto_renew": {
+      "type": "boolean",
+      "default": false
+    },
+    "member_number": {
+      "type": "string"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "name",
+    "category"
+  ]
+}

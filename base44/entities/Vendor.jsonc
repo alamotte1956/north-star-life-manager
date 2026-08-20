@@ -1,0 +1,85 @@
+{
+  "name": "Vendor",
+  "type": "object",
+  "properties": {
+    "company_name": {
+      "type": "string",
+      "description": "Vendor company name"
+    },
+    "contact_name": {
+      "type": "string",
+      "description": "Primary contact person"
+    },
+    "email": {
+      "type": "string",
+      "description": "Vendor email"
+    },
+    "phone": {
+      "type": "string",
+      "description": "Contact phone"
+    },
+    "specialties": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "hvac",
+          "plumbing",
+          "electrical",
+          "landscaping",
+          "cleaning",
+          "security",
+          "pool",
+          "appliance",
+          "pest_control",
+          "general"
+        ]
+      },
+      "description": "Service specialties"
+    },
+    "service_area_zip_codes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "ZIP codes they service"
+    },
+    "hourly_rate": {
+      "type": "number",
+      "description": "Standard hourly rate"
+    },
+    "rating": {
+      "type": "number",
+      "description": "Average rating (1-5)"
+    },
+    "total_jobs_completed": {
+      "type": "number",
+      "default": 0,
+      "description": "Number of completed jobs"
+    },
+    "available": {
+      "type": "boolean",
+      "default": true,
+      "description": "Currently available for work"
+    },
+    "availability_schedule": {
+      "type": "object",
+      "description": "Weekly availability (hours)"
+    },
+    "insurance_verified": {
+      "type": "boolean",
+      "default": false
+    },
+    "license_number": {
+      "type": "string"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "company_name",
+    "email",
+    "specialties"
+  ]
+}

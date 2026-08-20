@@ -1,0 +1,44 @@
+{
+  "name": "EmergencyInfo",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Title (e.g., Home Security Code, Emergency Contact)"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "security_code",
+        "legal_document",
+        "emergency_contact",
+        "account_info",
+        "other"
+      ],
+      "description": "Type of emergency information"
+    },
+    "content": {
+      "type": "string",
+      "description": "The actual information (code, details, etc.)"
+    },
+    "location": {
+      "type": "string",
+      "description": "Physical location (e.g., Main Residence, Lake Cabin)"
+    },
+    "priority": {
+      "type": "string",
+      "enum": [
+        "critical",
+        "high",
+        "medium",
+        "low"
+      ],
+      "default": "medium",
+      "description": "Priority level"
+    }
+  },
+  "required": [
+    "title",
+    "content"
+  ]
+}

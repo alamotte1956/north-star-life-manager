@@ -1,0 +1,68 @@
+{
+  "name": "TenantNotificationPreference",
+  "type": "object",
+  "properties": {
+    "tenant_email": {
+      "type": "string",
+      "description": "Email of the tenant"
+    },
+    "rent_due_enabled": {
+      "type": "boolean",
+      "default": true,
+      "description": "Notify about upcoming rent payments"
+    },
+    "rent_due_days_before": {
+      "type": "number",
+      "default": 3,
+      "description": "Days before rent due to notify"
+    },
+    "rent_overdue_enabled": {
+      "type": "boolean",
+      "default": true,
+      "description": "Notify when rent is overdue"
+    },
+    "maintenance_update_enabled": {
+      "type": "boolean",
+      "default": true,
+      "description": "Notify about maintenance request updates"
+    },
+    "maintenance_completed_enabled": {
+      "type": "boolean",
+      "default": true,
+      "description": "Notify when maintenance is completed"
+    },
+    "lease_expiring_enabled": {
+      "type": "boolean",
+      "default": true,
+      "description": "Notify about upcoming lease expiration"
+    },
+    "lease_expiring_days_before": {
+      "type": "number",
+      "default": 60,
+      "description": "Days before lease expires to notify"
+    },
+    "announcements_enabled": {
+      "type": "boolean",
+      "default": true,
+      "description": "Receive announcements from property manager"
+    },
+    "payment_received_enabled": {
+      "type": "boolean",
+      "default": true,
+      "description": "Notify when payment is received"
+    },
+    "in_app_enabled": {
+      "type": "boolean",
+      "default": true,
+      "description": "Show in-app notifications"
+    },
+    "email_enabled": {
+      "type": "boolean",
+      "default": false,
+      "description": "Send email notifications"
+    }
+  },
+  "required": [
+    "tenant_email"
+  ]
+}

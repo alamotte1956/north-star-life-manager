@@ -1,0 +1,52 @@
+{
+  "name": "Family",
+  "type": "object",
+  "properties": {
+    "family_name": {
+      "type": "string",
+      "description": "Name of the family or household"
+    },
+    "family_code": {
+      "type": "string",
+      "description": "Unique code for family members to join"
+    },
+    "primary_admin_email": {
+      "type": "string",
+      "description": "Primary admin of the family"
+    },
+    "subscription_tier": {
+      "type": "string",
+      "enum": [
+        "free",
+        "basic",
+        "premium"
+      ],
+      "default": "free",
+      "description": "Family subscription level"
+    },
+    "storage_quota_gb": {
+      "type": "number",
+      "default": 5,
+      "description": "Storage quota in GB"
+    },
+    "storage_used_gb": {
+      "type": "number",
+      "default": 0,
+      "description": "Storage currently used"
+    },
+    "member_limit": {
+      "type": "number",
+      "default": 5,
+      "description": "Maximum family members"
+    },
+    "active": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "family_name",
+    "family_code",
+    "primary_admin_email"
+  ]
+}

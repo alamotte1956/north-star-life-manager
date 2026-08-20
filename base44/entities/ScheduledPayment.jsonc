@@ -1,0 +1,87 @@
+{
+  "name": "ScheduledPayment",
+  "type": "object",
+  "properties": {
+    "bill_payment_id": {
+      "type": "string",
+      "description": "Related bill"
+    },
+    "bill_name": {
+      "type": "string",
+      "description": "Bill name for display"
+    },
+    "amount": {
+      "type": "number",
+      "description": "Payment amount"
+    },
+    "payment_method_id": {
+      "type": "string",
+      "description": "Payment method to use"
+    },
+    "scheduled_date": {
+      "type": "string",
+      "format": "date",
+      "description": "When payment will execute"
+    },
+    "due_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Original bill due date"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending_approval",
+        "approved",
+        "scheduled",
+        "processing",
+        "completed",
+        "failed",
+        "cancelled"
+      ],
+      "default": "pending_approval",
+      "description": "Payment status"
+    },
+    "requires_approval": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether manual approval is needed"
+    },
+    "approved_by": {
+      "type": "string",
+      "description": "Who approved the payment"
+    },
+    "approved_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When payment was approved"
+    },
+    "executed_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When payment was executed"
+    },
+    "confirmation_number": {
+      "type": "string",
+      "description": "Payment confirmation number"
+    },
+    "failure_reason": {
+      "type": "string",
+      "description": "Reason if payment failed"
+    },
+    "ai_confidence": {
+      "type": "number",
+      "description": "AI confidence in scheduling this payment"
+    },
+    "auto_scheduled": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether this was auto-scheduled by AI"
+    }
+  },
+  "required": [
+    "bill_payment_id",
+    "amount",
+    "scheduled_date"
+  ]
+}

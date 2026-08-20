@@ -1,0 +1,59 @@
+{
+  "name": "User",
+  "type": "object",
+  "properties": {
+    "user_type": {
+      "type": "string",
+      "enum": [
+        "regular",
+        "staff",
+        "master_admin"
+      ],
+      "default": "regular",
+      "description": "User access level - master_admin and staff get free access"
+    },
+    "family_id": {
+      "type": "string",
+      "description": "Family group this user belongs to"
+    },
+    "phone": {
+      "type": "string",
+      "description": "Phone number"
+    },
+    "address": {
+      "type": "string",
+      "description": "Physical address"
+    },
+    "date_of_birth": {
+      "type": "string",
+      "format": "date",
+      "description": "Date of birth"
+    },
+    "emergency_contact_name": {
+      "type": "string",
+      "description": "Emergency contact name"
+    },
+    "emergency_contact_phone": {
+      "type": "string",
+      "description": "Emergency contact phone"
+    },
+    "timezone": {
+      "type": "string",
+      "default": "America/New_York",
+      "description": "User timezone"
+    },
+    "preferences": {
+      "type": "object",
+      "description": "User preferences and settings"
+    }
+  },
+  "required": [
+    "family_id",
+    "phone",
+    "address",
+    "date_of_birth",
+    "emergency_contact_name",
+    "emergency_contact_phone",
+    "preferences"
+  ]
+}

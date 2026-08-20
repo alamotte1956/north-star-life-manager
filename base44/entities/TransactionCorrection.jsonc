@@ -1,0 +1,42 @@
+{
+  "name": "TransactionCorrection",
+  "type": "object",
+  "properties": {
+    "merchant": {
+      "type": "string",
+      "description": "Merchant name"
+    },
+    "description_pattern": {
+      "type": "string",
+      "description": "Transaction description pattern"
+    },
+    "corrected_category": {
+      "type": "string",
+      "enum": [
+        "property",
+        "vehicle",
+        "subscription",
+        "maintenance",
+        "health",
+        "travel",
+        "utilities",
+        "groceries",
+        "dining",
+        "entertainment",
+        "other"
+      ],
+      "description": "User-corrected category"
+    },
+    "ai_suggested_category": {
+      "type": "string",
+      "description": "What AI originally suggested"
+    },
+    "confidence": {
+      "type": "number",
+      "description": "Confidence score for this correction"
+    }
+  },
+  "required": [
+    "corrected_category"
+  ]
+}

@@ -1,0 +1,68 @@
+{
+  "name": "WorkflowRule",
+  "type": "object",
+  "properties": {
+    "family_id": {
+      "type": "string",
+      "description": "ID of the family"
+    },
+    "rule_name": {
+      "type": "string",
+      "description": "Name of the automation rule"
+    },
+    "trigger_type": {
+      "type": "string",
+      "enum": [
+        "document_uploaded",
+        "document_expiring",
+        "document_expired",
+        "document_category_match",
+        "folder_created"
+      ],
+      "description": "What triggers this rule"
+    },
+    "trigger_conditions": {
+      "type": "object",
+      "description": "Conditions for trigger (e.g., category=tax, days_before=30)"
+    },
+    "action_type": {
+      "type": "string",
+      "enum": [
+        "assign_task",
+        "send_notification",
+        "add_to_calendar",
+        "send_email"
+      ],
+      "description": "Action to perform"
+    },
+    "action_config": {
+      "type": "object",
+      "description": "Configuration for action (e.g., task details, notification message)"
+    },
+    "enabled": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether rule is active"
+    },
+    "created_by_email": {
+      "type": "string",
+      "description": "Who created the rule"
+    },
+    "last_triggered": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When rule was last triggered"
+    },
+    "trigger_count": {
+      "type": "number",
+      "default": 0,
+      "description": "How many times rule has been triggered"
+    }
+  },
+  "required": [
+    "family_id",
+    "rule_name",
+    "trigger_type",
+    "action_type"
+  ]
+}

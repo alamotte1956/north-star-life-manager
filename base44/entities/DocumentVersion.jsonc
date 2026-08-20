@@ -1,0 +1,52 @@
+{
+  "name": "DocumentVersion",
+  "type": "object",
+  "properties": {
+    "document_id": {
+      "type": "string",
+      "description": "ID of the parent document"
+    },
+    "version_number": {
+      "type": "number",
+      "description": "Version number (1, 2, 3, etc.)"
+    },
+    "file_url": {
+      "type": "string",
+      "description": "URL to this version's file"
+    },
+    "file_size_bytes": {
+      "type": "number",
+      "description": "File size in bytes"
+    },
+    "title": {
+      "type": "string",
+      "description": "Document title at this version"
+    },
+    "change_description": {
+      "type": "string",
+      "description": "What changed in this version"
+    },
+    "uploaded_by": {
+      "type": "string",
+      "description": "Email of user who uploaded this version"
+    },
+    "extracted_text": {
+      "type": "string",
+      "description": "OCR text for this version"
+    },
+    "extracted_data": {
+      "type": "object",
+      "description": "Structured data from this version"
+    },
+    "is_current": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether this is the current active version"
+    }
+  },
+  "required": [
+    "document_id",
+    "version_number",
+    "file_url"
+  ]
+}

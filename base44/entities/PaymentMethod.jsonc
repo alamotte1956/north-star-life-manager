@@ -1,0 +1,62 @@
+{
+  "name": "PaymentMethod",
+  "type": "object",
+  "properties": {
+    "user_email": {
+      "type": "string",
+      "description": "Owner email"
+    },
+    "method_type": {
+      "type": "string",
+      "enum": [
+        "credit_card",
+        "debit_card",
+        "bank_account"
+      ],
+      "description": "Type of payment method"
+    },
+    "nickname": {
+      "type": "string",
+      "description": "User-friendly name"
+    },
+    "last_four": {
+      "type": "string",
+      "description": "Last 4 digits"
+    },
+    "card_brand": {
+      "type": "string",
+      "description": "Visa, Mastercard, etc."
+    },
+    "bank_name": {
+      "type": "string",
+      "description": "Bank name for bank accounts"
+    },
+    "payment_token": {
+      "type": "string",
+      "description": "Encrypted payment token (NOT actual card number)"
+    },
+    "is_default": {
+      "type": "boolean",
+      "default": false,
+      "description": "Default payment method"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "expired",
+        "disabled"
+      ],
+      "default": "active"
+    },
+    "expiry_date": {
+      "type": "string",
+      "description": "Expiry date for cards (MM/YY)"
+    }
+  },
+  "required": [
+    "method_type",
+    "nickname",
+    "last_four"
+  ]
+}

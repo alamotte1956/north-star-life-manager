@@ -1,0 +1,157 @@
+{
+  "name": "CalendarEvent",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Event or task title"
+    },
+    "description": {
+      "type": "string",
+      "description": "Detailed description"
+    },
+    "event_type": {
+      "type": "string",
+      "enum": [
+        "task",
+        "maintenance",
+        "bill_due",
+        "lease_event",
+        "document_expiry",
+        "appointment",
+        "reminder",
+        "other"
+      ],
+      "default": "task",
+      "description": "Type of calendar event"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "maintenance",
+        "financial",
+        "administrative",
+        "seasonal",
+        "legal",
+        "health",
+        "personal",
+        "other"
+      ],
+      "default": "other",
+      "description": "Event category"
+    },
+    "due_date": {
+      "type": "string",
+      "format": "date",
+      "description": "When the event/task is due"
+    },
+    "due_time": {
+      "type": "string",
+      "description": "Specific time (HH:MM format)"
+    },
+    "all_day": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether this is an all-day event"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "completed",
+        "cancelled"
+      ],
+      "default": "pending",
+      "description": "Event status"
+    },
+    "priority": {
+      "type": "string",
+      "enum": [
+        "high",
+        "medium",
+        "low"
+      ],
+      "default": "medium",
+      "description": "Task priority"
+    },
+    "linked_entity_type": {
+      "type": "string",
+      "description": "Type of linked entity (Property, MaintenanceTask, BillPayment, etc.)"
+    },
+    "linked_entity_id": {
+      "type": "string",
+      "description": "ID of the linked entity"
+    },
+    "linked_entity_name": {
+      "type": "string",
+      "description": "Name/title of the linked entity for display"
+    },
+    "reminders": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "time_value": {
+            "type": "number",
+            "description": "Numeric value for reminder time"
+          },
+          "time_unit": {
+            "type": "string",
+            "enum": [
+              "minutes",
+              "hours",
+              "days",
+              "weeks"
+            ],
+            "description": "Unit of time"
+          },
+          "triggered": {
+            "type": "boolean",
+            "default": false,
+            "description": "Whether this reminder has been triggered"
+          },
+          "triggered_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When reminder was triggered"
+          }
+        }
+      },
+      "default": [],
+      "description": "Array of custom reminders for this event"
+    },
+    "reminder_days_before": {
+      "type": "number",
+      "default": 1,
+      "description": "DEPRECATED: Days before due date to send reminder - use reminders array instead"
+    },
+    "recurring": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether this is a recurring event"
+    },
+    "recurrence_pattern": {
+      "type": "string",
+      "enum": [
+        "daily",
+        "weekly",
+        "monthly",
+        "quarterly",
+        "yearly"
+      ],
+      "description": "How often the event repeats"
+    },
+    "completed_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the task was completed"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "title",
+    "due_date"
+  ]
+}

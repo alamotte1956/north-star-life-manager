@@ -1,0 +1,148 @@
+{
+  "name": "Communication",
+  "type": "object",
+  "properties": {
+    "communication_type": {
+      "type": "string",
+      "enum": [
+        "email",
+        "sms",
+        "in_app",
+        "notification"
+      ],
+      "description": "Type of communication"
+    },
+    "direction": {
+      "type": "string",
+      "enum": [
+        "inbound",
+        "outbound"
+      ],
+      "default": "outbound",
+      "description": "Communication direction"
+    },
+    "sender_email": {
+      "type": "string",
+      "description": "Sender email address"
+    },
+    "sender_phone": {
+      "type": "string",
+      "description": "Sender phone number"
+    },
+    "recipient_email": {
+      "type": "string",
+      "description": "Recipient email address"
+    },
+    "recipient_phone": {
+      "type": "string",
+      "description": "Recipient phone number"
+    },
+    "subject": {
+      "type": "string",
+      "description": "Subject line for emails"
+    },
+    "body": {
+      "type": "string",
+      "description": "Message content"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "sent",
+        "delivered",
+        "failed",
+        "read"
+      ],
+      "default": "draft",
+      "description": "Communication status"
+    },
+    "linked_entity_type": {
+      "type": "string",
+      "description": "Type of linked entity (Property, Contact, BillPayment, etc.)"
+    },
+    "linked_entity_id": {
+      "type": "string",
+      "description": "ID of linked entity"
+    },
+    "linked_entity_name": {
+      "type": "string",
+      "description": "Name of linked entity for display"
+    },
+    "thread_id": {
+      "type": "string",
+      "description": "Thread ID for grouping related messages"
+    },
+    "reply_to_id": {
+      "type": "string",
+      "description": "ID of message being replied to"
+    },
+    "ai_generated": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether message was AI-generated"
+    },
+    "ai_confidence": {
+      "type": "number",
+      "description": "AI confidence score for generated content"
+    },
+    "sentiment": {
+      "type": "string",
+      "enum": [
+        "positive",
+        "neutral",
+        "negative",
+        "urgent"
+      ],
+      "description": "AI-detected sentiment"
+    },
+    "priority": {
+      "type": "string",
+      "enum": [
+        "low",
+        "normal",
+        "high",
+        "urgent"
+      ],
+      "default": "normal",
+      "description": "Message priority"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Tags for categorization"
+    },
+    "attachments": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Array of attachment URLs"
+    },
+    "scheduled_send_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When to send scheduled message"
+    },
+    "sent_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When message was sent"
+    },
+    "read_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When message was read"
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Additional communication metadata"
+    }
+  },
+  "required": [
+    "communication_type",
+    "body"
+  ]
+}

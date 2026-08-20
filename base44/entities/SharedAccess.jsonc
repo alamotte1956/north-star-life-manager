@@ -1,0 +1,76 @@
+{
+  "name": "SharedAccess",
+  "type": "object",
+  "properties": {
+    "entity_type": {
+      "type": "string",
+      "enum": [
+        "Property",
+        "Vehicle",
+        "Subscription",
+        "ValuableItem",
+        "MaintenanceTask",
+        "Document",
+        "Transaction",
+        "Automation",
+        "CalendarEvent",
+        "BillPayment",
+        "Investment",
+        "Contact",
+        "HealthRecord"
+      ],
+      "description": "Type of entity being shared"
+    },
+    "entity_id": {
+      "type": "string",
+      "description": "ID of the entity being shared"
+    },
+    "entity_name": {
+      "type": "string",
+      "description": "Name/title of the entity for display"
+    },
+    "shared_with_email": {
+      "type": "string",
+      "description": "Email of user who has access"
+    },
+    "shared_with_name": {
+      "type": "string",
+      "description": "Name of user for display"
+    },
+    "permission_level": {
+      "type": "string",
+      "enum": [
+        "view",
+        "edit",
+        "comment"
+      ],
+      "default": "view",
+      "description": "Access level granted"
+    },
+    "can_reshare": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether recipient can share with others"
+    },
+    "expiry_date": {
+      "type": "string",
+      "format": "date",
+      "description": "When access expires (optional)"
+    },
+    "notification_sent": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether recipient was notified"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Optional notes about why this is shared"
+    }
+  },
+  "required": [
+    "entity_type",
+    "entity_id",
+    "shared_with_email",
+    "entity_name"
+  ]
+}

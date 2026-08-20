@@ -1,0 +1,94 @@
+{
+  "name": "RentPayment",
+  "type": "object",
+  "properties": {
+    "property_id": {
+      "type": "string",
+      "description": "ID of the property"
+    },
+    "property_name": {
+      "type": "string",
+      "description": "Property name for display"
+    },
+    "tenant_name": {
+      "type": "string",
+      "description": "Tenant name"
+    },
+    "tenant_email": {
+      "type": "string",
+      "description": "Tenant email for notifications"
+    },
+    "tenant_phone": {
+      "type": "string",
+      "description": "Tenant phone for SMS reminders"
+    },
+    "amount": {
+      "type": "number",
+      "description": "Payment amount"
+    },
+    "due_date": {
+      "type": "string",
+      "format": "date",
+      "description": "When payment is due"
+    },
+    "payment_date": {
+      "type": "string",
+      "format": "date",
+      "description": "When payment was made"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "paid",
+        "overdue",
+        "partially_paid"
+      ],
+      "default": "pending",
+      "description": "Payment status"
+    },
+    "payment_method": {
+      "type": "string",
+      "enum": [
+        "online",
+        "check",
+        "bank_transfer",
+        "cash"
+      ],
+      "description": "How payment was made"
+    },
+    "stripe_payment_id": {
+      "type": "string",
+      "description": "Stripe payment intent ID"
+    },
+    "reminder_sent": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether reminder has been sent"
+    },
+    "reminder_sent_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When reminder was sent"
+    },
+    "late_notice_sent": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether late notice has been sent"
+    },
+    "late_notice_count": {
+      "type": "number",
+      "default": 0,
+      "description": "Number of late notices sent"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "property_id",
+    "property_name",
+    "amount",
+    "due_date"
+  ]
+}

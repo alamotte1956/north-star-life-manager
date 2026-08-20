@@ -1,0 +1,74 @@
+{
+  "name": "FinancialGoal",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Goal name"
+    },
+    "goal_type": {
+      "type": "string",
+      "enum": [
+        "savings",
+        "down_payment",
+        "retirement",
+        "education",
+        "vacation",
+        "emergency_fund",
+        "debt_payoff",
+        "investment",
+        "other"
+      ],
+      "description": "Type of financial goal"
+    },
+    "target_amount": {
+      "type": "number",
+      "description": "Target amount to reach"
+    },
+    "current_amount": {
+      "type": "number",
+      "default": 0,
+      "description": "Current progress"
+    },
+    "target_date": {
+      "type": "string",
+      "format": "date",
+      "description": "When to achieve goal"
+    },
+    "monthly_contribution": {
+      "type": "number",
+      "description": "Planned monthly contribution"
+    },
+    "priority": {
+      "type": "string",
+      "enum": [
+        "high",
+        "medium",
+        "low"
+      ],
+      "default": "medium"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "completed",
+        "paused"
+      ],
+      "default": "active"
+    },
+    "ai_suggestions": {
+      "type": "string",
+      "description": "AI-generated suggestions to reach goal faster"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "title",
+    "goal_type",
+    "target_amount",
+    "target_date"
+  ]
+}

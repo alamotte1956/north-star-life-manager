@@ -1,0 +1,73 @@
+{
+  "name": "MaintenanceFeedback",
+  "type": "object",
+  "properties": {
+    "assignment_id": {
+      "type": "string",
+      "description": "Related assignment"
+    },
+    "maintenance_task_id": {
+      "type": "string",
+      "description": "Related maintenance task"
+    },
+    "vendor_id": {
+      "type": "string",
+      "description": "Vendor being reviewed"
+    },
+    "tenant_email": {
+      "type": "string",
+      "description": "Tenant who provided feedback"
+    },
+    "property_name": {
+      "type": "string",
+      "description": "Property name"
+    },
+    "rating": {
+      "type": "number",
+      "description": "Rating 1-5"
+    },
+    "quality_rating": {
+      "type": "number",
+      "description": "Work quality rating"
+    },
+    "timeliness_rating": {
+      "type": "number",
+      "description": "Timeliness rating"
+    },
+    "professionalism_rating": {
+      "type": "number",
+      "description": "Professionalism rating"
+    },
+    "comments": {
+      "type": "string",
+      "description": "Additional feedback"
+    },
+    "issue_resolved": {
+      "type": "boolean",
+      "description": "Was the issue fully resolved"
+    },
+    "would_recommend": {
+      "type": "boolean",
+      "description": "Would recommend this vendor"
+    },
+    "ai_sentiment": {
+      "type": "string",
+      "enum": [
+        "positive",
+        "neutral",
+        "negative"
+      ],
+      "description": "AI-analyzed sentiment"
+    },
+    "ai_summary": {
+      "type": "string",
+      "description": "AI summary of feedback"
+    }
+  },
+  "required": [
+    "maintenance_task_id",
+    "vendor_id",
+    "tenant_email",
+    "rating"
+  ]
+}

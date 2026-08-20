@@ -1,0 +1,69 @@
+{
+  "name": "ValuableItem",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Item name or description"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "jewelry",
+        "art",
+        "wine",
+        "collectible",
+        "antique",
+        "watches",
+        "electronics",
+        "furniture",
+        "other"
+      ]
+    },
+    "purchase_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "purchase_price": {
+      "type": "number"
+    },
+    "current_value": {
+      "type": "number"
+    },
+    "last_appraisal_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "appraiser_name": {
+      "type": "string"
+    },
+    "serial_number": {
+      "type": "string"
+    },
+    "location": {
+      "type": "string",
+      "description": "Where item is kept"
+    },
+    "insured": {
+      "type": "boolean",
+      "default": false
+    },
+    "insurance_value": {
+      "type": "number"
+    },
+    "certificate_url": {
+      "type": "string",
+      "description": "Appraisal or authenticity certificate"
+    },
+    "image_url": {
+      "type": "string"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "name",
+    "category"
+  ]
+}

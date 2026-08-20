@@ -1,0 +1,45 @@
+{
+  "name": "DocumentFolder",
+  "type": "object",
+  "properties": {
+    "family_id": {
+      "type": "string",
+      "description": "ID of the family this folder belongs to"
+    },
+    "name": {
+      "type": "string",
+      "description": "Folder name"
+    },
+    "description": {
+      "type": "string",
+      "description": "Folder description"
+    },
+    "parent_folder_id": {
+      "type": "string",
+      "description": "Parent folder for nested folders"
+    },
+    "color": {
+      "type": "string",
+      "default": "#C5A059",
+      "description": "Folder color"
+    },
+    "icon": {
+      "type": "string",
+      "default": "folder",
+      "description": "Folder icon"
+    },
+    "shared_with_all": {
+      "type": "boolean",
+      "default": true,
+      "description": "Visible to all family members"
+    },
+    "created_by": {
+      "type": "string",
+      "description": "Email of creator"
+    }
+  },
+  "required": [
+    "family_id",
+    "name"
+  ]
+}

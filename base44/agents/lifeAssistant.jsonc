@@ -1,0 +1,98 @@
+{
+  "description": "AI assistant that helps users manage their life data, answer questions, and add records via natural language",
+  "instructions": "You are a helpful AI assistant for the North Star Life Manager app. You help users:\n\n1. Answer questions about their data (spending, upcoming dates, property info, etc.)\n2. Add new records when they ask (e.g., 'Add a maintenance task for HVAC service next month')\n3. Update existing records\n4. Provide summaries and insights\n\nBe conversational, friendly, and concise. When users ask vague questions, ask for clarification. When adding records, confirm what you've created. Always format dates clearly and handle amounts in dollars.",
+  "tool_configs": [
+    {
+      "entity_name": "Property",
+      "allowed_operations": [
+        "create",
+        "update",
+        "read"
+      ]
+    },
+    {
+      "entity_name": "Vehicle",
+      "allowed_operations": [
+        "create",
+        "update",
+        "read"
+      ]
+    },
+    {
+      "entity_name": "MaintenanceTask",
+      "allowed_operations": [
+        "create",
+        "update",
+        "read"
+      ]
+    },
+    {
+      "entity_name": "Subscription",
+      "allowed_operations": [
+        "create",
+        "update",
+        "read"
+      ]
+    },
+    {
+      "entity_name": "ValuableItem",
+      "allowed_operations": [
+        "create",
+        "update",
+        "read"
+      ]
+    },
+    {
+      "entity_name": "Contact",
+      "allowed_operations": [
+        "create",
+        "update",
+        "read"
+      ]
+    },
+    {
+      "entity_name": "TravelPlan",
+      "allowed_operations": [
+        "create",
+        "update",
+        "read"
+      ]
+    },
+    {
+      "entity_name": "HealthRecord",
+      "allowed_operations": [
+        "create",
+        "update",
+        "read"
+      ]
+    },
+    {
+      "entity_name": "Document",
+      "allowed_operations": [
+        "read"
+      ]
+    },
+    {
+      "entity_name": "ImportantDate",
+      "allowed_operations": [
+        "create",
+        "update",
+        "read"
+      ]
+    },
+    {
+      "entity_name": "Beneficiary",
+      "allowed_operations": [
+        "read"
+      ]
+    },
+    {
+      "entity_name": "AdvanceDirective",
+      "allowed_operations": [
+        "read"
+      ]
+    }
+  ],
+  "whatsapp_greeting": "",
+  "name": "lifeAssistant"
+}

@@ -1,0 +1,133 @@
+{
+  "name": "Document",
+  "type": "object",
+  "properties": {
+    "family_id": {
+      "type": "string",
+      "description": "ID of the family this document belongs to"
+    },
+    "folder_id": {
+      "type": "string",
+      "description": "ID of the folder containing this document"
+    },
+    "title": {
+      "type": "string",
+      "description": "Document title or filename"
+    },
+    "file_url": {
+      "type": "string",
+      "description": "URL to the uploaded PDF or image"
+    },
+    "document_type": {
+      "type": "string",
+      "description": "AI-extracted document type (e.g., Invoice, Receipt, Contract)"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "legal",
+        "financial",
+        "property",
+        "vehicle",
+        "health",
+        "insurance",
+        "tax",
+        "personal",
+        "other"
+      ],
+      "description": "Document category"
+    },
+    "extracted_text": {
+      "type": "string",
+      "description": "Full OCR-extracted text from document"
+    },
+    "extracted_data": {
+      "type": "object",
+      "description": "Comprehensive structured data: contract dates, amounts, parties involved, contact info, important dates"
+    },
+    "expiry_date": {
+      "type": "string",
+      "format": "date",
+      "description": "AI-extracted expiry date if applicable"
+    },
+    "expiry_notification_sent_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When expiry notification was sent"
+    },
+    "expired_notification_sent_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When expired notification was sent"
+    },
+    "amount": {
+      "type": "number",
+      "description": "Extracted monetary amount (for invoices, receipts, etc.)"
+    },
+    "linked_entity_type": {
+      "type": "string",
+      "description": "Type of entity this document is linked to (Property, Vehicle, etc.)"
+    },
+    "linked_entity_id": {
+      "type": "string",
+      "description": "ID of the linked entity"
+    },
+    "linked_entity_name": {
+      "type": "string",
+      "description": "Name of the linked entity for display"
+    },
+    "analysis_status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "analyzing",
+        "completed",
+        "failed"
+      ],
+      "default": "pending",
+      "description": "Status of AI analysis"
+    },
+    "cabin_related": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether this document relates to cabin/seasonal property"
+    },
+    "ai_summary": {
+      "type": "string",
+      "description": "AI-generated 2-3 sentence summary of key information"
+    },
+    "key_points": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "4-7 key points extracted from the document"
+    },
+    "action_items": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Action items or next steps identified in the document"
+    },
+    "suggested_tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "AI-suggested tags for organization (e.g., urgent, renewal-needed, high-value)"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Additional notes about the document"
+    },
+    "supabase_doc_id": {
+      "type": "string",
+      "description": "Reference to Supabase document ID"
+    }
+  },
+  "required": [
+    "title",
+    "file_url"
+  ]
+}

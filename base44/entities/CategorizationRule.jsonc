@@ -1,0 +1,68 @@
+{
+  "name": "CategorizationRule",
+  "type": "object",
+  "properties": {
+    "user_email": {
+      "type": "string",
+      "description": "User who created the rule"
+    },
+    "merchant_pattern": {
+      "type": "string",
+      "description": "Merchant name pattern (e.g., 'Netflix', 'Amazon')"
+    },
+    "category": {
+      "type": "string",
+      "description": "Assigned category"
+    },
+    "confidence": {
+      "type": "number",
+      "default": 1.0,
+      "description": "Rule confidence (0-1)"
+    },
+    "rule_type": {
+      "type": "string",
+      "enum": [
+        "user_created",
+        "ai_learned",
+        "manual_correction"
+      ],
+      "default": "user_created",
+      "description": "How rule was created"
+    },
+    "match_count": {
+      "type": "number",
+      "default": 0,
+      "description": "Times this rule has matched"
+    },
+    "correction_count": {
+      "type": "number",
+      "default": 0,
+      "description": "Times user corrected this rule"
+    },
+    "last_matched": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Last time rule was used"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether rule is active"
+    },
+    "applies_to": {
+      "type": "string",
+      "enum": [
+        "budget",
+        "investment",
+        "bill",
+        "all"
+      ],
+      "default": "all",
+      "description": "What transactions this applies to"
+    }
+  },
+  "required": [
+    "merchant_pattern",
+    "category"
+  ]
+}

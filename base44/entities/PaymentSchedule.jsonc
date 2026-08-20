@@ -1,0 +1,89 @@
+{
+  "name": "PaymentSchedule",
+  "type": "object",
+  "properties": {
+    "property_id": {
+      "type": "string",
+      "description": "ID of the property"
+    },
+    "property_name": {
+      "type": "string",
+      "description": "Property name"
+    },
+    "tenant_email": {
+      "type": "string",
+      "description": "Tenant email"
+    },
+    "tenant_phone": {
+      "type": "string",
+      "description": "Tenant phone"
+    },
+    "amount": {
+      "type": "number",
+      "description": "Monthly rent amount"
+    },
+    "frequency": {
+      "type": "string",
+      "enum": [
+        "monthly",
+        "biweekly",
+        "weekly"
+      ],
+      "default": "monthly",
+      "description": "Payment frequency"
+    },
+    "due_day": {
+      "type": "number",
+      "description": "Day of month rent is due (1-31)"
+    },
+    "reminder_days_before": {
+      "type": "number",
+      "default": 3,
+      "description": "Days before due date to send reminder"
+    },
+    "grace_period_days": {
+      "type": "number",
+      "default": 5,
+      "description": "Days after due date before late notices"
+    },
+    "late_fee_amount": {
+      "type": "number",
+      "description": "Late fee amount"
+    },
+    "auto_reminder_enabled": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether to send automated reminders"
+    },
+    "reminder_channels": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "email",
+          "sms"
+        ]
+      },
+      "default": [
+        "email"
+      ],
+      "description": "Channels for reminders"
+    },
+    "active": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether schedule is active"
+    },
+    "last_payment_generated": {
+      "type": "string",
+      "format": "date",
+      "description": "Last date payment record was generated"
+    }
+  },
+  "required": [
+    "property_id",
+    "property_name",
+    "amount",
+    "due_day"
+  ]
+}

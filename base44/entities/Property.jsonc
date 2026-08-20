@@ -1,0 +1,125 @@
+{
+  "name": "Property",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Property name (e.g., Main Residence, Lake Cabin)"
+    },
+    "address": {
+      "type": "string"
+    },
+    "property_type": {
+      "type": "string",
+      "enum": [
+        "primary_residence",
+        "vacation_home",
+        "cabin",
+        "investment_property",
+        "other"
+      ]
+    },
+    "seasonal": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether this is a seasonal property"
+    },
+    "season_open": {
+      "type": "string",
+      "description": "When property is opened (e.g., May)"
+    },
+    "season_close": {
+      "type": "string",
+      "description": "When property is closed (e.g., October)"
+    },
+    "square_footage": {
+      "type": "number"
+    },
+    "purchase_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "purchase_price": {
+      "type": "number"
+    },
+    "current_value": {
+      "type": "number"
+    },
+    "property_tax_annual": {
+      "type": "number"
+    },
+    "insurance_provider": {
+      "type": "string"
+    },
+    "insurance_policy_number": {
+      "type": "string"
+    },
+    "tenant_name": {
+      "type": "string",
+      "description": "Current tenant name (for investment properties)"
+    },
+    "tenant_email": {
+      "type": "string",
+      "description": "Tenant contact email"
+    },
+    "tenant_phone": {
+      "type": "string",
+      "description": "Tenant contact phone"
+    },
+    "lease_start_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Lease start date"
+    },
+    "lease_end_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Lease expiration date"
+    },
+    "monthly_rent": {
+      "type": "number",
+      "description": "Monthly rent amount"
+    },
+    "security_deposit": {
+      "type": "number",
+      "description": "Security deposit amount"
+    },
+    "ai_maintenance_score": {
+      "type": "number",
+      "description": "AI-calculated maintenance health score (0-100)"
+    },
+    "ai_financial_score": {
+      "type": "number",
+      "description": "AI-calculated financial health score (0-100)"
+    },
+    "ai_risk_factors": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "AI-identified risk factors"
+    },
+    "ai_recommendations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "AI-generated recommendations"
+    },
+    "next_major_repair": {
+      "type": "string",
+      "description": "AI-predicted next major repair needed"
+    },
+    "estimated_repair_cost": {
+      "type": "number",
+      "description": "AI-estimated cost for next major repair"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "name",
+    "property_type"
+  ]
+}

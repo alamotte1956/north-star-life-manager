@@ -1,0 +1,112 @@
+{
+  "name": "Email",
+  "type": "object",
+  "properties": {
+    "subject": {
+      "type": "string",
+      "description": "Email subject"
+    },
+    "from": {
+      "type": "string",
+      "description": "Sender email address"
+    },
+    "to": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Recipient email addresses"
+    },
+    "cc": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "CC email addresses"
+    },
+    "body": {
+      "type": "string",
+      "description": "Email content"
+    },
+    "thread_id": {
+      "type": "string",
+      "description": "Email thread identifier"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "work",
+        "personal",
+        "finance",
+        "travel",
+        "family",
+        "health",
+        "property",
+        "subscriptions",
+        "other"
+      ],
+      "description": "AI-categorized email type"
+    },
+    "priority": {
+      "type": "string",
+      "enum": [
+        "high",
+        "medium",
+        "low"
+      ],
+      "default": "medium",
+      "description": "AI-determined priority"
+    },
+    "ai_summary": {
+      "type": "string",
+      "description": "AI-generated email summary"
+    },
+    "suggested_reply": {
+      "type": "string",
+      "description": "AI-suggested reply"
+    },
+    "action_items": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "AI-extracted action items"
+    },
+    "sentiment": {
+      "type": "string",
+      "enum": [
+        "positive",
+        "neutral",
+        "negative",
+        "urgent"
+      ],
+      "description": "Email sentiment"
+    },
+    "read": {
+      "type": "boolean",
+      "default": false
+    },
+    "starred": {
+      "type": "boolean",
+      "default": false
+    },
+    "archived": {
+      "type": "boolean",
+      "default": false
+    },
+    "reminder_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When to remind about this email"
+    },
+    "draft": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether this is a draft email"
+    }
+  },
+  "required": [
+    "subject",
+    "from"
+  ]
+}

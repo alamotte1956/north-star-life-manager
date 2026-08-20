@@ -1,0 +1,46 @@
+{
+  "name": "ImportantDate",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "date": {
+      "type": "string",
+      "format": "date"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "birthday",
+        "anniversary",
+        "tax_deadline",
+        "renewal",
+        "appointment",
+        "event",
+        "holiday",
+        "other"
+      ]
+    },
+    "recurring": {
+      "type": "boolean",
+      "default": false
+    },
+    "reminder_days_before": {
+      "type": "number",
+      "default": 7,
+      "description": "Days before to send reminder"
+    },
+    "person_name": {
+      "type": "string"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "title",
+    "date",
+    "category"
+  ]
+}

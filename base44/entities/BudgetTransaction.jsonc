@@ -1,0 +1,50 @@
+{
+  "name": "BudgetTransaction",
+  "type": "object",
+  "properties": {
+    "budget_id": {
+      "type": "string",
+      "description": "Related budget ID"
+    },
+    "category": {
+      "type": "string",
+      "description": "Budget category"
+    },
+    "amount": {
+      "type": "number",
+      "description": "Transaction amount"
+    },
+    "description": {
+      "type": "string",
+      "description": "Transaction description"
+    },
+    "transaction_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Date of transaction"
+    },
+    "source_type": {
+      "type": "string",
+      "enum": [
+        "bill_payment",
+        "subscription",
+        "manual"
+      ],
+      "description": "Where transaction came from"
+    },
+    "source_id": {
+      "type": "string",
+      "description": "ID of source record (bill or subscription)"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "budget_id",
+    "category",
+    "amount",
+    "transaction_date",
+    "source_type"
+  ]
+}

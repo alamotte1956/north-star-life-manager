@@ -1,0 +1,51 @@
+{
+  "name": "Automation",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Automation name"
+    },
+    "trigger_type": {
+      "type": "string",
+      "enum": [
+        "email",
+        "calendar",
+        "webhook",
+        "scheduled"
+      ],
+      "description": "What triggers this automation"
+    },
+    "trigger_config": {
+      "type": "object",
+      "description": "Trigger configuration (email filters, calendar patterns, etc.)"
+    },
+    "action_type": {
+      "type": "string",
+      "enum": [
+        "create_subscription",
+        "create_maintenance",
+        "create_transaction",
+        "send_notification"
+      ],
+      "description": "Action to perform"
+    },
+    "action_config": {
+      "type": "object",
+      "description": "Action configuration"
+    },
+    "enabled": {
+      "type": "boolean",
+      "default": true
+    },
+    "last_triggered": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "name",
+    "trigger_type",
+    "action_type"
+  ]
+}

@@ -1,0 +1,72 @@
+{
+  "name": "MedicalEmergencyInfo",
+  "type": "object",
+  "properties": {
+    "blood_type": {
+      "type": "string",
+      "enum": [
+        "A+",
+        "A-",
+        "B+",
+        "B-",
+        "AB+",
+        "AB-",
+        "O+",
+        "O-",
+        "Unknown"
+      ]
+    },
+    "allergies": {
+      "type": "string",
+      "description": "Medication and food allergies"
+    },
+    "current_medications": {
+      "type": "string",
+      "description": "List of current medications and dosages"
+    },
+    "chronic_conditions": {
+      "type": "string",
+      "description": "Diabetes, heart disease, etc."
+    },
+    "emergency_contact_name": {
+      "type": "string"
+    },
+    "emergency_contact_phone": {
+      "type": "string"
+    },
+    "emergency_contact_relationship": {
+      "type": "string"
+    },
+    "primary_physician": {
+      "type": "string"
+    },
+    "primary_physician_phone": {
+      "type": "string"
+    },
+    "preferred_hospital": {
+      "type": "string"
+    },
+    "insurance_provider": {
+      "type": "string"
+    },
+    "insurance_policy_number": {
+      "type": "string"
+    },
+    "insurance_group_number": {
+      "type": "string"
+    },
+    "organ_donor": {
+      "type": "boolean",
+      "default": false
+    },
+    "advance_directive_on_file": {
+      "type": "boolean",
+      "default": false
+    },
+    "special_instructions": {
+      "type": "string",
+      "description": "Any critical medical instructions"
+    }
+  },
+  "required": []
+}

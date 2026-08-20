@@ -1,0 +1,65 @@
+{
+  "name": "AdvanceDirective",
+  "type": "object",
+  "properties": {
+    "document_type": {
+      "type": "string",
+      "enum": [
+        "living_will",
+        "healthcare_proxy",
+        "power_of_attorney_financial",
+        "power_of_attorney_healthcare",
+        "dnr_order",
+        "organ_donation"
+      ],
+      "description": "Type of advance directive"
+    },
+    "title": {
+      "type": "string"
+    },
+    "agent_name": {
+      "type": "string",
+      "description": "Person appointed (if applicable)"
+    },
+    "agent_phone": {
+      "type": "string"
+    },
+    "agent_email": {
+      "type": "string"
+    },
+    "alternate_agent_name": {
+      "type": "string"
+    },
+    "alternate_agent_phone": {
+      "type": "string"
+    },
+    "execution_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "witness_names": {
+      "type": "string"
+    },
+    "notarized": {
+      "type": "boolean",
+      "default": false
+    },
+    "document_url": {
+      "type": "string"
+    },
+    "attorney_name": {
+      "type": "string"
+    },
+    "stored_location": {
+      "type": "string",
+      "description": "Where original is kept"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "document_type",
+    "title"
+  ]
+}

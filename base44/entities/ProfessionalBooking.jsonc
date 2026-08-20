@@ -1,0 +1,72 @@
+{
+  "name": "ProfessionalBooking",
+  "type": "object",
+  "properties": {
+    "user_email": {
+      "type": "string",
+      "description": "Client email"
+    },
+    "professional_id": {
+      "type": "string",
+      "description": "Professional ID"
+    },
+    "professional_name": {
+      "type": "string",
+      "description": "Professional name"
+    },
+    "service_type": {
+      "type": "string",
+      "description": "Type of service"
+    },
+    "appointment_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "duration_minutes": {
+      "type": "number",
+      "default": 60
+    },
+    "meeting_type": {
+      "type": "string",
+      "enum": [
+        "in_person",
+        "video",
+        "phone"
+      ],
+      "default": "video"
+    },
+    "meeting_link": {
+      "type": "string",
+      "description": "Video call URL"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "confirmed",
+        "completed",
+        "cancelled"
+      ],
+      "default": "pending"
+    },
+    "cost": {
+      "type": "number"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Client notes/questions"
+    },
+    "shared_documents": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Document IDs shared with professional"
+    }
+  },
+  "required": [
+    "professional_id",
+    "service_type",
+    "appointment_date"
+  ]
+}

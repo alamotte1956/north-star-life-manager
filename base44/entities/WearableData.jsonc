@@ -1,0 +1,61 @@
+{
+  "name": "WearableData",
+  "type": "object",
+  "properties": {
+    "date": {
+      "type": "string",
+      "format": "date",
+      "description": "Date of the health data"
+    },
+    "data_type": {
+      "type": "string",
+      "enum": [
+        "heart_rate",
+        "sleep",
+        "steps",
+        "blood_pressure",
+        "blood_oxygen",
+        "weight",
+        "exercise",
+        "stress"
+      ],
+      "description": "Type of health data"
+    },
+    "value": {
+      "type": "number",
+      "description": "Primary value (e.g., heart rate in bpm, steps count)"
+    },
+    "value_min": {
+      "type": "number",
+      "description": "Minimum value (e.g., min heart rate)"
+    },
+    "value_max": {
+      "type": "number",
+      "description": "Maximum value (e.g., max heart rate)"
+    },
+    "duration_minutes": {
+      "type": "number",
+      "description": "Duration in minutes (for sleep, exercise)"
+    },
+    "quality_score": {
+      "type": "number",
+      "description": "Quality score 1-100 (for sleep quality)"
+    },
+    "device_source": {
+      "type": "string",
+      "description": "Device that recorded data (e.g., Apple Watch, Fitbit)"
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Additional data specific to type"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "date",
+    "data_type",
+    "value"
+  ]
+}

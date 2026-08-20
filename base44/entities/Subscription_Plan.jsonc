@@ -1,0 +1,50 @@
+{
+  "name": "Subscription_Plan",
+  "type": "object",
+  "properties": {
+    "stripe_subscription_id": {
+      "type": "string",
+      "description": "Stripe subscription ID"
+    },
+    "stripe_customer_id": {
+      "type": "string",
+      "description": "Stripe customer ID"
+    },
+    "plan_name": {
+      "type": "string",
+      "enum": [
+        "basic",
+        "premium",
+        "enterprise"
+      ],
+      "description": "Subscription plan tier"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "cancelled",
+        "past_due",
+        "trialing"
+      ],
+      "default": "active"
+    },
+    "current_period_start": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "current_period_end": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "cancel_at_period_end": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "required": [
+    "stripe_subscription_id",
+    "stripe_customer_id",
+    "plan_name"
+  ]
+}

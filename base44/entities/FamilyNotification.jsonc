@@ -1,0 +1,68 @@
+{
+  "name": "FamilyNotification",
+  "type": "object",
+  "properties": {
+    "family_id": {
+      "type": "string",
+      "description": "ID of the family"
+    },
+    "recipient_email": {
+      "type": "string",
+      "description": "Recipient email (or null for all family)"
+    },
+    "notification_type": {
+      "type": "string",
+      "enum": [
+        "document_uploaded",
+        "document_shared",
+        "task_assigned",
+        "task_completed",
+        "folder_created",
+        "member_joined",
+        "document_expiring",
+        "comment_added",
+        "document_updated"
+      ]
+    },
+    "title": {
+      "type": "string",
+      "description": "Notification title"
+    },
+    "message": {
+      "type": "string",
+      "description": "Notification message"
+    },
+    "priority": {
+      "type": "string",
+      "enum": [
+        "low",
+        "medium",
+        "high",
+        "urgent"
+      ],
+      "default": "medium"
+    },
+    "read": {
+      "type": "boolean",
+      "default": false
+    },
+    "action_url": {
+      "type": "string",
+      "description": "URL to navigate to"
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Additional data"
+    },
+    "triggered_by_email": {
+      "type": "string",
+      "description": "Who triggered this notification"
+    }
+  },
+  "required": [
+    "family_id",
+    "notification_type",
+    "title",
+    "message"
+  ]
+}

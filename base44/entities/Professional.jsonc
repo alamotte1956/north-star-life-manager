@@ -1,0 +1,99 @@
+{
+  "name": "Professional",
+  "type": "object",
+  "properties": {
+    "full_name": {
+      "type": "string",
+      "description": "Professional's name"
+    },
+    "professional_type": {
+      "type": "string",
+      "enum": [
+        "cpa",
+        "financial_advisor",
+        "estate_attorney",
+        "tax_attorney",
+        "insurance_agent",
+        "real_estate_agent",
+        "property_manager"
+      ],
+      "description": "Professional category"
+    },
+    "firm_name": {
+      "type": "string",
+      "description": "Company/firm name"
+    },
+    "email": {
+      "type": "string",
+      "description": "Contact email"
+    },
+    "phone": {
+      "type": "string",
+      "description": "Contact phone"
+    },
+    "specialties": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Areas of expertise"
+    },
+    "hourly_rate": {
+      "type": "number",
+      "description": "Hourly rate"
+    },
+    "flat_fee_services": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "service": {
+            "type": "string"
+          },
+          "price": {
+            "type": "number"
+          }
+        }
+      }
+    },
+    "rating": {
+      "type": "number",
+      "description": "Average rating (1-5)"
+    },
+    "total_bookings": {
+      "type": "number",
+      "default": 0
+    },
+    "bio": {
+      "type": "string",
+      "description": "Professional bio"
+    },
+    "credentials": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Licenses, certifications"
+    },
+    "location": {
+      "type": "string",
+      "description": "City, State"
+    },
+    "availability": {
+      "type": "object",
+      "description": "Weekly availability"
+    },
+    "verified": {
+      "type": "boolean",
+      "default": false
+    },
+    "profile_image": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "full_name",
+    "professional_type",
+    "email"
+  ]
+}

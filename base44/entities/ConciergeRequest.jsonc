@@ -1,0 +1,96 @@
+{
+  "name": "ConciergeRequest",
+  "type": "object",
+  "properties": {
+    "user_email": {
+      "type": "string"
+    },
+    "request_type": {
+      "type": "string",
+      "enum": [
+        "document_filing",
+        "appointment_booking",
+        "research",
+        "travel_planning",
+        "bill_payment",
+        "vendor_coordination",
+        "other"
+      ],
+      "description": "Request category"
+    },
+    "priority": {
+      "type": "string",
+      "enum": [
+        "low",
+        "normal",
+        "high",
+        "urgent"
+      ],
+      "default": "normal"
+    },
+    "title": {
+      "type": "string",
+      "description": "Request title"
+    },
+    "description": {
+      "type": "string",
+      "description": "Detailed description"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "submitted",
+        "assigned",
+        "in_progress",
+        "completed",
+        "cancelled"
+      ],
+      "default": "submitted"
+    },
+    "assigned_to": {
+      "type": "string",
+      "description": "Concierge team member"
+    },
+    "estimated_completion": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "actual_completion": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "timestamp": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "from": {
+            "type": "string"
+          }
+        }
+      },
+      "description": "Status updates"
+    },
+    "attachments": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "satisfaction_rating": {
+      "type": "number",
+      "description": "User rating (1-5)"
+    }
+  },
+  "required": [
+    "request_type",
+    "title",
+    "description"
+  ]
+}

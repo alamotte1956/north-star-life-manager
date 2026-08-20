@@ -1,0 +1,62 @@
+{
+  "name": "Budget",
+  "type": "object",
+  "properties": {
+    "family_id": {
+      "type": "string",
+      "description": "ID of the family"
+    },
+    "user_email": {
+      "type": "string",
+      "description": "User who created the budget"
+    },
+    "category": {
+      "type": "string",
+      "description": "Budget category (e.g., Housing, Food, Transportation)"
+    },
+    "monthly_limit": {
+      "type": "number",
+      "description": "Monthly spending limit for this category"
+    },
+    "current_spending": {
+      "type": "number",
+      "default": 0,
+      "description": "Current spending in this period"
+    },
+    "period_start": {
+      "type": "string",
+      "format": "date",
+      "description": "Budget period start date"
+    },
+    "period_end": {
+      "type": "string",
+      "format": "date",
+      "description": "Budget period end date"
+    },
+    "alert_threshold": {
+      "type": "number",
+      "default": 80,
+      "description": "Alert when spending reaches this percentage"
+    },
+    "auto_rollover": {
+      "type": "boolean",
+      "default": false,
+      "description": "Rollover unused budget to next period"
+    },
+    "rollover_amount": {
+      "type": "number",
+      "default": 0,
+      "description": "Amount rolled over from previous period"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Additional notes"
+    }
+  },
+  "required": [
+    "category",
+    "monthly_limit",
+    "period_start",
+    "period_end"
+  ]
+}

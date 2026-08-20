@@ -1,0 +1,36 @@
+{
+  "name": "FamilyMemberRole",
+  "type": "object",
+  "properties": {
+    "family_id": {
+      "type": "string",
+      "description": "ID of the family"
+    },
+    "user_email": {
+      "type": "string",
+      "description": "Email of the family member"
+    },
+    "role_id": {
+      "type": "string",
+      "description": "ID of the assigned custom role"
+    },
+    "role_name": {
+      "type": "string",
+      "description": "Name of role for display"
+    },
+    "assigned_by_email": {
+      "type": "string",
+      "description": "Admin who assigned the role"
+    },
+    "permissions": {
+      "type": "object",
+      "description": "Cached permissions from role"
+    }
+  },
+  "required": [
+    "family_id",
+    "user_email",
+    "role_id",
+    "role_name"
+  ]
+}

@@ -1,0 +1,108 @@
+{
+  "name": "BillPayment",
+  "type": "object",
+  "properties": {
+    "bill_name": {
+      "type": "string",
+      "description": "Name of the bill (e.g., Electric, Netflix)"
+    },
+    "merchant": {
+      "type": "string",
+      "description": "Merchant/company name"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "utilities",
+        "subscription",
+        "insurance",
+        "rent_mortgage",
+        "credit_card",
+        "loan",
+        "phone_internet",
+        "other"
+      ],
+      "description": "Type of bill"
+    },
+    "amount": {
+      "type": "number",
+      "description": "Bill amount"
+    },
+    "frequency": {
+      "type": "string",
+      "enum": [
+        "weekly",
+        "biweekly",
+        "monthly",
+        "quarterly",
+        "annual"
+      ],
+      "default": "monthly",
+      "description": "How often the bill recurs"
+    },
+    "due_day": {
+      "type": "number",
+      "description": "Day of month bill is due (1-31)"
+    },
+    "next_payment_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Next scheduled payment date"
+    },
+    "auto_pay_enabled": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether automatic payment is enabled"
+    },
+    "payment_method": {
+      "type": "string",
+      "description": "Linked bank account or card (last 4 digits)"
+    },
+    "payment_account_id": {
+      "type": "string",
+      "description": "External payment account identifier"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "paused",
+        "completed"
+      ],
+      "default": "active",
+      "description": "Current bill status"
+    },
+    "last_paid_date": {
+      "type": "string",
+      "format": "date",
+      "description": "When the bill was last paid"
+    },
+    "last_paid_amount": {
+      "type": "number",
+      "description": "Amount of last payment"
+    },
+    "ai_detected": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether this bill was detected by AI"
+    },
+    "confidence_score": {
+      "type": "number",
+      "description": "AI confidence in bill detection (0-100)"
+    },
+    "notification_days_before": {
+      "type": "number",
+      "default": 3,
+      "description": "Days before due date to send notification"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "bill_name",
+    "merchant",
+    "amount",
+    "frequency"
+  ]
+}

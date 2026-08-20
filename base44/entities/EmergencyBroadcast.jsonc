@@ -1,0 +1,89 @@
+{
+  "name": "EmergencyBroadcast",
+  "type": "object",
+  "properties": {
+    "user_email": {
+      "type": "string",
+      "description": "Person triggering emergency"
+    },
+    "user_name": {
+      "type": "string"
+    },
+    "emergency_type": {
+      "type": "string",
+      "enum": [
+        "medical",
+        "accident",
+        "natural_disaster",
+        "security",
+        "other"
+      ],
+      "description": "Emergency category"
+    },
+    "message": {
+      "type": "string",
+      "description": "Emergency message"
+    },
+    "location": {
+      "type": "object",
+      "properties": {
+        "latitude": {
+          "type": "number"
+        },
+        "longitude": {
+          "type": "number"
+        },
+        "address": {
+          "type": "string"
+        }
+      }
+    },
+    "contacts_notified": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "notified_at": {
+            "type": "string"
+          },
+          "delivery_status": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "medical_info_sent": {
+      "type": "boolean",
+      "default": false,
+      "description": "Medical profile sent to contacts"
+    },
+    "emergency_services_called": {
+      "type": "boolean",
+      "default": false
+    },
+    "resolved": {
+      "type": "boolean",
+      "default": false
+    },
+    "resolved_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "resolution_notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "emergency_type",
+    "message"
+  ]
+}

@@ -1,0 +1,62 @@
+{
+  "name": "TravelPlan",
+  "type": "object",
+  "properties": {
+    "trip_name": {
+      "type": "string"
+    },
+    "destination": {
+      "type": "string"
+    },
+    "start_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "end_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "planned",
+        "booked",
+        "in_progress",
+        "completed",
+        "cancelled"
+      ],
+      "default": "planned"
+    },
+    "accommodation": {
+      "type": "string"
+    },
+    "accommodation_confirmation": {
+      "type": "string"
+    },
+    "flight_details": {
+      "type": "string"
+    },
+    "flight_confirmation": {
+      "type": "string"
+    },
+    "total_cost": {
+      "type": "number"
+    },
+    "travel_documents": {
+      "type": "string",
+      "description": "Required documents (passport, visa, etc.)"
+    },
+    "activities": {
+      "type": "string",
+      "description": "Planned activities and reservations"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "trip_name",
+    "destination",
+    "start_date"
+  ]
+}

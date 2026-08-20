@@ -1,0 +1,98 @@
+{
+  "name": "MaintenanceAssignment",
+  "type": "object",
+  "properties": {
+    "maintenance_task_id": {
+      "type": "string",
+      "description": "Related maintenance task"
+    },
+    "vendor_id": {
+      "type": "string",
+      "description": "Assigned vendor"
+    },
+    "vendor_name": {
+      "type": "string",
+      "description": "Vendor name for display"
+    },
+    "property_id": {
+      "type": "string",
+      "description": "Property ID"
+    },
+    "property_name": {
+      "type": "string",
+      "description": "Property name"
+    },
+    "scheduled_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Scheduled service date"
+    },
+    "scheduled_time_slot": {
+      "type": "string",
+      "description": "Time slot (e.g., 9:00 AM - 12:00 PM)"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "assigned",
+        "scheduled",
+        "in_progress",
+        "completed",
+        "cancelled"
+      ],
+      "default": "assigned",
+      "description": "Assignment status"
+    },
+    "check_in_time": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When vendor checked in"
+    },
+    "completion_time": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When work was completed"
+    },
+    "work_performed": {
+      "type": "string",
+      "description": "Description of work done"
+    },
+    "parts_used": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "part_name": {
+            "type": "string"
+          },
+          "cost": {
+            "type": "number"
+          }
+        }
+      }
+    },
+    "labor_hours": {
+      "type": "number",
+      "description": "Hours worked"
+    },
+    "total_cost": {
+      "type": "number",
+      "description": "Total service cost"
+    },
+    "report_photos": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Photo URLs from vendor"
+    },
+    "ai_assignment_score": {
+      "type": "number",
+      "description": "AI confidence in this assignment"
+    }
+  },
+  "required": [
+    "maintenance_task_id",
+    "vendor_id"
+  ]
+}

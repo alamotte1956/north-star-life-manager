@@ -1,0 +1,67 @@
+{
+  "name": "Vehicle",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Vehicle nickname or identifier"
+    },
+    "year": {
+      "type": "number"
+    },
+    "make": {
+      "type": "string"
+    },
+    "model": {
+      "type": "string"
+    },
+    "vin": {
+      "type": "string"
+    },
+    "license_plate": {
+      "type": "string"
+    },
+    "purchase_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "purchase_price": {
+      "type": "number"
+    },
+    "current_value": {
+      "type": "number"
+    },
+    "insurance_provider": {
+      "type": "string"
+    },
+    "insurance_policy": {
+      "type": "string"
+    },
+    "registration_expires": {
+      "type": "string",
+      "format": "date"
+    },
+    "last_service_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "last_service_mileage": {
+      "type": "number"
+    },
+    "next_service_due": {
+      "type": "string",
+      "format": "date"
+    },
+    "stored_at": {
+      "type": "string",
+      "description": "Where vehicle is kept"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "make",
+    "model"
+  ]
+}

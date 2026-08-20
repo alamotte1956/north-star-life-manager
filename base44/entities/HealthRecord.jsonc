@@ -1,0 +1,125 @@
+{
+  "name": "HealthRecord",
+  "type": "object",
+  "properties": {
+    "record_type": {
+      "type": "string",
+      "enum": [
+        "prescription",
+        "insurance",
+        "vaccination",
+        "test_result",
+        "medical_condition",
+        "provider_info",
+        "other"
+      ]
+    },
+    "title": {
+      "type": "string"
+    },
+    "provider_name": {
+      "type": "string"
+    },
+    "date": {
+      "type": "string",
+      "format": "date"
+    },
+    "expiry_date": {
+      "type": "string",
+      "format": "date",
+      "description": "For prescriptions, insurance renewal, etc."
+    },
+    "prescription_name": {
+      "type": "string"
+    },
+    "dosage": {
+      "type": "string"
+    },
+    "pharmacy": {
+      "type": "string"
+    },
+    "insurance_provider": {
+      "type": "string"
+    },
+    "policy_number": {
+      "type": "string"
+    },
+    "group_number": {
+      "type": "string"
+    },
+    "document_url": {
+      "type": "string"
+    },
+    "notes": {
+      "type": "string"
+    },
+    "ai_summary": {
+      "type": "string",
+      "description": "AI-generated summary of the record"
+    },
+    "extracted_medications": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "dosage": {
+            "type": "string"
+          }
+        }
+      },
+      "description": "AI-extracted medication information"
+    },
+    "extracted_provider_contact": {
+      "type": "string",
+      "description": "AI-extracted provider contact information"
+    },
+    "extracted_appointment_dates": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "AI-extracted appointment dates"
+    },
+    "key_findings": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "AI-identified key medical findings"
+    },
+    "follow_up_required": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether follow-up is needed"
+    },
+    "follow_up_notes": {
+      "type": "string",
+      "description": "Notes about required follow-up"
+    },
+    "risk_indicators": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "AI-identified health risks or concerns"
+    },
+    "analysis_status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "analyzing",
+        "completed",
+        "failed"
+      ],
+      "default": "pending",
+      "description": "Status of AI analysis"
+    }
+  },
+  "required": [
+    "record_type",
+    "title"
+  ]
+}

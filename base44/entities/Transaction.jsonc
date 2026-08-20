@@ -1,0 +1,64 @@
+{
+  "name": "Transaction",
+  "type": "object",
+  "properties": {
+    "date": {
+      "type": "string",
+      "format": "date",
+      "description": "Transaction date"
+    },
+    "description": {
+      "type": "string",
+      "description": "Transaction description"
+    },
+    "amount": {
+      "type": "number",
+      "description": "Transaction amount (negative for expenses)"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "property",
+        "vehicle",
+        "subscription",
+        "maintenance",
+        "health",
+        "travel",
+        "utilities",
+        "groceries",
+        "dining",
+        "entertainment",
+        "other"
+      ],
+      "description": "Transaction category"
+    },
+    "merchant": {
+      "type": "string",
+      "description": "Merchant or payee name"
+    },
+    "account": {
+      "type": "string",
+      "description": "Account name"
+    },
+    "linked_entity_type": {
+      "type": "string",
+      "description": "Type of linked entity"
+    },
+    "linked_entity_id": {
+      "type": "string",
+      "description": "ID of linked entity"
+    },
+    "linked_entity_name": {
+      "type": "string",
+      "description": "Name of linked entity"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "date",
+    "description",
+    "amount"
+  ]
+}

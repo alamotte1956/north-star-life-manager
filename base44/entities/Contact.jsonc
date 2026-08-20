@@ -1,0 +1,63 @@
+{
+  "name": "Contact",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "attorney",
+        "accountant",
+        "financial_advisor",
+        "physician",
+        "insurance_agent",
+        "property_manager",
+        "contractor",
+        "concierge",
+        "personal_assistant",
+        "family",
+        "friend",
+        "other"
+      ]
+    },
+    "company": {
+      "type": "string"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string"
+    },
+    "address": {
+      "type": "string"
+    },
+    "specialty": {
+      "type": "string",
+      "description": "Area of expertise or service"
+    },
+    "priority": {
+      "type": "string",
+      "enum": [
+        "vip",
+        "high",
+        "medium",
+        "low"
+      ],
+      "default": "medium"
+    },
+    "notes": {
+      "type": "string"
+    },
+    "last_contacted": {
+      "type": "string",
+      "format": "date"
+    }
+  },
+  "required": [
+    "name",
+    "category"
+  ]
+}

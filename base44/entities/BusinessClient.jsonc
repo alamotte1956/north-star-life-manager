@@ -1,0 +1,75 @@
+{
+  "name": "BusinessClient",
+  "type": "object",
+  "properties": {
+    "user_email": {
+      "type": "string",
+      "description": "Business owner"
+    },
+    "company_name": {
+      "type": "string",
+      "description": "Client company name"
+    },
+    "contact_name": {
+      "type": "string",
+      "description": "Primary contact"
+    },
+    "email": {
+      "type": "string",
+      "description": "Client email"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "address": {
+      "type": "string"
+    },
+    "industry": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "lead",
+        "active",
+        "inactive",
+        "archived"
+      ],
+      "default": "lead"
+    },
+    "billing_rate": {
+      "type": "number",
+      "description": "Default hourly rate"
+    },
+    "payment_terms": {
+      "type": "string",
+      "default": "Net 30"
+    },
+    "total_invoiced": {
+      "type": "number",
+      "default": 0
+    },
+    "total_paid": {
+      "type": "number",
+      "default": 0
+    },
+    "outstanding_balance": {
+      "type": "number",
+      "default": 0
+    },
+    "notes": {
+      "type": "string"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "company_name",
+    "contact_name",
+    "email"
+  ]
+}

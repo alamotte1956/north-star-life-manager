@@ -1,0 +1,58 @@
+{
+  "name": "Beneficiary",
+  "type": "object",
+  "properties": {
+    "account_type": {
+      "type": "string",
+      "enum": [
+        "life_insurance",
+        "retirement_account",
+        "bank_account",
+        "investment_account",
+        "trust",
+        "will",
+        "other"
+      ],
+      "description": "Type of account or instrument"
+    },
+    "account_name": {
+      "type": "string",
+      "description": "Name of account or policy"
+    },
+    "institution": {
+      "type": "string"
+    },
+    "account_number": {
+      "type": "string"
+    },
+    "primary_beneficiary_name": {
+      "type": "string"
+    },
+    "primary_beneficiary_relationship": {
+      "type": "string"
+    },
+    "primary_beneficiary_percentage": {
+      "type": "number"
+    },
+    "contingent_beneficiary_name": {
+      "type": "string"
+    },
+    "contingent_beneficiary_relationship": {
+      "type": "string"
+    },
+    "last_updated": {
+      "type": "string",
+      "format": "date"
+    },
+    "document_url": {
+      "type": "string"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "account_type",
+    "account_name"
+  ]
+}

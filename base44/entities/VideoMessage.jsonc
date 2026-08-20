@@ -1,0 +1,89 @@
+{
+  "name": "VideoMessage",
+  "type": "object",
+  "properties": {
+    "creator_email": {
+      "type": "string",
+      "description": "Message creator"
+    },
+    "recipient_name": {
+      "type": "string",
+      "description": "Intended recipient"
+    },
+    "recipient_email": {
+      "type": "string",
+      "description": "Recipient email"
+    },
+    "message_type": {
+      "type": "string",
+      "enum": [
+        "legacy",
+        "birthday",
+        "graduation",
+        "wedding",
+        "emergency",
+        "general"
+      ],
+      "default": "legacy"
+    },
+    "title": {
+      "type": "string",
+      "description": "Message title"
+    },
+    "video_url": {
+      "type": "string",
+      "description": "Video file URL"
+    },
+    "thumbnail_url": {
+      "type": "string"
+    },
+    "duration_seconds": {
+      "type": "number"
+    },
+    "transcript": {
+      "type": "string",
+      "description": "AI-generated transcript"
+    },
+    "delivery_condition": {
+      "type": "string",
+      "enum": [
+        "immediate",
+        "on_death",
+        "on_date",
+        "manual_trigger"
+      ],
+      "default": "manual_trigger"
+    },
+    "scheduled_delivery_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "delivered": {
+      "type": "boolean",
+      "default": false
+    },
+    "delivered_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "accompanying_documents": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Document IDs to deliver with video"
+    },
+    "digital_assets": {
+      "type": "object",
+      "description": "Social media, crypto wallet info"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "recipient_name",
+    "title",
+    "message_type"
+  ]
+}

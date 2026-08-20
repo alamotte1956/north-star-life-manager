@@ -1,0 +1,44 @@
+{
+  "name": "Comment",
+  "type": "object",
+  "properties": {
+    "entity_type": {
+      "type": "string",
+      "description": "Type of entity being commented on"
+    },
+    "entity_id": {
+      "type": "string",
+      "description": "ID of the entity"
+    },
+    "comment_text": {
+      "type": "string",
+      "description": "The comment content"
+    },
+    "parent_comment_id": {
+      "type": "string",
+      "description": "ID of parent comment for threaded replies"
+    },
+    "mentioned_users": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Array of user emails mentioned in comment"
+    },
+    "edited": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether comment was edited"
+    },
+    "edited_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When comment was last edited"
+    }
+  },
+  "required": [
+    "entity_type",
+    "entity_id",
+    "comment_text"
+  ]
+}

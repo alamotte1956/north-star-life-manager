@@ -1,0 +1,75 @@
+{
+  "name": "InternationalAsset",
+  "type": "object",
+  "properties": {
+    "user_email": {
+      "type": "string"
+    },
+    "asset_type": {
+      "type": "string",
+      "enum": [
+        "property",
+        "bank_account",
+        "investment",
+        "business",
+        "other"
+      ],
+      "description": "Asset category"
+    },
+    "asset_name": {
+      "type": "string",
+      "description": "Asset name"
+    },
+    "country": {
+      "type": "string",
+      "description": "Country location"
+    },
+    "local_currency": {
+      "type": "string",
+      "description": "Asset currency"
+    },
+    "value_local": {
+      "type": "number",
+      "description": "Value in local currency"
+    },
+    "value_usd": {
+      "type": "number",
+      "description": "USD equivalent"
+    },
+    "exchange_rate": {
+      "type": "number",
+      "description": "Current exchange rate"
+    },
+    "last_rate_update": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "institution_name": {
+      "type": "string",
+      "description": "Bank/institution"
+    },
+    "account_number": {
+      "type": "string",
+      "description": "Account/reference number"
+    },
+    "tax_reporting_required": {
+      "type": "boolean",
+      "default": false
+    },
+    "fbar_reporting": {
+      "type": "boolean",
+      "default": false,
+      "description": "FBAR reporting required"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "asset_type",
+    "asset_name",
+    "country",
+    "local_currency",
+    "value_local"
+  ]
+}

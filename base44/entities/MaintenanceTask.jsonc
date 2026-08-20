@@ -1,0 +1,78 @@
+{
+  "name": "MaintenanceTask",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Task name"
+    },
+    "property_name": {
+      "type": "string",
+      "description": "Which property this relates to"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "hvac",
+        "plumbing",
+        "electrical",
+        "landscaping",
+        "cleaning",
+        "security",
+        "pool",
+        "seasonal",
+        "inspection",
+        "other"
+      ]
+    },
+    "frequency": {
+      "type": "string",
+      "enum": [
+        "one_time",
+        "weekly",
+        "monthly",
+        "quarterly",
+        "semi_annual",
+        "annual"
+      ]
+    },
+    "next_due_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "last_completed": {
+      "type": "string",
+      "format": "date"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "upcoming",
+        "due",
+        "overdue",
+        "completed"
+      ],
+      "default": "upcoming"
+    },
+    "assigned_to": {
+      "type": "string",
+      "description": "Email of assigned user"
+    },
+    "provider_name": {
+      "type": "string"
+    },
+    "provider_contact": {
+      "type": "string"
+    },
+    "estimated_cost": {
+      "type": "number"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "title",
+    "property_name"
+  ]
+}
