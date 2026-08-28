@@ -14,6 +14,20 @@ Deno.serve(async (req) => {
 
         const { action, payment_id } = await req.json();
 
+        // Input validation
+        if (!action || typeof action !== 'string') {
+            return Response.json({ error: 'Action is required' }, { status: 400 });
+        }
+
+        const validActions = ['create_payment_intent', 'confirm_payment', 'record_manual_payment'];
+        if (!validActions.includes(action)) {
+            return Response.json({ error: 'Invalid action' }, { status: 400 });
+        }
+
+        if (!payment_id || typeof payment_id !== 'string') {
+            return Response.json({ error: 'Payment ID is required' }, { status: 400 });
+        }
+
         if (action === 'create_payment_intent') {
             // Fetch payment from DB - don't trust client data
             const payment = await base44.asServiceRole.entities.RentPayment.filter({ id: payment_id });
@@ -114,6 +128,20 @@ Deno.serve(async (req) => {
             // Record payment made outside the system
             const { payment_method, payment_date, notes } = await req.json();
 
+            // Validate manual payment inputs
+            const validPaymentMethods = ['check', 'cash', 'wire', 'other'];
+            if (payment_method && !validPaymentMethods.includes(payment_method)) {
+                return Response.json({ error: 'Invalid payment method' }, { status: 400 });
+            }
+
+            if (payment_date && isNaN(Date.parse(payment_date))) {
+                return Response.json({ error: 'Invalid payment date' }, { status: 400 });
+            }
+
+            if (notes && typeof notes === 'string' && notes.length > 1000) {
+                return Response.json({ error: 'Notes too long (max 1000 characters)' }, { status: 400 });
+            }
+
             await base44.asServiceRole.entities.RentPayment.update(payment_id, {
                 status: 'paid',
                 payment_date: payment_date || new Date().toISOString(),
@@ -135,7 +163,7 @@ Deno.serve(async (req) => {
     } catch (error) {
         console.error('Payment processing error:', error);
         return Response.json({ 
-            error: error.message,
+            error: 'Payment processing failed',
             success: false 
         }, { status: 500 });
     }

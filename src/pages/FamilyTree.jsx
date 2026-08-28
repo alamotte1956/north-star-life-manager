@@ -7,7 +7,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Plus, Users, Link2, FileText } from 'lucide-react';
+import { Plus, Users, FileText } from 'lucide-react';
 import { toast } from 'sonner';
 
 export default function FamilyTree() {

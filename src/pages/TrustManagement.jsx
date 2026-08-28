@@ -9,7 +9,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
-import { Shield, Plus, Users, FileText, DollarSign, Calendar, Loader2, Download } from 'lucide-react';
+import { Shield, Plus, Users, DollarSign, Loader2, Download } from 'lucide-react';
 import { toast } from 'sonner';
 import { format } from 'date-fns';
 import { Link } from 'react-router-dom';

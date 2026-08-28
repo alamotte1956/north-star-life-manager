@@ -5,15 +5,32 @@ const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY'), {
     apiVersion: '2023-10-16'
 });
 
-// Get price IDs from environment variables with fallback to hardcoded values
+// Get price IDs from environment variables
 const PRICE_IDS = {
-    basic: Deno.env.get('STRIPE_BASIC_PRICE_ID') || 'price_1SiIxfLV02BUsIMDilboDMGv',
-    premium: Deno.env.get('STRIPE_PREMIUM_PRICE_ID') || 'price_1SiJ3qLV02BUsIMD0kfW9BqX',
-    enterprise: Deno.env.get('STRIPE_ENTERPRISE_PRICE_ID') || 'price_1SiJ4oLV02BUsIMDrmKLoPkY'
+    basic: Deno.env.get('STRIPE_BASIC_PRICE_ID'),
+    premium: Deno.env.get('STRIPE_PREMIUM_PRICE_ID'),
+    enterprise: Deno.env.get('STRIPE_ENTERPRISE_PRICE_ID')
 };
+
+// Validate that all required price IDs are configured at startup
+const missingPriceIds = Object.entries(PRICE_IDS)
+    .filter(([, value]) => !value)
+    .map(([key]) => key);
+
+if (missingPriceIds.length > 0) {
+    console.error(`Missing required Stripe price IDs: ${missingPriceIds.join(', ')}`);
+}
 
 Deno.serve(async (req) => {
     try {
+        // Check if price IDs are configured before processing
+        if (missingPriceIds.length > 0) {
+            return Response.json({ 
+                error: 'Service configuration error',
+                success: false 
+            }, { status: 503 });
+        }
+
         const base44 = createClientFromRequest(req);
         const user = await base44.auth.me();
 
@@ -33,6 +50,12 @@ Deno.serve(async (req) => {
 
         if (!plan_id || !PRICE_IDS[plan_id]) {
             return Response.json({ error: 'Invalid plan_id' }, { status: 400 });
+        }
+
+        // Verify that the price ID is configured
+        if (!PRICE_IDS[plan_id]) {
+            console.error(`Missing Stripe price ID for plan: ${plan_id}`);
+            return Response.json({ error: 'Plan configuration error' }, { status: 500 });
         }
 
         // Create or retrieve Stripe customer

@@ -7,7 +7,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Heart, Plus, Image as ImageIcon, FileText, Video } from 'lucide-react';
+import { Heart, Plus } from 'lucide-react';
 import { toast } from 'sonner';
 
 export default function DigitalMemorial() {

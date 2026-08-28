@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { 
-    MessageSquare, Mail, MessageCircle, Send, Plus, Filter, 
-    Search, Sparkles, Link as LinkIcon, Calendar, Phone
+    MessageSquare, Mail, MessageCircle, Plus, Link as LinkIcon, Phone
 } from 'lucide-react';
 import MessageComposer from '../components/communications/MessageComposer';
 import MessageThread from '../components/communications/MessageThread';

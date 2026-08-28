@@ -18,6 +18,13 @@ export async function onRequest(context) {
     const newResponse = new Response(response.body, response)
     
     // Add security headers
+    // TODO: CSP Security Improvement Needed
+    // Current policy allows 'unsafe-inline' and 'unsafe-eval' which can enable XSS attacks
+    // Recommendations:
+    // 1. Implement nonce-based CSP for inline scripts/styles
+    // 2. Move inline event handlers to external scripts
+    // 3. Replace eval() with safer alternatives
+    // 4. Use build-time tools to generate CSP-compatible code
     newResponse.headers.set(
       'Content-Security-Policy',
       "default-src 'self'; " +
@@ -50,6 +57,8 @@ export async function onRequest(context) {
     
     return newResponse
   } catch (err) {
-    return new Response(`${err.message}\n${err.stack}`, { status: 500 })
+    // Log the error for debugging but don't expose details to client
+    console.error('Middleware error:', err)
+    return new Response('Internal Server Error', { status: 500 })
   }
 }

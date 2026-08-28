@@ -2,7 +2,7 @@ import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { FileText, Eye, Edit, Download, Share2, MessageSquare, Upload } from 'lucide-react';
+import { Eye, Edit, Download, Share2, MessageSquare, Upload } from 'lucide-react';
 import { format } from 'date-fns';
 
 export default function ActivityLogViewer({ activities }) {

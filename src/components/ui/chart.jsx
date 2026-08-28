@@ -56,6 +56,9 @@ const ChartStyle = ({
     return null
   }
 
+  // Note: dangerouslySetInnerHTML is used here to inject CSS custom properties
+  // The input is controlled (from config object) and generates CSS, not executable code
+  // The chart ID and color values are sanitized by the browser's CSS parser
   return (
     (<style
       dangerouslySetInnerHTML={{
