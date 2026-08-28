@@ -6,7 +6,6 @@ import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Download, Loader2, Printer } from 'lucide-react';
 import { toast } from 'sonner';
-import { base44 } from '@/api/base44Client';
 
 export default function CustomReportBuilder({ open, onOpenChange, documents }) {
     const [generating, setGenerating] = useState(false);

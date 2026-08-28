@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
-import { Search, Home, Car, Wrench, Gem, DollarSign, Plane, Heart, Shield, FileText, Filter, X, Calendar } from 'lucide-react';
+import { Search, Home, Car, Wrench, Gem, DollarSign, Plane, Heart, Shield, FileText, Filter, Calendar } from 'lucide-react';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
