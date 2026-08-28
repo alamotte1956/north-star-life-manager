@@ -1,5 +1,6 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.4';
 import { createClient } from 'npm:@supabase/supabase-js@2.39.0';
+import { encryptSensitiveFields, auditLog } from './lib/kmsService.ts';
 
 Deno.serve(async (req) => {
     try {
@@ -51,23 +52,36 @@ Deno.serve(async (req) => {
         const base44Users = await base44.entities.User.filter({ email: user.email });
         const family_id = base44Users[0]?.family_id;
 
+        // Prepare metadata for encryption
+        const docMetadata = {
+            user_email: user.email,
+            family_id: family_id,
+            file_name: file.name,
+            file_path: fileName,
+            file_url: publicUrl,
+            file_size: file.size,
+            file_type: file.type,
+            title: documentMetadata.title || file.name,
+            category: documentMetadata.category || 'other',
+            linked_entity_type: documentMetadata.linked_entity_type,
+            linked_entity_id: documentMetadata.linked_entity_id,
+            analysis_status: 'pending'
+        };
+
+        // Encrypt sensitive fields (email, file paths) using KMS
+        const sensitiveFields = ['user_email', 'file_path', 'file_url'];
+        const encryptedMetadata = await encryptSensitiveFields(docMetadata, sensitiveFields);
+        
+        auditLog('DOCUMENT_METADATA_ENCRYPTED', {
+            userId: user.id,
+            fileName: file.name,
+            category: documentMetadata.category
+        });
+
         // Store metadata in Supabase database with RLS
         const { data: docRecord, error: dbError } = await supabase
             .from('documents')
-            .insert({
-                user_email: user.email,
-                family_id: family_id,
-                file_name: file.name,
-                file_path: fileName,
-                file_url: publicUrl,
-                file_size: file.size,
-                file_type: file.type,
-                title: documentMetadata.title || file.name,
-                category: documentMetadata.category || 'other',
-                linked_entity_type: documentMetadata.linked_entity_type,
-                linked_entity_id: documentMetadata.linked_entity_id,
-                analysis_status: 'pending'
-            })
+            .insert(encryptedMetadata)
             .select()
             .single();
 
@@ -107,6 +121,7 @@ Deno.serve(async (req) => {
 
     } catch (error) {
         console.error('Upload error:', error);
+        auditLog('DOCUMENT_UPLOAD_FAILED', {}, error as Error);
         return Response.json({ 
             error: error.message,
             success: false 

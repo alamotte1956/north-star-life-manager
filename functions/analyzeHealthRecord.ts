@@ -1,4 +1,5 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.4';
+import { encryptSensitiveFields, auditLog } from './lib/kmsService.ts';
 
 Deno.serve(async (req) => {
     try {
@@ -81,8 +82,8 @@ Extract and provide:
             }
         });
 
-        // Update record with extracted information
-        await base44.asServiceRole.entities.HealthRecord.update(record_id, {
+        // Encrypt sensitive fields before storing
+        const updateData = {
             ai_summary: analysis.summary,
             extracted_medications: analysis.extracted_medications,
             extracted_provider_contact: analysis.extracted_provider_contact,
@@ -92,7 +93,20 @@ Extract and provide:
             follow_up_notes: analysis.follow_up_notes,
             risk_indicators: analysis.risk_indicators,
             analysis_status: 'completed'
+        };
+
+        // Encrypt sensitive PII fields using KMS
+        const sensitiveFields = ['extracted_provider_contact', 'ai_summary', 'follow_up_notes'];
+        const encryptedData = await encryptSensitiveFields(updateData, sensitiveFields);
+        
+        auditLog('HEALTH_RECORD_ENCRYPTED', {
+            recordId: record_id,
+            userId: user.id,
+            fieldsEncrypted: sensitiveFields
         });
+
+        // Update record with encrypted information
+        await base44.asServiceRole.entities.HealthRecord.update(record_id, encryptedData);
 
         return Response.json({
             success: true,
@@ -101,6 +115,7 @@ Extract and provide:
 
     } catch (error) {
         console.error('Health record analysis error:', error);
+        auditLog('HEALTH_RECORD_ANALYSIS_FAILED', {}, error as Error);
         
         if (req.json && (await req.json()).record_id) {
             const { record_id } = await req.json();

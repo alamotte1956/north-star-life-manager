@@ -1,4 +1,5 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.6';
+import { encryptData, auditLog } from './lib/kmsService.ts';
 
 Deno.serve(async (req) => {
     try {
@@ -92,15 +93,24 @@ Also provide your confidence level (0-1) and a brief reason.`,
 
         // If confidence is high, auto-create a rule
         if (aiResult.confidence >= 0.8) {
+            // Encrypt merchant pattern before storing
+            const encryptedPattern = await encryptData(aiResult.suggested_merchant_pattern || searchText.split(' ')[0]);
+            
             await base44.entities.CategorizationRule.create({
                 user_email: user.email,
-                merchant_pattern: aiResult.suggested_merchant_pattern || searchText.split(' ')[0],
+                merchant_pattern: encryptedPattern,
+                merchant_pattern_encrypted: true,
                 category: aiResult.category,
                 confidence: aiResult.confidence,
                 rule_type: 'ai_learned',
                 match_count: 1,
                 last_matched: new Date().toISOString(),
                 applies_to: transaction_type || 'all'
+            });
+            
+            auditLog('TRANSACTION_RULE_ENCRYPTED', {
+                userId: user.id,
+                category: aiResult.category
             });
         }
 
@@ -115,6 +125,7 @@ Also provide your confidence level (0-1) and a brief reason.`,
 
     } catch (error) {
         console.error('Categorization error:', error);
+        auditLog('TRANSACTION_CATEGORIZATION_FAILED', {}, error as Error);
         return Response.json({ 
             success: false,
             error: error.message 
