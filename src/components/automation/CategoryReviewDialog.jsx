@@ -5,7 +5,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { CheckCircle, XCircle, Brain, AlertTriangle } from 'lucide-react';
+import { CheckCircle, Brain, AlertTriangle } from 'lucide-react';
 import { toast } from 'sonner';
 
 const CATEGORIES = [

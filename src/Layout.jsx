@@ -11,7 +11,6 @@ import ChatAssistant from '@/components/ChatAssistant';
 import PWAInstaller from '@/components/PWAInstaller';
 import ProactiveAssistant from '@/components/ProactiveAssistant';
 import PushNotificationManager from '@/components/PushNotificationManager';
-import AuthGuard from '@/components/auth/AuthGuard';
 import OfflineIndicator from '@/components/pwa/OfflineIndicator';
 import OfflineDataManager from '@/components/pwa/OfflineDataManager';
 import PWAManager from '@/components/pwa/PWAManager';

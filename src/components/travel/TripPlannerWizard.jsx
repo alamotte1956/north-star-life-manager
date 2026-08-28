@@ -7,10 +7,9 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Sparkles, MapPin, Calendar, DollarSign, CheckCircle, Plane } from 'lucide-react';
+import { Sparkles, MapPin, DollarSign, CheckCircle } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 import { toast } from 'sonner';
-import { format } from 'date-fns';
 
 export default function TripPlannerWizard({ open, onOpenChange, onComplete }) {
     const [step, setStep] = useState(1);

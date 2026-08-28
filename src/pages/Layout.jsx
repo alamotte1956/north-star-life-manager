@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { createPageUrl } from './utils';
+import { createPageUrl } from '@/components/utils';
 import {
     LayoutDashboard, FileText, Shield, Home, Wrench, Users, Car,
     DollarSign, Gem, Plane, Heart, Calendar, LogOut, Menu, X, Search, Plug, TrendingUp, Zap, CheckCircle, Activity, AlertCircle, Globe, Briefcase, Video, HelpCircle
@@ -12,7 +12,6 @@ import ChatAssistant from '@/components/ChatAssistant';
 import PWAInstaller from '@/components/PWAInstaller';
 import ProactiveAssistant from '@/components/ProactiveAssistant';
 import PushNotificationManager from '@/components/PushNotificationManager';
-import AuthGuard from '@/components/auth/AuthGuard';
 import OfflineIndicator from '@/components/pwa/OfflineIndicator';
 import OfflineDataManager from '@/components/pwa/OfflineDataManager';
 import PWAManager from '@/components/pwa/PWAManager';
