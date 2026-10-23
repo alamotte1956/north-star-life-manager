@@ -5,10 +5,9 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { BookOpen, Brain, Target, Sparkles, Clock, TrendingUp, Play, FileText, Video, CheckCircle } from 'lucide-react';
+import { BookOpen, Brain, Target, Sparkles, Clock, Play, FileText, Video, CheckCircle } from 'lucide-react';
 import ConceptExplainer from '../components/literacy/ConceptExplainer';
 import InteractiveQuiz from '../components/literacy/InteractiveQuiz';
-import { toast } from 'sonner';
 
 export default function FinancialLiteracy() {
     const [selectedConcept, setSelectedConcept] = useState(null);

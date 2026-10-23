@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
-import { filterMine } from '@/components/utils/safeQuery';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { 
     Home, FileText, Wrench, DollarSign, MessageSquare, 
-    Calendar, AlertCircle, CheckCircle, Bell, Settings 
+    Calendar, AlertCircle, Bell, Settings 
 } from 'lucide-react';
 import { format } from 'date-fns';
 import TenantLeaseView from '@/components/tenant/TenantLeaseView';

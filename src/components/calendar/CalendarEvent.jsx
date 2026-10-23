@@ -1,6 +1,5 @@
 import React from 'react';
 import { Calendar, Wrench, Plane, DollarSign, Star } from 'lucide-react';
-import { Badge } from '@/components/ui/badge';
 
 const eventTypeConfig = {
     maintenance: { icon: Wrench, color: 'bg-orange-100 text-orange-700 border-orange-200' },

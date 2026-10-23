@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Bell, CheckCircle, Trash2, Filter, Folder, FileText, UserPlus, CheckCheck, MessageSquare } from 'lucide-react';
+import { Bell, CheckCircle, Trash2, Folder, FileText, UserPlus, CheckCheck, MessageSquare } from 'lucide-react';
 import { format } from 'date-fns';
 import { Badge } from '@/components/ui/badge';
 import { toast } from 'sonner';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 export default function FamilyNotifications() {
     const [filter, setFilter] = useState('all');

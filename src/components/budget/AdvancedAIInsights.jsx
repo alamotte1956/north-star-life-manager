@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { 
-    AlertTriangle, TrendingUp, TrendingDown, Target, Lightbulb, 
+    AlertTriangle, TrendingUp, TrendingDown, Target, 
     Shield, Sparkles, ChevronRight, DollarSign, Calendar, Zap
 } from 'lucide-react';
 import { Progress } from '@/components/ui/progress';

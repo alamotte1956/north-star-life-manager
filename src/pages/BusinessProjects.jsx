@@ -10,7 +10,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { Progress } from '@/components/ui/progress';
-import { Briefcase, Plus, Clock, DollarSign, CheckCircle } from 'lucide-react';
+import { Plus, Clock, DollarSign } from 'lucide-react';
 import { toast } from 'sonner';
 
 export default function BusinessProjects() {

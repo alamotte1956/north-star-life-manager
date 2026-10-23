@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { TrendingUp, Shield, Users, Calendar, Sparkles } from 'lucide-react';
+import { TrendingUp, Shield, Users, Calendar } from 'lucide-react';
 import ScenarioSimulator from '@/components/wealth/ScenarioSimulator';
 import EstatePlanningGuidance from '@/components/wealth/EstatePlanningGuidance';
 import WealthPreservation from '@/components/wealth/WealthPreservation';

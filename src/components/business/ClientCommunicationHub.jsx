@@ -10,8 +10,8 @@ import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { 
-    Mail, Send, Clock, CheckCircle, FileText, DollarSign, 
-    Briefcase, Paperclip, Sparkles, MessageSquare
+    Mail, Send, Clock, CheckCircle, DollarSign, 
+    Briefcase, MessageSquare
 } from 'lucide-react';
 import { format } from 'date-fns';
 import { toast } from 'sonner';

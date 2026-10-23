@@ -1,7 +1,7 @@
 import React from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Badge } from '@/components/ui/badge';
-import { Calendar, MapPin, DollarSign, Bell, Clock } from 'lucide-react';
+import { MapPin, DollarSign, Bell, Clock } from 'lucide-react';
 import { format } from 'date-fns';
 
 export default function EventDetailsDialog({ event, open, onOpenChange }) {

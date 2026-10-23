@@ -10,7 +10,7 @@ import {
 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { format, isAfter, isBefore, addDays } from 'date-fns';
+import { format, isBefore, addDays } from 'date-fns';
 import FinancialAdvisor from '../components/financial/FinancialAdvisor';
 import OnboardingFlow from '../components/onboarding/OnboardingFlow';
 import FinancialHealthAlerts from '../components/alerts/FinancialHealthAlerts';

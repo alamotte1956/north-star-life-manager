@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { listMine } from '@/components/utils/safeQuery';
-import { CreditCard, Plus, Calendar, DollarSign, Zap, CheckCircle, AlertCircle, Clock, Sparkles } from 'lucide-react';
+import { CreditCard, Plus, Calendar, DollarSign, Zap, CheckCircle, Clock, Sparkles } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
@@ -12,7 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Switch } from '@/components/ui/switch';
 import { Badge } from '@/components/ui/badge';
 import { Textarea } from '@/components/ui/textarea';
-import { format, addDays } from 'date-fns';
+import { format } from 'date-fns';
 import { toast } from 'sonner';
 
 const categoryLabels = {

@@ -4,8 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
-import { 
-    Target, Sparkles, TrendingUp, Plus, Calendar, 
+import { Sparkles, TrendingUp, Plus, Calendar, 
     DollarSign, RefreshCw, CheckCircle 
 } from 'lucide-react';
 import { format, differenceInDays } from 'date-fns';

@@ -3,12 +3,11 @@ import { base44 } from '@/api/base44Client';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { MessageSquare, Send, FileText, BarChart3, Copy, Sparkles, AlertCircle, CheckCircle } from 'lucide-react';
+import { MessageSquare, FileText, BarChart3, Copy, Sparkles, AlertCircle, CheckCircle } from 'lucide-react';
 import { toast } from 'sonner';
 
 export default function TenantCommunications({ properties }) {

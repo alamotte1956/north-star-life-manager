@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import logger from '@/utils/logger'
-import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -8,10 +7,9 @@ import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { 
     Activity, Sparkles, Loader2, TrendingUp, TrendingDown, 
-    DollarSign, Target, Shield, Zap, AlertTriangle, CheckCircle,
-    PieChart as PieChartIcon, BarChart3, ArrowUpRight, ArrowDownRight
+    DollarSign, Target, Shield, Zap, AlertTriangle, CheckCircle, BarChart3, ArrowUpRight
 } from 'lucide-react';
-import { LineChart, Line, AreaChart, Area, BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { AreaChart, Area, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 const COLORS = ['#4A90E2', '#2E5C8A', '#7BB3E0', '#1E3A5F', '#B8D4ED', '#0F1729'];
 
